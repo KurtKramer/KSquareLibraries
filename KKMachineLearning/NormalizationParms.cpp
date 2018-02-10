@@ -347,16 +347,16 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
 
       else if  (varName.EqualIgnoreCase ("Sigma"))
       {
-        XmlElementArrayDoublePtr  s = dynamic_cast<XmlElementArrayDoublePtr>(e);
-        if  ((kkint32)s->Count () == numOfFeatures)
+        XmlElementArrayDoublePtr  sss = dynamic_cast<XmlElementArrayDoublePtr>(e);
+        if  ((kkint32)sss->Count () == numOfFeatures)
         {
           delete  sigma;
-          sigma = s->TakeOwnership ();
+          sigma = sss->TakeOwnership ();
         }
         else
         {
           log.Level (-1) << endl
-            << "XmlElementNormalizationParms   ***ERROR***    sigma->Count[" << s->Count ()  << "] does not agree with NumOfFeatures[" << numOfFeatures << "]." <<endl
+            << "XmlElementNormalizationParms   ***ERROR***    sigma->Count[" << sss->Count ()  << "] does not agree with NumOfFeatures[" << numOfFeatures << "]." <<endl
             << endl;
         }
       }

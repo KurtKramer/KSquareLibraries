@@ -2399,7 +2399,7 @@ TrainingConfiguration2::Factory*   TrainingConfiguration2::FactoryInstace ()
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::Manufacture 
-                                                       (const KKStr&  className,
+                                                       (const KKStr&  factoryClassName,
                                                         const KKStr&  configFileName,
                                                         bool          validateDirectories,
                                                         RunLog&       log
@@ -2418,10 +2418,10 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::Manufacture
   TrainingConfiguration2Ptr  newInstance = NULL;
 
   map<KKStr,Factory*>::const_iterator  idx;
-  idx = registeredFactories->find (className);
+  idx = registeredFactories->find (factoryClassName);
   if  (idx == registeredFactories->end ())
   {
-    log.Level (-1) << endl << "TrainingConfiguration2::Manufacture   Factory: " << className << "  Is not defined;  will return instance of 'TrainingConfiguration2'." << endl << endl;
+    log.Level (-1) << endl << "TrainingConfiguration2::Manufacture   Factory: " << factoryClassName << "  Is not defined;  will return instance of 'TrainingConfiguration2'." << endl << endl;
     newInstance = new TrainingConfiguration2 ();
     newInstance->Load (configFileName, validateDirectories, log);
   }

@@ -68,14 +68,14 @@ FileDescConstPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
     GetToken (_in, " ", field, eof, eol);  rowNum++;
     while  ((!eol)  &&  (!eof))
     {
-      MLClassPtr  mlClass = _classes->GetMLClassPtr (field);
+      // Make sure entry for class specified by 'field' exists in _classes
+      _classes->GetMLClassPtr (field);
       _estSize++;
       GetToken (_in, " ", field, eof, eol);
     }
   }
 
   FileDescPtr  fileDesc = new FileDesc ();
-
 
   kkint32  numOfFeatures = 0;
   while  (!eof)
@@ -119,8 +119,6 @@ FileDescConstPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
 
   return  fileDesc;
 }  /* GetFileDesc */
-
-
 
 
 
@@ -226,11 +224,11 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
     featureNum++;
   }
 
-
+  _log.Level (50) << "FeatureFileIOColumn::LoadFile  : " 
+    << "  _changesMade: " << _changesMade
+    << "  _cancelFlag: " << _cancelFlag;
   return  examples;
 }  /* LoadFile */
-
-
 
 
 
@@ -287,5 +285,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
   _out.precision (p);
 
   _successful = true;
+  _log.Level (50) << "FeatureFileIOColumn::SaveFile  _cancelFlag: " << _cancelFlag
+    << "  _errorMessage: " << _errorMessage << endl;
   return;
 }  /* SaveFile */

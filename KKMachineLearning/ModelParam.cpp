@@ -56,8 +56,6 @@ ModelParam::ModelParam  ():
 
 
 
-
-
 ModelParam::ModelParam  (const ModelParam&  _param):
 
   encodingMethod             (_param.encodingMethod),
@@ -82,6 +80,7 @@ ModelParam::~ModelParam  ()
   delete  selectedFeatures;
   selectedFeatures = NULL;
 }
+
 
 
 kkMemSize  ModelParam::MemoryConsumedEstimated ()  const
@@ -111,11 +110,6 @@ void  ModelParam::SelectedFeatures   (FeatureNumListConst&  _selectedFeatures)
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (_selectedFeatures);
 }
-
-
-
-
-
 
 
 
@@ -168,40 +162,11 @@ ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _m
 
 
 
-
-float  ModelParam::A_Param  () const
-{
-  return  prob;
-}
-
-double  ModelParam::C_Param  () const
-{
-  return cost;
-}
-
-double  ModelParam::Cost     () const
-{
-  return cost;
-}
-
-double  ModelParam::Gamma    () const
-{
-  return  gamma;
-}
-
-float  ModelParam::Prob () const
-{
-  return  prob;
-}
-
-
-
-
-
 void  ModelParam::A_Param  (float   _prob)
 {
   prob = _prob;
 }
+
 
 
 void  ModelParam::C_Param  (double  _cost)
@@ -210,10 +175,12 @@ void  ModelParam::C_Param  (double  _cost)
 }
 
 
+
 void  ModelParam::Cost (double  _cost)
 {
   cost = _cost;
 }
+
 
 
 void  ModelParam::Gamma (double  _gamma)
@@ -222,12 +189,11 @@ void  ModelParam::Gamma (double  _gamma)
 }
 
 
+
 void  ModelParam::Prob (float _prob)
 {
   prob = _prob;
 }
-
-
 
 
 
@@ -383,8 +349,6 @@ KKStr   ModelParam::ToCmdLineStr () const
 
 
 
-
-
 kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
                                                  RunLog&           log
                                                 )  const
@@ -428,7 +392,6 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
 
 
 
-
 KKStr  ModelParam::EncodingMethodToStr (EncodingMethodType  encodingMethod)
 {
   if  (encodingMethod == EncodingMethodType::Binary)
@@ -442,7 +405,7 @@ KKStr  ModelParam::EncodingMethodToStr (EncodingMethodType  encodingMethod)
 }  /* EncodingMethodToStr */
 
 
-
+        
 ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr&  encodingMethodStr)
 {
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
@@ -482,7 +445,6 @@ void  ModelParam::WriteXMLFields (ostream&  o)  const
   XmlElementDouble::WriteXML (prob,       "Prob",       o);
   XmlElementBool::WriteXML   (validParam, "ValidParam", o);
 }  /* WriteXML */
-
 
 
 

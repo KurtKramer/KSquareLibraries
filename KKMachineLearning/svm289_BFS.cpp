@@ -940,8 +940,6 @@ private:
 };  /* Kernel */
 
 
-
-
 SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
                         const FeatureNumList&     _selFeatures, 
                         const svm_parameter&      _param,
@@ -4420,6 +4418,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
         o << "\t" << zed << ":" << p.FeatureData (zed);
     }
     o << endl;
+    o.precision (origPrec);
   }
 
   o << "</Svm_Model>"  << endl;

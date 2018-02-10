@@ -1098,7 +1098,7 @@ bool  KKStr::StartsWith (const KKStr&  value)  const
 
 
 
-bool  KKStr::StartsWith (const char*   value)  const
+bool  KKStr::StartsWith (const char*  value)  const
 {
   return  StartsWith (value, false);
 }
@@ -1942,7 +1942,7 @@ kkint64  KKStr::LocateLastOccurrence (char  ch)  const
   if  (!val)
     return -1;
 
-  kkint64  lastIdx = len - 1;
+  kkint32  lastIdx = (kkint32)len - 1;
   while ((lastIdx >= 0) && (val[lastIdx] != ch))
     --lastIdx;
 
@@ -2884,7 +2884,6 @@ KKStr   KKStr::GetNextToken2 (const char* delStr) const
 
 
 
-
 kkint32  KKStr::ExtractTokenInt (const char* delStr)
 {
   #ifdef  KKDEBUG
@@ -2994,7 +2993,6 @@ char  KKStr::ExtractLastChar ()
 
   return val[len];
 }  /* ExtractLastChar */
-
 
 
 
@@ -3145,66 +3143,6 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
 
 
 
-char  KKStr::operator[] (kkint16 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint16 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkint32 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint32 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkint64 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint64 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i >= len)) return 0; else return val[i];
-}
-
-
-
 /**
  *@brief  Static method that returns an Empty String.
  *@return  a empty String.
@@ -3274,7 +3212,7 @@ VectorKKStr  KKStr::Split (char del)  const
   }
 
   return  result;
-}  /* Parse */
+}  /* Split */
 
 
 
@@ -3931,6 +3869,7 @@ KKStr&  KKStr::operator<< (const KKStr&  right)
 }
 
 
+
 KKStr&  KKStr::operator<< (KKStr&&  right)
 {
   if  ((len < 1)  &&  (allocatedSize <= right.allocatedSize))
@@ -4180,7 +4119,6 @@ bool  KKStr::StrInStr (const char*  target,
     char*  t = strdup (target);
     char*  s = strdup (searchStr);
 #endif
-
 
   StrCapitalize (t);
   StrCapitalize (s);
@@ -4665,7 +4603,6 @@ KKStr  KKB::StrFormatDouble (double       val,
            *bp = (uchar)('0' + nextDigit);
            break;
 
-
       case  '#':
       case  '9':
            if (intPart > 0)
@@ -4682,7 +4619,6 @@ KKStr  KKB::StrFormatDouble (double       val,
            }
            break;
 
-
       case  'Z':
            if (intPart > 0)
            {
@@ -4692,7 +4628,6 @@ KKStr  KKB::StrFormatDouble (double       val,
              *bp = (uchar)('0' + nextDigit);
            }
            break;
-
 
       case  '-':
            if  (intPart > 0)
@@ -4712,7 +4647,6 @@ KKStr  KKB::StrFormatDouble (double       val,
              }
            }
            break;
-
 
       case  ',':
            if  (intPart > 0)
@@ -5378,7 +5312,7 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
 
 
 
-///<summary> Strings will be separated by tab(\t) characters and in order of index. </summary>
+/**@brief Strings will be separated by tab(\t) characters and in order of index. */
 KKStr  KKStrListIndexed::ToTabDelString ()  const
 {
   KKStr  s (indexIndex.size () * 20);

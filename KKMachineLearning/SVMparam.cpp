@@ -610,7 +610,6 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
 
 
 
-
 void  SVMparam::SetFeatureNums (MLClassPtr              _class1,
                                 MLClassPtr              _class2,
                                 FeatureNumListConstPtr  _features,
@@ -810,14 +809,13 @@ void  SVMparam::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  SVMparam::ReadXML (XmlStream&      s,
                          XmlTagConstPtr  tag,
                          VolConstBool&   cancelFlag,
                          RunLog&         log
                         )
 {
+  log.Level (50) << "SVMparam::ReadXML  tag: " << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {

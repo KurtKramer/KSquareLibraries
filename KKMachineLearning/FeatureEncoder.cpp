@@ -222,7 +222,6 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
            << "             " << errMsg << endl
            << endl;
       throw KKException (errMsg);
-      exit (-1);
     }
 
     KKStr  origFieldDesc = StrFormatInt (srcFeatureNum, "zz0") + "\t" +
@@ -304,6 +303,15 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescConstPtr  encodedFileD
                                                   FeatureVectorPtr  src
                                                  )
 {
+  if (numEncodedFeatures != (kkint32)encodedFileDesc->NumOfFields ())
+  {
+    KKStr  errMsg(156);
+    errMsg
+      << "FeatureEncoder::EncodeAExample  numEncodedFeatures: " << numEncodedFeatures << " "
+      << "not equal  encodedFileDesc->NumOfFields" << encodedFileDesc->NumOfFields ();
+    throw new KKException (errMsg);
+  }
+
   FeatureVectorPtr  encodedExample = new FeatureVector (numEncodedFeatures);
   encodedExample->MLClass        (src->MLClass     ());
   encodedExample->PredictedClass (src->PredictedClass ());
@@ -623,8 +631,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
  * @param[out] compressedExamples The reduced list of examples
  */
 void  FeatureEncoder::CompressExamples (FeatureVectorListPtr  srcExamples,
-                                        FeatureVectorListPtr  compressedExamples,
-                                        ClassAssignments&     assignments
+                                        FeatureVectorListPtr  compressedExamples
                                        )
 {
   compressedExamples->AddQueue (*srcExamples);

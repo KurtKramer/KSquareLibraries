@@ -344,8 +344,6 @@ KKStr  KKB::osGetCurrentDirectory ()
  
 
 
-
-
 KKStr  KKB::osGetCurrentDirectory ()
 {
   size_t   buffLen = 0;
@@ -372,8 +370,6 @@ KKStr  KKB::osGetCurrentDirectory ()
   return  curDir;
 }  /* ossGetCurrentDirectory */
 #endif
-
-
 
 
 
@@ -1396,9 +1392,6 @@ KKStr  KKB::osGetProgName ()
 
 
 
-
-
-
 KKStr  KKB::osGetUserName ()
 {
 #if  defined(KKOS_WINDOWS)
@@ -1499,7 +1492,6 @@ void  KKB::osWaitForEnter ()
   while  (getchar () != '\n');
 
 } /* osWaitForEnter */
-
 
 
 
@@ -2809,7 +2801,7 @@ KKStr  KKB::osGetFullPathOfApplication ()
 {
 #if  defined(WIN32)
   char  szAppPath[MAX_PATH] = "";
-  DWORD  result = ::GetModuleFileName (0, szAppPath, MAX_PATH);
+  ::GetModuleFileName (0, szAppPath, MAX_PATH);
   return  szAppPath;
 #else
   return  KKStr::EmptyStr ();

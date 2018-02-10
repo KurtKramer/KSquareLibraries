@@ -222,7 +222,7 @@ namespace KKMLL
                                                              )  const;
 
 
-    /** if BinaryClass parms exist for the two specified classes will return otherwise NULL. */
+    /** if BinaryClass params exist for the two specified classes will return otherwise NULL. */
     BinaryClassParmsPtr      GetBinaryClassParms (MLClassPtr       class1,
                                                   MLClassPtr       class2
                                                  );
@@ -499,7 +499,7 @@ namespace KKMLL
     virtual  KKStr  FactoryName () const  {return "TrainingConfiguration2::Factory";}   /**<  The name of the Factory class that produces an instance of this class. */
 
     static  TrainingConfiguration2Ptr  Manufacture 
-                             (const KKStr&  _className,
+                             (const KKStr&  _factoryClassName,
                               const KKStr&  _configFileName,
                               bool          _validateDirectories,
                               RunLog&       _log

@@ -68,8 +68,7 @@ namespace KKMLL
      * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
      */
     void  CompressExamples (FeatureVectorListPtr  srcExamples,
-                            FeatureVectorListPtr  compressedExamples,
-                            ClassAssignments&     assignments
+                            FeatureVectorListPtr  compressedExamples
                            );
 
 

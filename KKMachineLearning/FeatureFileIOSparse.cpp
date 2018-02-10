@@ -28,7 +28,6 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-
 FeatureFileIOSparse  FeatureFileIOSparse::driver;
 
 
@@ -116,8 +115,6 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
 
   return  fileDesc;
 }  /* GetFileDesc */
-
-
 
 
 
@@ -217,7 +214,6 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
 
 
 
-
 void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
                                       const KKStr&          _fileName,
                                       FeatureNumListConst&  _selFeatures,
@@ -260,5 +256,6 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
   if  (!_cancelFlag)
     _successful = true;
 
+  _log.Level (50) << "FeatureFileIOSparse::SaveFile  _successful: " << _successful << "  _cancelFlag: " << _cancelFlag << "  _numExamplesWritten: " << _numExamplesWritten << endl;
   return;
 }  /* SaveFile */

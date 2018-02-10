@@ -1221,7 +1221,7 @@ void  UsfCasCor::strdncase (char *s)
   for  (i = 0;  s[i] != EOL;  i++)
   {
     if  (isupper(s[i]))
-      s[i] = tolower(s[i]);  /* tolower only guaranteed on upper case */
+      s[i] = (char)tolower(s[i]);  /* tolower only guaranteed on upper case */
     else
       s[i] = s[i];
   }
@@ -2709,7 +2709,6 @@ float  UsfCasCor::STANDARD_DEV (float** outputs,
 
 
 
-
 /* ErrorIndex is the rms TrueError normalized by the standard deviation of the 
  * goal set.
  */
@@ -2722,17 +2721,13 @@ float  UsfCasCor::ERROR_INDEX (double std_dev,
 
 
 
-
 //******************************************************************************
 //                            Utility Functions.                               *
 //******************************************************************************
-
-
 int  GetProcessId ()
 {
   return  osGetProcessId ();
 }
-
 
 
 
@@ -2754,14 +2749,9 @@ void UsfCasCor::INITIALIZE_GLOBALS ()
 
 
 
-
-
-
 //******************************************************************
 //*                       load_data.c                              *
 //******************************************************************
-
-
 void  UsfCasCor::load_data (FeatureVectorListPtr  trainExamples,
                             RunLog&               log
                            )
@@ -2783,7 +2773,6 @@ void  UsfCasCor::_load_training_data (FeatureVectorListPtr  trainExamples)
   for  (kkint32 i = 0;  i < NTrainingPatterns;  ++i) 
     _load_training_example (trainExamples->IdxToPtr (i), i);
 }  /* _load_training_data */
-
 
 
 
@@ -2819,7 +2808,6 @@ void  UsfCasCor::_load_training_example (FeatureVectorPtr  example,
       TrainingOutputs[i][j] = SigmoidMin; 
   }
 }  /* _load_training_example */
-
 
 
 
@@ -2973,7 +2961,6 @@ void  UsfCasCor::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
 
 
 
@@ -3161,7 +3148,7 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
         if  (typeid (*t) == typeid (XmlElementArrayFloat2DVarying))
         {
           XmlElementArrayFloat2DVaryingPtr w = dynamic_cast<XmlElementArrayFloat2DVaryingPtr> (t);
-          if  (w->Height () != MaxUnits)
+          if  ((int)w->Height () != MaxUnits)
           {
             log.Level (-1) << endl 
               << "UsfCasCor::ReadXML   ***ERROR***   Height[" << w->Height () << "] of Weights array does not MaxUnits[" << MaxUnits << "]." << endl
@@ -3195,8 +3182,8 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
       else if  ((varName.EqualIgnoreCase ("OutputWeights"))  &&  (typeid (*t) == typeid (XmlElementArrayFloat2D)))
       {
         XmlElementArrayFloat2DPtr array2D = dynamic_cast<XmlElementArrayFloat2DPtr> (t);
-        kkuint32  owHeight = array2D->Height ();
-        kkuint32  owWidth  = array2D->Width  ();
+        kkint32  owHeight = (kkint32)array2D->Height ();
+        kkint32  owWidth  = (kkint32)array2D->Width  ();
         if  ((owHeight != Noutputs)  ||  (owWidth != MaxUnits))
         {
           log.Level (-1) << endl

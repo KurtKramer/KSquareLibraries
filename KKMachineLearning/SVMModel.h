@@ -510,7 +510,7 @@ namespace KKMLL
     kkint32                numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
     kkint32                numOfModels;
 
-    VectorShort            oneVsAllAssignment;
+    VectorInt32            oneVsAllAssignment;
     ClassAssignmentsPtr*   oneVsAllClassAssignments;
 
     XSpacePtr              predictXSpace;         /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */

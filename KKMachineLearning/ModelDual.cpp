@@ -35,7 +35,6 @@ using namespace  KKMLL;
 
 
 
-
 ModelDual::ModelDual ():
   Model (),
   param         (NULL),
@@ -50,7 +49,6 @@ ModelDual::ModelDual ():
 
 
 
-
 ModelDual::ModelDual (FactoryFVProducerPtr  _factoryFVProducer):
   Model (_factoryFVProducer),
   param         (NULL),
@@ -62,6 +60,7 @@ ModelDual::ModelDual (FactoryFVProducerPtr  _factoryFVProducer):
   classifier2   (NULL)
 {
 }
+
 
 
 ModelDual::ModelDual (const KKStr&           _name,
@@ -82,7 +81,6 @@ ModelDual::ModelDual (const KKStr&           _name,
 
 
 
-
 ModelDual::ModelDual (const ModelDual&   _model):
   Model  (_model),
   param         (NULL),
@@ -95,8 +93,6 @@ ModelDual::ModelDual (const ModelDual&   _model):
 {
   param = dynamic_cast<ModelParamDualPtr> (Model::param);
 }
-
-
 
 
 
@@ -115,6 +111,7 @@ ModelDual::~ModelDual ()
   delete  classifier2;  classifier2 = NULL;
 
 }
+
 
 
 kkMemSize ModelDual::MemoryConsumedEstimated ()  const
@@ -925,6 +922,8 @@ void  ModelDual::ReadXML (XmlStream&      s,
       {
         const KKStr&  varName     = e->VarName();
         const KKStr&  sectionName = e->SectionName ();
+
+        log.Level (90) << "ModelDual::ReadXML   sectionName: " << sectionName << "  varName: " << varName << endl;
 
         if  ((varName.EqualIgnoreCase ("config1"))  &&  (typeid (*e) == typeid (XmlElementTrainingConfiguration2)))
         {
