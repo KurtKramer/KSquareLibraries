@@ -56,6 +56,8 @@ namespace  KKB
 
     Matrix (const Matrix&  _matrix);
 
+    Matrix (Matrix&&  _matrix);
+
     Matrix (const VectorDouble&  _v);
 
     ~Matrix ();
@@ -173,6 +175,7 @@ namespace  KKB
 
     double**  data;       /**< A two dimensional array that will index into 'dataArea'.       */
     double*   dataArea;   /**< one dimensional array that will contain all the matrices data. */
+    kkuint32  alignment;
     kkuint32  numOfCols;
     kkuint32  numOfRows;
     RowPtr    rows;

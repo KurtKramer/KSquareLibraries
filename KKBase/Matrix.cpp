@@ -14,6 +14,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "mkl.h"
 
 #include "Matrix.h"
 
@@ -83,9 +84,9 @@ double&  Row::operator[] (kkuint32  idx)
 
 
 
-
 Matrix::Matrix ():
 
+  alignment   (64),
   data        (NULL),
   dataArea    (NULL),
   numOfCols   (0),
@@ -97,11 +98,10 @@ Matrix::Matrix ():
 
 
 
-
 Matrix::Matrix (kkuint32  _numOfRows,
                 kkuint32  _numOfCols
                ):
-
+  alignment   (64),
   data        (NULL),
   dataArea    (NULL),
   numOfCols   (_numOfCols),
@@ -115,8 +115,8 @@ Matrix::Matrix (kkuint32  _numOfRows,
 
 
 
-
 Matrix::Matrix (const Matrix&  _matrix):
+  alignment   (_matrix.alignment),
   data        (NULL),
   dataArea    (NULL),
   numOfCols   (_matrix.numOfCols),
@@ -130,8 +130,24 @@ Matrix::Matrix (const Matrix&  _matrix):
 } /* Matrix::Matrix  */
 
 
+Matrix::Matrix (Matrix&&  _matrix):
+    alignment   (_matrix.alignment),
+    data        (_matrix.data),
+    dataArea    (_matrix.dataArea),
+    numOfCols   (_matrix.numOfCols),
+    numOfRows   (_matrix.numOfRows),
+    rows        (_matrix.rows),
+    totNumCells (_matrix.totNumCells)
+{
+  _matrix.data     = NULL;
+  _matrix.dataArea = NULL;
+  _matrix.rows     = NULL;
+}
+
+
 
 Matrix::Matrix (const VectorDouble&  _v):
+  alignment (64),
   data      (NULL),
   dataArea  (NULL),
   numOfCols (1),
@@ -142,7 +158,6 @@ Matrix::Matrix (const VectorDouble&  _v):
   for  (kkuint32 row = 0;  row < numOfRows;  ++row)
     dataArea[row] = _v[row];
 } /* Matrix::Matrix  */
-
 
 
 
@@ -209,11 +224,14 @@ void   Matrix::ReSize (kkuint32 _numOfRows,
 
 
 
-
 void  Matrix::AllocateStorage ()
 {
   totNumCells = numOfRows * numOfCols;
+#if  defined(USE_MKL)
+  dataArea = (double*)mkl_calloc (totNumCells, sizeof (double), alignment);
+#else
   dataArea = new double[totNumCells];
+#endif
   data = new double*[numOfRows];
   rows = new Row [numOfRows];
 
@@ -233,9 +251,13 @@ void  Matrix::AllocateStorage ()
 
 void  Matrix::Destroy ()
 {
-  delete[]  rows;     rows     = NULL;
-  delete[]  data;     data     = NULL;
+  delete[]  rows;     rows = NULL;
+  delete[]  data;     data = NULL;
+#if  defined(USE_MKL)
+  mkl_free (dataArea);
+#else
   delete[]  dataArea; dataArea = NULL;
+#endif
 }
 
 
@@ -252,7 +274,6 @@ Row&  Matrix::operator[] (kkuint32  rowIDX) const
 
   return  (rows[rowIDX]);
 } /* Matrix::operator[] */
-
 
 
 
@@ -296,12 +317,14 @@ Matrix&  Matrix::Invert ()
 */
 
 
+
 Matrix&  Matrix::operator= (const Matrix&  right)
 {
   ReSize (right.numOfRows, right.numOfCols);
   memcpy (dataArea, right.dataArea, totNumCells * sizeof (double));
   return  *this;
 }
+
 
 
 Matrix&  Matrix::operator=  (const VectorDouble&  right)
@@ -312,7 +335,6 @@ Matrix&  Matrix::operator=  (const VectorDouble&  right)
 
   return  *this;
 }  /* operator= */
-
 
 
 
@@ -358,7 +380,6 @@ Matrix  Matrix::operator+ (const Matrix&  right)
 
 
 
-
 Matrix&  Matrix::operator+= (const Matrix&  right)
 {
   if  ((numOfRows != right.numOfRows)  ||
@@ -377,8 +398,6 @@ Matrix&  Matrix::operator+= (const Matrix&  right)
 
   return  *this;
 }  /* Matrix::operator+ */
-
-
 
 
 
@@ -418,7 +437,6 @@ Matrix   Matrix::operator- (double right)
 
 
 
-
 Matrix  KKB::operator- (double        left, 
                         const Matrix& right
                        )
@@ -438,7 +456,28 @@ Matrix  KKB::operator- (double        left,
 }  /* operator- */
 
 
+#if  defined(USE_MKL)
+Matrix  Matrix::operator* (const Matrix&  right)
+{
+  Matrix result (this->NumOfRows (), right.NumOfCols ());
 
+  cblas_dgemv (
+    CBLAS_LAYOUT::CblasRowMajor,
+    CBLAS_TRANSPOSE::CblasNoTrans,
+    this->NumOfRows (),
+    right.NumOfCols (),
+    1.0f, // alpha
+    dataArea,
+    this->NumOfCols (),
+    result.dataArea,
+    1, // incX
+    1.0,  // beta
+    NULL,
+    1  // incY
+  );
+  return result;
+}
+#else
 Matrix  Matrix::operator* (const Matrix&  right)
 {
   if  (numOfCols != right.numOfRows)
@@ -472,6 +511,7 @@ Matrix  Matrix::operator* (const Matrix&  right)
 
   return  result;
 }  /* Matrix::operator */
+#endif
 
 
 
