@@ -48,6 +48,8 @@ namespace KKB
 
   #ifndef  _MATRIX_
   template<typename T>  class Matrix;
+  typedef  Matrix<float>    MatrixF;
+  typedef  Matrix<double>   MatrixD;
   typedef  Matrix<float>*   MatrixFPtr;
   typedef  Matrix<double>*  MatrixDPtr;
 #endif
@@ -459,7 +461,7 @@ namespace KKB
      *@returns A 2-dimensional matrix representing the Gaussian kernel.
      */
     static
-    MatrixFPtr    BuildGaussian2dKernel (float  sigma);  // Used by the Gaussian Smoothing algorithm.
+    MatrixDPtr    BuildGaussian2dKernel (float  sigma);  // Used by the Gaussian Smoothing algorithm.
 
 
     kkint32       CalcArea ();
@@ -1329,9 +1331,9 @@ namespace KKB
                                  kkint32  maskSize
                                 )  const;
 
-    void     SmoothUsingKernel (Matrix&  kernel,
-                                uchar**  src,
-                                uchar**  dest
+    void     SmoothUsingKernel (MatrixD&  kernel,
+                                uchar**   src,
+                                uchar**   dest
                                )  const;
 
 

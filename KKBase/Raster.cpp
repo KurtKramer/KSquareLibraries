@@ -8212,13 +8212,12 @@ RasterPtr   Raster::Padded (kkint32 padding)
 
 
 
-MatrixPtr  Raster::BuildGaussian2dKernel (float  sigma)  
+MatrixDPtr  Raster::BuildGaussian2dKernel (float  sigma)  
 {
   kkint32 row, col, x, y;
 
   double  prefix =  1.0 / (2.0 * PIE * sigma * sigma);
   double  twoSigmaSquared = 2.0 * sigma * sigma;
-
 
   // Determine size of kernel
   double z = 100;
@@ -8236,7 +8235,7 @@ MatrixPtr  Raster::BuildGaussian2dKernel (float  sigma)
 
   kkint32 len = delta * 2 + 1;
 
-  MatrixPtr  kernel = new Matrix (len, len);
+  MatrixDPtr  kernel = new MatrixD (len, len);
 
   double  total = 0.0;
   x =  -delta;
@@ -8264,9 +8263,9 @@ MatrixPtr  Raster::BuildGaussian2dKernel (float  sigma)
 
 
 
-void  Raster::SmoothUsingKernel (Matrix&  kernel,
-                                 uchar**  src,
-                                 uchar**  dest
+void  Raster::SmoothUsingKernel (MatrixD&  kernel,
+                                 uchar**   src,
+                                 uchar**   dest
                                 )  const
 {
   kkint32  row, col;
@@ -8314,7 +8313,7 @@ void  Raster::SmoothUsingKernel (Matrix&  kernel,
 
 RasterPtr  Raster::CreateGaussianSmoothedImage (float sigma)  const
 {
-  MatrixPtr  kernel = BuildGaussian2dKernel (sigma);
+  auto  kernel = BuildGaussian2dKernel (sigma);
 
   RasterPtr  result = AllocateARasterInstance (*this);
 
@@ -8390,7 +8389,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
 
   kkuint32  x = 0;
 
-  MatrixPtr  cov = new Matrix (3, 3);
+  auto  cov = new MatrixD (3, 3);
   {
     // Build a covariance matrix.
     kkint32  col = 0, row = 0;
@@ -8448,7 +8447,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
     delete[]  totals;         totals = NULL;
   }
  
-  MatrixPtr      eigenVectors = NULL;
+  MatrixDPtr     eigenVectors = NULL;
   VectorDouble*  eigenValues  = NULL;
 
   cov->EigenVectors (eigenVectors, eigenValues);
@@ -8541,7 +8540,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
 
   kkint32  totalMaskPixels = mask.TotalBackgroundPixels ();
 
-  MatrixPtr  cov = new Matrix (3, 3);
+  auto  cov = new MatrixD (3, 3);
   {
     // Build a covariance matrix.
     double*   totals       = new double[3];
@@ -8606,7 +8605,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
     delete[]  totals;         totals = NULL;
   }
  
-  MatrixPtr      eigenVectors = NULL;
+  MatrixDPtr     eigenVectors = NULL;
   VectorDouble*  eigenValues  = NULL;
 
   cov->EigenVectors (eigenVectors, eigenValues);
