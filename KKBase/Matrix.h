@@ -30,8 +30,7 @@
 
 namespace  KKB
 {
-  class  Row; 
-  typedef Row*  RowPtr;
+  template<typename T>  class  Row; 
 
   /**
    *@class  Matrix
@@ -43,10 +42,12 @@ namespace  KKB
    *  can be done against either another matrix or scaler.  Also Transpose and Determinant
    *  operations are supported.
    */
+  template<typename T>
   class  Matrix
   {
   public:
     typedef  Matrix*  MatrixPtr;
+    typedef  Row<T>*  RowPtr;
 
     Matrix ();
 
@@ -58,44 +59,47 @@ namespace  KKB
 
     Matrix (Matrix&&  _matrix);
 
-    Matrix (const VectorDouble&  _v);
+    Matrix (const vector<T>&  _v);
 
     ~Matrix ();
 
-    template<typename T>
+    template<typename U>
     static  MatrixPtr  BuildFromArray (kkuint32 numOfRows,
                                        kkuint32 numOfCols,
-                                       T**   data
+                                       U**   data
                                       );
 
-    Matrix&  operator=  (const Matrix&  right);
+    Matrix<T>&  operator=  (const Matrix<T>&  right);
 
-    Matrix&  operator=  (const VectorDouble&  right);
+    template<typename U>
+    Matrix<T>&  operator=  (const vector<U>&  right);
 
-    Matrix&  operator*= (double  right);
+    template<typename U>
+    Matrix<T>&  operator*= (U  right);
 
-    Matrix&  operator+= (double  right);
+    template<typename U>
+    Matrix<T>&  operator+= (U  right);
   
-    Matrix&  operator+= (const Matrix&  right);
+    Matrix<T>&  operator+= (const Matrix<T>&  right);
 
-    Matrix   operator+  (const Matrix&  right);
+    Matrix<T>   operator+  (const Matrix<T>&  right);
 
-    Matrix   operator+  (double  right);
+    Matrix<T>   operator+  (T  right);
 
-    Matrix   operator-  (const Matrix&  right);  
+    Matrix<T>   operator-  (const Matrix<T>&  right);  
 
-    Matrix   operator-  (double right);  
+    Matrix<T>   operator-  (T right);
 
-    Matrix   operator*  (const Matrix&  right);
+    Matrix<T>   operator*  (const Matrix<T>&  right);
 
-    Matrix   operator*  (double right);
+    Matrix<T>   operator*  (T right);
 
-    Row&     operator[] (kkuint32  rowIDX) const;
+    Row<T>&     operator[] (kkuint32  rowIDX) const;
 
-    friend  Matrix  operator- (double left, const Matrix& right);
+    friend  Matrix<T>  operator- (T left, const Matrix<T>& right);
 
 
-    MatrixPtr       CalcCoFactorMatrix ();
+    Matrix<T>*     CalcCoFactorMatrix ();
 
     /**
      *@brief  Returns a Covariance matrix.
@@ -103,29 +107,29 @@ namespace  KKB
      *@return  Returns a symmetric matrix that will be (numOfRows x numOfRows) where each element will represent the covariance 
      *         between their respective variables.
      */
-    MatrixPtr       Covariance ()  const;
+    Matrix<T>*      Covariance ()  const;
 
-    double const * const *   Data ()  const  {return  data;}
+    T const * const *   Data ()  const  {return  data;}
 
-    double**        DataNotConst ()  {return data;}
+    T**             DataNotConst ()  {return data;}
 
-    double          Determinant ();
+    T               Determinant ();
 
-    double          DeterminantSlow ();  /**<  @brief Recursive Implementation. */
+    T               DeterminantSlow ();  /**<  @brief Recursive Implementation. */
 
-    void            EigenVectors (MatrixPtr&      eigenVectors,
-                                  VectorDouble*&  eigenValues
+    void            EigenVectors (Matrix<T>*&  eigenVectors,
+                                  vector<T>*&  eigenValues
                                  )  const;
 
     /** @brief  Locates the maximum value in a matrix along with the row and column that is located. */
-    void            FindMaxValue (double&    maxVal, 
+    void            FindMaxValue (T&         maxVal, 
                                   kkuint32&  row, 
                                   kkuint32&  col
                                  );
 
-    VectorDouble    GetCol (kkuint32 col)  const;
+    vector<T>       GetCol (kkuint32 col)  const;
 
-    Matrix          Inverse ();
+    Matrix<T>       Inverse ();
 
     kkuint32        NumOfCols () const  {return numOfCols;}
 
@@ -137,10 +141,10 @@ namespace  KKB
 
     bool            Symmetric ()  const;  /**< Returns true is the matrix is Symmetric */
 
-    Matrix          Transpose ();
+    Matrix<T>       Transpose ();
 
     friend  std::ostream&  operator<< (      std::ostream&  os, 
-                                       const Matrix&        matrix
+                                       const Matrix<T>&     matrix
                                       );
 
   private:
@@ -148,33 +152,33 @@ namespace  KKB
 
     void  AllocateStorage ();
 
-    double DeterminantSwap (double**  mat, 
-                            kkuint32  offset
-                           );
+    T  DeterminantSwap (T**       mat, 
+                        kkuint32  offset
+                       );
 
-    double  CalcDeterminent (kkuint32*  rowMap,
-                             kkuint32*  colMap,
-                             kkuint32 size
-                            );
+    T  CalcDeterminent (kkuint32*  rowMap,
+                        kkuint32*  colMap,
+                        kkuint32 size
+                       );
 
-    double  Pythag (const double a,
-                    const double b
-                   )  const;
+    T  Pythag (const T a,
+               const T b
+              )  const;
 
-    kkint32  Tqli (double*   d, 
-                   double*   e,
+    kkint32  Tqli (T*        d, 
+                   T*        e,
                    kkuint32  n,
-                   double**  z
+                   T**       z
                   )  const;
 
-    void  Tred2 (double**  a, 
+    void  Tred2 (T**       a, 
                  kkuint32  n, 
-                 double*   d, 
-                 double*   e
+                 T*        d, 
+                 T*        e
                 )  const;
 
-    double**  data;       /**< A two dimensional array that will index into 'dataArea'.       */
-    double*   dataArea;   /**< one dimensional array that will contain all the matrices data. */
+    T**       data;       /**< A two dimensional array that will index into 'dataArea'.       */
+    T*        dataArea;   /**< one dimensional array that will contain all the matrices data. */
     kkuint32  alignment;
     kkuint32  numOfCols;
     kkuint32  numOfRows;
@@ -183,15 +187,22 @@ namespace  KKB
   };  /* matrix */
 
 
-  typedef  Matrix::MatrixPtr  MatrixPtr;
+  typedef  Matrix<double> MatrixD;
+  typedef  MatrixD*  MatrixDPtr;
 
+  typedef  Matrix<float> MatrixF;
+
+  typedef  Matrix<float>*   MatrixFPtr;
+  typedef  Matrix<double>*  MatrixDPtr;
+
+  template<typename T>
   class  Row
   {
   public:
      Row  ();
  
      Row (kkuint32  _numOfCols,
-          double*   _cells
+          T*        _cells
          );
 
      Row (const Row&  _row);
@@ -199,24 +210,22 @@ namespace  KKB
      ~Row ();
 
 
-     double*  Cols ()  {return cells;}
+     T*  Cols ()  {return cells;}
 
-     double&  operator[] (kkuint32  idx);
+     T&  operator[] (kkuint32  idx);
 
      void  Define (kkuint32  _numOfCols,
-                   double*   _cells
+                   T*        _cells
                   );
 
   private:
-    double*  cells;
+    T*  cells;
     kkuint32  numOfCols;
   };  /* Row */
 
-  Matrix  operator- (double left, const Matrix& right);
+  template<typename T>
+  Matrix<T>  operator- (T left, const Matrix<T>& right);
 }  /* KKB */
-
-
-
 
 #endif
 

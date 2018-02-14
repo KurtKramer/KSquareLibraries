@@ -30,7 +30,6 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   kkint32   ret;
   z_stream  strm;
 
-
   Bytef*  outputBuffer = NULL;
   kkuint32  outputBufferSize = sourceLen * 2;
 
@@ -168,9 +167,6 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
  return  NULL;
 #endif
 }   /* CreateCompressedBuffer*/
-
-
-
 
 
 
