@@ -59,7 +59,7 @@ namespace  KKB
 
     Matrix (Matrix&&  _matrix);
 
-    Matrix (const vector<T>&  _v);
+    Matrix (const std::vector<T>&  _v);
 
     ~Matrix ();
 
@@ -72,7 +72,7 @@ namespace  KKB
     Matrix<T>&  operator=  (const Matrix<T>&  right);
 
     template<typename U>
-    Matrix<T>&  operator=  (const vector<U>&  right);
+    Matrix<T>&  operator=  (const std::vector<U>&  right);
 
     template<typename U>
     Matrix<T>&  operator*= (U  right);
@@ -117,17 +117,17 @@ namespace  KKB
 
     T               DeterminantSlow ();  /**<  @brief Recursive Implementation. */
 
-    void            EigenVectors (Matrix<T>*&  eigenVectors,
-                                  vector<T>*&  eigenValues
+    void            EigenVectors (Matrix<T>*&       eigenVectors,
+                                  std::vector<T>*&  eigenValues
                                  )  const;
 
-    /** @brief  Locates the maximum value in a matrix along with the row and column that is located. */
+    /** @brief  Locates the maximum value in a matrixw1 along with the row and column that is located. */
     void            FindMaxValue (T&         maxVal, 
                                   kkuint32&  row, 
                                   kkuint32&  col
                                  );
 
-    vector<T>       GetCol (kkuint32 col)  const;
+    std::vector<T>  GetCol (kkuint32 col)  const;
 
     Matrix<T>       Inverse ();
 
@@ -225,6 +225,12 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>  operator- (T left, const Matrix<T>& right);
+
+
+  template<typename T>
+  std::ostream&  operator<< (std::ostream&  os,
+                             const Matrix<T>&     matrix
+                            );
 }  /* KKB */
 
 #endif

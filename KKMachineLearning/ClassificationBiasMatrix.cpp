@@ -97,13 +97,13 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (const ClassificationBiasMatr
 
 {
   if  (cbm.counts)
-    counts = new Matrix (*cbm.counts);
+    counts = new MatrixD (*cbm.counts);
 
   if  (cbm.classes)
     classes = new MLClassList (*cbm.classes);
 
   if  (cbm.probabilities)
-    probabilities = new Matrix (*cbm.probabilities);
+    probabilities = new MatrixD (*cbm.probabilities);
 }
 
 
@@ -179,7 +179,6 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (RunLog&  _runLog):
 
 
 
-
 ClassificationBiasMatrix::~ClassificationBiasMatrix ()
 {
   delete  probabilities;
@@ -204,13 +203,11 @@ ClassificationBiasMatrixPtr  ClassificationBiasMatrix::BuildFromIstreamXML (istr
 
 
 
-
-   
 void  ClassificationBiasMatrix::DeclareMatrix ()
 {
   numClasses = classes->QueueSize ();
-  probabilities = new Matrix (numClasses, numClasses);
-  counts        = new Matrix (numClasses, numClasses);
+  probabilities = new MatrixD (numClasses, numClasses);
+  counts        = new MatrixD (numClasses, numClasses);
   for  (kkint32 r = 0;  r < numClasses;  r++)
   {
     for  (kkint32 c = 0;  c < numClasses;  c++)
@@ -220,7 +217,6 @@ void  ClassificationBiasMatrix::DeclareMatrix ()
     }
   }
 }  /* DeclareMatrix */
-
 
 
 
@@ -238,16 +234,16 @@ void  ClassificationBiasMatrix::BuildTestMatrix ()
 
   numClasses = classes->QueueSize ();
 
-  probabilities = new Matrix (numClasses, numClasses);
-  counts        = new Matrix (numClasses, numClasses);
+  probabilities = new MatrixD (numClasses, numClasses);
+  counts        = new MatrixD (numClasses, numClasses);
 
-  Row& r0 = (*probabilities)[0];
-  Row& r1 = (*probabilities)[1];
-  Row& r2 = (*probabilities)[2];
-  Row& r3 = (*probabilities)[3];
-  Row& r4 = (*probabilities)[4];
-  Row& r5 = (*probabilities)[5];
-  Row& r6 = (*probabilities)[6];
+  auto& r0 = (*probabilities)[0];
+  auto& r1 = (*probabilities)[1];
+  auto& r2 = (*probabilities)[2];
+  auto& r3 = (*probabilities)[3];
+  auto& r4 = (*probabilities)[4];
+  auto& r5 = (*probabilities)[5];
+  auto& r6 = (*probabilities)[6];
 
   r0[0] = 0.710;  r0[1] = 0.059;  r0[2] = 0.010;  r0[3] = 0.010;  r0[4] = 0.007;  r0[5] = 0.031;  r0[6] = 0.175;
   r1[0] = 0.073;  r1[1] = 0.873;  r1[2] = 0.001;  r1[3] = 0.007;  r1[4] = 0.008;  r1[5] = 0.013;  r1[6] = 0.024;
@@ -257,7 +253,6 @@ void  ClassificationBiasMatrix::BuildTestMatrix ()
   r5[0] = 0.158;  r5[1] = 0.025;  r5[2] = 0.076;  r5[3] = 0.064;  r5[4] = 0.175;  r5[5] = 0.449;  r5[6] = 0.054;
   r6[0] = 0.289;  r6[1] = 0.096;  r6[2] = 0.033;  r6[3] = 0.065;  r6[4] = 0.018;  r6[5] = 0.072;  r6[6] = 0.427;
 }  /* BuildTestMatrix  */
-
 
 
 
@@ -306,7 +301,6 @@ void  ClassificationBiasMatrix::TestPaperResults (ostream&   sw)
 
   sw << endl << endl;
 }  /* TestPaperResults*/
-
 
 
 
@@ -615,15 +609,15 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
     }
   }
 
-  Matrix  m (numClasses, 1);
+  MatrixD  m (numClasses, 1);
   for  (x = 0;  x < numClasses;  x++)
     m[x][0] = classifiedCounts[x];
 
-  Matrix  transposed = probabilities->Transpose ();
-  Matrix  Q = transposed.Inverse ();
-  Matrix  n = Q * m;
+  MatrixD  transposed = probabilities->Transpose ();
+  MatrixD  Q = transposed.Inverse ();
+  MatrixD  n = Q * m;
 
-  Matrix  varM (numClasses, numClasses);
+  MatrixD  varM (numClasses, numClasses);
   for  (j = 0;  j < numClasses;  j++)
   {
     double  varM_j = 0.0;
@@ -649,7 +643,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
     }
   }
 
-  Matrix  varN = Q * varM * Q.Transpose ();
+  MatrixD  varN = Q * varM * Q.Transpose ();
 
   adjCounts.clear ();
   stdErrors.clear ();
