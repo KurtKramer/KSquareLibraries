@@ -188,7 +188,7 @@ namespace KKB
   /**
    *@brief Returns mili-secs that system (Windows = has been started, Linux time in epoch).
    */
-  kkuint64  osGetSystemTimeInMiliSecs ();
+  //kkuint64  osGetSystemTimeInMiliSecs ();
 
 
   /**

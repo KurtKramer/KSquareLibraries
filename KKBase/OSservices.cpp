@@ -44,6 +44,24 @@ using namespace KKB;
 
 
 
+//#ifdef  WIN32
+//kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+//{
+//  return timeGetTime ();
+//} /* osGetSystemTimeInMiliSecs */
+
+//#else 
+//kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+//{
+//  struct timeval now;
+//  gettimeofday (&now, NULL);
+//  return now.tv_usec / 1000;
+//} / *osGetSystemTimeInMiliSecs * /
+//#endif
+
+
+
+
 KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 {
   KKStr  desc;
@@ -1532,7 +1550,6 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
 
 
 
-
 KKStrListPtr  osDirectoryList (KKStr  dirName)   /*  Unix Version of Function  */
 {
   if  (dirName.Empty ())
@@ -1627,7 +1644,6 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
 }  /* osGetListOfFiles */
 
 #endif
-
 
 
 
@@ -1806,10 +1822,6 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 
 
 
-
-
-
-
 #ifdef  WIN32
 double  KKB::osGetSystemTimeUsed ()
 {
@@ -1850,8 +1862,6 @@ double  KKB::osGetSystemTimeUsed ()
 
 
 
-
-
 #ifdef  WIN32
 double  KKB::osGetUserTimeUsed ()
 {
@@ -1876,8 +1886,9 @@ double  KKB::osGetUserTimeUsed ()
   return  ut;
 }  /* osGetSystemTimeUsed */
 
-#else
 
+
+#else
 
 
 
@@ -1889,7 +1900,6 @@ double  KKB::osGetUserTimeUsed ()
   return  (totalTime / (double)(sysconf (_SC_CLK_TCK)));
 }
 #endif
-
 
 
 
@@ -1929,25 +1939,6 @@ double  KKB::osGetKernalTimeUsed ()
 
 
 
-
-
-#ifdef  WIN32
-kkuint64  KKB::osGetSystemTimeInMiliSecs ()
-{
-  return timeGetTime();
-}  /* osGetSystemTimeInMiliSecs */
-
-#else
-kkuint64  KKB::osGetSystemTimeInMiliSecs ()
-{
-  struct timeval now;
-  gettimeofday(&now, NULL);
-  return now.tv_usec/1000;
-}  /* osGetSystemTimeInMiliSecs */
-#endif
-
-
-
 #ifdef  WIN32
 DateTime  KKB::osGetLocalDateTime ()
 {
@@ -1965,7 +1956,6 @@ DateTime  KKB::osGetLocalDateTime ()
 
   return  dateTime;
 }  /* osGetCurrentDateTime */
-
 
 
 
