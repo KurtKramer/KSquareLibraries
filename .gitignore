@@ -62,3 +62,9 @@ KKBase/Zed.txt
 KSquareLibraries.VC.db
 
 KSquareLibraries - Shortcut.lnk
+*.ipch
+.vs/KSquareLibraries/v15/Server/sqlite3/db.lock
+*.db
+*.tlog
+*.ide
+.vs/KSquareLibraries/v15/Solution.VC.db-shm
