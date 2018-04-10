@@ -68,3 +68,4 @@ KSquareLibraries - Shortcut.lnk
 *.tlog
 *.ide
 .vs/KSquareLibraries/v15/Solution.VC.db-shm
+*.db-wal
