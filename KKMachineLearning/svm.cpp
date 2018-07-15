@@ -1,4 +1,4 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -67,6 +67,7 @@ SvmModel233::~SvmModel233 ()
 }
 
 
+
 kkMemSize  SvmModel233::MemoryConsumedEstimated ()  const
 {
   kkMemSize  memoryConsumedEstimated = sizeof (SvmModel233)
@@ -85,8 +86,6 @@ kkMemSize  SvmModel233::MemoryConsumedEstimated ()  const
 
   return  memoryConsumedEstimated;
 }
-
-
 
 
 void  SvmModel233::Dispose ()
@@ -226,8 +225,6 @@ void  SvmModel233::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -496,9 +493,6 @@ XmlFactoryMacro(SvmModel233)
 
 
 
-
-
-
   // Generalized SMO+SVMlight algorithm
   // Solves:
   //
@@ -608,7 +602,6 @@ XmlFactoryMacro(SvmModel233)
     virtual void do_shrinking();
   };
 
-
   static void  solve_c_svc (const svm_problem*     prob, 
                             const svm_parameter*   param,
                             double*                alpha, 
@@ -624,14 +617,11 @@ XmlFactoryMacro(SvmModel233)
                             double*                C_
                            );
 
-
-
   static void  solve_nu_svc (const svm_problem*    prob, 
                              const svm_parameter*  param,
                              double*               alpha, 
                              Solver::SolutionInfo* si
                             );
-
 
   static void  solve_one_class (const svm_problem*     prob, 
                                 const svm_parameter*   param,
@@ -681,7 +671,6 @@ XmlFactoryMacro(SvmModel233)
 #endif
 
 #endif
-
 
 
 template <class T> inline void  Swap(T& x, T& y) { T t=x; x=y; y=t; }
@@ -764,7 +753,6 @@ svm_parameter::svm_parameter ():
 
 
 
-
 svm_parameter::svm_parameter (const svm_parameter&  _param)
   :
    coef0           (_param.coef0),
@@ -820,8 +808,6 @@ svm_parameter::svm_parameter (const svm_parameter&  _param)
       featureWeight[x] = _param.featureWeight[x];
   }
 }  
-
-
 
 
 
@@ -1065,7 +1051,6 @@ svm_parameter::svm_parameter (KKStr&  _paramStr):
 
 
 
-
 KKStr  svm_parameter::ToCmdLineStr ()  const
 {
   KKStr cmdStr (200); // Initialized char* allocation to 200
@@ -1096,8 +1081,6 @@ KKStr  svm_parameter::ToCmdLineStr ()  const
 
   return  cmdStr;
 }  /* ToCmdLineStr */
-
-
 
 
 
@@ -1169,10 +1152,6 @@ KKStr  svm_parameter::ToTabDelStr  ()  const
 
 
 
-
-
-
-
 void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
 {
   KKStr  str = _str;
@@ -1195,9 +1174,6 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
     result << "\t";
   }
 */
-
-
-
 
   while  (!str.Empty ())
   {
