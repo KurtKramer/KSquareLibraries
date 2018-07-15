@@ -36,7 +36,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <UseIntelMKL>Sequential</UseIntelMKL>
+    <UseIntelMKL>No</UseIntelMKL>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -121,6 +121,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -160,6 +161,7 @@
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>

@@ -112,7 +112,7 @@ namespace  KKB
     T const * const *   Data ()  const  {return  data;}
 
     T**             DataNotConst ()  {return data;}
-
+     
     T               Determinant ();
 
     T               DeterminantSlow ();  /**<  @brief Recursive Implementation. */
@@ -225,7 +225,6 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>  operator- (T left, const Matrix<T>& right);
-
 
   template<typename T>
   std::ostream&  operator<< (std::ostream&  os,

@@ -859,6 +859,8 @@ void   Matrix<T>::FindMaxValue (T&         maxVal,
   return;
 }  /* FindMaxValue */
 
+
+
 template<typename T>
 std::ostream&  KKB::operator<< (std::ostream&     os,
                                 const Matrix<T>&  matrix
