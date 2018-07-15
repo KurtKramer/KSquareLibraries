@@ -605,9 +605,9 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::ExtractDuplicatesByRootImageFil
 
 
 GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
-                                                                                   kkint32     _maxToExtract,
-                                                                                   float       _minSize
-                                                                                  )  const
+                                                                                 kkint32     _maxToExtract,
+                                                                                 float       _minSize
+                                                                                )  const
 {
   FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractExamplesForAGivenClass (_mlClass, _maxToExtract, _minSize);
   GrayScaleImagesFVListPtr  imageFeaturesList = new GrayScaleImagesFVList (*featureVectorList);
