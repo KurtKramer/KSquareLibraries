@@ -3266,4 +3266,3 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(UsfCasCor)
-

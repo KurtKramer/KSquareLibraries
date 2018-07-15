@@ -48,7 +48,6 @@ ModelKnn::ModelKnn (FactoryFVProducerPtr  _factoryFVProducer):
 
 
 
-
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
                     FactoryFVProducerPtr  _factoryFVProducer
@@ -58,7 +57,6 @@ ModelKnn::ModelKnn (const KKStr&          _name,
 {
   param = dynamic_cast<ModelParamKnnPtr> (Model::param);
 }
-
 
 
 
@@ -78,17 +76,18 @@ ModelKnn::~ModelKnn ()
 
 
 
-
 ModelKnnPtr  ModelKnn::Duplicate ()  const
 {
   return  new ModelKnn (*this);
 }
 
 
+
 ModelParamKnnPtr  ModelKnn::Param ()
 {
   return  param;
 }
+
 
 
 MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example,
@@ -117,7 +116,6 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
 {
 }  /* Predict */
                         
-
 
 
 ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
@@ -155,7 +153,6 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
 
 
 
-
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
                                       const MLClassList&  _mlClasses,
                                       kkint32*            _votes,
@@ -166,6 +163,7 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
 }
 
 
+
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                       const MLClassList&  _mlClasses,
                                       double*             _probabilities,
@@ -173,7 +171,6 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                      )
 {
 }  /* ProbabilitiesByClass */
-
 
 
 
@@ -217,8 +214,6 @@ void  ModelKnn::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -284,7 +279,4 @@ void  ModelKnn::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
-
 XmlFactoryMacro(ModelKnn)
-
-

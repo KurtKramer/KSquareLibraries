@@ -55,12 +55,12 @@ FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
 {
   _log.Level (20) << "FeatureFileIOUCI::GetFileDesc     FileName[" << _fileName << "]." << endl;
 
+  _errorMessage = "";
 
   // We are just going to read the first few lines to determine number of fields, etc
  
   kkint32  numOfFields       = 0;
   kkint32  numFieldsThisLine = 0;
-
 
   KKStr  ln;
   bool   eof;
