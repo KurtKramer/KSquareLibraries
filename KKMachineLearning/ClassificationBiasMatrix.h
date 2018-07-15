@@ -49,8 +49,8 @@ namespace KKMLL
     typedef  KKB::RunLog      RunLog;
     typedef  KKB::KKStr       KKStr;
     typedef  KKB::DateTime    DateTime;
-    typedef  KKB::Matrix      Matrix;
-    typedef  KKB::MatrixPtr   MatrixPtr;
+    typedef  KKB::MatrixD     MatrixD;
+    typedef  KKB::MatrixDPtr  MatrixDPtr;
 
 
     /**
@@ -136,11 +136,11 @@ namespace KKMLL
     KKStr           configFileName;
     KKStr           configFileNameFromMatrixBiasFile;
     DateTime        configDateTime;       /**< TimeStamp of config file when this BiasMatrix was written. */
-    MatrixPtr       counts;
+    MatrixDPtr      counts;
     DateTime        dateTimeFileWritten;
     VectorKKStr     errMsgs;
     kkint32         numClasses;
-    MatrixPtr       probabilities;
+    MatrixDPtr      probabilities;
     RunLog&         runLog;
     bool            valid;
   };

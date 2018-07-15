@@ -139,18 +139,18 @@ namespace KKB
                           const VectorDouble&  right
                          );
 
-   Matrix  DotMult (const Matrix&  left,
-                    const Matrix&  right
-                   );
+   MatrixD  DotMult (const MatrixD&  left,
+                     const MatrixD&  right
+                    );
 
 
    VectorDouble  DotDiv (const VectorDouble&  left,
                          const VectorDouble&  right
                         );
 
-   Matrix  DotDiv (const Matrix&  left,
-                   const Matrix&  right
-                  );
+   MatrixD  DotDiv (const MatrixD&  left,
+                    const MatrixD&  right
+                   );
 
    template<typename T>
    vector<T>   FlipLeftRight (const vector<T>&  v);
@@ -160,12 +160,12 @@ namespace KKB
                            kkint32 numPoints
                           );
 
-   void  MakeNanWhenLesOrEqualZero (Matrix&  m);
+   void  MakeNanWhenLesOrEqualZero (MatrixD&  m);
 
    void  NdGrid (const VectorDouble&  x,
                  const VectorDouble&  y,
-                 Matrix&              xm,
-                 Matrix&              ym
+                 MatrixD&             xm,
+                 MatrixD&             ym
                 );
 
 
@@ -173,9 +173,9 @@ namespace KKB
                         double               right
                        );
 
-   Matrix  Power (const Matrix&  left,
-                  double         right
-                 );
+   MatrixD  Power (const MatrixD&  left,
+                   double          right
+                  );
 
    VectorDouble  Round (const VectorDouble&  v);
   
@@ -209,7 +209,7 @@ namespace KKB
    template<typename T>
    void  ZeroOutNaN (vector<T>&  v);
 
-   void  ZeroOutNaN (Matrix&  m);
+   void  ZeroOutNaN (MatrixD&  m);
 
 
    //VectorDouble  PWD

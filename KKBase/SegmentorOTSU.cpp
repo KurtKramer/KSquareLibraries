@@ -146,9 +146,9 @@ VectorDouble  SegmentorOTSU::DotMult (const VectorDouble&  left,
 
 
 
-Matrix  SegmentorOTSU::DotMult (const Matrix&  left,
-                                const Matrix&  right
-                               )
+MatrixD  SegmentorOTSU::DotMult (const MatrixD&  left,
+                                 const MatrixD&  right
+                                )
 {
   kkint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
   kkint32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
@@ -156,7 +156,7 @@ Matrix  SegmentorOTSU::DotMult (const Matrix&  left,
   kkint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
   kkint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
 
-  Matrix  result (maxNumOfRows, maxNumOfCols);
+  MatrixD  result (maxNumOfRows, maxNumOfCols);
 
   double const * const * leftData   = left.Data  ();
   double const * const * rightData  = right.Data ();
@@ -210,8 +210,8 @@ VectorDouble  SegmentorOTSU::DotDiv (const VectorDouble&  left,
 
 
 
-Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
-                               const Matrix&  right
+MatrixD  SegmentorOTSU::DotDiv (const MatrixD&  left,
+                               const MatrixD&  right
                               )
 {
   kkuint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
@@ -220,7 +220,7 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
   kkuint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
   kkuint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
 
-  Matrix  result (maxNumOfRows, maxNumOfCols);
+  MatrixD  result (maxNumOfRows, maxNumOfCols);
 
   double const * const * leftData   = left.Data  ();
   double const * const * rightData  = right.Data ();
@@ -438,14 +438,14 @@ VectorDouble  SegmentorOTSU::Power (const VectorDouble&  left,
 
 
 
-Matrix  SegmentorOTSU::Power (const Matrix&  left,
-                              double         right
-                             )
+MatrixD  SegmentorOTSU::Power (const MatrixD&  left,
+                               double          right
+                              )
 {
   kkuint32 numOfRows = left.NumOfRows ();
   kkuint32 numOfCols = left.NumOfCols ();
 
-  Matrix  result (numOfRows, numOfCols);
+  MatrixD  result (numOfRows, numOfCols);
   double const * const *  leftData = left.Data ();
   double**  resultData = result.DataNotConst ();
 
@@ -491,8 +491,8 @@ T  SegmentorOTSU::Sum (const vector<T>&  v)
 
 void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
                              const VectorDouble&  y,
-                             Matrix&              xm,
-                             Matrix&              ym
+                             MatrixD&             xm,
+                             MatrixD&             ym
                             )
 {
   kkuint32  xLen = (kkuint32)x.size ();
@@ -518,7 +518,7 @@ void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
 
 
 
-void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (Matrix&  m)
+void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (MatrixD&  m)
 {
   double**  data = m.DataNotConst ();
   for  (kkuint32  r = 0;  r < m.NumOfRows ();  ++r)
@@ -581,7 +581,7 @@ bool  _isnan (double&   d)
 
 
 
-void  SegmentorOTSU::ZeroOutNaN (Matrix&  m)
+void  SegmentorOTSU::ZeroOutNaN (MatrixD&  m)
 {
   double**  data = m.DataNotConst ();
   kkuint32  numOfRows = m.NumOfRows ();
@@ -957,8 +957,8 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
 
     //[w0,w2] = ndgrid(w0,w2);
-    Matrix w0M ((kkint32)w0.size (), (kkint32)w0.size ());
-    Matrix w2M ((kkint32)w2.size (), (kkint32)w2.size ());
+    MatrixD w0M ((kkint32)w0.size (), (kkint32)w0.size ());
+    MatrixD w2M ((kkint32)w2.size (), (kkint32)w2.size ());
     NdGrid (w0, w2, w0M, w2M);
 
     
@@ -974,12 +974,12 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     // TODO  
     //[mu0,mu2] = ndgrid(mu0,mu2);
-    Matrix  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
-    Matrix  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
+    MatrixD  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
+    MatrixD  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
     NdGrid (mu0, mu2, mu0M, mu2M);
     
     //w1 = 1-w0-w2;
-    Matrix  w1M = 1.0 - w0M - w2M;
+    MatrixD  w1M = 1.0 - w0M - w2M;
 
     //w1(w1<=0) = NaN;
     MakeNanWhenLesOrEqualZero (w1M);
@@ -987,9 +987,9 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     //sigma2B =...
     //    w0.*(mu0-mu(end)).^2 + w2.*(mu2-mu(end)).^2 +...
     //    (w0.*(mu0-mu(end)) + w2.*(mu2-mu(end))).^2./w1;
-    Matrix  P1M = (DotMult (w0M, Power ((mu0M - muEnd), 2.0)))  +  (DotMult (w2M, Power ((mu2M - muEnd), 2.0)));
-    Matrix  P2M = DotDiv (Power ((DotMult (w0M, (mu0M - muEnd)) + DotMult (w2M, (mu2M - muEnd))), 2.0), w1M);
-    Matrix  sigma2B = P1M + P2M;
+    MatrixD  P1M = (DotMult (w0M, Power ((mu0M - muEnd), 2.0)))  +  (DotMult (w2M, Power ((mu2M - muEnd), 2.0)));
+    MatrixD  P2M = DotDiv (Power ((DotMult (w0M, (mu0M - muEnd)) + DotMult (w2M, (mu2M - muEnd))), 2.0), w1M);
+    MatrixD  sigma2B = P1M + P2M;
 
 
     //sigma2B(isnan(sigma2B)) = 0; % zeroing if k1 >= k2
@@ -1272,8 +1272,8 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     VectorDouble  w0 = w;
     VectorDouble  w2 = FlipLeftRight (CumSum (FlipLeftRight (P)));
 
-    Matrix w0M ((kkint32)w0.size (), (kkint32)w0.size ());
-    Matrix w2M ((kkint32)w2.size (), (kkint32)w2.size ());
+    MatrixD w0M ((kkint32)w0.size (), (kkint32)w0.size ());
+    MatrixD w2M ((kkint32)w2.size (), (kkint32)w2.size ());
     NdGrid (w0, w2, w0M, w2M);
     
     VectorDouble  mu0 = DotDiv (mu, w);
@@ -1286,12 +1286,12 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     VectorDouble  mu2 = FlipLeftRight (DotDiv (P1, P2));
 
     //[mu0,mu2] = ndgrid(mu0,mu2);
-    Matrix  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
-    Matrix  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
+    MatrixD  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
+    MatrixD  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
     NdGrid (mu0, mu2, mu0M, mu2M);
     
     //w1 = 1-w0-w2;
-    Matrix  w1M = 1.0 - w0M - w2M;
+    MatrixD  w1M = 1.0 - w0M - w2M;
 
     //w1(w1<=0) = NaN;
     MakeNanWhenLesOrEqualZero (w1M);
@@ -1299,9 +1299,9 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     //sigma2B =...
     //    w0.*(mu0-mu(end)).^2 + w2.*(mu2-mu(end)).^2 +...
     //    (w0.*(mu0-mu(end)) + w2.*(mu2-mu(end))).^2./w1;
-    Matrix  P1M = (DotMult (w0M, Power ((mu0M - muEnd), 2.0)))  + (DotMult (w2M, Power ((mu2M - muEnd), 2.0)));
-    Matrix  P2M = DotDiv (Power ((DotMult (w0M, (mu0M - muEnd)) +  DotMult (w2M, (mu2M - muEnd))), 2.0), w1M);
-    Matrix  sigma2B = P1M + P2M;
+    MatrixD  P1M = (DotMult (w0M, Power ((mu0M - muEnd), 2.0)))  + (DotMult (w2M, Power ((mu2M - muEnd), 2.0)));
+    MatrixD  P2M = DotDiv (Power ((DotMult (w0M, (mu0M - muEnd)) +  DotMult (w2M, (mu2M - muEnd))), 2.0), w1M);
+    MatrixD  sigma2B = P1M + P2M;
 
     //sigma2B(isnan(sigma2B)) = 0; % zeroing if k1 >= k2
     ZeroOutNaN (sigma2B);

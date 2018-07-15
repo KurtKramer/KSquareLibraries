@@ -552,7 +552,7 @@ void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVPr
     osAddLastSlash (fullFileName);
     fullFileName << example->ExampleFileName ();
 
-    bool   validFile;
+    bool  validFile = false;;
     RasterPtr  raster = new Raster (fullFileName, validFile);
     if  (!validFile)
     {
