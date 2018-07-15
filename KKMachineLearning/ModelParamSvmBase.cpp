@@ -34,7 +34,6 @@ ModelParamSvmBase::ModelParamSvmBase  ():
 
 
 
-
 ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
                                        Kernel_Type  _kernelType,
                                        double       _cost,
@@ -52,8 +51,6 @@ ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
 
 
 
-
-
 ModelParamSvmBase::ModelParamSvmBase  (const ModelParamSvmBase&  _param):
   ModelParam (_param),
   svmParam   (_param.svmParam)
@@ -65,6 +62,7 @@ ModelParamSvmBase::ModelParamSvmBase  (const ModelParamSvmBase&  _param):
 ModelParamSvmBase::~ModelParamSvmBase  ()
 {
 }
+
 
 
 ModelParamSvmBasePtr  ModelParamSvmBase::Duplicate ()  const
@@ -81,6 +79,7 @@ void  ModelParamSvmBase::Cost   (double _cost)
 }
 
 
+
 void  ModelParamSvmBase::Gamma  (double _gamma)
 {
   svmParam.Gamma (_gamma);
@@ -88,10 +87,12 @@ void  ModelParamSvmBase::Gamma  (double _gamma)
 }
 
 
+
 double  ModelParamSvmBase::Cost ()  const 
 {
   return  svmParam.Cost ();
 }
+
 
 
 double  ModelParamSvmBase::Gamma ()  const 
@@ -112,7 +113,6 @@ void  ModelParamSvmBase::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-
 /**
  @brief  // Will get called after the entire parameter string has been processed.
  */
@@ -121,7 +121,6 @@ void   ModelParamSvmBase::ParseCmdLinePost ()
   svmParam.Gamma (Gamma ());
   svmParam.Cost  (Cost  ());
 }
-
 
 
 
@@ -134,8 +133,6 @@ KKStr   ModelParamSvmBase::ToCmdLineStr () const
   cmdStr = ModelParam::ToCmdLineStr () + " " + svmParam.ToCmdLineStr ();
   return  cmdStr;
 }  /* ToCmdLineStr */
-
-
 
 
 
@@ -158,8 +155,6 @@ void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -187,6 +182,4 @@ void  ModelParamSvmBase::ReadXML (XmlStream&      s,
   t = NULL;
 }  /* ReadXML */
 
- 
 XmlFactoryMacro(ModelParamSvmBase)
-

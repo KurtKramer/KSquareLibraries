@@ -48,6 +48,7 @@ ModelUsfCasCor::ModelUsfCasCor (FactoryFVProducerPtr  _factoryFVProducer):
 }
 
 
+
 ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 const ModelParamUsfCasCor& _param,         // Create new model from
                                 FactoryFVProducerPtr       _factoryFVProducer
@@ -58,7 +59,6 @@ ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
 {
   param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
 }
-
 
 
 
@@ -73,6 +73,7 @@ ModelUsfCasCor::ModelUsfCasCor (const ModelUsfCasCor&   _model):
     usfCasCorClassifier = new UsfCasCor (*_model.usfCasCorClassifier);
   }
 }
+
 
 
 /**
@@ -90,6 +91,7 @@ ModelUsfCasCor::~ModelUsfCasCor ()
 }
 
 
+
 kkMemSize  ModelUsfCasCor::MemoryConsumedEstimated ()  const
 {
   kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
@@ -99,7 +101,6 @@ kkMemSize  ModelUsfCasCor::MemoryConsumedEstimated ()  const
     memoryConsumedEstimated += usfCasCorClassifier->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
-
 
 
 
@@ -196,7 +197,6 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
-
 MLClassPtr  ModelUsfCasCor::Predict (FeatureVectorPtr  example,
                                      RunLog&           log
                                     )
@@ -221,7 +221,6 @@ MLClassPtr  ModelUsfCasCor::Predict (FeatureVectorPtr  example,
 
 
 
-
 void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
                                MLClassPtr       knownClass,
                                MLClassPtr&      predClass1,
@@ -243,7 +242,6 @@ void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
     log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
-
 
   VectorFloat  probabilities;
 
@@ -282,8 +280,6 @@ void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
 
 
 
-
-
 ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  example,
                                                         RunLog&           log
                                                        )
@@ -310,7 +306,6 @@ ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  exampl
 
   return  results;
 }  /* ProbabilitiesByClass */
-
 
 
 
@@ -389,8 +384,6 @@ void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 
 
-
-
 void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                              const MLClassList&  _mlClasses,
                                              double*             _probabilities,
@@ -448,8 +441,6 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
   return;
 }  /* ProbabilitiesByClass */
-  
-
 
 
 
@@ -457,9 +448,6 @@ kkint32  ModelUsfCasCor::NumOfSupportVectors ()  const
 {
   return  0;
 }  /* NumOfSupportVectors */
-
-
-
 
 
 
@@ -481,8 +469,6 @@ void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -553,6 +539,3 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(ModelUsfCasCor)
-
-
-

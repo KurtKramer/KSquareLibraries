@@ -144,6 +144,9 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
   kkint32     lineCount     = 0;
   kkint32     numOfFeatures = _fileDesc->NumOfFields ();
 
+  if (_maxCount < 0)
+    _maxCount = INT_MAX;
+
   // Each row will represent a specific feature
   // Will initially create empty examples, then populate
   // each feature value as row's are read in.
@@ -156,7 +159,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
     lineCount = 0;
 
     GetToken (_in, " ", field, eof, eol);
-    while  ((!eof)  &&  (!eol))
+    while  ((!eof)  &&  (!eol)  &&  (examples->QueueSize() < _maxCount))
     {
       exampleClass = _classes.GetMLClassPtr (field);
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
@@ -193,9 +196,8 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
       return  NULL;
     }
 
-
     kkint32  lineNum = 0;
-    while  ((!eof)  &&  (!eol))
+    while  ((!eof)  &&  (!eol)  &&  (lineNum < lineCount))
     {
       if  (lineNum >= lineCount)
       {
