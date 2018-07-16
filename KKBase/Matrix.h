@@ -122,7 +122,7 @@ namespace  KKB
 
     T               Determinant () const;
 
-    T               DeterminantSlow ();  /**<  @brief Recursive Implementation. */
+    T               DeterminantSlow () const;  /**<  @brief Recursive Implementation. */
 
     void            EigenVectors (Matrix<T>*&       eigenVectors,
                                   std::vector<T>*&  eigenValues
@@ -247,6 +247,8 @@ namespace  KKB
                              const Matrix<T>&     matrix
                             );
 
+
+
   template<typename T>
   Row<T>::Row (): cells (NULL), numOfCols (0) { }
 
@@ -255,12 +257,15 @@ namespace  KKB
   Row<T>::Row (kkuint32 _numOfCols,  T* _cells): cells (_cells), numOfCols (_numOfCols) {}
 
   
+
   template<typename T>
   Row<T>::Row (const Row&  _row): cells (_row.cells), numOfCols (_row.numOfCols) {}
 
 
+
   template<typename T>
   Row<T>::~Row () {cells = NULL;}
+
 
 
   template<typename T>
@@ -271,17 +276,18 @@ namespace  KKB
   }
 
 
+
   template<typename T>
   T&  Row<T>::operator[] (kkuint32  idx)
   {
     if (idx >= numOfCols)
     {
-      std::cerr << std::endl
-        << "Row::operator[]  **** ERROR ****,  Index["
+      KKStr errMsg(80);
+      errMsg << "Row::operator[]  **** ERROR ****,  Index["
         << idx << "]  out of range of [0-" << numOfCols << "]."
         << std::endl;
-      osWaitForEnter ();
-      exit (1);
+      std::cerr << errMsg << std::endl;
+      throw new KKException(errMsg);
     }
 
     return  cells[idx];
@@ -292,12 +298,12 @@ namespace  KKB
   template<typename T>
   Matrix<T>::Matrix ():
 
-    alignment (64),
-    data (NULL),
-    dataArea (NULL),
-    numOfCols (0),
-    numOfRows (0),
-    rows (NULL),
+    alignment   (64),
+    data        (NULL),
+    dataArea    (NULL),
+    numOfCols   (0),
+    numOfRows   (0),
+    rows        (NULL),
     totNumCells (0)
   {
   }
@@ -306,14 +312,14 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>::Matrix (kkuint32  _numOfRows,
-    kkuint32  _numOfCols
-  ) :
-    alignment (64),
-    data (NULL),
-    dataArea (NULL),
-    numOfCols (_numOfCols),
-    numOfRows (_numOfRows),
-    rows (NULL),
+                     kkuint32  _numOfCols
+                    ):
+    alignment   (64),
+    data        (NULL),
+    dataArea    (NULL),
+    numOfCols   (_numOfCols),
+    numOfRows   (_numOfRows),
+    rows        (NULL),
     totNumCells (0)
 
   {
@@ -324,33 +330,33 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>::Matrix (const Matrix&  _matrix) :
-    alignment (_matrix.alignment),
-    data (NULL),
-    dataArea (NULL),
-    numOfCols (_matrix.numOfCols),
-    numOfRows (_matrix.numOfRows),
-    rows (NULL),
+    alignment   (_matrix.alignment),
+    data        (NULL),
+    dataArea    (NULL),
+    numOfCols   (_matrix.numOfCols),
+    numOfRows   (_matrix.numOfRows),
+    rows        (NULL),
     totNumCells (0)
-
   {
     AllocateStorage ();
     memcpy (dataArea, _matrix.dataArea, totNumCells * sizeof (T));
   } /* Matrix::Matrix  */
 
 
+
   template<typename T>
   Matrix<T>::Matrix (Matrix&&  _matrix) :
-    alignment (_matrix.alignment),
-    data (_matrix.data),
-    dataArea (_matrix.dataArea),
-    numOfCols (_matrix.numOfCols),
-    numOfRows (_matrix.numOfRows),
-    rows (_matrix.rows),
+    alignment   (_matrix.alignment),
+    data        (_matrix.data),
+    dataArea    (_matrix.dataArea),
+    numOfCols   (_matrix.numOfCols),
+    numOfRows   (_matrix.numOfRows),
+    rows        (_matrix.rows),
     totNumCells (_matrix.totNumCells)
   {
-    _matrix.data = NULL;
+    _matrix.data     = NULL;
     _matrix.dataArea = NULL;
-    _matrix.rows = NULL;
+    _matrix.rows     = NULL;
   }
 
 
@@ -358,11 +364,11 @@ namespace  KKB
   template<typename T>
   Matrix<T>::Matrix (const std::vector<T>&  _v) :
     alignment (64),
-    data (NULL),
-    dataArea (NULL),
+    data      (NULL),
+    dataArea  (NULL),
     numOfCols (1),
     numOfRows (kkuint32 (_v.size ())),
-    rows (NULL)
+    rows      (NULL)
   {
     AllocateStorage ();
     for (kkuint32 row = 0; row < numOfRows; ++row)
@@ -371,21 +377,21 @@ namespace  KKB
 
 
 
-    /**
-    *@brief  Will create a new matrix using the 2dArray "data" for source.
-    *@details  If any row in "data" is equal to NULL then the corresponding row
-    * in the returned matrix will be initialized to zeros.
-    *@param[in]  numOfRows  Number of rows in resultant matrix.
-    *@param[in]  numOfCols  Number of cols if resultant matrix.
-    *@param[in]  data       A two dimensional array.
-    *@return  A matrix that is initialized with the contents of "data".
-    */
+  /**
+   *@brief  Creates new matrix using the 2dArray "data" for source.
+   *@details  If any row in "data" is equal to NULL then the corresponding row
+   * in the returned matrix will be initialized to zeros.
+   *@param[in]  numOfRows  Number of rows in resultant matrix.
+   *@param[in]  numOfCols  Number of cols if resultant matrix.
+   *@param[in]  data       A two dimensional array.
+   *@return  A matrix that is initialized with the contents of "data".
+  */
   template<typename T>
   template<typename U>
   Matrix<T>*  Matrix<T>::BuildFromArray (kkuint32 numOfRows,
-    kkuint32 numOfCols,
-    U**      data
-  )
+                                         kkuint32 numOfCols,
+                                         U**      data
+                                        )
   {
     if ((numOfRows < 1) || (numOfCols < 1))
     {
@@ -418,8 +424,8 @@ namespace  KKB
 
   template<typename T>
   void   Matrix<T>::ReSize (kkuint32 _numOfRows,
-    kkuint32 _numOfCols
-  )
+                            kkuint32 _numOfCols
+                           )
   {
     Destroy ();
     numOfRows = _numOfRows;
@@ -478,7 +484,7 @@ namespace  KKB
 
 
   template<typename T>
-  T  Matrix<T>::DeterminantSlow ()
+  T  Matrix<T>::DeterminantSlow () const
   {
     if (numOfCols != numOfRows)
     {
@@ -644,8 +650,8 @@ namespace  KKB
                              const Matrix<T>& right
                             )
   {
-    kkuint32  numOfRows = right.NumOfRows ();
-    kkuint32  numOfCols = right.NumOfCols ();
+    kkuint32  numOfRows   = right.NumOfRows ();
+    kkuint32  numOfCols   = right.NumOfCols ();
     kkuint32  totNumCells = right.totNumCells;
 
     Matrix<T>  result (numOfRows, numOfCols);
@@ -964,9 +970,9 @@ namespace  KKB
 
   template<typename T>
   void   Matrix<T>::FindMaxValue (T&         maxVal,
-    kkuint32&  rowIdx,
-    kkuint32&  colIdx
-  )
+                                  kkuint32&  rowIdx,
+                                  kkuint32&  colIdx
+                                 )
   {
     rowIdx = 0;
     colIdx = 0;
@@ -1350,9 +1356,7 @@ namespace  KKB
 
   // Computes sqrt (a^2 + b^2)  without destructive underflow or overflow
   template<typename T>
-  T  Matrix<T>::Pythag (const T a,
-                        const T b
-                       )  const
+  T  Matrix<T>::Pythag (const T a,  const T b)  const
   {
     T  absa, absb;
     absa = fabs (a);

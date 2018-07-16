@@ -478,6 +478,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
                                RunLog&         log
                               )
 {
+  log.Level(30) << "ModelUsfCasCor::ReadXML  tag->Name: " << tag->Name() << std::endl;
   delete  usfCasCorClassifier;
   usfCasCorClassifier = NULL;
 

@@ -232,12 +232,12 @@ void  MLClass::ResetAllParentsToAllClasses ()
   CreateBlocker ();
   blocker->StartBlock ();
   
-  MLClassListPtr  globalClassList = GlobalClassList ();
+  MLClassListPtr  globalList = GlobalClassList ();
 
-  MLClassPtr       allClasses = globalClassList->LookUpByName ("AllClasses");
+  MLClassPtr  allClasses = globalList->LookUpByName ("AllClasses");
 
   MLClassList::iterator  idx;
-  for  (idx = globalClassList->begin ();  idx != globalClassList->end ();  ++idx)
+  for  (idx = globalList->begin ();  idx != globalList->end ();  ++idx)
   {
     MLClassPtr  ic = *idx;
     if  (ic == allClasses)

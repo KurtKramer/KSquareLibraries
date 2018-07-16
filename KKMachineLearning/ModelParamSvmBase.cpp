@@ -164,6 +164,7 @@ void  ModelParamSvmBase::ReadXML (XmlStream&      s,
                                   RunLog&         log
                                  )
 {
+  log.Level(50) << "ModelParamSvmBase::ReadXML   tag->name: " << tag->Name() << std::endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {

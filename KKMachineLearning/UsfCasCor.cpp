@@ -2970,6 +2970,7 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
                           RunLog&         log
                          )
 {
+  log.Level(30) << "UsfCasCor::ReadXML   " << tag->Name() << std::endl;
   if  (Weights)
     Delete2DArray (Weights, MaxUnits);
 

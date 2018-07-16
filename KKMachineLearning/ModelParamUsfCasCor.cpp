@@ -59,6 +59,7 @@ ModelParamUsfCasCor::~ModelParamUsfCasCor  ()
 }
 
 
+
 ModelParamUsfCasCorPtr  ModelParamUsfCasCor::Duplicate ()  const
 {
   return  new ModelParamUsfCasCor (*this);
@@ -70,8 +71,10 @@ void  ModelParamUsfCasCor::ParseCmdLineParameter (const KKStr&  parameter,
                                                   const KKStr&  value,
                                                   bool&         parameterUsed,
                                                   RunLog&       log
-                                               )
+                                                 )
 {
+  log.Level(50) << "ModelParamUsfCasCor::ParseCmdLineParameter  parameter: " << parameter << "  value: " << value << std::endl;
+
   parameterUsed = true;
   if  (parameter.EqualIgnoreCase ("-InLimit")  ||
        parameter.EqualIgnoreCase ("-IL")       ||
@@ -227,8 +230,6 @@ void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
   }
   delete  t;
   t = NULL;
-
-  bool  validFormat = false;
 }  /* ReadXML */
 
 
