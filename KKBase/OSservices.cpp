@@ -44,24 +44,6 @@ using namespace KKB;
 
 
 
-//#ifdef  WIN32
-//kkuint64  KKB::osGetSystemTimeInMiliSecs ()
-//{
-//  return timeGetTime ();
-//} /* osGetSystemTimeInMiliSecs */
-
-//#else 
-//kkuint64  KKB::osGetSystemTimeInMiliSecs ()
-//{
-//  struct timeval now;
-//  gettimeofday (&now, NULL);
-//  return now.tv_usec / 1000;
-//} / *osGetSystemTimeInMiliSecs * /
-//#endif
-
-
-
-
 KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 {
   KKStr  desc;
@@ -1935,6 +1917,23 @@ double  KKB::osGetKernalTimeUsed ()
   double  totalTime = (double)(buff.tms_stime);
   return  (totalTime / (double)(sysconf (_SC_CLK_TCK)));
 }  /* osGetSystemTimeUsed */
+#endif
+
+
+
+#ifdef  WIN32
+kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+{
+  return timeGetTime ();
+} 
+
+#else
+kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+{
+  struct timeval now;
+  gettimeofday (&now, NULL);
+  return now.tv_usec / 1000;
+}
 #endif
 
 
