@@ -3,9 +3,10 @@
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-#include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <limits>
+#include <string>
 #include <vector>
 #include "MemoryDebug.h"
 using namespace std;
@@ -18,11 +19,11 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
+
 #include "FeatureFileIODstWeb.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace KKMLL;
-
 
 
 FeatureFileIODstWeb  FeatureFileIODstWeb::driver;
@@ -101,8 +102,9 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
                                                    )
 {
   KKStr  line (1024);
-  bool   eof;
+  bool   eof = false;
   KKStr  classNameAttribute;
+  _estSize = -1;
 
   {
     // Make sure that the True and False _classes exist.
@@ -158,12 +160,9 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     classNameAttribute = rightSide;
   }
 
-
   FileDescPtr  fileDesc = new FileDesc ();
 
-
   vector<AttrDescLinePtr> attributes;
-
 
   GetLine (_in, line, eof);
   while  (!eof)
@@ -191,7 +190,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
   sort (attributes.begin (), attributes.end (), c);
 
   kkuint32  x;
-  for  (x = 0;  x < attributes.size ();  x++)
+  for  (x = 0;  x < attributes.size ();  ++x)
   {
     bool  alreadyExists = false;
     fileDesc->AddAAttribute (attributes[x]->code, AttributeType::Nominal, alreadyExists);
@@ -232,6 +231,10 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 {
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;
 
+  _changesMade = false;
+  if (_maxCount < 0)
+    _maxCount = INT_MAX;
+
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");
   MLClassPtr  falseClass = _classes.GetMLClassPtr ("FALSE");
 
@@ -267,7 +270,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
   KKStr  classNameAttributeUpper (_fileDesc->ClassNameAttribute ());
   classNameAttributeUpper.Upper ();
 
-  while  (!eof)
+  while  (!eof  &&  !_cancelFlag)
   {
     // We have a new user
 
@@ -295,26 +298,26 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
     while  ((!eof)  &&  (line.FirstChar () == 'V'))
     {
-      KKStr  vStr  = line.ExtractToken (",\n\r\t");
-      KKStr  idStr = line.ExtractToken (",\n\r\t");
-      idStr.Upper ();
-      if  (idStr == classNameAttributeUpper)
+      KKStr  vStr = line.ExtractToken (",\n\r\t");
+      KKStr  attrName = line.ExtractToken (",\n\r\t");
+      attrName.Upper ();
+      if  (attrName == classNameAttributeUpper)
       {
         example->MLClass (trueClass);
       }
       else
       {
-        kkint32  fieldNum = _fileDesc->GetFieldNumFromAttributeName (idStr);
+        kkint32  fieldNum = _fileDesc->GetFieldNumFromAttributeName (attrName);
         if  (fieldNum < 0)
         {
-          _errorMessage << "Invalid Attribute[" << idStr + "]  Line[" << lineCount << "]";
+          _errorMessage << "Invalid Attribute[" << attrName + "]  Line[" << lineCount << "]";
           _log.Level (-1) << endl
                           << "FeatureFileIODstWeb::LoadFile     ***ERROR***"  << endl
                           << endl
                           << "                        " << _errorMessage << endl
                           << endl;
-          delete  examples;
-          delete  example;
+          delete  examples;  examples = NULL;
+          delete  example;   example = NULL;
           return  NULL;
         }
 
@@ -329,6 +332,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
   }
 
   delete  [] attributeTable;
+  attributeTable = NULL;
 
   return  examples;
 }  /* LoadFile */
@@ -347,7 +351,7 @@ void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&    _data,
                                      )
 {
   _log.Level (-1) << endl << endl
-                  << "FeatureFileIODstWeb::SaveFile     FileName[" << _fileName << "]            ***ERROR***." << endl
+                  << "FeatureFileIODstWeb::SaveFile     FileName[" << _fileName << "]   ***ERROR***." << endl
                   << endl
                   << "                       SaveFile   not implemented." << endl
                   << endl;
