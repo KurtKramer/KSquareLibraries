@@ -242,7 +242,6 @@ namespace  KKB
   template<typename T>
   Matrix<T>  operator- (T left, const Matrix<T>& right);
 
-
   template<typename T>
   std::ostream&  operator<< (std::ostream&  os,
                              const Matrix<T>&     matrix
