@@ -3985,6 +3985,32 @@ KKStr&  KKStr::operator<< (double  right)
 
 
 
+KKStr&  KKStr::operator<< (istream&  right)
+{
+  bool lastCharCR = false;
+  auto ch = right.get();
+  while (!right.eof() && (ch != '\n'))
+  {
+    if (lastCharCR)
+    {
+      Append('\r');
+      lastCharCR = false;
+    }
+    if (ch == '\r')
+    {
+      lastCharCR = true;
+    }
+    else
+    {
+      Append(ch);
+    }
+    ch = right.get();
+  }
+  return *this;
+}
+
+
+
 void  Test2 (ostream& x1, const char* x2)
 {
   x1 << x2;

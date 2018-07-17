@@ -178,6 +178,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     if  (a->code == classNameAttribute)
     {
       delete  a;
+      a = NULL;
     }
     else
     {

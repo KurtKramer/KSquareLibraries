@@ -57,6 +57,10 @@ FileDescConstPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
                   << "  _classes : " << _classes->ToTabDelimitedStr () << endl
                   << "  _estSize : " << _estSize << endl
                   << endl;
+  _estSize = -1;
+
+  KKStr firstLine;
+  firstLine << _in;
 
   _errorMessage = "ARFF read functionality not implemented.";
   return NULL;
@@ -77,12 +81,13 @@ FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&      _fileName,
 {
   _log.Level (10) << endl
     << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-    << "  _fileName    : " << _fileName << endl
-    << "  _fileDesc    : " << _fileDesc->NumOfFields ()
+    << "  _fileName    : " << _fileName    << endl
+    << "  _fileDesc    : " << _fileDesc->NumOfFields ()     << endl
     << "  _classes     : " << _classes.ToTabDelimitedStr () << endl
-    << "  _maxCount    : " << _maxCount << endl
-    << "  _cancelFlag  : " << _cancelFlag << endl
+    << "  _maxCount    : " << _maxCount    << endl
+    << "  _cancelFlag  : " << _cancelFlag  << endl
     << "  _changesMade : " << _changesMade << endl
+    << "  _in.eof()    : " << _in.eof()    << endl
     << endl;
                 
   _errorMessage = "ARFF read functionality not implemented.";
