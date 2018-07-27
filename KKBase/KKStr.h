@@ -14,6 +14,7 @@
 //*  KKStr class and string manipulation routines.
 //************************************************************************************
 
+#include <istream>
 #include <map>
 #include <ostream>
 #include <string>
@@ -684,7 +685,7 @@ namespace  KKB
     KKStr&  operator<< (kkuint64      right);
     KKStr&  operator<< (float         right);
     KKStr&  operator<< (double        right);
-    KKStr&  operator<< (istream&      right);
+    KKStr&  operator<< (std::istream& right);
 
     KKStr&  operator+= (const char*   right)  {return  *this << right;}
     KKStr&  operator+= (const KKStr&  right)  {return  *this << right;}
