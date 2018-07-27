@@ -720,7 +720,7 @@ namespace  KKB
 
   KKStr  operator+ (const char   left,  const KKStr&  right);
   KKStr  operator+ (const char*  left,  const KKStr&  right);
-
+  
 
 
   #ifdef  WIN32
@@ -827,8 +827,6 @@ namespace  KKB
 
 
 
-
-
   ///<summary> Maintains a list of ordered KKStr instances that can be recalled by either string of index. </summary>
   class  KKStrListIndexed
   {
@@ -874,7 +872,6 @@ namespace  KKB
                    RunLog&         log
                   );
 
-
     size_t size ()  const;
 
     KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
@@ -913,8 +910,6 @@ namespace  KKB
   };  /* KKStrListIndexed */
 
 
-
-
   KKStr  StrFormatDouble (double       val,
                           const char*  mask
                          );
@@ -926,8 +921,7 @@ namespace  KKB
   KKStr  StrFormatInt64 (kkint64      val,
                          const char*  mask
                         );
-
-
+  
   KKStr StrFromBuff   (const char* buff, kkuint32 buffLen);
   KKStr StrFromInt16  (kkint16  i);
   KKStr StrFromUint16 (kkuint16 ui);
