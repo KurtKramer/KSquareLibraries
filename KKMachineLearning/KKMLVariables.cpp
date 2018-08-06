@@ -35,7 +35,7 @@ const KKStr&  KKMLVariables::MachineLearningHomeDir ()
 {
   if  (machineLearningHomeDir.Empty ())
   {
-    #if  defined(OS_WINDOWS)
+    #if  defined(KKOS_WINDOWS)
       machineLearningHomeDir = "C:\\KKMLL";
     #else
       machineLearningHomeDir = "/KKMLL";

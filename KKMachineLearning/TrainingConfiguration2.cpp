@@ -2351,6 +2351,7 @@ BinaryClassParmsConstPtr  TrainingConfiguration2::GetParamtersToUseFor2ClassComb
 }  /* BinaryClassParms */
 
 
+
 BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr       class1,
                                                                    MLClassPtr       class2
                                                                   )
@@ -2361,6 +2362,7 @@ BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr   
 
   return param->GetBinaryClassParms (class1, class2);
 }
+
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  configFileName)  const
@@ -2779,5 +2781,3 @@ void   TrainingConfiguration2::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(TrainingConfiguration2)
-
-  
