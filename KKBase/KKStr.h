@@ -185,7 +185,6 @@ namespace  KKB
     kkint32  CompareTo (const KKStr&  s2)  const  {return  Compare (s2);}
 
 
-    
     ///<summary>Compares with another KKStr, ignoring case.</summary>
     ///<param name='s2'>  Other String to compare with.</param>
     ///<returns> -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater.</returns>
@@ -198,7 +197,6 @@ namespace  KKB
     kkint32  CompareIgnoreCase (const std::string&  s2)  const;
 
 
-    
     ///<summary>Compares with ascii-z string ignoring case. </summary>
     ///<param name='s2'> Ascii-z string to compare with. </param>
     ///<returns> -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater. </returns>
@@ -310,7 +308,6 @@ namespace  KKB
      */
     KKStr   ExtractToken2 (const char* delStr = "\n\t\r ");
 
-
     /**
      *@brief  Retrieves the first token in the string without removing any characters.
      *@details Similar to 'ExtractToken2' except it does not remove characters from the string.
@@ -404,7 +401,6 @@ namespace  KKB
     static 
       KKStr  Spaces (kkStrUint  c);
 
-
     /**
      *@brief  Breaks up the contents of the string into tokens where the characters in 'delStr' acts as separates each token.
      *@param[in] delStr  List of characters that where any one of them can be a delimiter.
@@ -434,11 +430,10 @@ namespace  KKB
                    RunLog&         log
                   );
 
-
     static
       const char*  Str (const char*  s);
 
-
+    
     static
       void  StrCapitalize (char*  str);
 
@@ -698,10 +693,8 @@ namespace  KKB
     KKStr&  operator+= (float     right)      {return  *this << right;}
     KKStr&  operator+= (double    right)      {return  *this << right;}
 
-
     //friend  KKB::KKStr& endl (KKStr& _s);
     KKStr&  operator<< (std::ostream& (* mf)(std::ostream &));
-
 
   private:
     void  AllocateStrSpace (kkStrUint  size);
@@ -712,16 +705,13 @@ namespace  KKB
 
   };   /* KKStr */
 
-
   typedef  KKStr::KKStrPtr         KKStrPtr;
   typedef  KKStr::KKStrConstPtr    KKStrConstPtr;
   typedef  std::pair<KKStr,KKStr>  KKStrPair;
 
-
   KKStr  operator+ (const char   left,  const KKStr&  right);
   KKStr  operator+ (const char*  left,  const KKStr&  right);
   
-
 
   #ifdef  WIN32
   std::ostream& __cdecl  operator<< (      std::ostream&  os, 
@@ -750,7 +740,6 @@ namespace  KKB
 
   char*  STRDUP (const char* src);
 
-
   kkint32  STRICMP  (const char*  left, const char*  right);
   kkint32  STRNICMP (const char*  left, const char*  right,  kkint32      len);
 
@@ -762,7 +751,6 @@ namespace  KKB
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint64     right);
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint32      precision,  double       d );
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  char const*  formatSpec,  double       d);
-
 
 
 

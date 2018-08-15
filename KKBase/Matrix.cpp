@@ -136,5 +136,3 @@ void  KKB::MultiplyMatrix (const Matrix <double> & a, const Matrix<double>& b, M
 
   return;
 }  /* Matrix::operator */
-
-

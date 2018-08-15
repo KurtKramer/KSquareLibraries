@@ -29,7 +29,6 @@ using namespace std;
 using namespace KKB;
 
 
-
 char*  KKB::STRCOPY (char*        dest,
                      kkStrUint    destSize,
                      const char*  src

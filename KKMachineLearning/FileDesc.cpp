@@ -321,8 +321,6 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum)  const
   
   default: return  INT_MAX;
   }
-
-  return  INT_MAX;
 }  /* Cardinality */
 
 
