@@ -3960,10 +3960,6 @@ void  SVM289_BFS::svm_predict_values (const svm_model*      model,
 
 
 
-
-
-
-
 double SVM289_BFS::svm_predict (const svm_model*      model, 
                                 const FeatureVector&  x
                                )
@@ -4017,8 +4013,6 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
     return model->label[vote_max_idx];
   }
 }  /* svm_predict */
-
-
 
 
 
@@ -4098,6 +4092,7 @@ double  SVM289_BFS::svm_predict_probability (svm_model*            model,
     return  svm_predict (model, x);
   }
 }  /* svm_predict_probability */
+
 
 
 SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
@@ -4210,6 +4205,7 @@ SVM289_BFS::svm_model::svm_model (FileDescConstPtr  _fileDesc,
 }
 
 
+
 SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
                                   FileDescConstPtr      _fileDesc,
@@ -4235,6 +4231,7 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
 }
 
 
+
 SVM289_BFS::svm_model::svm_model (istream&          _in,
                                   FileDescConstPtr  _fileDesc,
                                   RunLog&           _log
@@ -4257,7 +4254,6 @@ SVM289_BFS::svm_model::svm_model (istream&          _in,
 {
   Read (_in, _fileDesc, _log);
 }
-
 
 
 
@@ -4302,6 +4298,7 @@ SVM289_BFS::svm_model::~svm_model ()
 }
 
 
+
 double*  SVM289_BFS::svm_model::DecValues () 
 {
   if  (!dec_values)
@@ -4310,12 +4307,14 @@ double*  SVM289_BFS::svm_model::DecValues ()
 }
 
 
+
 double*  SVM289_BFS::svm_model::ProbEstimates () 
 {
   if  (!prob_estimates)
     prob_estimates = new double[nr_class];
   return  prob_estimates;
 }
+
 
 
 double** SVM289_BFS::svm_model::PairwiseProb  () 
@@ -4328,6 +4327,7 @@ double** SVM289_BFS::svm_model::PairwiseProb  ()
   }
   return  pairwise_prob;
 }
+
 
 
 void  SVM289_BFS::svm_model::Write (ostream& o)
@@ -4798,7 +4798,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
   return NULL;
 }  /* svm_check_parameter */
-
 
 
 

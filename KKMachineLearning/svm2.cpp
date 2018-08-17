@@ -113,7 +113,6 @@ namespace  SVM289_MFS
 
 
 
-
 SVM289_MFS::svm_problem::svm_problem (const svm_problem&  _prob):
       numTrainExamples   (_prob.numTrainExamples),
       selFeatures        (_prob.selFeatures),
@@ -123,7 +122,6 @@ SVM289_MFS::svm_problem::svm_problem (const svm_problem&  _prob):
 {
   clone (y, _prob.y, numTrainExamples);
 }
-
 
 
 
@@ -157,6 +155,7 @@ SVM289_MFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
 {
   kkint32  zed = 87989;
 }
+
 
 
 SVM289_MFS::svm_problem::~svm_problem ()
@@ -193,6 +192,7 @@ SVM289_MFS::svm_parameter::svm_parameter ():
   probParam    (0.0)
 {
 }
+
 
 
 SVM289_MFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
@@ -325,8 +325,6 @@ KKStr   SVM289_MFS::svm_parameter::ToCmdLineStr ()  const
 
 
 
-
-
 void  SVM289_MFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
                                                       const KKStr&  value,
                                                       bool&         parmUsed
@@ -397,9 +395,6 @@ void  SVM289_MFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
     parmUsed = false;
   }
 }  /* ProcessSvmParameter */
-
-
-
 
 
 
@@ -528,9 +523,6 @@ void    SVM289_MFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
 
 
 
-
-
-
 SVM_Type  SVM289_MFS::SVM_Type_FromStr (KKStr  s)
 {
   s.Upper ();
@@ -561,20 +553,18 @@ KKStr  SVM289_MFS::SVM_Type_ToStr (SVM_Type  svmType)
 
 
 
- Kernel_Type  SVM289_MFS::Kernel_Type_FromStr (KKStr  s)
- {
-   s.Upper ();
-   if  ((s.EqualIgnoreCase ("LINEAR"))       ||  (s == "0"))                                      return  Kernel_Type::LINEAR;
-   if  ((s.EqualIgnoreCase ("POLYNOMIAL"))   ||  (s.EqualIgnoreCase ("POLY"))  ||  (s == "1"))    return  Kernel_Type::POLY;
-   if  ((s.EqualIgnoreCase ("RBF"))          ||  (s == "2"))                                      return  Kernel_Type::RBF;
-   if  ((s.EqualIgnoreCase ("SIGMOID"))      ||  (s == "3"))                                      return  Kernel_Type::SIGMOID;
-   if  ((s.EqualIgnoreCase ("PRECOMPUTED"))  ||  (s == "4"))                                      return  Kernel_Type::PRECOMPUTED;
+Kernel_Type  SVM289_MFS::Kernel_Type_FromStr (KKStr  s)
+{
+  s.Upper ();
+  if  ((s.EqualIgnoreCase ("LINEAR"))       ||  (s == "0"))                                      return  Kernel_Type::LINEAR;
+  if  ((s.EqualIgnoreCase ("POLYNOMIAL"))   ||  (s.EqualIgnoreCase ("POLY"))  ||  (s == "1"))    return  Kernel_Type::POLY;
+  if  ((s.EqualIgnoreCase ("RBF"))          ||  (s == "2"))                                      return  Kernel_Type::RBF;
+  if  ((s.EqualIgnoreCase ("SIGMOID"))      ||  (s == "3"))                                      return  Kernel_Type::SIGMOID;
+  if  ((s.EqualIgnoreCase ("PRECOMPUTED"))  ||  (s == "4"))                                      return  Kernel_Type::PRECOMPUTED;
 
-   return  Kernel_Type::Kernel_NULL;
- }
-
- 
- 
+  return  Kernel_Type::Kernel_NULL;
+}
+  
 
 
 KKStr  SVM289_MFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
@@ -821,8 +811,6 @@ public:
 
 
 
-
-
 class  SVM289_MFS::Kernel: public QMatrix 
 {
 public:
@@ -878,10 +866,12 @@ private:
               )  const;
 
 
+
   double kernel_linear (kkint32 i, kkint32 j) const
   {
     return dot ((*x)[i], (*x)[j]);
   }
+
 
 
   double  kernel_poly (kkint32 i, kkint32 j) const
@@ -890,16 +880,19 @@ private:
   }
 
 
+
   double  kernel_rbf (kkint32 i, kkint32 j) const
   {
     return exp (-gamma * (x_square[i] + x_square[j] - 2 * dot ((*x)[i], (*x)[j])));
   }
 
 
+
   double kernel_sigmoid (kkint32 i, kkint32 j) const
   {
     return tanh (gamma * dot ((*x)[i], (*x)[j]) + coef0);
   }
+
 
 
   double kernel_precomputed (kkint32 i, kkint32 j) const
@@ -910,7 +903,6 @@ private:
       return 0.0f;
   }
 };  /* Kernel */
-
 
 
 
@@ -976,7 +968,6 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
 
 
-
 SVM289_MFS::Kernel::~Kernel()
 {
   delete[] selFeatures;    selFeatures = NULL;
@@ -995,7 +986,6 @@ SVM289_MFS::Kernel::~Kernel()
   delete  x;
   x = NULL;
 }
-
 
 
 
@@ -1043,10 +1033,6 @@ double  SVM289_MFS::Kernel::DotStatic (const FeatureVector&   px,
 
   return sum;
 }  /* dot */
-
-
-
-
 
 
 
@@ -1098,8 +1084,6 @@ double  SVM289_MFS::Kernel::k_function  (const FeatureVector&   x,
       return 0;  // Unreachable 
   }
 }  /* k_function */
-
-
 
 
 
@@ -1197,14 +1181,12 @@ protected:
 
   virtual void   do_shrinking ();
 
-
 private:
   bool  be_shrunk (kkint32  i, 
                    double Gmax1, 
                    double Gmax2
                   );  
 };  /* Solver */
-
 
 
 
@@ -1270,8 +1252,6 @@ void  SVM289_MFS::Solver::reconstruct_gradient ()
     }
   }
 }  /* reconstruct_gradient */
-
-
 
 
 
@@ -1572,7 +1552,6 @@ void  SVM289_MFS::Solver::Solve (kkint32            l,
 
 
 
-
 // return 1 if already optimal, return 0 otherwise
 kkint32  SVM289_MFS::Solver::select_working_set (kkint32&  out_i, 
                                          kkint32&  out_j
@@ -1686,8 +1665,6 @@ kkint32  SVM289_MFS::Solver::select_working_set (kkint32&  out_i,
 
 
 
-
-
 bool  SVM289_MFS::Solver::be_shrunk(kkint32 i, double Gmax1, double Gmax2)
 {
   if  (is_upper_bound(i))
@@ -1711,7 +1688,6 @@ bool  SVM289_MFS::Solver::be_shrunk(kkint32 i, double Gmax1, double Gmax2)
     return(false);
   }
 }  /* be_shrunk */
-
 
 
 
@@ -1782,7 +1758,6 @@ void   Solver::do_shrinking()
 
 
 
-
 double  SVM289_MFS::Solver::calculate_rho ()
 {
   double  r;
@@ -1824,8 +1799,6 @@ double  SVM289_MFS::Solver::calculate_rho ()
 
   return r;
 }  /* calculate_rho */
-
-
 
 
 
@@ -3811,9 +3784,6 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
  
 
 
-
-
-
 kkint32  svm_get_svm_type(const Svm_Model *model)
 {
   return  (int)model->param.svm_type;
@@ -3825,7 +3795,6 @@ kkint32  SVM289_MFS::svm_get_nr_class(const Svm_Model *model)
 {
   return model->nr_class;
 }
-
 
 
 
@@ -3849,7 +3818,6 @@ double svm_get_svr_probability (const Svm_Model *model)
     return 0;
   }
 }
-
 
 
 
@@ -3923,10 +3891,6 @@ void  SVM289_MFS::svm_predict_values (const Svm_Model*      model,
 
 
 
-
-
-
-
 double SVM289_MFS::svm_predict (const Svm_Model*      model, 
                                 const FeatureVector&  x
                                )
@@ -3983,12 +3947,10 @@ double SVM289_MFS::svm_predict (const Svm_Model*      model,
 
 
 
-
-
-double  SVM289_MFS::svm_predict_probability (Svm_Model*             model, 
-                                             const FeatureVector&   x, 
-                                             double*                classProbabilities,
-                                             kkint32*                 votes
+double  SVM289_MFS::svm_predict_probability (Svm_Model*            model, 
+                                             const FeatureVector&  x, 
+                                             double*               classProbabilities,
+                                             kkint32*              votes
                                             )
 {
   double  probParam = model->param.probParam;
