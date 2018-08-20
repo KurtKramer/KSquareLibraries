@@ -204,10 +204,6 @@ void  GreaterVotes (bool     useProbability,
 
 
 
-
-
-
-
 void saveData (svm_problem  ds, 
                kkint32      begin, 
                kkint32      end, 
@@ -232,6 +228,7 @@ void saveData (svm_problem  ds,
   }
   out.close();
 }
+
 
 
 /**

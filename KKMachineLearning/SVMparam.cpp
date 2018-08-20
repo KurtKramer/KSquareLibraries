@@ -50,8 +50,6 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
 
 
 
-
-
 SVMparam::SVMparam  ():
 
   binaryParmsList           (NULL),
@@ -67,8 +65,6 @@ SVMparam::SVMparam  ():
   validParam                (false)
 {
 }
-
-
 
 
 
@@ -142,6 +138,7 @@ void  SVMparam::SelectedFeatures (const FeatureNumList&  _selectedFeatures)
 }
 
 
+
 void  SVMparam::SelectedFeatures  (FeatureNumListConstPtr  _selectedFeatures)
 {
   delete  selectedFeatures;
@@ -183,12 +180,10 @@ void  SVMparam::ProbClassPairsInitialize (const ClassAssignments&  assignments)
 
 
 
-
 void  SVMparam::A_Param (float  _A)
 {
   param.A = _A;
 }
-
 
 
 
@@ -258,19 +253,16 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
     samplingRate = float (atof (value.Str ()));
   }
 
-
   else if  ((field == "-UP")  ||  (field == "-USEPROBABILITY"))
   {
     useProbabilityToBreakTies = true;
   }
-
 
   else
   {
     parameterUsed = false;
   }
 }  /* ParseCmdLineParameter */
-
 
 
 
@@ -340,10 +332,8 @@ void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
     field = _cmdLineStr.ExtractToken (" \t\n\r");
   } 
 
-
   validParam = _validFormat;
 }  /* ParseCmdLine */
-
 
 
 
@@ -358,7 +348,6 @@ KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 
   return  cmdStr;
 }  /* SvmParamToString */
-
 
 
 
@@ -390,7 +379,6 @@ KKStr   SVMparam::ToString () const
 
 
 
-
 BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
                                                                  MLClassPtr  class2
                                                                 )
@@ -418,10 +406,8 @@ BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  cla
 
 
 
-
-
-BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr       class1,
-                                                     MLClassPtr       class2
+BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr  class1,
+                                                     MLClassPtr  class2
                                                     )
 {
   if  (binaryParmsList == NULL)
@@ -429,7 +415,6 @@ BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr       class1,
   else
     return binaryParmsList->LookUp (class1, class2);
 }  /* GetBinaryClassParms */
-
 
 
 
@@ -468,7 +453,6 @@ FeatureNumListConstPtr SVMparam::GetFeatureNums (FileDescConstPtr  fileDesc,
   else
     return  twoClassComboParm->SelectedFeaturesFD  (fileDesc);
 }  /* GetFeatureNums */
-
 
 
 
@@ -650,7 +634,6 @@ void  SVMparam::SetFeatureNums (const FeatureNumList&  _features)
 
 
 
-
 void  SVMparam::SetFeatureNums (FeatureNumListConstPtr  _features)
 {
   delete  selectedFeatures;
@@ -687,7 +670,6 @@ double  SVMparam::C_Param (MLClassPtr  class1,
 
 
 
-
 void  SVMparam::C_Param (MLClassPtr  class1,
                          MLClassPtr  class2,
                          double      cParam
@@ -713,7 +695,6 @@ void  SVMparam::C_Param (MLClassPtr  class1,
     binaryParms->C (cParam);
   }
 }  /* C_Param */
-
 
 
 
@@ -746,8 +727,6 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr              _class1,
 
 
 
-
-
 /**
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
@@ -761,7 +740,6 @@ void  SVMparam::AddBinaryClassParms (MLClassPtr              _class1,
 {
   AddBinaryClassParms (new BinaryClassParms (_class1, _class2, _param, _selectedFeatures, _weight));
 }  /* AddBinaryClassParms */
-
 
 
 
@@ -875,11 +853,6 @@ void  SVMparam::ReadXML (XmlStream&      s,
 XmlFactoryMacro(SVMparam)
 
 
-
-
-
-
-
 KKStr  KKMLL::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
 {
   if  (encodingMethod == SVM_EncodingMethod::Binary)
@@ -959,7 +932,6 @@ SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
 
 
 
-
 KKStr  KKMLL::MachineTypeToStr (SVM_MachineType  machineType)
 {
   if  (machineType == SVM_MachineType::OneVsOne)
@@ -976,8 +948,6 @@ KKStr  KKMLL::MachineTypeToStr (SVM_MachineType  machineType)
 
   return "";
 }  /* MachineTypeToStr */
-
-
 
 
 
@@ -1002,7 +972,6 @@ SVM_MachineType  KKMLL::MachineTypeFromStr (const KKStr&  machineTypeStr)
  
 
 
-
 KKStr  KKMLL::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
 {
   if  (selectionMethod == SVM_SelectionMethod::Voting)
@@ -1013,7 +982,6 @@ KKStr  KKMLL::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
 
   return "";
 }  /* SelectionMethodToStr */
-
 
 
 
@@ -1033,10 +1001,3 @@ SVM_SelectionMethod  KKMLL::SelectionMethodFromStr (const KKStr&  selectionMetho
   return  SVM_SelectionMethod::Null;
 
 }  /* SelectionMethodFromStr */
-
-
-
-
-
-
-

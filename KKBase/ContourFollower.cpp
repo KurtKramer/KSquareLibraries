@@ -72,6 +72,7 @@ uchar  ContourFollower::PixelValue (kkint32 row,
 }
 
 
+
 kkint32  ContourFollower::PixelCountIn9PixelNeighborhood (kkint32  row, 
                                                           kkint32  col
                                                          )
@@ -211,9 +212,6 @@ void  ContourFollower::GetNextPixel (kkint32&  nextRow,
   }  /* CalcMagnitude */
   
 #endif
-
-
-
 
 
 
@@ -828,9 +826,6 @@ PointListPtr  ContourFollower::GenerateContourList ()
 
 
 
-
-
-
 ComplexDouble**  GetFourierOneDimMask (kkint32  size)
 {
   static  
@@ -907,7 +902,6 @@ ComplexDouble**  GetFourierOneDimMask (kkint32  size)
 
 
 
-
 ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourier
 {
   static  
@@ -915,7 +909,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   static  
   ComplexDouble**  revFourierMask = NULL;
-
 
   if  (size == curRevMaskSize)
     return  revFourierMask;
@@ -925,7 +918,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   kkint32  x;
   
-
   if  (revFourierMask)
   {
     for  (x = 0;  x < curRevMaskSize;  x++)
@@ -937,7 +929,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
     delete[]  revFourierMask;
     revFourierMask = NULL;
   }
-
 
   revFourierMask = new ComplexDouble*[size];
   for  (x = 0;  x < size;  x++)
@@ -987,7 +978,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   return  revFourierMask;
 }  /* GetRevFourierOneDimMask */
-
 
 
 
@@ -1052,7 +1042,6 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
     numOfBorderPixels++;
   }
-
 
   #if  defined(FFTW_AVAILABLE)
     fftwf_complex*  src = (fftwf_complex*)fftwf_malloc (sizeof (fftwf_complex) * numOfBuckets);
@@ -1133,7 +1122,6 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
   return  numOfBorderPixels;
 }  /* CreateFourierDescriptorBySampling */
-
 
 
 
@@ -1272,8 +1260,6 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
 
 
-
-
 PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>  fourier,
                                                            PointList&             origPointList
                                                           )
@@ -1331,7 +1317,6 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
        double  imagPart = (double)destFFTW[l].imag ();
        ComplexDouble  z (realPart, imagPart);
     #endif
-
     
     //  z = z / (double)(fourier.size ());
 

@@ -15,15 +15,13 @@
 #include <stdarg.h>
 #include <vector>
 #include <string.h>
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace  std;
-
 
 #include "KKException.h"
 #include "KKStr.h"
 #include "OSservices.h"
 using namespace  KKB;
-
 
 #include "FeatureVector.h"
 using namespace  KKMLL;
@@ -125,7 +123,6 @@ SVM289_BFS::svm_problem::svm_problem (const svm_problem&  _prob):
 
 
 
-
 SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
                                       const float*              _y,
                                       const FeatureNumList&     _selFeatures
@@ -160,6 +157,7 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
 }
 
 
+
 SVM289_BFS::svm_problem::~svm_problem ()
 {
   delete y;
@@ -167,7 +165,6 @@ SVM289_BFS::svm_problem::~svm_problem ()
 }
 
 
-    
 
 FileDescConstPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 {
@@ -195,6 +192,7 @@ SVM289_BFS::svm_parameter::svm_parameter ():
   probParam    (0.0)
 {
 }
+
 
 
 SVM289_BFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
@@ -327,8 +325,6 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
 
 
 
-
-
 void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
                                                       const KKStr&  value,
                                                       bool&         parmUsed
@@ -399,9 +395,6 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
     parmUsed = false;
   }
 }  /* ProcessSvmParameter */
-
-
-
 
 
 
@@ -530,9 +523,6 @@ void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
 
 
 
-
-
-
 SVM_Type  SVM289_BFS::SVM_Type_FromStr (KKStr  s)
 {
   s.Upper ();
@@ -594,8 +584,6 @@ KKStr  SVM289_BFS::SVM_Type_ToStr (SVM_Type  svmType)
  }
 
  
- 
-
 
 KKStr  SVM289_BFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
 {
@@ -613,12 +601,12 @@ KKStr  SVM289_BFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
 
 
 
-
 static void print_string_stdout (const char *s)
 {
   fputs(s,stdout);
   fflush(stdout);
 }
+
 
 
 void (*SVM289_BFS::svm_print_string) (const char *) = &print_string_stdout;
@@ -643,8 +631,6 @@ static void info(const char *fmt,...) {}
 #endif
 
 
-
-//
 
 class  SVM289_BFS::Cache
 {
@@ -787,7 +773,6 @@ void Cache::swap_index (kkint32 i, kkint32 j)
   if  (head[j].len) 
     lru_delete(&head[j]);
 
-
   SVM289_BFS::swap (head[i].data, head[j].data);
 
   SVM289_BFS::swap (head[i].len,  head[j].len);
@@ -800,7 +785,6 @@ void Cache::swap_index (kkint32 i, kkint32 j)
 
   if  (i > j) 
     SVM289_BFS::swap(i, j);
-
 
   for  (head_t*  h = lru_head.next;  h != &lru_head;  h = h->next)
   {
@@ -825,13 +809,6 @@ void Cache::swap_index (kkint32 i, kkint32 j)
 
 
 
-
-
-
-
-
-
-
 class  SVM289_BFS::QMatrix 
 {
 public:
@@ -840,8 +817,6 @@ public:
   virtual void swap_index (kkint32 i, kkint32 j)  = 0;
   virtual ~QMatrix() {}
 };
-
-
 
 
 
@@ -906,10 +881,12 @@ private:
               )  const;
 
 
+
   double kernel_linear (kkint32 i, kkint32 j) const
   {
     return dot ((*x)[i], (*x)[j]);
   }
+
 
 
   double  kernel_poly (kkint32 i, kkint32 j) const
@@ -918,10 +895,12 @@ private:
   }
 
 
+
   double  kernel_rbf (kkint32 i, kkint32 j) const
   {
     return exp (-gamma * (x_square[i] + x_square[j] - 2 * dot ((*x)[i], (*x)[j])));
   }
+
 
 
   double kernel_sigmoid (kkint32 i, kkint32 j) const
@@ -1013,7 +992,6 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
 
 
-
 SVM289_BFS::Kernel::~Kernel()
 {
   delete[] selFeatures;    selFeatures = NULL;
@@ -1032,7 +1010,6 @@ SVM289_BFS::Kernel::~Kernel()
   delete  x;
   x = NULL;
 }
-
 
 
 
@@ -1083,15 +1060,11 @@ double  SVM289_BFS::Kernel::DotStatic (const FeatureVector&   px,
 
 
 
-
-
-
-
 double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x, 
-                                     const FeatureVector&   y,
-                                     const svm_parameter&   param,
-                                     const FeatureNumList&  selFeatures
-                                    )
+                                         const FeatureVector&   y,
+                                         const svm_parameter&   param,
+                                         const FeatureNumList&  selFeatures
+                                        )
 {
   switch  (param.kernel_type)
   {
@@ -1135,7 +1108,6 @@ double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x,
       return 0;  // Unreachable 
   }
 }  /* k_function */
-
 
 
 
@@ -1202,10 +1174,12 @@ protected:
   bool            unshrink;  // XXX
 
 
+
   double get_C (kkint32 i)
   {
     return (y[i] > 0) ? Cp : Cn;
   }
+
 
 
   void  update_alpha_status (kkint32 i)
@@ -1218,6 +1192,7 @@ protected:
 
     else alpha_status[i] = FREE;
   }
+
 
 
   bool is_upper_bound (kkint32 i) {return alpha_status[i] == UPPER_BOUND;}
@@ -1241,7 +1216,6 @@ private:
                    double Gmax2
                   );  
 };  /* Solver */
-
 
 
 
@@ -1310,18 +1284,16 @@ void  SVM289_BFS::Solver::reconstruct_gradient ()
 
 
 
-
-
-void  SVM289_BFS::Solver::Solve (kkint32          l, 
-                                 QMatrix&         Q, 
-                                 const double*    p_, 
-                                 const schar*     y_,
-                                 double*          alpha_, 
-                                 double           Cp, 
-                                 double           Cn, 
-                                 double           eps,
-                                 SolutionInfo*    si, 
-                                 kkint32          shrinking
+void  SVM289_BFS::Solver::Solve (kkint32        l, 
+                                 QMatrix&       Q, 
+                                 const double*  p_, 
+                                 const schar*   y_,
+                                 double*        alpha_, 
+                                 double         Cp, 
+                                 double         Cn, 
+                                 double         eps,
+                                 SolutionInfo*  si, 
+                                 kkint32        shrinking
                                 )
 {
   this->l = l;
@@ -1609,7 +1581,6 @@ void  SVM289_BFS::Solver::Solve (kkint32          l,
 
 
 
-
 // return 1 if already optimal, return 0 otherwise
 kkint32  SVM289_BFS::Solver::select_working_set (kkint32&  out_i, 
                                                  kkint32&  out_j
@@ -1652,7 +1623,6 @@ kkint32  SVM289_BFS::Solver::select_working_set (kkint32&  out_i,
       }
     }
   }
-
 
   kkint32 i = Gmax_idx;
   const Qfloat *Q_i = NULL;
@@ -1723,8 +1693,6 @@ kkint32  SVM289_BFS::Solver::select_working_set (kkint32&  out_i,
 
 
 
-
-
 bool  SVM289_BFS::Solver::be_shrunk(kkint32 i, double Gmax1, double Gmax2)
 {
   if  (is_upper_bound(i))
@@ -1748,7 +1716,6 @@ bool  SVM289_BFS::Solver::be_shrunk(kkint32 i, double Gmax1, double Gmax2)
     return(false);
   }
 }  /* be_shrunk */
-
 
 
 
@@ -1819,7 +1786,6 @@ void   Solver::do_shrinking()
 
 
 
-
 double  SVM289_BFS::Solver::calculate_rho ()
 {
   double  r;
@@ -1861,8 +1827,6 @@ double  SVM289_BFS::Solver::calculate_rho ()
 
   return r;
 }  /* calculate_rho */
-
-
 
 
 
@@ -1958,7 +1922,6 @@ kkint32  SVM289_BFS::Solver_NU::select_working_set (kkint32&  out_i,
       }
     }
   }
-
 
   kkint32 ip = Gmaxp_idx;
   kkint32 in = Gmaxn_idx;
@@ -2225,6 +2188,7 @@ public:
   }
 
 
+
   Qfloat*  get_QD() const
   {
     return QD;
@@ -2241,6 +2205,7 @@ public:
   }
 
 
+
   ~SVC_Q()
   {
     delete[] y;
@@ -2253,7 +2218,6 @@ private:
   Cache*  cache;
   Qfloat* QD;
 };  /* SVC_Q */
-
 
 
 
@@ -2274,6 +2238,7 @@ public:
   }
   
 
+
   Qfloat *get_Q (kkint32 i, kkint32 len) const
   {
     Qfloat *data;
@@ -2287,10 +2252,12 @@ public:
   }
 
 
+
   Qfloat *get_QD() const
   {
     return QD;
   }
+
 
 
   void swap_index (kkint32 i, kkint32 j)
@@ -2301,18 +2268,19 @@ public:
   }
 
 
+
   ~ONE_CLASS_Q()
   {
     delete cache;
     delete[] QD;
   }
 
+
 private:
   Cache *cache;
   Qfloat *QD;
 
 };  /* ONE_CLASS_Q */
-
 
 
 
@@ -2346,6 +2314,7 @@ public:
     buffer [1] = new Qfloat [2 * l];
     next_buffer = 0;
   }
+
 
 
   void swap_index (kkint32 i, kkint32 j)
@@ -2385,6 +2354,7 @@ public:
   }
 
 
+
   ~SVR_Q()
   {
     delete cache;
@@ -2394,6 +2364,7 @@ public:
     delete[] buffer[1];
     delete[] QD;
   }
+
 
 
 private:
@@ -2507,7 +2478,6 @@ void  SVM289_BFS::solve_c_svc (const svm_problem*     prob,
 
 
 
-
 void  SVM289_BFS::solve_nu_svc (const svm_problem*     prob, 
                                 const svm_parameter*   param,
                                 double*                alpha, 
@@ -2528,7 +2498,6 @@ void  SVM289_BFS::solve_nu_svc (const svm_problem*     prob,
     else
       y[i] = -1;
   }
-
 
   double sum_pos = nu * l / 2;
   double sum_neg = nu * l / 2;
@@ -2589,13 +2558,12 @@ void  SVM289_BFS::solve_nu_svc (const svm_problem*     prob,
 
 
 
-
 void  SVM289_BFS::solve_one_class (const svm_problem*    prob, 
-                               const svm_parameter*  param,
-                               double*               alpha, 
-                               Solver::SolutionInfo* si,
-                               RunLog&               _log
-                              )
+                                   const svm_parameter*  param,
+                                   double*               alpha, 
+                                   Solver::SolutionInfo* si,
+                                   RunLog&               _log
+                                  )
 {
   kkint32 l = prob->l;
 
@@ -2644,13 +2612,12 @@ void  SVM289_BFS::solve_one_class (const svm_problem*    prob,
 
 
 
-
 void  SVM289_BFS::solve_epsilon_svr (const svm_problem*    prob, 
-                                 const svm_parameter*  param,
-                                 double*               alpha, 
-                                 Solver::SolutionInfo* si,
-                                 RunLog&               _log
-                                )
+                                     const svm_parameter*  param,
+                                     double*               alpha, 
+                                     Solver::SolutionInfo* si,
+                                     RunLog&               _log
+                                    )
 {
   kkint32 l = prob->l;
   double*  alpha2       = new double [2 * l];
@@ -2668,7 +2635,6 @@ void  SVM289_BFS::solve_epsilon_svr (const svm_problem*    prob,
     linear_term [i + l] = param->p + prob->y[i];
     y           [i + l] = -1;
   }
-
 
   SVR_Q*  jester = new SVR_Q (*prob, *param, _log);
   Solver s;
@@ -2703,7 +2669,6 @@ void  SVM289_BFS::solve_epsilon_svr (const svm_problem*    prob,
 
 
 
-
 static void solve_nu_svr (const svm_problem*    prob, 
                           const svm_parameter*  param,
                           double*               alpha, 
@@ -2733,7 +2698,6 @@ static void solve_nu_svr (const svm_problem*    prob,
     y          [i + l] = -1;
   }
 
-
   SVR_Q*  jester = new SVR_Q (*prob, *param, _log);
   Solver_NU  s;
   s.Solve (2 * l, 
@@ -2762,7 +2726,6 @@ static void solve_nu_svr (const svm_problem*    prob,
 
 
 
-
 //
 // decision_function
 //
@@ -2774,14 +2737,12 @@ struct SVM289_BFS::decision_function
 
 
 
-
-
 decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob, 
-                                          const svm_parameter&  param,
-                                          double                Cp, 
-                                          double                Cn,
-                                          RunLog&               _log
-                                         )
+                                              const svm_parameter&  param,
+                                              double                Cp, 
+                                              double                Cn,
+                                              RunLog&               _log
+                                             )
 {
   double*  alpha = new double [prob.l];
   Solver::SolutionInfo  si;
@@ -2887,9 +2848,6 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
   f.rho    = si.rho;
   return  f;
 }  /* svm_train_one */
-
-
-
 
 
 
@@ -3043,8 +3001,6 @@ double  SVM289_BFS::sigmoid_predict (double  decision_value,
 
 
 
-
-
 // Method 2 from the multiclass_prob paper by Wu, Lin, and Weng
 void  SVM289_BFS::multiclass_probability (kkint32   k, /**< Number of Classes.       */
                                           double**  r, /**< Pairwise Probabilities.  */
@@ -3121,7 +3077,6 @@ void  SVM289_BFS::multiclass_probability (kkint32   k, /**< Number of Classes.  
   delete  Q;  Q  = NULL;
   delete  Qp; Qp = NULL;
 }  /* multiclass_probability */
-
 
 
 
@@ -3255,10 +3210,6 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
 
 
 
-
-
-
-
 // Return parameter of a Laplace distribution 
 double  svm_svr_probability (const svm_problem&   prob, 
                              const svm_parameter& param,
@@ -3298,8 +3249,6 @@ double  svm_svr_probability (const svm_problem&   prob,
   delete  ymv;  ymv = NULL;
   return mae;
 }  /* svm_svr_probability */
-
-
 
 
 
@@ -3373,7 +3322,6 @@ void  svm_group_classes (const svm_problem*  prob,
   *count_ret = count;
   delete  data_label;  data_label = NULL;
 }  /* svm_group_classes*/
-
 
 
 
@@ -3693,8 +3641,6 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
 
 
 
-
-
 // Stratified cross validation
 void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob, 
                                     const svm_parameter&  param, 
@@ -3846,9 +3792,6 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
  
 
 
-
-
-
 SVM_Type  svm_get_svm_type (const svm_model *model)
 {
   return model->param.svm_type;
@@ -3860,7 +3803,6 @@ kkint32  SVM289_BFS::svm_get_nr_class(const svm_model*  model)
 {
   return model->nr_class;
 }
-
 
 
 
@@ -3886,7 +3828,6 @@ double svm_get_svr_probability (const svm_model *model)
     return 0;
   }
 }
-
 
 
 
@@ -4545,7 +4486,6 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
       selFeatures = FeatureNumList (line, valid);
     }
 
-
     else if  (fieldName.EqualIgnoreCase ("SupportVector"))
     {
       // read sv_coef and SV
@@ -4735,7 +4675,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
   if  ((param->probability == 1)  &&  (svm_type == SVM_Type::ONE_CLASS))
     return "one-class SVM probability output not supported yet";
-
 
   // check whether nu-svc is feasible
   

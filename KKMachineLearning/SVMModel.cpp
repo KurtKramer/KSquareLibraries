@@ -2413,7 +2413,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           else
           {
             log.Level (-1) << endl
-              << "SVMModel::ReadXM   ***ERROR***   Unrecognized Header Field: " << idx.first << endl
+              << "SVMModel::ReadXML   ***ERROR***   Unrecognized Header Field: " << idx.first << endl
               << endl;
             errorsFound = true;
           }
@@ -2422,7 +2422,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
         if  (numOfModels < 1)
         {
           log.Level (-1) << endl
-            << "SVMModel::ReadXM   ***ERROR***   numOfModels: " << numOfModels << " Is invalid." << endl
+            << "SVMModel::ReadXML   ***ERROR***   numOfModels: " << numOfModels << " Is invalid." << endl
             << endl;
           errorsFound = true;
         }
@@ -2465,7 +2465,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           if  (!m->valid)
           {
             log.Level (-1) << endl
-              << "SVMModel::ReadXM   ***ERROR***   'OneVsOneModel'  is invalid." << endl
+              << "SVMModel::ReadXML   ***ERROR***   'OneVsOneModel'  is invalid." << endl
               << endl;
           }
           else
@@ -2473,7 +2473,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
             if  (!models)
             {
               log.Level (-1) << endl
-                << "SVMModel::ReadXM   ***ERROR***   'OneVsOneModel'   models was not defined/allocated." << endl
+                << "SVMModel::ReadXML   ***ERROR***   'OneVsOneModel'   models was not defined/allocated." << endl
                 << endl;
             }
             else
@@ -2500,7 +2500,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
         if  ((!m)  ||  (!m->valid))
         {
           log.Level (-1) << endl
-            << "SVMModel::ReadXM   ***ERROR***  SvmModel233[" << varName << "] is invalid." << endl
+            << "SVMModel::ReadXML   ***ERROR***  SvmModel233[" << varName << "] is invalid." << endl
             << endl;
           errorsFound = true;
         }
@@ -2508,7 +2508,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
         else if  (numModeLoaded >= numOfModels)
         {
           log.Level (-1) << endl
-            << "SVMModel::ReadXM   ***ERROR***   Number of models being loaded exceeds what was expected." << endl
+            << "SVMModel::ReadXML   ***ERROR***   Number of models being loaded exceeds what was expected." << endl
             << endl;
           errorsFound = true;
         }
@@ -2518,7 +2518,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           MLClassPtr  class1 = MLClass::CreateNewMLClass (lastBinaryClass1Name);
           MLClassPtr  class2 = MLClass::CreateNewMLClass (lastBinaryClass2Name);
 
-          log.Level (10) << "SVMModel::ReadXM     Class1[" << lastBinaryClass1Name << "]  Class2[" << lastBinaryClass2Name << "]" << endl;
+          log.Level (10) << "SVMModel::ReadXML     Class1[" << lastBinaryClass1Name << "]  Class2[" << lastBinaryClass2Name << "]" << endl;
 
           BinaryClassParmsPtr  binClassParms = svmParam->GetParamtersToUseFor2ClassCombo (class1, class2);
           if  (!binClassParms)
@@ -2544,7 +2544,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
             if  (lastModelIdx != numModeLoaded)
             {
-              log.Level(50) << "SVMModel::ReadXM    ***WARNING***   Index from xml file[" << lastModelIdx << "] "
+              log.Level(50) << "SVMModel::ReadXML    ***WARNING***   Index from xml file[" << lastModelIdx << "] "
             		        << "not matched numModeLoaded[" << numModeLoaded << "]."
 							<< endl;
             }
@@ -2565,7 +2565,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
   if  (assignments.size () < 2)
   {
    log.Level (-1) << endl 
-     << "SVMModel::ReadXM   ***ERROR***   'assignments is not properly defined." << endl
+     << "SVMModel::ReadXML   ***ERROR***   'assignments is not properly defined." << endl
      << endl;
     errorsFound = true;
   }
@@ -2573,7 +2573,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
   if  (!fileDesc)
   {
    log.Level (-1) << endl 
-     << "SVMModel::ReadXM   ***ERROR***   'fileDesc' is not defined." << endl
+     << "SVMModel::ReadXML   ***ERROR***   'fileDesc' is not defined." << endl
      << endl;
     errorsFound = true;
   }
@@ -2581,7 +2581,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
   if  (!svmParam)
   {
    log.Level (-1) << endl 
-     << "SVMModel::ReadXM   ***ERROR***   'svmParam' is not defined." << endl
+     << "SVMModel::ReadXML   ***ERROR***   'svmParam' is not defined." << endl
      << endl;
     errorsFound = true;
   }
