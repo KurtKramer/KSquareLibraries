@@ -116,13 +116,13 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr _config,
 
 
 
-
 NormalizationParms::~NormalizationParms ()
 {
   delete [] mean;               mean             = NULL;
   delete [] sigma;              sigma            = NULL;
   delete [] normalizeFeature;   normalizeFeature = NULL;
 }
+
 
 
 kkMemSize  NormalizationParms::MemoryConsumedEstimated ()  const
@@ -194,7 +194,6 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
     double meanDouble  = total[i] / double (numOfExamples);
     mean[i]  = meanDouble;
   }
-
 
   for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
   {
@@ -269,8 +268,6 @@ NormalizationParmsConstPtr  NormalizationParms::ReadFromFile (const KKStr&  file
   delete stream; stream = NULL;
   return n;
 }
-
-
 
 
 
@@ -376,6 +373,7 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
 }  /* ReadXML */
 
 
+
 double  NormalizationParms::Mean (kkint32  i,
                                   RunLog&  log
                                  )
@@ -392,6 +390,7 @@ double  NormalizationParms::Mean (kkint32  i,
 }  /* Mean */
 
 
+
 double  NormalizationParms::Sigma (kkint32  i,
                                    RunLog&  log
                                   )
@@ -406,6 +405,7 @@ double  NormalizationParms::Sigma (kkint32  i,
     return  sigma[i];
   }
 }  /* Sigma */
+
 
 
 void  NormalizationParms::ConstructNormalizeFeatureVector ()
@@ -435,6 +435,7 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
     }
   }
 }  /* ConstructNormalizeFeatureVector */
+
 
 
 void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)  const

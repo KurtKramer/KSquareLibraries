@@ -1,19 +1,14 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
-
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
@@ -21,7 +16,6 @@ using namespace std;
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureFileIORoberts.h"
 #include "FileDesc.h"

@@ -204,10 +204,6 @@ void  GreaterVotes (bool     useProbability,
 
 
 
-
-
-
-
 void saveData (svm_problem  ds, 
                kkint32      begin, 
                kkint32      end, 
@@ -232,6 +228,7 @@ void saveData (svm_problem  ds,
   }
   out.close();
 }
+
 
 
 /**
@@ -276,56 +273,59 @@ void  ComputeProb  (kkint32            numClasses,             // Number of Clas
                     vector<double>&    dist,                   // Distances for each binary classifier from decision boundary.
                     double**           crossClassProbTable,    // A 'numClass' x 'numClass' matrix;  will get the probabilities between classes.
                     kkint32*           votes,                  // votes by class
-                    double*            probabilities           // Probabilities for Each Class
+                    double*            probabilities,          // Probabilities for Each Class
+                    double             classPairMinProb        /**< Minimum that any class pair's computed probabilty can be. */
                    )
 {
-  kkint32  i;
-  for  (i = 0;  i < numClasses;  i++)
+  double classPairMaxProb = 1.0 - classPairMinProb;
+
+  for  (kkint32 i = 0;  i < numClasses;  i++)
     votes[i] = 0;
 
-   kkint32 distIdx = 0;
-   for  (i = 0;  i < (numClasses - 1); i++)
-   {
-     for  (kkint32 j = i + 1;  j < numClasses;  j++)
-     {
-       if  (dist[distIdx] > 0)
-         votes[i]++;
-       else
-         votes[j]++;
+  kkint32 distIdx = 0;
+  for  (kkint32 i = 0;  i < (numClasses - 1); i++)
+  {
+    for  (kkint32 j = i + 1;  j < numClasses;  j++)
+    {
+      if  (dist[distIdx] > 0)
+        votes[i]++;
+      else
+        votes[j]++;
 
-       double tempProb = (double)(1.0 / (1.0 + exp (-1.0 * probClassPairs[distIdx] * dist[distIdx])));
-       crossClassProbTable[i][j] = tempProb;
-       crossClassProbTable[j][i] = (1.0 - tempProb);
-       distIdx++;
-     }
-   }
+      double tempProb = (double)(1.0 / (1.0 + exp (-1.0 * probClassPairs[distIdx] * dist[distIdx])));
+      tempProb = Max (classPairMinProb, Min (classPairMaxProb, tempProb));
+      crossClassProbTable[i][j] = tempProb;
+      crossClassProbTable[j][i] = (1.0 - tempProb);
+      distIdx++;
+    }
+  }
 
-   double  totalProb = 0.0;
-   for  (i = 0;  i < numClasses;  i++)
-   {
-     double  probThisClass = 1.0;
-     for  (kkint32 j = 0;  j < numClasses;  j++)
-     {
-       if  (i != j)
-         probThisClass *= crossClassProbTable [i][j];
-     }
+  double  totalProb = 0.0;
+  for  (kkint32 i = 0;  i < numClasses;  i++)
+  {
+    double  probThisClass = 1.0;
+    for  (kkint32 j = 0;  j < numClasses;  j++)
+    {
+      if  (i != j)
+        probThisClass *= crossClassProbTable [i][j];
+    }
 
-     probabilities[i] = probThisClass;
-     totalProb += probThisClass;
-   }
+    probabilities[i] = probThisClass;
+    totalProb += probThisClass;
+  }
 
-   if  (totalProb == 0.0)
-   {
-     // I think this happens because we are using float for probTable and double for dist[]
-     // For now we will give each class an equal probability.
-     for  (i = 0; i < numClasses; i++)
-       probabilities[i] = (1.0 / double(numClasses));
-   }
-   else
-   {
-     for  (i = 0;  i < numClasses;  i++)
-       probabilities[i] = probabilities[i] / totalProb;
-   }
+  if  (totalProb == 0.0)
+  {
+    // I think this happens because we are using float for probTable and double for dist[]
+    // For now we will give each class an equal probability.
+    for  (kkint32 i = 0; i < numClasses; i++)
+      probabilities[i] = (1.0 / double(numClasses));
+  }
+  else
+  {
+    for  (kkint32 i = 0;  i < numClasses;  i++)
+      probabilities[i] = probabilities[i] / totalProb;
+  }
 
    //NormalizeProbabilitiesWithAMinumum (numClasses, probabilities, 0.002);
 }  /* ComputeProb */
@@ -375,7 +375,8 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                 dist,                   // Distances for each binary classifier from decision boundary.
                 crossClassProbTable,    // Will get Probabilities between classes.
                 votes,
-                probabilities           // Probabilities for Each Class
+                probabilities,          // Probabilities for Each Class
+                1e-08
                );
 
   GreaterVotes ((svmParam.SelectionMethod () == SVM_SelectionMethod::Probability),
