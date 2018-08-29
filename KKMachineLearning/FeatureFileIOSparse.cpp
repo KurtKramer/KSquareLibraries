@@ -129,8 +129,17 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
                                                      RunLog&           _log
                                                    )
 {
-  _log.Level (20) << "FeatureFileIOSparse::LoadFile   FileName[" << _fileName << "]" << endl;
-
+  _log.Level (10) << endl 
+      << "FeatureFileIOSparse::LoadFile   ***ERROR***   Roberts  LoadFile Functionality not implemented." << endl 
+      << "    _fileName   : " << _fileName << endl
+      << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
+      << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
+      << "    _in.flags   : " << _in.flags << endl
+      << "    _maxCount   : " << _maxCount << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+  
   bool  eof = false;
   bool  eol = true;
 
@@ -209,6 +218,11 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
     lineCount++;
   }
 
+  _log.Level (10) << "FeatureFileIOSparse::LoadFile  Done" << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+
   return  examples;
 }  /* LoadFile */
 
@@ -225,9 +239,16 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
                                       RunLog&               _log
                                      )
 {
-  _log.Level (20) << "FeatureFileIOSparse::SaveFile     FileName[" << _fileName << "]." << endl;
+  _log.Level (-1) << endl
+      << "FeatureFileIOSparse::SaveFile    ***ERROR***   not implemented." << endl
+      << "     _fileName    : " << _fileName << endl
+      << "     _selFeatures : " << _selFeatures.ToCommaDelStr () << endl
+      << "     _out.fail    : " << _out.fail << endl
+      << "     _cancelFlag  : " << _cancelFlag << endl
+      << endl;
+
   FeatureVectorPtr  example  = NULL;
-  FileDescConstPtr       fileDesc = _data.FileDesc ();
+  FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   _numExamplesWritten = 0;
 

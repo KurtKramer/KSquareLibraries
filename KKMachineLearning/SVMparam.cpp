@@ -562,14 +562,13 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
   if  (!selectedFeatures)
     return 0;
 
-  kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
   kkint32 numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
   switch (EncodingMethod ())
   {
   case  SVM_EncodingMethod::Binary:
-    for  (z = 0; z < numOfFeaturesSelected; z++)
+    for  (kkint32  z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
       if  ((fileDesc->Type (fieldNum) == AttributeType::Nominal)  ||
@@ -894,8 +893,6 @@ KKStr  KKMLL::KernalTypeToStr (SVM_KernalType  kernalType)
   case  SVM_KernalType::RBF:         return "RBF";
   default: return "UnKnown";
   }
-
-  return "";
 }  /* KernalTypeToStr */
 
 

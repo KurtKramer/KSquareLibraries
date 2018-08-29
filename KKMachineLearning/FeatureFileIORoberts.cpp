@@ -47,12 +47,15 @@ FileDescConstPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
                                                      RunLog&         _log
                                                     )
 {
-  _log.Level (10) << endl << endl 
-                  << "FeatureFileIORoberts::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-                  << endl;
-
-  _errorMessage = "ROBERTS read functionality not implemented.";
-  return NULL;
+  _log.Level (10) << endl << endl
+      << "FeatureFileIORoberts::GetFileDesc   ***ERROR***      Roberts  read Functionality not implemented." << endl
+      << "    _fileName: " << _fileName << endl
+      << "    _in.flags: " << _in.flags << endl
+      << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
+      << "    _estSize : " << _estSize << endl
+      << endl;
+  _errorMessage = "ROBERTS read_estSize, functionality not implemented.";
+  return NULL; 
 }
 
 
@@ -68,10 +71,17 @@ FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileNam
                                                       RunLog&           _log
                                                      )
 {
-  _log.Level (10) << endl << endl 
-                  << "FeatureFileIORoberts::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl 
-                  << endl;
-                
+  _log.Level (10) << endl
+      << "FeatureFileIORoberts::LoadFile   ***ERROR***   Roberts  LoadFile Functionality not implemented." << endl 
+      << "    _fileName   : " << _fileName << endl
+      << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
+      << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
+      << "    _in.flags   : " << _in.flags << endl
+      << "    _maxCount   : " << _maxCount << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+
   _errorMessage = "ROBERTS read functionality not implemented.";
   return NULL;
 }  /* LoadFile */

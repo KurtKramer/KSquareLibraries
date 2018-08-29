@@ -94,6 +94,7 @@ MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example,
                                RunLog&           log
                               )
 {
+  log.Level (-1) << "ModelKnn::Predict  ***ERROR***   Not Supported   example: " << example->ExampleFileName () << endl;
   return NULL;
 }
 
@@ -114,6 +115,18 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
                          RunLog&           log
                         )
 {
+  log.Level (-1) << "ModelKnn::Predict  ***ERROR***   Not Supported" << endl
+      << "example: " << example->ExampleFileName () << endl
+      << (knownClass ? 1 : 0) << (predClass1 ? 1 : 0) << (predClass2 ? 1 : 0) << endl;
+
+  predClass1Votes = 0;
+  predClass2Votes = 0;
+  probOfKnownClass = 0;
+  predClass1Prob = 0.0;
+  predClass2Prob = 0.0;
+  numOfWinners = 0;
+  knownClassOneOfTheWinners = false;
+  breakTie = 0.0;
 }  /* Predict */
                         
 

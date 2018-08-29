@@ -101,6 +101,14 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
                                                     RunLog&         _log
                                                    )
 {
+  _log.Level (10)
+      << "FeatureFileIODstWeb::GetFileDesc" << endl
+      << "    _fileName: " << _fileName << endl
+      << "    _in.flags: " << _in.flags << endl
+      << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
+      << "    _estSize : " << _estSize << endl
+      << endl;
+
   KKStr  line (1024);
   bool   eof = false;
   KKStr  classNameAttribute;
@@ -351,12 +359,15 @@ void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&    _data,
                                       RunLog&               _log
                                      )
 {
-  _log.Level (-1) << endl << endl
-                  << "FeatureFileIODstWeb::SaveFile     FileName[" << _fileName << "]   ***ERROR***." << endl
-                  << endl
-                  << "                       SaveFile   not implemented." << endl
-                  << endl;
-
+  _log.Level (-1) << endl
+      << "FeatureFileIODstWeb::SaveFile    ***ERROR***   not implemented." << endl
+      << "     _data.size   : " << _data.size () << endl
+      << "     _fileName    : " << _fileName << endl
+      << "     _selFeatures : " << _selFeatures.ToCommaDelStr () << endl
+      << "     _out.fail    : " << _out.fail << endl
+      << "     _cancelFlag  : " << _cancelFlag << endl
+      << endl;
+      
   _errorMessage = "FeatureFileIODstWeb::SaveFile    Not Implemented.";
   _successful = false;
   _numExamplesWritten = 0;

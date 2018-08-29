@@ -937,6 +937,9 @@ KKStr  MLClassList::ToTabDelimitedStr ()  const
 
 KKStr  MLClassList::ToCommaDelimitedStr ()  const
 {
+  if  (this == NULL)
+    return "NULL";
+
   KKStr s (10 * QueueSize ());
   for (kkint32 i = 0;  i < QueueSize ();  i++)
   {

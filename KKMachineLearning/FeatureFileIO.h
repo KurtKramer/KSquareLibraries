@@ -283,8 +283,6 @@ namespace KKMLL
 
     const  KKStr&   DriverName ()  {return  driverName;}
 
-
-
     static  FeatureFileIOPtr   FileFormatFromStr   (const KKStr&  _fileFormatStr);
 
     static  FeatureFileIOPtr   FileFormatFromStr   (const KKStr&  _fileFormatStr,
