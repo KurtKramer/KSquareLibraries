@@ -66,8 +66,7 @@ namespace  SVM289_MFS
     double*           y;
   };  /* svm_problem */
 
-
-
+  
 
   enum class  SVM_Type     
   {
@@ -155,8 +154,7 @@ namespace  SVM289_MFS
   };  /* svm_parameter */
 
 
-
-
+  
   struct  Svm_Model
   {
     Svm_Model ();
@@ -175,8 +173,6 @@ namespace  SVM289_MFS
     virtual ~Svm_Model ();
 
     void  CleanUpMemory ();
-
-    void  CancelFlag (bool  cancelFlag);
 
     double*  DecValues     ();
     double*  ProbEstimates ();
@@ -198,11 +194,9 @@ namespace  SVM289_MFS
                              ostream&      o
                             )  const;
 
-
-    volatile bool      cancelFlag;
     FileDescConstPtr   fileDesc;
     svm_parameter      param;      // parameter
-    kkint32            nr_class;   // number of classes, = 2 in regression/one class svm
+    kkuint32           nr_class;   // number of classes, = 2 in regression/one class svm
     kkint32            numSVs;     /**< total #SV  */
     FeatureVectorList  SV;         // SVs (SV[l])
     double**           sv_coef;    // coefficients for SVs in decision functions (sv_coef[k-1][l])

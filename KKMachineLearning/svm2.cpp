@@ -18,14 +18,12 @@
 #include  "MemoryDebug.h"
 using namespace  std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKException.h"
 #include "KKStr.h"
 #include "KKStrParser.h"
 #include "OSservices.h"
 using namespace  KKB;
-
 
 #include  "FeatureVector.h"
 using namespace  KKMLL;
@@ -153,7 +151,7 @@ SVM289_MFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
   x                (_fileDesc, false),
   y                (NULL)
 {
-  kkint32  zed = 87989;
+  _log.Level(30) << "SVM289_MFS::svm_problem::svm_problem"  << endl;
 }
 
 
@@ -248,7 +246,7 @@ SVM289_MFS::svm_parameter::svm_parameter (KKStr&  paramStr):
   probability  (0),
   probParam    (0.0)
 {
-  cerr << endl << "VM289::svm_parameter::svm_parameter   Not Doing anything with 'paramStr'" << endl << endl;
+  cerr << endl << "VM289::svm_parameter::svm_parameter   Not Doing anything with 'paramStr' " << paramStr << endl << endl;
 }
 
 
@@ -455,7 +453,6 @@ void    SVM289_MFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
     KKStr  value = str.ExtractToken2 ("\t");
     kkint32   valueI = value.ToInt    ();
     double  valueD = value.ToDouble ();
-    float   valueF = value.ToFloat  ();
 
     if  (field == "svm_type")
       svm_type = SVM_Type_FromStr (value);
@@ -923,6 +920,7 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
    x              (NULL)
 
 {
+  _log.Level(30) << "SVM289_MFS::Kernel::Kernel  _param:" << _param.ToCmdLineStr () << endl;
   x = new FeatureVectorList (_x, false);
 
   numSelFeatures = _selFeatures.NumSelFeatures ();
@@ -932,10 +930,10 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
   switch  (kernel_type)
   {
-    case Kernel_Type::LINEAR:         kernel_function = &Kernel::kernel_linear;    break;
-    case Kernel_Type::POLY:           kernel_function = &Kernel::kernel_poly;      break;
-    case Kernel_Type::RBF:            kernel_function = &Kernel::kernel_rbf;       break;
-    case Kernel_Type::SIGMOID:        kernel_function = &Kernel::kernel_sigmoid;   break;
+    case Kernel_Type::LINEAR:  kernel_function = &Kernel::kernel_linear;    break;
+    case Kernel_Type::POLY:    kernel_function = &Kernel::kernel_poly;      break;
+    case Kernel_Type::RBF:     kernel_function = &Kernel::kernel_rbf;       break;
+    case Kernel_Type::SIGMOID: kernel_function = &Kernel::kernel_sigmoid;   break;
 
     case Kernel_Type::PRECOMPUTED:
       {
@@ -975,9 +973,7 @@ SVM289_MFS::Kernel::~Kernel()
 
   if  (preComputed)
   {
-    kkint32  n = x->QueueSize ();
-    kkint32 z1 = 0;
-    for  (z1 = 0;  z1 < l;  z1++)
+    for  (kkint32 z1 = 0;  z1 < l;  z1++)
       delete  preComputed[z1];
     delete  preComputed;
     preComputed = NULL;
@@ -1143,7 +1139,7 @@ protected:
   double          Cp;
   double          Cn;
   double*         p;
-  kkint32*          active_set;
+  kkint32*        active_set;
   double*         G_bar;     // gradient, if we treat free variables as 0
   kkint32         l;
   bool            unshrink;  // XXX
@@ -1255,17 +1251,17 @@ void  SVM289_MFS::Solver::reconstruct_gradient ()
 
 
 
-void  SVM289_MFS::Solver::Solve (kkint32            l, 
-                             QMatrix&         Q, 
-                             const double*    p_, 
-                             const schar*     y_,
-                             double*          alpha_, 
-                             double           Cp, 
-                             double           Cn, 
-                             double           eps,
-                             SolutionInfo*    si, 
-                             kkint32            shrinking
-                            )
+void  SVM289_MFS::Solver::Solve (kkint32        l, 
+                                 QMatrix&       Q, 
+                                 const double*  p_, 
+                                 const schar*   y_,
+                                 double*        alpha_, 
+                                 double         Cp, 
+                                 double         Cn, 
+                                 double         eps,
+                                 SolutionInfo*  si, 
+                                 kkint32        shrinking
+                                )
 {
   this->l = l;
   this->Q = &Q;
@@ -1812,7 +1808,7 @@ class  SVM289_MFS::Solver_NU : public SVM289_MFS::Solver
 public:
   Solver_NU() {}
 
-  void  Solve (kkint32           l, 
+  void  Solve (kkint32         l, 
                QMatrix&        Q, 
                const double*   p, 
                const schar*    y,
@@ -1821,7 +1817,7 @@ public:
                double          Cn, 
                double          eps,
                SolutionInfo*   si, 
-               kkint32           shrinking
+               kkint32         shrinking
               )
   {
     this->si = si;
@@ -1829,7 +1825,7 @@ public:
   }
 
 private:
-  SolutionInfo*  si;
+  SolutionInfo*  si = NULL;
 
   kkint32  select_working_set (kkint32 &i, kkint32 &j);
 
@@ -1849,8 +1845,8 @@ private:
 
 // return 1 if already optimal, return 0 otherwise
 kkint32  SVM289_MFS::Solver_NU::select_working_set (kkint32&  out_i, 
-                                            kkint32&  out_j
-                                           )
+                                                    kkint32&  out_j
+                                                   )
 {
   // return i,j such that y_i = y_j and
   // i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)
@@ -1894,8 +1890,7 @@ kkint32  SVM289_MFS::Solver_NU::select_working_set (kkint32&  out_i,
       }
     }
   }
-
-
+  
   kkint32 ip = Gmaxp_idx;
   kkint32 in = Gmaxn_idx;
   const Qfloat *Q_ip = NULL;
@@ -1973,10 +1968,10 @@ kkint32  SVM289_MFS::Solver_NU::select_working_set (kkint32&  out_i,
 
 
 bool Solver_NU::be_shrunk (kkint32   i, 
-                           double  Gmax1, 
-                           double  Gmax2, 
-                           double  Gmax3, 
-                           double  Gmax4
+                           double   Gmax1, 
+                           double   Gmax2, 
+                           double   Gmax3, 
+                           double   Gmax4
                           )
 {
   if  (is_upper_bound(i))
@@ -2011,8 +2006,7 @@ void  SVM289_MFS::Solver_NU::do_shrinking ()
   double Gmax4 = -INF;  // Max { y_i * grad(f)_i | y_i = -1, i in I_low(\alpha) }
 
   // find maximal violating pair first
-  kkint32 i;
-  for  (i = 0;  i < active_size;  i++)
+  for  (kkint32 i = 0;  i < active_size;  i++)
   {
     if  (!is_upper_bound (i))
     {
@@ -2044,7 +2038,7 @@ void  SVM289_MFS::Solver_NU::do_shrinking ()
     active_size = l;
   }
 
-  for(i=0;i<active_size;i++)
+  for(kkint32 i = 0;  i < active_size;  ++i)
   {
     if (be_shrunk (i, Gmax1, Gmax2, Gmax3, Gmax4))
     {
@@ -2068,16 +2062,16 @@ double  SVM289_MFS::Solver_NU::calculate_rho ()
 {
   kkint32   nr_free1  = 0;
   kkint32   nr_free2  = 0;
-  double  ub1       = INF;
-  double  ub2       = INF;
-  double  lb1       = -INF;
-  double  lb2       = -INF;
-  double  sum_free1 = 0;
-  double  sum_free2 = 0;
+  double    ub1       = INF;
+  double    ub2       = INF;
+  double    lb1       = -INF;
+  double    lb2       = -INF;
+  double    sum_free1 = 0;
+  double    sum_free2 = 0;
 
   for  (kkint32 i = 0;  i < active_size;  i++)
   {
-    if(  y[i]==+1)
+    if  (y[i] == +1)
     {
       if  (is_upper_bound (i))
         lb1 = Max (lb1, G[i]);
@@ -3237,8 +3231,6 @@ double  svm_svr_probability (const svm_problem&   prob,
 
 
 
-
-
 // label: label name, start: begin of each class, count: #data of classes, perm: indexes to the original data
 // perm, length l, must be allocated before calling this subroutine
 void  svm_group_classes (const svm_problem*  prob, 
@@ -3249,21 +3241,19 @@ void  svm_group_classes (const svm_problem*  prob,
                          kkint32*                perm
                         )
 {
-  kkint32 l = prob->numTrainExamples;
-  kkint32 max_nr_class = 16;
-  kkint32 nr_class = 0;
-  kkint32 *label      = new kkint32[max_nr_class];
-  kkint32 *count      = new kkint32[max_nr_class];
-  kkint32 *data_label = new kkint32[l];
-  kkint32 i;
-
+  kkint32  l = prob->numTrainExamples;
+  kkuint32 max_nr_class = 16;
+  kkuint32 nr_class = 0;
+  kkint32* label      = new kkint32[max_nr_class];
+  kkint32* count      = new kkint32[max_nr_class];
+  kkint32* data_label = new kkint32[l];
 
   // Count number of examples in each class
-  for  (i = 0;  i < l;  i++)
+  for  (kkint32 i = 0;  i < l;  ++i)
   {
     kkint32 this_label = (kkint32)prob->y[i];
-    kkint32 j;
-    for  (j = 0;  j < nr_class;  j++)
+    kkuint32 j = 0;
+    for  (j = 0;  j < nr_class;  ++j)
     {
       if  (this_label == label[j])
       {
@@ -3289,17 +3279,17 @@ void  svm_group_classes (const svm_problem*  prob,
 
   kkint32 *start = new kkint32[nr_class];
   start[0] = 0;
-  for  (i = 1;  i < nr_class;  i++)
+  for  (kkuint32 i = 1;  i < nr_class;  i++)
     start[i] = start[i - 1] + count[i - 1];
 
-  for  (i = 0;  i < l;  i++)
+  for  (kkint32 i = 0;  i < l;  i++)
   {
     perm[start[data_label[i]]] = i;
     ++start[data_label[i]];
   }
 
   start[0] = 0;
-  for  (i = 1;  i < nr_class;  i++)
+  for  (kkuint32 i = 1;  i < nr_class;  ++i)
     start[i] = start[i - 1] + count[i - 1];
 
   *nr_class_ret = nr_class;
@@ -3308,7 +3298,6 @@ void  svm_group_classes (const svm_problem*  prob,
   *count_ret = count;
   delete  data_label;  data_label = NULL;
 }  /* svm_group_classes*/
-
 
 
 
@@ -3801,7 +3790,7 @@ kkint32  SVM289_MFS::svm_get_nr_class(const Svm_Model *model)
 void svm_get_labels(const Svm_Model *model, kkint32* label)
 {
   if (model->label != NULL)
-    for(kkint32 i=0;i<model->nr_class;i++)
+    for(kkuint32 i  =0;  i < model->nr_class;  i++)
       label[i] = model->label[i];
 }
 
@@ -3844,7 +3833,7 @@ void  SVM289_MFS::svm_predict_values (const Svm_Model*      model,
   }
   else
   {
-    kkint32 i;
+    kkint32 i = 0;
     kkint32 nr_class = model->nr_class;
     kkint32 numSVs = model->numSVs;
     
@@ -4027,7 +4016,6 @@ double  SVM289_MFS::svm_predict_probability (Svm_Model*            model,
 
 
 SVM289_MFS::Svm_Model::Svm_Model ():
-  cancelFlag          (false),
   fileDesc            (NULL),
   param               (),
   nr_class            (0),
@@ -4051,7 +4039,6 @@ SVM289_MFS::Svm_Model::Svm_Model ():
 SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
                                   FileDescConstPtr  _fileDesc
                                  ):
-  cancelFlag          (false),
   fileDesc            (_fileDesc),
   param               (_model.param),
   nr_class            (_model.nr_class),
@@ -4070,8 +4057,15 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
   prob_estimates      (NULL)
 
 {
-  kkint32  m = nr_class - 1;
-  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+  if  (nr_class < 1)
+  {
+    KKStr errMsg = "Svm_Model::Svm_Model  ***ERROR***   nr_class lesstah one.";
+    cerr << errMsg << endl;
+    throw KKException(errMsg);
+  }
+  
+  kkuint32  m = nr_class - 1;
+  kkuint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
   {
     // Copy over support vectors.
@@ -4090,7 +4084,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
   if  (_model.sv_coef)
   {
     sv_coef = new double*[m];
-    for  (kkint32 j = 0;  j < m;  j++)
+    for  (kkuint32 j = 0;  j < m;  j++)
     {
       sv_coef[j] = new double[numSVs];
       for  (kkint32 i = 0;   i < numSVs;  ++i)
@@ -4102,35 +4096,35 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
   {
     // Copy over RHO
     rho = new double[numBinaryCombos];
-    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkuint32 i = 0;  i < numBinaryCombos;  ++i)
       rho[i] = _model.rho[i];
   }
 
   if  (_model.probA)
   {
     probA = new double[numBinaryCombos];
-    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkuint32 i = 0;  i < numBinaryCombos;  ++i)
       probA[i] = _model.probA[i];
   }
 
   if  (_model.probB)
   {
     probB = new double[numBinaryCombos];
-    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkuint32 i = 0;  i < numBinaryCombos;  ++i)
       probB[i] = _model.probB[i];
   }
 
   if  (_model.label)
   {
     label = new kkint32[nr_class];
-    for  (kkint32 i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
       label[i] = _model.label[i];
   }
 
   if  (_model.nSV)
   {
     nSV = new kkint32[nr_class];
-    for (kkint32 i = 0;  i < nr_class;  i++)
+    for (kkuint32 i = 0;  i < nr_class;  i++)
       nSV[i] = _model.nSV[i];
   }
 }
@@ -4138,7 +4132,6 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
 
 
 SVM289_MFS::Svm_Model::Svm_Model (FileDescConstPtr _fileDesc):
-   cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (),
    nr_class            (0),
@@ -4163,7 +4156,6 @@ SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
                                   FileDescConstPtr      _fileDesc
                                  ):
-   cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (_param),
    nr_class            (0),
@@ -4186,12 +4178,11 @@ SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
 
 
 
-
-
 SVM289_MFS::Svm_Model::~Svm_Model ()
 {
   CleanUpMemory ();
 }
+
 
 
 void SVM289_MFS::Svm_Model::CleanUpMemory ()
@@ -4201,11 +4192,9 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
   else
     SV.Owner (false);
 
-  kkint32  i;
-
   if  (sv_coef)
   {
-    for  (i = 0;  i < (nr_class - 1);  i++)
+    for  (kkuint32 i = 0;  i < (nr_class - 1);  i++)
       delete sv_coef[i];
     delete  sv_coef;
     sv_coef = NULL;
@@ -4219,7 +4208,7 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
 
   if  (pairwise_prob)
   {
-    for  (i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
     {
       delete  pairwise_prob[i];
       pairwise_prob[i] = NULL;
@@ -4233,14 +4222,6 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
   delete  prob_estimates;
   prob_estimates = NULL;
 }  /* CleanUpMemory */
-
-
-
-void  SVM289_MFS::Svm_Model::CancelFlag (bool  _cancelFlag)
-{
-  cancelFlag = _cancelFlag;
-}
-
 
 
 kkMemSize  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
@@ -4283,7 +4264,7 @@ double** SVM289_MFS::Svm_Model::PairwiseProb  ()
   if  (!pairwise_prob)
   {
     pairwise_prob = new double*[nr_class];
-    for  (kkint32 x = 0;  x < nr_class;  x++)
+    for  (kkuint32 x = 0;  x < nr_class;  x++)
       pairwise_prob[x] = new double[nr_class];
   }
   return  pairwise_prob;
@@ -4345,7 +4326,7 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
 
     KKStr  svStr (512);
     svStr << p.ExampleFileName () << "\t" << p.NumOfFeatures ();
-    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
+    for  (kkuint32 j = 0;  j < nr_class - 1;  j++)
     {
       SPRINTF (buff, sizeof (buff), "%0.15g", sv_coef[j][i]);
       svStr << "\t" << buff;
@@ -4357,7 +4338,7 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
     }
     else
     {
-      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
+      for  (kkuint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
         svStr << "\t" << zed << ":" << p.FeatureData (zed);
     }
 
@@ -4371,11 +4352,9 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
 
 
 
-
 /**
  *@details  Reading in all the info needed to build the Svm_Model data structure including allocating needed memory.
  */
-
 void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
                                       XmlTagConstPtr  tag,
                                       VolConstBool&   cancelFlag,      
@@ -4478,7 +4457,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("SupportVector"))
         {
           kkint32 m = nr_class - 1;
-          kkint32 i = 0, j = 0;
+          kkint32 i = 0;
 
           if  (!sv_coef)
           {
@@ -4486,7 +4465,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
             for  (i = 0;  i < m;  i++)
             {
               sv_coef[i] = new double[numSVs];
-              for  (j = 0;  j < numSVs;  j++)
+              for  (kkint32 j = 0;  j < numSVs;  j++)
                 sv_coef[i][j] = 0.0;
             }
           }
@@ -4505,7 +4484,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
 
             FeatureVectorPtr  fv = new FeatureVector (numOffeatures);
 
-            for  (kkint32  j = 0;  (j < (nr_class - 1))  &&  p.MoreTokens ();  ++j)
+            for  (kkuint32  j = 0;  (j < (nr_class - 1))  &&  p.MoreTokens ();  ++j)
               sv_coef[j][i] = p.GetNextTokenDouble ("\t");
 
             if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
@@ -4538,7 +4517,6 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
 
 
 
-
 /** @brief Derives multi-class probability. */
 void  SVM289_MFS::Svm_Model::NormalizeProbability ()
 {
@@ -4548,14 +4526,12 @@ void  SVM289_MFS::Svm_Model::NormalizeProbability ()
   if  (pairwise_prob == NULL)
     return;
 
-  kkint32  x = 0;
-  kkint32  y = 0;
   double  totalProb = 0.0;
 
-  for  (x = 0;  x < nr_class;  x++)
+  for  (kkuint32 x = 0;  x < nr_class;  x++)
   {
     prob_estimates[x] = 1.0;
-    for  (y = 0;  y < nr_class;  y++)
+    for  (kkuint32 y = 0;  y < nr_class;  y++)
     {
       if  (x != y)
         prob_estimates[x] *= pairwise_prob[x][y];
@@ -4564,7 +4540,7 @@ void  SVM289_MFS::Svm_Model::NormalizeProbability ()
     totalProb += prob_estimates[x];
   }
 
-  for  (x = 0;  x < nr_class;  x++)
+  for  (kkuint32 x = 0;  x < nr_class;  x++)
     prob_estimates[x] /= totalProb;
 }  /* NormalizeProbability */
 
