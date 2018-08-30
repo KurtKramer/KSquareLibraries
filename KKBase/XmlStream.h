@@ -322,6 +322,7 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  nameTag->ToString ();}
     virtual  double   ToDouble () const {return  0.0;}
     virtual  float    ToFloat  () const {return  0.0f;}
+    virtual  kkuint16 ToUnit16 () const {return  0;}
     virtual  kkint32  ToInt32  () const {return  0;}
 
   private:
@@ -526,16 +527,13 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  value ? "True" : "False";}
     virtual  double   ToDouble () const {return  (double)value;}
     virtual  float    ToFloat  () const {return  (float)value;}
-    virtual  kkint32  ToInt32  () const {return  (kkint32)value;}
+    virtual  kkuint16 ToUint16 () const {return  (value ? 1 : 0);}
+    virtual  kkint32  ToInt32  () const {return  (value ? 1 : 0);}
 
   private:
     bool  value;
   };
   typedef  XmlElementBool*  XmlElementBoolPtr;
-
-
-
-
 
 
   /****************************************************************************/
@@ -562,7 +560,8 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  value.YYYY_MM_DD_HH_MM_SS ();}
     virtual  double   ToDouble () const {return  (double)value.Seconds ();}
     virtual  float    ToFloat  () const {return  (float)value.Seconds ();}
-    virtual  kkint32  ToInt32  () const {return  (kkint32)value.ToDays ();}
+    virtual  kkuint16 ToUint16 () const;
+    virtual  kkint32  ToInt32  () const;
     
   private:
     DateTime  value;
@@ -671,11 +670,12 @@ namespace  KKB
       XmlElementTemplate<KKStr> (tag, s, cancelFlag, log)
     {}
 
-    virtual  bool     ToBool   () const {return  (Value () ? Value ()->ToBool () : false);}
-    virtual  KKStr    ToKKStr  () const {return  (Value () ? *Value () : KKStr::EmptyStr ());}
+    virtual  bool     ToBool   () const {return  (Value () ? Value ()->ToBool ()   : false);}
+    virtual  KKStr    ToKKStr  () const {return  (Value () ? *Value ()             : KKStr::EmptyStr ());}
     virtual  double   ToDouble () const {return  (Value () ? Value ()->ToDouble () : 0.0);}
-    virtual  float    ToFloat  () const {return  (Value () ? Value ()->ToFloat ()  : 0.0f);}
-    virtual  kkint32  ToInt32  () const {return  (Value () ? Value ()->ToInt32 ()  : 0);}
+    virtual  float    ToFloat  () const {return  (Value () ? Value ()->ToFloat  () : 0.0f);}
+    virtual  kkuint32 ToUint16 () const {return  (Value () ? Value ()->ToUint16 () : 0);}
+    virtual  kkint32  ToInt32  () const {return  (Value () ? Value ()->ToInt32  () : 0);}
   };
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
   XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
@@ -805,6 +805,7 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const;                    \
     virtual  double   ToDouble () const;                    \
     virtual  float    ToFloat  () const;                    \
+    virtual  kkuint16 ToUint16 () const;                    \
     virtual  kkint32  ToInt32  () const;                    \
     virtual  kkint64  ToInt64  () const;                    \
   private:                                                  \

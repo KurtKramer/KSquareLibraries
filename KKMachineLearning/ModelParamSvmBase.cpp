@@ -13,7 +13,6 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ModelParamSvmBase.h"
 #include "FileDesc.h"
 #include "MLClass.h"
@@ -72,7 +71,7 @@ ModelParamSvmBasePtr  ModelParamSvmBase::Duplicate ()  const
 
 
 
-void  ModelParamSvmBase::Cost   (double _cost)
+void  ModelParamSvmBase::Cost (double _cost)
 {
   svmParam.Cost (_cost);
   ModelParam::Cost (_cost);
@@ -80,7 +79,7 @@ void  ModelParamSvmBase::Cost   (double _cost)
 
 
 
-void  ModelParamSvmBase::Gamma  (double _gamma)
+void  ModelParamSvmBase::Gamma (double _gamma)
 {
   svmParam.Gamma (_gamma);
   ModelParam::Gamma (_gamma);
@@ -147,8 +146,7 @@ void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
   o << endl;
 
   WriteXMLFields (o);
-
-
+  
   svmParam.ToTabDelStr ().WriteXML ("SvmParam", o);
 
   XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);

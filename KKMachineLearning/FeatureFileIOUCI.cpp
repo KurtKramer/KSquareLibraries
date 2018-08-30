@@ -1,17 +1,13 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include "KKBaseTypes.h"
@@ -21,12 +17,10 @@ using namespace std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FeatureFileIOUCI.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace  KKMLL;
-
 
 
 FeatureFileIOUCI   FeatureFileIOUCI::driver;
@@ -110,9 +104,6 @@ FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
 
 
 
-
-
-
 FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
@@ -173,9 +164,6 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
 
 
 
-
-
-
 void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
                                    const KKStr&          _fileName,
                                    FeatureNumListConst&  _selFeatures,
@@ -190,6 +178,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
 {
   _log.Level (50) << "FeatureFileIOUCI::SaveFile   _fileName: " << _fileName << endl;
   FeatureVectorPtr   example = NULL;
+  _errorMessage = "";
 
   _numExamplesWritten = 0;
 
@@ -227,6 +216,4 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   _log.Level (50) << "FeatureFileIOUCI::SaveFile  _successful: " << _successful << "  _cancelFlag: " << _cancelFlag << endl;
 
   return;
-}  /* WriteUCIFile */
-
-
+}  /* SaveFile */

@@ -119,7 +119,7 @@ kkint32  ImageFeaturesNodeKey::CompareTwoExamples (const FeatureVectorPtr i1,
   const float*  f1 = i1->FeatureDataConst ();
   const float*  f2 = i2->FeatureDataConst ();
 
-  for  (kkint32 x = 0;  x < i1->NumOfFeatures ();  x++)
+  for  (kkuint32 x = 0;  x < i1->NumOfFeatures ();  x++)
   {
     if  (f1[x] < f2[x])
       return -1;

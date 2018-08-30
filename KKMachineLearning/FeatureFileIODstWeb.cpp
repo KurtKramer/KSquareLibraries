@@ -11,14 +11,12 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace KKB;
-
 
 #include "FeatureFileIODstWeb.h"
 #include "FileDesc.h"
@@ -104,7 +102,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
   _log.Level (10)
       << "FeatureFileIODstWeb::GetFileDesc" << endl
       << "    _fileName: " << _fileName << endl
-      << "    _in.flags: " << _in.flags << endl
+      << "    _in.flags: " << _in.flags() << endl
       << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
       << "    _estSize : " << _estSize << endl
       << endl;
@@ -345,31 +343,3 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
   return  examples;
 }  /* LoadFile */
-
-
-
-void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&    _data,
-                                      const KKStr&          _fileName,
-                                      FeatureNumListConst&  _selFeatures,
-                                      ostream&              _out,
-                                      kkuint32&             _numExamplesWritten,
-                                      VolConstBool&         _cancelFlag,
-                                      bool&                 _successful,
-                                      KKStr&                _errorMessage,
-                                      RunLog&               _log
-                                     )
-{
-  _log.Level (-1) << endl
-      << "FeatureFileIODstWeb::SaveFile    ***ERROR***   not implemented." << endl
-      << "     _data.size   : " << _data.size () << endl
-      << "     _fileName    : " << _fileName << endl
-      << "     _selFeatures : " << _selFeatures.ToCommaDelStr () << endl
-      << "     _out.fail    : " << _out.fail << endl
-      << "     _cancelFlag  : " << _cancelFlag << endl
-      << endl;
-      
-  _errorMessage = "FeatureFileIODstWeb::SaveFile    Not Implemented.";
-  _successful = false;
-  _numExamplesWritten = 0;
-  return;
-}  /* SaveFile */

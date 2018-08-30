@@ -539,6 +539,7 @@ namespace  KKB
     KKStr     ToQuotedStr  () const  {return QuotedStr ();}
     kkuint32  ToUint       () const;
     ulong     ToUlong      () const;
+    kkuint32  ToUint16     () const;
     kkuint32  ToUint32     () const;
     kkuint64  ToUint64     () const;
 
@@ -702,6 +703,7 @@ namespace  KKB
     void  GrowAllocatedStrSpace (kkStrUint  newAllocatedSize);
 
     void  ValidateLen ()  const;
+
 
   };   /* KKStr */
 

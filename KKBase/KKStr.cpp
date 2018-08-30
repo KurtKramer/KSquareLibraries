@@ -3265,13 +3265,29 @@ double  KKStr::ToDouble () const
 
 
 
-float  KKStr::ToFloat  () const
+float  KKStr::ToFloat () const
 {
   if  (!val)
     return 0.0f;
 
-  float  f = (float)atof (val);
-  return f;
+  double d = atof (val);
+  if  (d < FLT_MIN)
+  {
+    KKStr errMsg;
+    errMsg << "KKStr::ToFloat ()  val: " << val << "  less than capacity of float: " << FLT_MIN;
+    cerr << errMsg << endl;
+    throw KKException(errMsg);
+  }
+
+  if  (d > FLT_MAX)
+  {
+    KKStr errMsg;
+    errMsg << "KKStr::ToFloat ()  val: " << val << "  greather than capacity of float: " << FLT_MAX;
+    cerr << errMsg << endl;
+    throw KKException(errMsg);
+  }
+
+  return (float)d;
 }   /* ToFloat */
 
 
@@ -3358,6 +3374,14 @@ KKB::ulong  KKStr::ToUlong () const
 {
   if  (!val)  return 0;
   return  (ulong)atol (val);
+}
+
+
+
+KKB::kkuint32  KKStr::ToUint16 () const
+{
+  if  (!val)  return 0;
+  return  (kkuint16)atol (val);
 }
 
 
@@ -3626,11 +3650,11 @@ double  KKStr::ToLongitude ()  const
 
 
 kkint32  SearchStr (const char*  src,
-                  kkint32      srcLen,
-                  kkint32      startPos,
-                  const char*  srchStr,
-                  kkint32      srchStrLen
-                 )
+                    kkint32      srcLen,
+                    kkint32      startPos,
+                    const char*  srchStr,
+                    kkint32      srchStrLen
+                   )
 {
   if  ((!src)  ||  (!srchStr))
     return -1;

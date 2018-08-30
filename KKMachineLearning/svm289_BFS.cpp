@@ -153,7 +153,6 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
   x           (_fileDesc, false),
   y           (NULL)
 {
-  kkint32  zed = 87989;
 }
 
 
@@ -455,7 +454,6 @@ void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
     KKStr  value = str.ExtractToken2 ("\t");
     kkint32 valueI = value.ToInt    ();
     double  valueD = value.ToDouble ();
-    float   valueF = value.ToFloat  ();
 
     if  (field == "svm_type")
       svm_type = SVM_Type_FromStr (value);
@@ -920,10 +918,10 @@ private:
 
 
 SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
-                        const FeatureNumList&     _selFeatures, 
-                        const svm_parameter&      _param,
-                        RunLog&                   _log
-                       ):
+                            const FeatureNumList&     _selFeatures, 
+                            const svm_parameter&      _param,
+                            RunLog&                   _log
+                           ):
 
    coef0          (_param.coef0),
    degree         (_param.degree),
@@ -999,10 +997,11 @@ SVM289_BFS::Kernel::~Kernel()
 
   if  (preComputed)
   {
-    kkint32  n = x->QueueSize ();
+    kkint32 n = x->QueueSize ();
     kkint32 z1 = 0;
-    for  (z1 = 0;  z1 < l;  z1++)
+    for  (z1 = 0;  z1 < l;  ++z1)
       delete  preComputed[z1];
+
     delete  preComputed;
     preComputed = NULL;
   }
@@ -1135,7 +1134,9 @@ public:
   Solver() {};
   virtual ~Solver() {};
 
-  struct SolutionInfo {
+  struct SolutionInfo 
+  {
+    SolutionInfo()  {obj = rho = upper_bound_p = upper_bound_n = r = 0; }
     double obj;
     double rho;
     double upper_bound_p;
@@ -1168,7 +1169,7 @@ protected:
   double          Cp;
   double          Cn;
   double*         p;
-  kkint32*          active_set;
+  kkint32*        active_set;
   double*         G_bar;     // gradient, if we treat free variables as 0
   kkint32         l;
   bool            unshrink;  // XXX
@@ -4355,7 +4356,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
     }
     else
     {
-      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
+      for  (kkuint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
         o << "\t" << zed << ":" << p.FeatureData (zed);
     }
     o << endl;
@@ -4491,7 +4492,7 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
       // read sv_coef and SV
 
       kkint32 m = nr_class - 1;
-      kkint32 i, j;
+      kkint32 i = 0, j = 0;
 
       if  (!sv_coef)
       {

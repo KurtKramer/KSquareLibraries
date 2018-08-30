@@ -227,9 +227,8 @@ namespace KKMLL
                                             kkint32&        _estSize,
                                             KKStr&          _errorMessage,
                                             RunLog&         _log
-                                           ) = 0;
-
-
+                                           );
+    
 
     /**
      *@brief To be implemented by derived classes; loads the contents of a feature data file and returns a ImageFeaturesList container object.
@@ -254,7 +253,7 @@ namespace KKMLL
                                              bool&             _changesMade,
                                              KKStr&            _errorMessage,
                                              RunLog&           _log
-                                            ) = 0;
+                                            );
 
 
     /**
@@ -278,7 +277,7 @@ namespace KKMLL
                               bool&                 _successful,
                               KKStr&                _errorMessage,
                               RunLog&               _log
-                             ) = 0;
+                             );
 
 
     const  KKStr&   DriverName ()  {return  driverName;}

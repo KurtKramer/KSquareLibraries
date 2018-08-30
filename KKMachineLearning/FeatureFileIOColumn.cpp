@@ -10,7 +10,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "OSservices.h"
@@ -18,12 +17,10 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
-
 #include "FeatureFileIOColumn.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace KKMLL;
-
 
 
 FeatureFileIOColumn  FeatureFileIOColumn::driver;

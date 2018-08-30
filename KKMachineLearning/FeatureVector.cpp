@@ -1,12 +1,12 @@
-#include  "FirstIncludes.h"
-#include  <ctype.h>
-#include  <time.h>
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <math.h>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <math.h>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace  std;
 
 #include "KKBaseTypes.h"
@@ -64,7 +64,7 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
   if  (_example.featureData)
   {
     AllocateFeatureDataArray ();
-    for  (kkint32 x = 0; x < numOfFeatures; x++)
+    for  (kkuint32 x = 0; x < numOfFeatures;  ++x)
       featureData[x] = _example.featureData[x];
   }
 }
@@ -99,7 +99,7 @@ FeatureVectorPtr  FeatureVector::Duplicate ()  const
 
 
 
-void  FeatureVector::ResetNumOfFeatures (kkint32  newNumOfFeatures)
+void  FeatureVector::ResetNumOfFeatures (kkuint32  newNumOfFeatures)
 {
   if  (newNumOfFeatures < 1)  
   {
@@ -109,9 +109,8 @@ void  FeatureVector::ResetNumOfFeatures (kkint32  newNumOfFeatures)
     throw KKException (errMsg);
   }
 
-  kkint32  x;
   float*  newFeatureData = new float[newNumOfFeatures];
-  for  (x = 0;  x < newNumOfFeatures;  x++)
+  for  (kkuint32 x = 0;  x < newNumOfFeatures;  ++x)
   {
     if  (x < numOfFeatures)
       newFeatureData[x] = featureData[x];
@@ -133,18 +132,15 @@ void  FeatureVector::AllocateFeatureDataArray ()
 
   featureData = new float [numOfFeatures];
 
-  kkint32  x;
-
-  for  (x = 0; x < numOfFeatures; x++)
+  for  (kkuint32 x = 0;  x < numOfFeatures;  ++x)
     featureData[x] = 0;
 }  /* AllocateFeatureDataArray */
 
 
 
-
-float  FeatureVector::FeatureData (kkint32 featureNum)  const
+float  FeatureVector::FeatureData (kkuint32 featureNum)  const
 {
-  if  ((featureNum < 0)  ||  (featureNum >= NumOfFeatures ()))
+  if  (featureNum >= NumOfFeatures ())
   {
     cerr << endl
          << "*** ERROR ***   FeatureVector::FeatureData(" << featureNum << ")  Index out of bounds." << endl
@@ -157,15 +153,13 @@ float  FeatureVector::FeatureData (kkint32 featureNum)  const
 
 
 
-
-void  FeatureVector::FeatureData (kkint32  _featureNum,
-                                  float  _featureValue
+void  FeatureVector::FeatureData (kkuint32  _featureNum,
+                                  float     _featureValue
                                  )
 {
-  if  ((_featureNum < 0)  ||  (_featureNum >= NumOfFeatures ()))
+  if  (_featureNum >= NumOfFeatures ())
   {
     cerr << endl
-         << endl
          << "*** ERROR ***   FeatureVector::FeatureData(" << _featureNum << ")  Index out of bounds,    no value set." << endl
          << endl;
     return;
@@ -176,22 +170,21 @@ void  FeatureVector::FeatureData (kkint32  _featureNum,
 
 
 
-
 float  FeatureVector::TotalOfFeatureData ()  const
 {
   float  totalOfFeatureData = 0.0f;
-  for  (int x = 0;  x < NumOfFeatures ();  ++x)
+  for  (kkuint32 x = 0;  x < NumOfFeatures ();  ++x)
     totalOfFeatureData += featureData[x];
   return  totalOfFeatureData;
 }
 
 
 
-void  FeatureVector::AddFeatureData (kkint32  _featureNum,
-                                     float    _featureData
+void  FeatureVector::AddFeatureData (kkuint32  _featureNum,
+                                     float     _featureData
                                     )
 {
-  if  ((_featureNum < 0)  ||  (_featureNum >= numOfFeatures))
+  if  (_featureNum >= numOfFeatures)
   {
     KKStr errMsg (128);
     errMsg << "FeatureVector::AddFeatureData   ***ERROR***   FeatureNum[" << _featureNum << "] exceeds maximum allowed Feature Number["<< numOfFeatures << "].";
@@ -204,12 +197,9 @@ void  FeatureVector::AddFeatureData (kkint32  _featureNum,
 
 
 
-
 bool  FeatureVector::FeatureDataValid ()
 {
-  kkint32  featureNum;
-
-  for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
+  for  (kkuint32 featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
   {
     if  ((featureData[featureNum] == KKB::FloatMin)  ||  (featureData[featureNum] == KKB::FloatMax))
       return  false;
@@ -217,8 +207,6 @@ bool  FeatureVector::FeatureDataValid ()
 
   return true;
 }  /* FeatureDataValid */
-
-
 
 
 
@@ -232,7 +220,6 @@ const KKStr&  FeatureVector::PredictedClassName ()  const
 
 
 
-
 const KKStr&  FeatureVector::MLClassName  ()  const
 {
   if  (mlClass)
@@ -240,6 +227,7 @@ const KKStr&  FeatureVector::MLClassName  ()  const
   else
     return KKStr::EmptyStr ();
 }  /* MLClassName */
+
 
 
 const KKStr&  FeatureVector::MLClassNameUpper ()  const
@@ -251,17 +239,20 @@ const KKStr&  FeatureVector::MLClassNameUpper ()  const
 }  /* MLClassNameUpper */
 
 
+
 KKStr  FeatureVector::ExampleRootName () const
 {
   return KKB::osGetRootNameWithExtension(exampleFileName);
 }
+
+
 
 bool FeatureVector::operator== (FeatureVector &other_image)  const
 {
   if (numOfFeatures != other_image.numOfFeatures)
     return false;
 
-  for (kkint32 i = 0; i < numOfFeatures; i++)
+  for (kkuint32 i = 0; i < numOfFeatures; i++)
   {
     if (featureData[i] != other_image.featureData[i])
     {
@@ -309,7 +300,6 @@ FeatureVectorList::FeatureVectorList (FileDescConstPtr  _fileDesc,
 
 
 
-
 FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      KKQueue<FeatureVector> (examples),
 
@@ -320,6 +310,7 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      version       (examples.version)
 {
 }
+
 
 
 /**
@@ -1272,13 +1263,12 @@ void  SplitImagesAmongstFolds (kkint32                numOfFolds,
 
 
 
-
-void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
-                                                 kkint32&  _count,
-                                                 float&  _total,
-                                                 float&  _mean,
-                                                 float&  _var,
-                                                 float&  _stdDev
+void  FeatureVectorList::CalcStatsForFeatureNum (kkuint32 _featureNum,
+                                                 kkint32& _count,
+                                                 float&   _total,
+                                                 float&   _mean,
+                                                 float&   _var,
+                                                 float&   _stdDev
                                                 )
 {
   _count  = 0;
@@ -1287,7 +1277,7 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
   _var    = 0.0f;
   _stdDev = 0.0f;
 
-  if  ((_featureNum < 0)  ||  (_featureNum >= NumOfFeatures ()))
+  if  (_featureNum >= NumOfFeatures ())
   {
     cerr << endl
          << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
@@ -1301,7 +1291,6 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
   if  (QueueSize () == 0)
     return;
     
-
   iterator  idx;
 
   for  (idx = begin (); idx != end ();  idx++)
@@ -1544,8 +1533,7 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
     MLClassPtr  mlClass = *cIDX;
     FeatureVectorListPtr  imagesThisClass = ExtractExamplesForAGivenClass (mlClass);
       
-    kkint32  featureNum;
-    for  (featureNum = 0;  featureNum < imagesThisClass->NumOfFeatures ();  featureNum++)
+    for  (kkuint32 featureNum = 0;  featureNum < imagesThisClass->NumOfFeatures ();  featureNum++)
     {
       kkint32  count;
       float  total, mean, var, stdDev;
@@ -1578,26 +1566,25 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
 
 VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 {
-  kkint32  fn = 0;
   FeatureVectorList::const_iterator  idx;
+
   VectorDouble  totals (this->NumOfFeatures (), 0.0);
-  VectorDouble  means (this->NumOfFeatures (), 0.0);
+  VectorDouble  means  (this->NumOfFeatures (), 0.0);
+
   for  (idx = begin ();  idx != end ();  idx++)
   {
     const FeatureVectorPtr fv = *idx;
     const float*  fd = fv->FeatureDataConst ();
 
-    for  (fn = 0;  fn < NumOfFeatures ();  fn++)
+    for  (kkuint32 fn = 0;  fn < NumOfFeatures ();  fn++)
       totals[fn] += fd[fn];
   }
 
-
-  for  (fn = 0;  fn < NumOfFeatures ();  fn++)
+  for  (kkuint32 fn = 0;  fn < NumOfFeatures ();  fn++)
     means[fn] = totals[fn] / (double)this->QueueSize ();
 
   return  means;
 }  /* ExtractMeanFeatureValues */
-
 
 
 
@@ -1859,7 +1846,6 @@ void  FeatureVectorList::SortByProbability (bool  reversedOrder)
 
 
 
-
 void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
 {
   auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {return l->BreakTie () < r->BreakTie ();};
@@ -1869,16 +1855,12 @@ void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
 
 
 
-
-
 void  FeatureVectorList::SortByImageFileName (bool  reversedOrder)
 {
   auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {return l->ExampleFileName() < r->ExampleFileName();};
   SortBy(reversedOrder, f);
   curSortOrder = IFL_SortOrder::IFL_ByName;
 }  /* SortByImageFileName */
-
-
 
 
 

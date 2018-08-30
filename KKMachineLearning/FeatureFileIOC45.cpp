@@ -19,7 +19,6 @@ using namespace std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FeatureFileIOC45.h"
 #include "FileDesc.h"
 #include "MLClass.h"
@@ -171,8 +170,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
 
 
-
-
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
   kkint64  lastBarPos = ln.LocateLastOccurrence ('|');
@@ -182,7 +179,6 @@ void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
 }  /* C45StripComments */
-
 
 
 
@@ -233,6 +229,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 }  /* C45StrPreProcessName */
 
 
+
 /**
  *@brief  Locates first 'ch' in 'txt' that is  not preceded by an escape character('\\').
  */
@@ -253,8 +250,6 @@ kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
 
   if  (x < txt.Len ())  return (kkint32)x;  else  return -1;
 }  /* C45LocateNextCharacter */
-
-
 
 
 
@@ -337,7 +332,6 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     validStr = false;
     return;
   }
-
 
   if  (attributeType == AttributeType::Nominal)
   {
@@ -445,7 +439,6 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
     _errorMessage = "No class line in Names File.";
     return  NULL;
   }
-
 
   FileDescPtr  fileDesc = new FileDesc ();
   fileDesc->AddClasses (*_classes);
@@ -561,8 +554,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
       return "";
     }
   }
-
-
+  
   else if  (ch == '|')
   {
     // The rest of the line is meant to be a comment,  
@@ -581,7 +573,6 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     }
     eof = in.eof ();
   }
-
 
   kkint32 tokenLen = 0;
 
@@ -708,7 +699,6 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
   return  token;
 }  /* C45ReadNextToken */
-
 
 
 
@@ -939,7 +929,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
 
 
-
 void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
                                                          KKStr&        namesFileName,
                                                          KKStr&        dataFileName
@@ -1003,9 +992,6 @@ KKStr  FeatureFileIOC45::C45AdjName (const  KKStr&  oldName)
 
   return  newName;
 } /* C45AdjName */
-
-
-
 
 
 

@@ -1,5 +1,4 @@
 #include "FirstIncludes.h"
-
 #include <math.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -10,11 +9,8 @@
 #include <vector>
 #include <assert.h>
 #include <iostream>
-
-
 #include "MemoryDebug.h"
 using namespace std;
-
 
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
@@ -22,7 +18,6 @@ using namespace std;
 #include "KKStrParser.h"
 #include "OSservices.h"
 using namespace KKB;
-
 
 #include  "KKMLLTypes.h"
 using namespace KKMLL;
@@ -50,7 +45,7 @@ SvmModel233::SvmModel233 ()
   sv_coef       = NULL;
   rho           = NULL;
   kValueTable   = NULL;
-  nr_class      = -1;
+  nr_class      = 0;
   l             = -1;
   numNonSV      = -1;
   weight        = -1;
@@ -98,7 +93,7 @@ void  SvmModel233::Dispose ()
 
   if  (sv_coef)
   {
-    for  (kkint32 i = 0;  i < (nr_class - 1);  i++)
+    for  (kkuint32 i = 0;  i < (nr_class - 1);  i++)
     {
       free (sv_coef[i]);
       sv_coef[i] = NULL;
@@ -150,7 +145,12 @@ void  SvmModel233::WriteXML (const KKStr&  varName,
   startTag.WriteXML (o);
   o << endl;
 
-  kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
+  if  (nr_class < 1)
+  {
+    throw KKException ("SvmModel233::WriteXML  nr_class < 1");
+  }
+
+  kkuint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
 
   kkint32  origPrecision = (kkint32)o.precision ();
   o.precision (14);
@@ -206,7 +206,7 @@ void  SvmModel233::WriteXML (const KKStr&  varName,
       o << "SuportVector";
 
     o.precision (16);
-    for (kkint32 j = 0;  j < nr_class - 1;  j++)
+    for (kkuint32 j = 0;  j < nr_class - 1;  j++)
       o << "\t" << sv_coef[j][i];
 
     const svm_node *p = SV[i];
@@ -235,11 +235,12 @@ void  SvmModel233::ReadXML (XmlStream&      s,
                            )
 {
   exampleNames.clear ();
-  kkint32 numberOfBinaryClassifiers = 0;
-  kkint32 numElementsLoaded         = 0;
-  kkint32 totalNumSVs               = 0;
-  kkint32 totalNumOfElements        = 0;
-  kkint32 numSVsLoaded              = 0;
+  kkuint32 numberOfBinaryClassifiers = 0;
+  kkint32  numElementsLoaded         = 0;
+  kkint32  totalNumSVs               = 0;
+  kkint32  totalNumOfElements        = 0;
+  kkint32  numSVsLoaded              = 0;
+
   delete  rho;      rho     = NULL;
   delete  margin;   margin  = NULL;
   delete  nSV;      nSV     = NULL;
@@ -427,14 +428,14 @@ void  SvmModel233::ReadXML (XmlStream&      s,
           exampleNames.push_back (p.GetNextToken ("\t"));
         }
       
-        for (kkint32 j = 0;  j < nr_class - 1;  j++)
+        for (kkuint32 j = 0;  j < nr_class - 1;  j++)
           sv_coef[j][numSVsLoaded] = p.GetNextTokenDouble ("\t");
 
         SV[numSVsLoaded] = &(xSpace[numElementsLoaded]);
 
         while  ((p.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
         {
-          xSpace[numElementsLoaded].index = p.GetNextTokenInt (":");
+          xSpace[numElementsLoaded].index = p.GetNextTokenInt16 (":");
           xSpace[numElementsLoaded].value = p.GetNextTokenDouble ("\t");
           numElementsLoaded++;
         }
@@ -529,7 +530,9 @@ XmlFactoryMacro(SvmModel233)
     Solver() {};
     virtual ~Solver() {};
   
-    struct SolutionInfo {
+    struct SolutionInfo 
+    {
+      SolutionInfo (): obj (0.0), rho(0.0), upper_bound_p(0.0), upper_bound_n(0.0), r(0.0) {}
       double obj;
       double rho;
       double upper_bound_p;
@@ -571,7 +574,7 @@ XmlFactoryMacro(SvmModel233)
     double         eps;
     double*        C;
     double*        b;
-    kkint32*         active_set;
+    kkint32*       active_set;
     double*        G_bar;          // gradient, if we treat free variables as 0
     kkint32        l;
     bool           unshrinked;     // XXX
@@ -1086,8 +1089,6 @@ KKStr  svm_parameter::ToCmdLineStr ()  const
 
 KKStr  svm_parameter::ToTabDelStr  ()  const
 {
-  kkint32  x;
-
   KKStr  result (300);
 
   result << "svm_type"    << "\t"  << svm_type       << "\t"
@@ -1102,14 +1103,14 @@ KKStr  svm_parameter::ToTabDelStr  ()  const
   result << "nr_weight"   << "\t"  << nr_weight      << "\t";
   if  (nr_weight > 0)
   {
-    for  (x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
     {
       if  (x > 0)  result << ",";
       result << weight_label[x];
     }
     result << "\t";
 
-    for  (x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
     {
       if  (x > 0)  result << ",";
       result << weight[x];
@@ -1893,7 +1894,7 @@ void SVM233::Solver::reconstruct_gradient()
 
 
 
-void  SVM233::Solver::Solve(kkint32          l,
+void  SVM233::Solver::Solve(kkint32        l,
                             const Kernel&  Q, 
                             const double*  b_, 
                             const schar*   y_,
@@ -2159,7 +2160,8 @@ void  SVM233::Solver::Solve(kkint32          l,
 }
 
 
-void SVM233::Solver::Solve(kkint32          l,
+
+void SVM233::Solver::Solve(kkint32        l,
                            const Kernel&  Q,
                            const double*  b_,
                            const schar*   y_,
@@ -2185,7 +2187,7 @@ void SVM233::Solver::Solve(kkint32          l,
 
 
 // return 1 if already optimal, return 0 otherwise
-kkint32  SVM233::Solver::select_working_set(kkint32 &out_i, kkint32 &out_j)
+kkint32  SVM233::Solver::select_working_set (kkint32 &out_i, kkint32 &out_j)
 {
   // return i,j which maximize -grad(f)^T d , under constraint
   // if alpha_i == C, d != +1
@@ -2396,8 +2398,7 @@ private:
 
 
 
-
-kkint32 SVM233::Solver_NU::select_working_set(kkint32 &out_i, kkint32 &out_j)
+kkint32  SVM233::Solver_NU::select_working_set (kkint32 &out_i, kkint32 &out_j)
 {
   // return i,j which maximize -grad(f)^T d , under constraint
   // if alpha_i == C, d != +1
@@ -2472,7 +2473,6 @@ kkint32 SVM233::Solver_NU::select_working_set(kkint32 &out_i, kkint32 &out_j)
   }
   return 0;
 }
-
 
 
 
@@ -3654,7 +3654,7 @@ kkint32 svm_get_nr_class(const SvmModel233 *model)
 
 void svm_get_labels(const SvmModel233 *model, kkint32* label)
 {
-  for  (kkint32 i = 0;  i < model->nr_class;  i++)
+  for  (kkuint32 i = 0;  i < model->nr_class;  i++)
     label[i] = model->label[i];
 }
 
@@ -3681,7 +3681,7 @@ void  SVM233::Svm_Save_Model (ostream&           o,
   const svm_parameter&  param = model->param;
 
   kkint32 nr_class = model->nr_class;
-  kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
+  kkuint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
 
   kkint32  origPrecision = (kkint32)o.precision ();
   o.precision (14);
@@ -3696,7 +3696,7 @@ void  SVM233::Svm_Save_Model (ostream&           o,
 
   {
     o << "rho";
-    for  (kkint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
+    for  (kkuint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
       o << "\t" << model->rho[i];
     o << endl;
   }
@@ -3706,7 +3706,7 @@ void  SVM233::Svm_Save_Model (ostream&           o,
     kkint32  oldPrecision = (kkint32)o.precision ();
     o.precision (9);
     o << "Margins";
-    for  (kkint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
+    for  (kkuint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
       o << "\t" << model->margin[i];
     o << endl;
     o.precision (oldPrecision);
@@ -3945,7 +3945,7 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
       model->SV[numSVsLoaded] = &(x_space[numElementsLoaded]);
       while  ((line.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
       {
-        x_space[numElementsLoaded].index = line.GetNextTokenInt (":");
+        x_space[numElementsLoaded].index = line.GetNextTokenInt16 (":");
         x_space[numElementsLoaded].value = line.GetNextTokenDouble ("\t");
         numElementsLoaded++;
       }
@@ -4016,11 +4016,11 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
 
 
 /****************************************************************************************/
-double  SVM233::svm_predict (const SvmModel233*      model,
-                             const svm_node*       x,
-                             std::vector<double>&  dist,
-                             std::vector<kkint32>&   winners,
-                             kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+double  SVM233::svm_predict (const SvmModel233*     model,
+                             const svm_node*        x,
+                             std::vector<double>&   dist,
+                             std::vector<kkint32>&  winners,
+                             kkint32                excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
                             )
 {
   kkint32 dimSelect = model->param.dimSelect;
@@ -4060,17 +4060,16 @@ double  SVM233::svm_predict (const SvmModel233*      model,
   }
   else
   {
-    kkint32 i;
-    kkint32 nr_class = model->nr_class;
+    kkuint32 nr_class = model->nr_class;
 
-    std::vector<kkint32>   voteTable (nr_class * nr_class, 0);
+    std::vector<kkint32>  voteTable (nr_class * nr_class, 0);
     kkint32 l = model->l;
 
 
     double*  kvalue = model->kValueTable;
 
     // Precompute S/V's for all classes.
-    for  (i=0; i<l; i++)
+    for  (kkint32 i = 0; i<l; i++)
     {
       if  (i == excludeSupportVectorIDX)
       {
@@ -4089,21 +4088,21 @@ double  SVM233::svm_predict (const SvmModel233*      model,
     // 'start'  will be built to point to the beginning of the list of S'V's for each class.
     kkint32 *start = Malloc (kkint32, nr_class);
     start[0] = 0;
-    for  (i = 1;  i < nr_class;  i++)
+    for  (kkuint32 i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + model->nSV[i-1];
 
     kkint32 *vote = Malloc (kkint32, nr_class);
 
-    for  (i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
       vote[i] = 0;
 
     kkint32 p = 0;
 
     std::vector<double>  distTable (nr_class * nr_class, 0);
 
-    for  (i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
     {
-      for  (kkint32 j = i + 1;  j < nr_class;  j++)
+      for  (kkuint32 j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0;
         kkint32 si = start[i];
@@ -4149,9 +4148,9 @@ double  SVM233::svm_predict (const SvmModel233*      model,
 
     {  // kk:  jun-06-2003
 
-      for (kkint32 i = 0;  i < nr_class - 1; i++)
+      for (kkuint32 i = 0;  i < nr_class - 1; i++)
       {
-        for (kkint32 j=i+1; j< nr_class; j++)
+        for (kkuint32 j=i+1; j< nr_class; j++)
         {
           dist[p++] = distTable[i * nr_class + j];
         }
@@ -4164,7 +4163,7 @@ double  SVM233::svm_predict (const SvmModel233*      model,
     kkint32 winningAmt   = vote[0];
     winners.push_back (model->label[0]);
 
-    for  (i = 1;  i < nr_class;  i++)
+    for  (kkuint32 i = 1;  i < nr_class;  i++)
     {
       if  (vote[i] > winningAmt)
       {
@@ -4187,7 +4186,6 @@ double  SVM233::svm_predict (const SvmModel233*      model,
     return  winningLabel;
   }
 }  /* svm_predict */
-
 
 
 
@@ -4778,38 +4776,31 @@ void  SVM233::svm_GetSupportVectorStatistics (const struct SvmModel233*  model,
   numSVs = model->l;
 
   {
-    kkint32 i;
-    kkint32 nr_class = model->nr_class;
-
-    kkint32 l = model->l;
-
+    kkuint32 nr_class = model->nr_class;
 
     // 'start'  will be built to point to the beginning of the list of S'V's for each class.
     kkint32*  start = new kkint32[nr_class];
     start[0] = 0;
-    for  (i = 1;  i < nr_class;  i++)
+    for  (kkuint32 i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + model->nSV[i-1];
 
-
-    for  (i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
     {
-      for  (kkint32 j = i + 1;  j < nr_class;  j++)
+      for  (kkuint32 j = i + 1;  j < nr_class;  j++)
       {
-        double sum = 0;
         kkint32 si = start[i];
         kkint32 sj = start[j];
         kkint32 ci = model->nSV[i];
         kkint32 cj = model->nSV[j];
 
-        kkint32 k;
         double *coef1 = model->sv_coef[j-1];
         double *coef2 = model->sv_coef[i];
 
-        for  (k = 0;  k < ci;  k++)
+        for  (kkint32 k = 0;  k < ci;  k++)
           if  (coef1[si + k] != 0.0)
             totalNumSVs++;
 
-        for  (k = 0;  k < cj;  k++)
+        for  (kkint32 k = 0;  k < cj;  k++)
           if  (coef2[sj + k] != 0.0)
             totalNumSVs++;
       }

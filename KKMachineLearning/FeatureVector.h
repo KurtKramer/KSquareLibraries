@@ -86,8 +86,8 @@ namespace KKMLL
      *@param[in] _featureNum Feature Number to assign '_featureValue' to.
      *@param[in] _featureValue Value to assign to feature '_featureNum'.
      */
-    void  FeatureData (kkint32 _featureNum,
-                       float   _featureValue
+    void  FeatureData (kkuint32 _featureNum,
+                       float    _featureValue
                       );
 
 
@@ -116,7 +116,7 @@ namespace KKMLL
     const KKStr&   ExampleFileName    () const  {return exampleFileName;}  /**< Name of file that this FeatureVector was computed from.            */
     KKStr          ExampleRootName    () const;                            /**< Root name of file that this FeatureVector was computed from.       */
     bool           MissingData        () const  {return missingData;}      /**< True indicates that one or more features were missing.             */        
-    kkint32        NumOfFeatures      () const  {return numOfFeatures;}    /**< Number of features in this FeatureVector.                          */
+    kkuint32       NumOfFeatures      () const  {return numOfFeatures;}    /**< Number of features in this FeatureVector.                          */
     float          OrigSize           () const  {return origSize;}         /**< The value of Feature[0] before normalization.                      */
     MLClassPtr     PredictedClass     () const  {return predictedClass;}
     const KKStr&   PredictedClassName () const;
@@ -125,17 +125,17 @@ namespace KKMLL
     bool           Validated          () const  {return validated;}
     kkint16        Version            () const  {return version;}
 
-    float          FeatureData        (kkint32 featureNum)  const;         /**< returns The value of 'featureNum'                             */
+    float          FeatureData        (kkuint32 featureNum)  const;         /**< returns The value of 'featureNum'                             */
     const float*   FeatureData        () const  {return featureData;}      /**< Returns as a pointer to the feature data itself.        */
     float*         FeatureDataAlter   ()        {return featureData;}      /**< Same as 'FeatureData() except you can modify the data.  */
                                                                       
     const float*   FeatureDataConst   () const  {return featureData;}
     bool           FeatureDataValid   ();
 
-    void    ResetNumOfFeatures (kkint32  newNumOfFeatures);  /**< Used to reallocate memory for feature data. */
+    void    ResetNumOfFeatures (kkuint32  newNumOfFeatures);  /**< Used to reallocate memory for feature data. */
 
-    void    AddFeatureData (kkint32  _featureNum,   /**< Indicates which feature number to update.  */
-                            float    _featureData   /**< New value to assign to '_featureNum'.      */
+    void    AddFeatureData (kkuint32  _featureNum,   /**< Indicates which feature number to update.  */
+                            float     _featureData   /**< New value to assign to '_featureNum'.      */
                            );
 
     bool  operator== (FeatureVector &other_example)  const;
@@ -149,7 +149,7 @@ namespace KKMLL
     void  AllocateFeatureDataArray ();
 
     float*         featureData;
-    kkint32        numOfFeatures;
+    kkuint32       numOfFeatures;
 
 
   private:
@@ -281,10 +281,10 @@ namespace KKMLL
   
     // Access methods.
     IFL_SortOrder      CurSortOrder    () const  {return curSortOrder;}
-    kkint32            FeatureCount    () const  {return numOfFeatures;}
+    kkuint32           FeatureCount    () const  {return numOfFeatures;}
     FileDescConstPtr   FileDesc        () const  {return fileDesc;}
     const  KKStr&      FileName        () const  {return fileName;}
-    kkint32            NumOfFeatures   () const  {return numOfFeatures;}
+    kkuint32           NumOfFeatures   () const  {return numOfFeatures;}
     kkint16            Version         () const  {return version;}
     //virtual  const char*      UnderlyingClass () const  {return "FeatureVectorList";}
 
@@ -314,7 +314,7 @@ namespace KKMLL
     FeatureVectorPtr  BinarySearchByName (const KKStr&  _imageFileName)  const;
 
 
-    void  CalcStatsForFeatureNum (kkint32   _featureNum,
+    void  CalcStatsForFeatureNum (kkuint32  _featureNum,
                                   kkint32&  _count,
                                   float&    _total,
                                   float&    _mean,
@@ -566,7 +566,7 @@ namespace KKMLL
 
     KKStr             fileName;
 
-    kkint32           numOfFeatures;
+    kkuint32          numOfFeatures;
 
     kkint16           version;  /**< Represents the version of the Feature data,  when ever I update the
                                  * way Features are calculated I increment the VersionNum in the respective

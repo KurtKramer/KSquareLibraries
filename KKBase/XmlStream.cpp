@@ -1148,6 +1148,33 @@ void  XmlElementDateTime::WriteXML (const DateTime&  d,
 }
 
 
+kkuint16 XmlElementDateTime::ToUint16 () const 
+{
+  auto zed = value.ToDays ();
+  if  (zed > UINT16_MAX)
+  {
+    KKStr errMsg;
+    errMsg << "XmlElementDateTime::ToUint16  value.ToDays (): " << zed << "> Capacity uint16: " << UINT16_MAX;
+    cerr << errMsg << endl;
+    throw KKException (errMsg);
+  }
+  return  (kkuint16)zed;
+}
+
+kkint32 XmlElementDateTime::ToInt32 () const 
+{
+  auto zed = value.ToDays ();
+  if  (zed > INT32_MAX)
+  {
+    KKStr errMsg;
+    errMsg << "XmlElementDateTime::ToInt32 value.ToDays (): " << zed << "> Capacity int32: " << INT32_MAX;
+    cerr << errMsg << endl;
+    throw KKException (errMsg);
+  }
+  return  (kkuint16)zed;
+}
+
+
 XmlFactoryMacro(DateTime)
 
 
@@ -1537,11 +1564,12 @@ void   XmlElement##TypeName::WriteXML (T              d,                  \
                                                                           \
 bool     XmlElement##TypeName::ToBool   () const {return value != 0;}     \
 KKStr    XmlElement##TypeName::ToKKStr  () const {return TurnIntoKKStr(&value);}   \
-double   XmlElement##TypeName::ToDouble () const {return (double)value;}  \
-float    XmlElement##TypeName::ToFloat  () const {return (float)value;}   \
-kkint32  XmlElement##TypeName::ToInt32  () const {return (kkint32)value;} \
-kkint64  XmlElement##TypeName::ToInt64  () const {return (kkint64)value;} \
-                                                                          \
+double   XmlElement##TypeName::ToDouble () const {return (double)value;}   \
+float    XmlElement##TypeName::ToFloat  () const {return (float)value;}    \
+kkuint16 XmlElement##TypeName::ToUint16 () const {return (kkuint16)value;} \
+kkint32  XmlElement##TypeName::ToInt32  () const {return (kkint32)value;}  \
+kkint64  XmlElement##TypeName::ToInt64  () const {return (kkint64)value;}  \
+                                                                           \
 XmlFactoryMacro(TypeName)
 
 

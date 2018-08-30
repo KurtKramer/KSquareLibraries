@@ -193,12 +193,10 @@ FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
 
 
 
-
 FeatureFileIOPtr  FeatureFileIO::FileFormatFromStr  (const KKStr&  _fileFormatStr)
 {
   return  LookUpDriver (_fileFormatStr);
 }
-
 
 
 
@@ -219,7 +217,6 @@ FeatureFileIOPtr   FeatureFileIO::FileFormatFromStr (const KKStr&  _fileFormatSt
 
   return  driver;
 }  /* FileFormatFromStr */
-
 
 
 
@@ -268,7 +265,6 @@ KKStr  FeatureFileIO::FileFormatsWrittenOptionsStr ()
 
 
 
-
 KKStr  FeatureFileIO::FileFormatsReadAndWriteOptionsStr ()
 {
   KKStr  driversThatCanReadAndWrite (128);
@@ -288,7 +284,6 @@ KKStr  FeatureFileIO::FileFormatsReadAndWriteOptionsStr ()
   }
   return driversThatCanReadAndWrite;
 }  /* FileFormatsReadAndWriteOptionsStr */
-
 
 
 
@@ -314,8 +309,6 @@ VectorKKStr  FeatureFileIO::RegisteredDriverNames (bool  canRead,
 
   return  names;
 }  /* RegisteredDriverNames */
-
-
 
 
 
@@ -455,10 +448,6 @@ void  FeatureFileIO::GetToken (istream&     _in,
 
 
 
-
-
-
-
 FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile 
                                       (const KKStr&   _fileName,
                                        MLClassList&   _mlClasses,
@@ -519,7 +508,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
 
 
 
-
 void   FeatureFileIO::AppendToFile (const KKStr&          _fileName,
                                     FeatureNumListConst&  _selFeatures,
                                     FeatureVectorList&    _examples,
@@ -559,7 +547,6 @@ void   FeatureFileIO::AppendToFile (const KKStr&          _fileName,
 
 
 
-
 void  FeatureFileIO::SaveFeatureFile (const KKStr&          _fileName, 
                                       FeatureNumListConst&  _selFeatures,
                                       FeatureVectorList&    _examples,
@@ -585,8 +572,6 @@ void  FeatureFileIO::SaveFeatureFile (const KKStr&          _fileName,
 
   out.close ();
 }  /* SaveFeatureFile */
-
-
 
 
 
@@ -636,8 +621,6 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&          _fileNa
     }
   }
 }  /* SaveFeatureFileMultipleParts */
-
-
 
 
 
@@ -779,11 +762,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
   return  dirImages;
 }  /* LoadInSubDirectoryTree */
-
-
-
-
-
 
 
 
@@ -1027,3 +1005,82 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   return  extractedFeatures;
 }  /* FeatureDataReSink */
+
+
+
+FileDescConstPtr  FeatureFileIO::GetFileDesc (const KKStr&    _fileName,
+                                              istream&        _in,
+                                              MLClassListPtr  _classes,
+                                              kkint32&        _estSize,
+                                              KKStr&          _errorMessage,
+                                              RunLog&         _log
+                                             )
+{
+  _errorMessage = "Driver '" + DriverName () + "' does not implemenet  'GetFileDesc'  method.";
+  _log.Level (10) << endl 
+      << "FeatureFileIO::GetFileDesc   ***ERROR***    " << _errorMessage << endl
+      << "    _fileName: " << _fileName << endl
+      << "    _in.flags: " << _in.flags () << endl
+      << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
+      << "    _estSize : " << _estSize << endl
+      << endl;
+  _errorMessage = "ROBERTS read_estSize, functionality not implemented.";
+  return NULL; 
+}
+
+
+
+FeatureVectorListPtr  FeatureFileIO::LoadFile (const KKStr&      _fileName,
+                                               FileDescConstPtr  _fileDesc,
+                                               MLClassList&      _classes, 
+                                               istream&          _in,
+                                               kkint32           _maxCount,    // Maximum # images to load.
+                                               VolConstBool&     _cancelFlag,
+                                               bool&             _changesMade,
+                                               KKStr&            _errorMessage,
+                                               RunLog&           _log
+                                              )
+{
+  _errorMessage = "Driver '" + DriverName () + "' does not implemenet  'LoadFile'  method.";
+  _log.Level (10) << endl
+      << "FeatureFileIO::LoadFile   ***ERROR***   " << _errorMessage << endl
+      << "    _fileName   : " << _fileName << endl
+      << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
+      << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
+      << "    _in.flags   : " << _in.flags () << endl
+      << "    _maxCount   : " << _maxCount << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+
+  _errorMessage = "ROBERTS read functionality not implemented.";
+  return NULL;
+}
+
+
+
+void  FeatureFileIO::SaveFile (FeatureVectorList&    _data,
+                               const KKStr&          _fileName,
+                               FeatureNumListConst&  _selFeatures,
+                               std::ostream&         _out,
+                               kkuint32&             _numExamplesWritten,
+                               VolConstBool&         _cancelFlag,
+                               bool&                 _successful,
+                               KKStr&                _errorMessage,
+                               RunLog&               _log
+                              )
+{
+   _errorMessage = "Driver: '" + this->DriverName () + "' does not implement 'SaveFile' method.";
+   _log.Level (-1) << endl
+      << "FeatureFileIO::SaveFile    ***ERROR***   " << _errorMessage << endl
+      << "     _data.size   : " << _data.size () << endl
+      << "     _fileName    : " << _fileName << endl
+      << "     _selFeatures : " << _selFeatures.ToCommaDelStr () << endl
+      << "     _out.fail    : " << _out.fail () << endl
+      << "     _cancelFlag  : " << _cancelFlag << endl
+      << endl;
+      
+  _successful = false;
+  _numExamplesWritten = 0;
+  return;
+}

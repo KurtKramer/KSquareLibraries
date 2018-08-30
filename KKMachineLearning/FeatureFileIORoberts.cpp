@@ -39,55 +39,6 @@ FeatureFileIORoberts::~FeatureFileIORoberts(void)
 
 
 
-FileDescConstPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
-                                                     istream&        _in,
-                                                     MLClassListPtr  _classes,
-                                                     kkint32&        _estSize,
-                                                     KKStr&          _errorMessage,
-                                                     RunLog&         _log
-                                                    )
-{
-  _log.Level (10) << endl << endl
-      << "FeatureFileIORoberts::GetFileDesc   ***ERROR***      Roberts  read Functionality not implemented." << endl
-      << "    _fileName: " << _fileName << endl
-      << "    _in.flags: " << _in.flags << endl
-      << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
-      << "    _estSize : " << _estSize << endl
-      << endl;
-  _errorMessage = "ROBERTS read_estSize, functionality not implemented.";
-  return NULL; 
-}
-
-
-
-FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileName,
-                                                      FileDescConstPtr  _fileDesc,
-                                                      MLClassList&      _classes, 
-                                                      istream&          _in,
-                                                      kkint32           _maxCount,    // Maximum # images to load.
-                                                      VolConstBool&     _cancelFlag,
-                                                      bool&             _changesMade,
-                                                      KKStr&            _errorMessage,
-                                                      RunLog&           _log
-                                                     )
-{
-  _log.Level (10) << endl
-      << "FeatureFileIORoberts::LoadFile   ***ERROR***   Roberts  LoadFile Functionality not implemented." << endl 
-      << "    _fileName   : " << _fileName << endl
-      << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
-      << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
-      << "    _in.flags   : " << _in.flags << endl
-      << "    _maxCount   : " << _maxCount << endl
-      << "    _cancelFlag : " << _cancelFlag << endl
-      << "    _changesMade: " << _changesMade << endl
-      << endl;
-
-  _errorMessage = "ROBERTS read functionality not implemented.";
-  return NULL;
-}  /* LoadFile */
-
-
-
 void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
                                        const KKStr&          _fileName,
                                        FeatureNumListConst&  _selFeatures,
@@ -102,6 +53,8 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
   _log.Level (20) << "FeatureFileIORoberts::SaveFile    FileName[" << _fileName << "]" << endl;
 
   _numExamplesWritten = 0;
+
+  _errorMessage = "";
   
   FileDescConstPtr  fileDesc = _data.FileDesc ();
 

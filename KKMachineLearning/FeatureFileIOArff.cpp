@@ -10,14 +10,12 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureFileIOArff.h"
 #include "FileDesc.h"
@@ -30,69 +28,16 @@ FeatureFileIOArff  FeatureFileIOArff::driver;
 
 
 
-
 FeatureFileIOArff::FeatureFileIOArff ():
    FeatureFileIO ("ARFF", false, true)
 {
 }
 
 
+
 FeatureFileIOArff::~FeatureFileIOArff(void)
 {
 }
-
-
-
-FileDescConstPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
-                                                  istream&        _in,
-                                                  MLClassListPtr  _classes,
-                                                  kkint32&        _estSize,
-                                                  KKStr&          _errorMessage,
-                                                  RunLog&         _log
-                                                 )
-{
-  _log.Level (10) << endl
-                  << "FeatureFileIOArff::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl
-                  << "  _fileName: " << _fileName << endl
-                  << "  _classes : " << _classes->ToTabDelimitedStr () << endl
-                  << "  _estSize : " << _estSize << endl
-                  << endl;
-  _estSize = -1;
-
-  KKStr firstLine;
-  firstLine << _in;
-
-  _errorMessage = "ARFF read functionality not implemented.";
-  return NULL;
-}
-
-
-
-FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&      _fileName,
-                                                   FileDescConstPtr  _fileDesc,
-                                                   MLClassList&      _classes, 
-                                                   istream&          _in,
-                                                   kkint32           _maxCount,    // Maximum # images to load.
-                                                   VolConstBool&     _cancelFlag,
-                                                   bool&             _changesMade,
-                                                   KKStr&            _errorMessage,
-                                                   RunLog&           _log
-                                                  )
-{
-  _log.Level (10) << endl
-    << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-    << "  _fileName    : " << _fileName    << endl
-    << "  _fileDesc    : " << _fileDesc->NumOfFields ()     << endl
-    << "  _classes     : " << _classes.ToTabDelimitedStr () << endl
-    << "  _maxCount    : " << _maxCount    << endl
-    << "  _cancelFlag  : " << _cancelFlag  << endl
-    << "  _changesMade : " << _changesMade << endl
-    << "  _in.eof()    : " << _in.eof()    << endl
-    << endl;
-                
-  _errorMessage = "ARFF read functionality not implemented.";
-  return NULL;
-}  /* LoadFile */
 
 
 
@@ -227,4 +172,3 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     << "  _cancelFlag: " << "  _errorMessage: " << _errorMessage << endl;
   return;
 }  /* SaveFile */
-

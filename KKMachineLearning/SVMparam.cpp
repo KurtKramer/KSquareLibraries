@@ -548,9 +548,7 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 
 
 
-kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
-                                               RunLog&           log
-                                              )  const
+kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc)  const
 {
   if  (!selectedFeatures)
   {
