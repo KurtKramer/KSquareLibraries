@@ -3,7 +3,6 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
-
 #include <memory>
 #include <math.h>
 #include <limits.h>
@@ -13,9 +12,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
@@ -68,6 +65,7 @@ KKStr  KKB::ColorChannelToKKStr (ColorChannels  c)
 }
 
 
+
 ColorChannels  KKB::ColorChannelFromKKStr(const KKStr& s)
 {
   uchar  c = (uchar)tolower(s.FirstChar());
@@ -93,12 +91,12 @@ void  Raster::Initialize ()
 }
 
 
+
 void  Raster::FinalCleanUp ()
 {
   GoalKeeper::Destroy (goalKeeper);
   goalKeeper = NULL;
 }
-
 
 
 
@@ -124,6 +122,7 @@ void  Raster::AddRasterInstance (const RasterPtr  r)
   }
   goalKeeper->EndBlock ();
 }
+
 
 
 void  Raster::RemoveRasterInstance (const RasterPtr  r)
@@ -161,8 +160,6 @@ void  Raster::PrintOutListOfAllocatedrasterInstances ()
              << std::endl;
   }
 }  /* PrintOutListOfAllocatedrasterInstances */
-
-
 
 
 
@@ -427,8 +424,6 @@ Raster::Raster (const BmpImage&  _bmpImage):
 
 
 
-
-
 Raster::Raster (const Raster&  _raster):
 
   backgroundPixelValue  (_raster.backgroundPixelValue),
@@ -534,11 +529,13 @@ Raster::Raster (const Raster&  _raster,
 }
 
 
+
 Raster::Raster (const Raster& _raster, const Point& topLeft, const Point& botRight) :
   Raster(_raster, topLeft.Row(), topLeft.Col(), 1 + botRight.Row () - topLeft.Row (),  1 + botRight.Col () - topLeft.Col ())
 {
 
 }
+
 
 
 Raster::Raster (const Raster& _raster,
@@ -593,7 +590,6 @@ Raster::Raster (const Raster& _raster,
     blueArea = blue[0];
   }
 }
-
 
 
 
@@ -660,7 +656,6 @@ Raster::Raster (const KKStr&  _fileName,
   weOwnRasterData = true;
   delete  r;
 }
-
 
 
 
@@ -736,9 +731,10 @@ Raster::Raster (kkint32       _height,
 {
   AddRasterInstance (this);
   AllocateImageArea ();
-  if  (!greenArea)  throw KKException ("Raster::Raster   Failed to allocate 'greenArea'.");
+  KKCheck(greenArea, "Raster::Raster   Failed to allocate 'greenArea'.");
   memcpy (greenArea, _grayScaleData, totPixels);
 }
+
 
 
 Raster::Raster (kkint32       _height,
@@ -777,27 +773,14 @@ Raster::Raster (kkint32       _height,
 {
   AddRasterInstance (this);
   AllocateImageArea ();
-  if  ((!_redChannel)  ||  (!_greenChannel)  ||  (!_blueChannel))
-  {
-    KKB::KKStr errMsg;
-    errMsg << "Raster::Raster   ***ERROR***   One of the provided channels is 'NULL'.";
-    cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
-    throw KKException (errMsg);
-  }
-
-  if ((!redArea) || (!greenArea) || (!blueArea))
-  {
-    KKB::KKStr errMsg;
-    errMsg << "Raster::Raster   ***ERROR***   Not all channels were allocated.";
-    cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
-    throw KKException(errMsg);
-  }
-
+  KKCheck (_redChannel,   "Raster::Raster   '_redChannel'   is 'NULL'.")
+  KKCheck (_greenChannel, "Raster::Raster   '_greenChannel' is 'NULL'.")
+  KKCheck (_blueChannel,  "Raster::Raster   '_blueChannel' is 'NULL'.")
+  
   memcpy (redArea,   _redChannel,   totPixels);
   memcpy (greenArea, _greenChannel, totPixels);
   memcpy (blueArea,  _blueChannel,  totPixels);
 }
-
 
 
 
@@ -887,11 +870,6 @@ void  Raster::ReSize (kkint32  _height,
 
 
 
-
-
-
-
-
 void  Raster::Initialize (kkint32    _height,
                           kkint32    _width,
                           uchar*     _grayScaleData,
@@ -905,14 +883,11 @@ void  Raster::Initialize (kkint32    _height,
   totPixels = height * width;
   color = false;
 
-  if  (_grayScaleData == NULL)
-    throw KKException ("Raster::Initialize    _grayScaleData == NULL");
-
-  if  (_grayScaleRows == NULL)
-    throw KKException ("Raster::Initialize    _grayScaleRows == NULL");
+  KKCheck (_grayScaleData, "Raster::Initialize    _grayScaleData == NULL");
+  KKCheck (_grayScaleRows, "Raster::Initialize    _grayScaleRows == NULL");
 
   greenArea = _grayScaleData;
-  green = _grayScaleRows;
+  green     = _grayScaleRows;
 
   weOwnRasterData = _takeOwnership;
 }
@@ -952,7 +927,6 @@ void  Raster::Initialize (kkint32  _height,
 
 
 
-
 void  Raster::TakeOwnershipOfAnotherRastersData (Raster&  otherRaster)
 {
   CleanUpMemory ();
@@ -988,7 +962,6 @@ void  Raster::TakeOwnershipOfAnotherRastersData (Raster&  otherRaster)
 
 
 
-
 RasterPtr  Raster::AllocateARasterInstance (kkint32  _height,
                                             kkint32  _width,
                                             bool     _color
@@ -1015,7 +988,6 @@ RasterPtr  Raster::AllocateARasterInstance (const Raster& _raster,  /**<  Source
 {
   return new Raster (_raster, _row, _col, _height, _width);
 }
-
 
 
 
@@ -1048,7 +1020,6 @@ bool  Raster::BackgroundPixel (uchar  pixel)  const
 
 
 
-
 bool  Raster::BackgroundPixel (kkint32  row,
                                kkint32  col
                               )  const
@@ -1071,7 +1042,6 @@ kkint32 Raster::TotalBackgroundPixels () const
   }
   return  totalBackgroundPixels;
 }  /* TotalBackgroundPixels */
-
 
 
 
@@ -1105,7 +1075,6 @@ float    Raster::CentroidRow ()  const
 
 
 
-
 RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
                                        kkint32    padding
                                       )
@@ -1123,17 +1092,15 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
   uchar**  newRows = paddedRaster->green;
 
   kkint32  newRow = padding;
-  kkint32  row;
-  kkint32  col;
 
   kkint32  paddedForgroudPixelCount = 0;
 
-  for  (row = 0;  row < oldHeight;  row++)
+  for  (kkint32  row = 0;  row < oldHeight;  row++)
   {
     const uchar* oldRow = image.ImageRow (row);
     
     kkint32  newCol = padding;
-    for  (col = 0; col < oldWidth;  col++)
+    for  (kkint32 col = 0; col < oldWidth;  col++)
     {
       if  (oldRow[col] > 0)
          paddedForgroudPixelCount++;
@@ -1161,7 +1128,6 @@ RasterPtr   Raster::ReversedImage ()
 
 
 
-
 RasterPtr  Raster::StreatchImage (float  rowFactor,
                                   float  colFactor
                                  )  const
@@ -1169,7 +1135,6 @@ RasterPtr  Raster::StreatchImage (float  rowFactor,
   MorphOpStretcher  streatcher (rowFactor, colFactor);
   return  streatcher.PerformOperation (this);
 }
-
 
 
 
@@ -1194,44 +1159,43 @@ void   Raster::ReverseImage ()
 }  /* ReversedImage */
 
 
+
 void  Raster::AllocateImageArea ()
 {
   CleanUpMemory ();
 
   totPixels = height * width;
   greenArea = new uchar [totPixels];
-  if  (!greenArea)
-  {
-    cerr << std::endl << std::endl 
-         << "Raster::AllocateImageArea      ***ERROR***    Error allocating memory" << std::endl
-         << std::endl;
-    osDisplayWarning ("Raster::AllocateImageArea      ***ERROR***    Error allocating memory");
 
-    greenArea = NULL;
-    return;
-  }
-
+  KKCheck(greenArea, "Raster::AllocateImageArea   Error allocating memory for 'greenArea'.");
   memset (greenArea, backgroundPixelValue, totPixels);
+  
   green = new uchar*[height];
-
+  KKCheck(green, "Raster::AllocateImageArea   Error allocating memory for 'green'.");
+  
   if  (color)
   {
     redArea = new uchar [totPixels];
+    KKCheck(redArea, "Raster::AllocateImageArea   Error allocating memory for 'redArea'.");
     memset (redArea, backgroundPixelValue, totPixels);
 
     blueArea = new uchar [totPixels];
+    KKCheck(blueArea, "Raster::AllocateImageArea   Error allocating memory for 'blueArea'.");
     memset (blueArea, backgroundPixelValue, totPixels);
 
     red  = new uchar*[height];
-    blue = new uchar*[height];  
+    KKCheck(red, "Raster::AllocateImageArea   Error allocating memory for 'red'.");
+
+    blue = new uchar*[height];
+    KKCheck(blue, "Raster::AllocateImageArea   Error allocating memory for 'blue'.");
+
   }
 
-  kkint32  row;
   uchar* greenPtr = greenArea;
   uchar* redPtr   = redArea;
   uchar* bluePtr  = blueArea;
   
-  for  (row = 0; row < height; row++)
+  for  (kkint32 row = 0; row < height; row++)
   {
     green[row] = greenPtr;
     greenPtr = greenPtr + width;
@@ -1246,6 +1210,7 @@ void  Raster::AllocateImageArea ()
     }
   }
 }  /* AllocateImageArea */
+
 
 
 void  Raster::AllocateFourierMagnitudeTable ()
@@ -1267,17 +1232,8 @@ void  Raster::AllocateFourierMagnitudeTable ()
 uchar  Raster::GetPixelValue (kkint32 row,  kkint32 col)  const
 
 {
-  if  ((row <  0)      ||  
-       (row >= height) ||
-       (col <  0)      ||
-       (col >= width))
-  {
-    cerr << "Raster::GetPixelValue   *** ERROR ***,  Raster Dimensions Exceeded."       << std::endl;
-    cerr << "                        Height[" << height << "]  Width[" << width << "]." << std::endl;
-    cerr << "                        Row["    << row    << "]  Col["   << col   << "]." << std::endl;
-    exit (-1);
-  }
-
+  KKCheck((row >= 0) && (row < height), "Raster::GetPixelValue  row: " + StrFromInt32 (row) + " out of range; Height: " + StrFromInt32 (height))
+  KKCheck((col >=  0) && (col < width),  "Raster::GetPixelValue  col: " + StrFromInt32 (col) + " out of range; Width: "  + StrFromInt32 (width))
   return  green[row][col];
 }  /* GetPixelValue */
 
@@ -1317,7 +1273,6 @@ void  Raster::GetPixelValue (kkint32 row,
 
 
 
-
 void  Raster::GetPixelValue (kkint32     row,
                              kkint32     col,
                              PixelValue& p
@@ -1328,40 +1283,25 @@ void  Raster::GetPixelValue (kkint32     row,
 
 
 
-
-
-
 uchar  Raster::GetPixelValue (ColorChannels  channel,
                               kkint32        row,
                               kkint32        col
                              )  const
 {
-  if  ((row <  0)      ||  
-       (row >= height) ||
-       (col <  0)      ||
-       (col >= width))
-  {
-    cerr << "Raster::GetPixelValue   *** ERROR ***,  Raster Dimensions Exceeded."       << std::endl;
-    cerr << "                        Height[" << height << "]  Width[" << width << "]." << std::endl;
-    cerr << "                        Row["    << row    << "]  Col["   << col   << "]." << std::endl;
-    exit (-1);
-  }
+  const char* zed = __FILE__;
+
+  KKCheck((row >= 0) || (row < height), "Raster::GetPixelValue  row: " + StrFromInt32 (row) + " out of range; Height: " + StrFromInt32 (height))
+  KKCheck((col >= 0) || (col < width),  "Raster::GetPixelValue  col: " + StrFromInt32 (col) + " out of range; Width: "  + StrFromInt32 (width))
 
   if  (channel == ColorChannels::Green)
     return  green [row][col];
 
-  if  (!color)
-  {
-    cerr << "***ERROR*** Raster::GetPixelValue   *** ERROR ***,  Not a Color Raster."  << std::endl;
-    exit (-1);
-  }
-
+  KKCheck(color, "Raster::GetPixelValue   channel: " + StrFromInt32 ((int)channel) + " but image not a Color Raster.")
   if  (channel == ColorChannels::Red)
     return red [row][col];
   else
     return blue[row][col];
 }  /* GetPixelValue */
-
 
 
 
@@ -1383,8 +1323,6 @@ void   Raster::SetPixelValue (kkint32  row,
 
   green[row][col] = pixVal;
 }  /* SetPixelValue */
-
-
 
 
 
@@ -1411,7 +1349,6 @@ void   Raster::SetPixelValue (kkint32            row,
     blue [row][col] = pixVal.b;
   }
 }  /* SetPixelValue  */
-
 
 
 
@@ -1573,8 +1510,6 @@ void  Raster::DrawGrid (float              pixelsPerMinor,
 
 
 
-
-
 inline
 void Raster::CalcDialatedValue (kkint32 row,
                                 kkint32 col,
@@ -1597,12 +1532,8 @@ void Raster::CalcDialatedValue (kkint32 row,
 
 
 
-
 RasterPtr  Raster::CreateDilatedRaster ()  const
 {
-  kkint32  row;
-  kkint32  col;
-
   kkint32  resultForegroundPixelCount = 0;
 
   RasterPtr  result = AllocateARasterInstance (*this);
@@ -1614,10 +1545,10 @@ RasterPtr  Raster::CreateDilatedRaster ()  const
 
   uchar*  resultRow = NULL;
 
-  for  (row = 0; row < height; row++)
+  for  (kkint32 row = 0;  row < height;  row++)
   {
     resultRow = resultRows[row];
-    for  (col = 0; col < width; col++)
+    for  (kkint32 col = 0;  col < width;  col++)
     {
       if  (BackgroundPixel (resultRow[col]))
       {
@@ -1655,7 +1586,6 @@ RasterPtr  Raster::CreateDilatedRaster ()  const
 
 
 
-
 void  Raster::Dilation ()
 {
   RasterPtr  tempRaster = CreateDilatedRaster ();
@@ -1676,12 +1606,8 @@ void  Raster::Dilation ()
 
   
 
-
 RasterPtr  Raster::CreateDilatedRaster (MaskTypes  mask)  const
 {
-  kkint32 row;
-  kkint32 col;
-
   RasterPtr  result = AllocateARasterInstance (*this);
 
   uchar** resultRows = result->green;
@@ -1702,10 +1628,10 @@ RasterPtr  Raster::CreateDilatedRaster (MaskTypes  mask)  const
   kkint32  resultForegroundPixelCount = 0;
   uchar*  resultRow = NULL;
   uchar   pixelValue;
-  for  (row = 0; row < height; row++)
+  for  (kkint32 row = 0;  row < height;  ++row)
   {
     resultRow = resultRows[row];
-    for  (col = 0; col < width; col++)
+    for  (kkint32 col = 0;  col < width;  ++col)
     {
       if  (BackgroundPixel (resultRow[col]))
       {
@@ -1728,8 +1654,6 @@ RasterPtr  Raster::CreateDilatedRaster (MaskTypes  mask)  const
 
 
 
-
-
 void  Raster::Dilation (MaskTypes  mask)
 {    
   RasterPtr tempRaster = CreateDilatedRaster (mask);
@@ -1747,7 +1671,6 @@ void  Raster::Dilation (MaskTypes  mask)
 
   delete  tempRaster;
 } /* Dilation */
-
 
 
 
@@ -1776,9 +1699,6 @@ void  Raster::Dilation (MorphOp::StructureType  _structure,
 
 
 
-
-
-
 void  Raster::Dilation (RasterPtr  dest)  const
 {
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
@@ -1792,8 +1712,6 @@ void  Raster::Dilation (RasterPtr  dest)  const
   memset (destArea, 0, totPixels);
   kkint32  pixelCount = 0;
 
-  int  c, r;
-
   //  Take care of Top and Bottom rows.
   {
     uchar*  srcRow0    = srcRows[0];
@@ -1803,7 +1721,7 @@ void  Raster::Dilation (RasterPtr  dest)  const
 
     uchar*  destRow0 = destRows[0];
     uchar*  destRowBot = destRows[height - 1];
-    for (c = 1;  c < (width  - 1);  ++c)
+    for (kkint32 c = 1;  c < (width  - 1);  ++c)
     {
       if  ((srcRow0[c - 1] > backgroundPixelTH)  ||  (srcRow0[c] > backgroundPixelTH)  ||  (srcRow0[c + 1] > backgroundPixelTH)  ||
            (srcRow1[c - 1] > backgroundPixelTH)  ||  (srcRow1[c] > backgroundPixelTH)  ||  (srcRow1[c + 1] > backgroundPixelTH)
@@ -1823,10 +1741,9 @@ void  Raster::Dilation (RasterPtr  dest)  const
     }
   }
 
-
   // Take care of left and right columns
   {
-    for  (r = 1;  r < (height - 1);  ++r)
+    for  (kkint32 r = 1;  r < (height - 1);  ++r)
     {
       if  ((srcRows[r - 1][0] > backgroundPixelTH)  ||  (srcRows[r - 1][1] > backgroundPixelTH)  ||
            (srcRows[r    ][0] > backgroundPixelTH)  ||  (srcRows[r    ][1] > backgroundPixelTH)  ||
@@ -1849,16 +1766,15 @@ void  Raster::Dilation (RasterPtr  dest)  const
     }
   }
 
-
   // Take care of main Body
   {
-    for  (r = 1;  r < (height - 1);  ++r)
+    for  (kkint32 r = 1;  r < (height - 1);  ++r)
     {
       uchar*  srcRow0 = srcRows[r - 1];
       uchar*  srcRow1 = srcRows[r    ];
       uchar*  srcRow2 = srcRows[r + 1];
 
-      for  (c = 1;  c < (width - 1);  ++c)
+      for  (kkint32 c = 1;  c < (width - 1);  ++c)
       {
         if  ((srcRow0[c - 1] > backgroundPixelTH)  ||  (srcRow0[c] > backgroundPixelTH)  ||  (srcRow0[c + 1] > backgroundPixelTH)  ||
              (srcRow1[c - 1] > backgroundPixelTH)  ||  (srcRow1[c] > backgroundPixelTH)  ||  (srcRow1[c + 1] > backgroundPixelTH)  ||
@@ -1877,8 +1793,6 @@ void  Raster::Dilation (RasterPtr  dest)  const
 
 
 
-
-
 void  Raster::Dilation (RasterPtr  dest,
                         MaskTypes  mask
                        )
@@ -1893,14 +1807,11 @@ void  Raster::Dilation (RasterPtr  dest,
   memset (destArea, 0, totPixels);
   kkint32  pixelCount = 0;
 
-  int  c, r;
-
-
   // Take care of main Body
   {
-    for  (r = 0;  r < height;  ++r)
+    for  (kkint32 r = 0;  r < height;  ++r)
     {
-      for  (c = 0;  c < width;  ++c)
+      for  (kkint32 c = 0;  c < width;  ++c)
       {
         if  (IsThereANeighbor (mask, r, c)) 
         {
@@ -1951,7 +1862,6 @@ void   Raster::FillRectangle (kkint32            tlRow,
     }
   }
 }  /* FillRectangle */
-
 
 
 
@@ -2023,8 +1933,6 @@ RasterPtr  Raster::CreateFillHole () const  {
 
 void  Raster::FillHole ()
 {
-  kkint32  r;
-  kkint32  c;
   Raster  mask (*this);
 
   uchar**  maskRows = mask.green;
@@ -2032,7 +1940,7 @@ void  Raster::FillHole ()
   kkint32  lastRow = height - 1;
   kkint32  lastCol = width  - 1;
 
-  for  (c = 0; c < width; c++)
+  for  (kkint32 c = 0; c < width;  ++c)
   {
     if  (BackgroundPixel (maskRows[0][c]))
       mask.FillHoleGrow (0, c);
@@ -2041,7 +1949,7 @@ void  Raster::FillHole ()
       mask.FillHoleGrow (lastRow, c);
   }
 
-  for  (r = 0; r < height; r++)     
+  for  (kkint32 r = 0; r < height; r++)     
   {
     if  (BackgroundPixel (maskRows[r][0]))
       mask.FillHoleGrow (r, 0);
@@ -2054,10 +1962,10 @@ void  Raster::FillHole ()
   // must be in a hole inside the image.
   foregroundPixelCount = 0;
   uchar*  curRow = NULL;
-  for  (r = 0; r < height; r++)
+  for  (kkint32 r = 0; r < height; r++)
   {
     curRow = green[r];
-    for  (c = 0; c < width; c++)
+    for  (kkint32 c = 0;  c < width;  ++c)
     {
       if  (BackgroundPixel (curRow[c]))
       {
@@ -2079,8 +1987,6 @@ void  Raster::FillHole ()
 
 
 
-
-
 void  Raster::FillHole (RasterPtr  mask)
 {
   if  ((mask->Height () != height)  |  (mask->Width () != width))
@@ -2093,9 +1999,7 @@ void  Raster::FillHole (RasterPtr  mask)
 
   memset (maskArea, 0, totPixels);
 
-  kkint32 c, r, x;
-
-  for  (x = 0;  x < totPixels;  ++x)
+  for  (kkint32 x = 0;  x < totPixels;  ++x)
   {
     if  (srcArea[x] > backgroundPixelTH)
       maskArea[x] = 255;
@@ -2106,7 +2010,7 @@ void  Raster::FillHole (RasterPtr  mask)
     uchar*  rowTop = maskRows[0];
     uchar*  rowBot = maskRows[height - 1];
 
-    for  (c = 0;  c < width;  ++c)
+    for  (kkint32 c = 0;  c < width;  ++c)
     {
       if  (rowTop[c] == 0)
         rowTop[c] = 1;
@@ -2119,7 +2023,7 @@ void  Raster::FillHole (RasterPtr  mask)
     // Check Left and Right columns for background pixels and flag them as having access to the border.
     uchar*  leftCol  = maskArea;
     uchar*  rightCol = maskArea + (width - 1);
-    for  (r = 0;  r < height;  ++r)
+    for  (kkint32  r = 0;  r < height;  ++r)
     {
       if  (*leftCol == 0)
         *leftCol = 1;
@@ -2130,7 +2034,6 @@ void  Raster::FillHole (RasterPtr  mask)
       rightCol += width;
     }
   }
-
 
   // We will not iteratively scan the Mask image for pixels that have access top the edge of the image.
   // We will repeat the following loop until no pixels get flagged.
@@ -2144,9 +2047,9 @@ void  Raster::FillHole (RasterPtr  mask)
     uchar*  rowCur   = rowPrev + width;
     uchar*  rowNext  = rowCur  + width;
 
-    for  (r = 1;  r < (height - 1);  ++r)
+    for  (kkint32 r = 1;  r < (height - 1);  ++r)
     {
-      for  (c = 1;  c < (width - 1);  ++c)
+      for  (kkint32 c = 1;  c < (width - 1);  ++c)
       {
         if  (rowCur[c] == 0)
         {
@@ -2173,9 +2076,9 @@ void  Raster::FillHole (RasterPtr  mask)
     rowCur   = rowPrev - width;
     rowNext  = rowCur  - width;
 
-    for  (r = (height - 2);  r > 0;  --r)
+    for  (kkint32 r = (height - 2);  r > 0;  --r)
     {
-      for  (c = (width - 2);  c > 0;  --c)
+      for  (kkint32 c = (width - 2);  c > 0;  --c)
       {
         if  (rowCur[c] == 0)
         {
@@ -2200,7 +2103,7 @@ void  Raster::FillHole (RasterPtr  mask)
 
   // At this point the only pixels in the mask image that contain a '0' are the ones that are in holes.
   // We will now fill the corresponding pixel locations in the original image with the ForegroundPixelValue.
-  for  (x = 0;  x < totPixels;  ++x)
+  for  (kkint32 x = 0;  x < totPixels;  ++x)
   {
     if  (maskArea[x] == 0)
     {
@@ -2212,8 +2115,6 @@ void  Raster::FillHole (RasterPtr  mask)
 
 
 
-
-
 void  Raster::Erosion ()
 {
   Raster  origRaster (*this);
@@ -2222,9 +2123,6 @@ void  Raster::Erosion ()
 
   foregroundPixelCount = 0;
 
-  kkint32  r;
-  kkint32  c;
-
   kkint32  lastRow = height - 1;
   kkint32  lastCol = width - 1;
 
@@ -2232,13 +2130,13 @@ void  Raster::Erosion ()
   uchar*  rowCur  = NULL;
   uchar*  rowNext = NULL;
 
-  for  (r = 1; r < lastRow; r++)
+  for  (kkint32 r = 1;  r < lastRow;  ++r)
   {
     rowLast = origRows[r - 1];
     rowCur  = origRows[r    ];
     rowNext = origRows[r + 1];
 
-    for  (c = 1; c < lastCol; c++)
+    for  (kkint32 c = 1; c < lastCol; c++)
     {
       if  (!BackgroundPixel (green[r][c]))
       {
@@ -2266,12 +2164,8 @@ void  Raster::Erosion ()
 
 
 
-
 void  Raster::Erosion (MaskTypes  mask)
 {
-  kkint32  r;
-  kkint32  c;
-
   kkint32  bias = MorphOp::Biases (mask);
 
   kkint32  maskRowStart = 0 - bias;
@@ -2288,14 +2182,14 @@ void  Raster::Erosion (MaskTypes  mask)
   uchar*      tempRowData = NULL;
   StructureType  m = MorphOp::MaskShapes (mask);
 
-  for  (r = 0;  r < height;  r++)
+  for  (kkint32 r = 0;  r < height;  r++)
   {
     maskColStart = 0 - bias;
     maskColEnd   = 0 + bias;
 
     tempRowData = tempGreen[r];
 
-    for  (c = 0; c < width; c++)
+    for  (kkint32 c = 0; c < width; c++)
     {
       if  (ForegroundPixel (green[r][c]))
       {
@@ -2397,8 +2291,6 @@ void  Raster::Erosion (RasterPtr  dest)  const
   memset (destArea, 0, totPixels);
   kkint32  pixelCount = 0;
 
-  int  c, r;
-
   //  Take care of Top and Bottom rows.
   {
     uchar*  srcRow0         = srcRows[0];
@@ -2408,7 +2300,7 @@ void  Raster::Erosion (RasterPtr  dest)  const
 
     uchar*  destRow0 = destRows[0];
     uchar*  destRowBot = destRows[height - 1];
-    for (c = 1;  c < (width  - 1);  ++c)
+    for (kkint32 c = 1;  c < (width  - 1);  ++c)
     {
       if  ((srcRow0[c - 1] > backgroundPixelTH)  &&  (srcRow0[c] > backgroundPixelTH)  &&  (srcRow0[c + 1] > backgroundPixelTH)  &&
            (srcRow1[c - 1] > backgroundPixelTH)  &&  (srcRow1[c] > backgroundPixelTH)  &&  (srcRow1[c + 1] > backgroundPixelTH)
@@ -2428,10 +2320,9 @@ void  Raster::Erosion (RasterPtr  dest)  const
     }
   }
 
-
   // Take care of left and right columns
   {
-    for  (r = 1;  r < (height - 1);  ++r)
+    for  (kkint32 r = 1;  r < (height - 1);  ++r)
     {
       if  ((srcRows[r - 1][0] > backgroundPixelTH)  &&  (srcRows[r - 1][1] > backgroundPixelTH)  &&
            (srcRows[r    ][0] > backgroundPixelTH)  &&  (srcRows[r    ][1] > backgroundPixelTH)  &&
@@ -2441,7 +2332,6 @@ void  Raster::Erosion (RasterPtr  dest)  const
         destRows[r][0] = 255;
         ++pixelCount;
       }
-
 
       if  ((srcRows[r - 1][width - 1] > backgroundPixelTH)  &&  (srcRows[r - 1][width - 2] > backgroundPixelTH)  &&
            (srcRows[r    ][width - 1] > backgroundPixelTH)  &&  (srcRows[r    ][width - 2] > backgroundPixelTH)  &&
@@ -2454,16 +2344,15 @@ void  Raster::Erosion (RasterPtr  dest)  const
     }
   }
 
-
   // Take care of main Body
   {
-    for  (r = 1;  r < (height - 1);  ++r)
+    for  (kkint32 r = 1;  r < (height - 1);  ++r)
     {
       uchar*  srcRow0 = srcRows[r - 1];
       uchar*  srcRow1 = srcRows[r    ];
       uchar*  srcRow2 = srcRows[r + 1];
 
-      for  (c = 1;  c < (width - 1);  ++c)
+      for  (kkint32 c = 1;  c < (width - 1);  ++c)
       {
         if  ((srcRow0[c - 1] > backgroundPixelTH)  &&  (srcRow0[c] > backgroundPixelTH)  &&  (srcRow0[c + 1] > backgroundPixelTH)  &&
              (srcRow1[c - 1] > backgroundPixelTH)  &&  (srcRow1[c] > backgroundPixelTH)  &&  (srcRow1[c + 1] > backgroundPixelTH)  &&
@@ -2482,8 +2371,6 @@ void  Raster::Erosion (RasterPtr  dest)  const
 
 
 
-
-
 void  Raster::Erosion (RasterPtr  dest,
                        MaskTypes  mask
                       )
@@ -2498,14 +2385,12 @@ void  Raster::Erosion (RasterPtr  dest,
   memset (destArea, 0, totPixels);
   kkint32  pixelCount = 0;
 
-  int  c, r;
-
   // Take care of main Body
   {
-    for  (r = 0;  r < height;  ++r)
+    for  (kkint32 r = 0;  r < height;  ++r)
     {
       uchar*  rowData = green[r];
-      for  (c = 0;  c < width;  ++c)
+      for  (kkint32 c = 0;  c < width;  ++c)
       {
         if  (ForegroundPixel (rowData[c]))
         {
@@ -2524,17 +2409,11 @@ void  Raster::Erosion (RasterPtr  dest,
 
 
 
-
-
-
-
 void  Raster::ErosionChanged (MaskTypes  mask, 
                               kkint32    row, 
                               kkint32    col
                              )
 {
-  kkint32  r;
-  kkint32  c;
 
   kkint32  bias = MorphOp::Biases (mask);
 
@@ -2547,8 +2426,6 @@ void  Raster::ErosionChanged (MaskTypes  mask,
   maskColStart = 0 - bias;
   maskColEnd   = 0 + bias;
   
-  kkint32  maskRow;
-  kkint32  maskCol;
   bool  fit;
 
   foregroundPixelCount = 0;
@@ -2557,16 +2434,16 @@ void  Raster::ErosionChanged (MaskTypes  mask,
   uchar*      tempRowData = NULL;
   StructureType  m = MorphOp::MaskShapes (mask);
 
-  for  (r = row- 150;  r < row+150;  r++)
+  for  (kkint32 r = row- 150;  r < row+150;  r++)
   { 
-    if (r<0)
-    r =0;
+    if (r < 0)
+      r =0;
     maskColStart = 0 - bias;
     maskColEnd   = 0 + bias;
     
     tempRowData = tempGreen[r];
 
-    for  (c = col - 10; c < col + 10; c++)
+    for  (kkint32 c = col - 10;  c < col + 10;  c++)
     {
       if  (c < 0)
         c = 0;
@@ -2586,10 +2463,10 @@ void  Raster::ErosionChanged (MaskTypes  mask,
 
         else if  (m == StructureType::stSquare)
         {
-          for  (maskRow = row - 150;  ((maskRow <= row + 150)  &&  fit);  maskRow++)
+          for  (kkint32 maskRow = row - 150;  ((maskRow <= row + 150)  &&  fit);  ++maskRow)
           {
             tempRowData =  tempGreen[maskRow];
-            for  (maskCol = col - 10;  maskCol <= col + 10 ; maskCol++)
+            for  (kkint32 maskCol = col - 10;  maskCol <= col + 10 ;  ++maskCol)
             {
               if  (BackgroundPixel (tempRowData[maskCol]))
               {
@@ -2603,7 +2480,8 @@ void  Raster::ErosionChanged (MaskTypes  mask,
         else
         {
           //  Cross Structure
-          for  (maskRow = row-20;  maskRow <= row+20;  maskRow++)
+          kkint32 maskRow;
+          for  (maskRow = row - 20;  maskRow <= row + 20;  ++maskRow)
           {
             if  (BackgroundPixel (tempGreen[maskRow][c]))
             {
@@ -2613,7 +2491,7 @@ void  Raster::ErosionChanged (MaskTypes  mask,
           }
 
           tempRowData =  tempGreen[maskRow];
-          for  (maskCol = col-20;  maskCol <= col+20;  maskCol++)
+          for  (kkint32 maskCol = col-20;  maskCol <= col+20;  ++maskCol)
           {
             if  (BackgroundPixel (tempRowData[maskCol]))
             {
@@ -2878,9 +2756,6 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
 
 RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
 {
-  kkint32  r;
-  kkint32  c;
-
   RasterPtr   erodedRaster = AllocateARasterInstance (*this);
 
   uchar*      srcRow    = NULL;
@@ -2889,12 +2764,12 @@ RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
 
   kkint32  erodedForegroundPixelCount = foregroundPixelCount;
 
-  for  (r = 0;  r < height;  ++r)
+  for  (kkint32 r = 0;  r < height;  ++r)
   {
     destRow = destGreen[r];
     srcRow  = green[r];
 
-    for  (c = 0;  c < width;  ++c)
+    for  (kkint32 c = 0;  c < width;  ++c)
     {
       if  (ForegroundPixel (srcRow[c]))
       {
@@ -2930,7 +2805,6 @@ void  Raster::Opening (MaskTypes mask)
 
 
 
-
 void  Raster::Closing ()
 {
   Dilation ();
@@ -2939,15 +2813,11 @@ void  Raster::Closing ()
 
 
 
-
-
 void  Raster::Closing (MaskTypes mask)
 {
   Dilation (mask);
   Erosion (mask);
 }  /* Open */
-
-
 
 
 
@@ -3012,7 +2882,6 @@ bool  Raster::CompletlyFilled3By3 (kkint32  row,
 
 
 
-
 void  Raster::Edge ()
 {
   Raster  orig (*this);
@@ -3021,14 +2890,10 @@ void  Raster::Edge ()
 
 
 
-
 void  Raster::Edge (RasterPtr  dest)
 {
   if  ((dest->Height () != height)  |  (dest->Width () != width))
     dest->ReSize (height, width, false);
-
-  kkint32  r;
-  kkint32  c;
 
   kkint32  lastRow = height - 1;
   kkint32  lastCol = width - 1;
@@ -3043,7 +2908,7 @@ void  Raster::Edge (RasterPtr  dest)
 
   uchar** destRows = dest->Green ();
 
-  for  (r = 1;  r < lastRow;  ++r)
+  for  (kkint32 r = 1;  r < lastRow;  ++r)
   {
     origRowLast = origRows[r - 1];
     origRowCur  = origRows[r];
@@ -3051,7 +2916,7 @@ void  Raster::Edge (RasterPtr  dest)
 
     uchar*  destRow = destRows[r];
 
-    for  (c = 1; c < lastCol; c++)
+    for  (kkint32 c = 1; c < lastCol; c++)
     {
       if  (ForegroundPixel (origRowCur[c]))
       {
@@ -3084,8 +2949,8 @@ void  Raster::Edge (RasterPtr  dest)
 
 inline
 kkint32 Raster::BlobId (kkint32  row,
-                      kkint32  col
-                     )  const
+                        kkint32  col
+                       )  const
 {
   if  ((row < 0)  ||  (row >= height)  ||
        (col < 0)  ||  (col >= width))
@@ -3105,15 +2970,15 @@ kkint32  Raster::NearestNeighborUpperLeft (kkint32 row,
                                           )
 {
   kkint32  nearestBlob = -1;
-  kkint32 c, r, startCol, blobID;
+  kkint32  startCol, blobID;
 
   startCol = col - 1;
 
-  for (r = row - dist;  r < row;  ++r)
+  for (kkint32 r = row - dist;  r < row;  ++r)
   {
     if  (r >= 0)
     {
-      for  (c = startCol;  c <= col;  ++c)
+      for  (kkint32 c = startCol;  c <= col;  ++c)
       {
         if  (c >= 0)
         {
@@ -3139,17 +3004,17 @@ kkint32  Raster::NearestNeighborUpperRight (kkint32 row,
                                            )
 {
   kkint32  nearestBlob = -1;
-  kkint32 r, c, endCol, blobID;
+  kkint32  endCol, blobID;
 
   endCol = col + 1;
-  for  (r = row - dist;  r < row;  ++r)
+  for  (kkint32 r = row - dist;  r < row;  ++r)
   {
     if  (r >= 0)
     {
       if  (endCol >= width)
         endCol = width - 1;
 
-      for  (c = col + 1;  c <= endCol;  ++c)
+      for  (kkint32 c = col + 1;  c <= endCol;  ++c)
       {
         blobID = BlobId (r, c);
         if  (blobID > nearestBlob)
@@ -3170,9 +3035,6 @@ BlobListPtr   Raster::ExtractBlobs (kkint32  dist)
   uchar*    curRow         = NULL;
   kkint32*  curRowBlobIds  = NULL;
 
-  kkint32  col = 2;
-  kkint32  row = 2;
-
   BlobPtr  curBlob    = NULL;
   kkint32  curBlobId  = 0;
   kkint32  nearBlobId = 0;
@@ -3183,14 +3045,14 @@ BlobListPtr   Raster::ExtractBlobs (kkint32  dist)
 
   BlobListPtr blobs = new BlobList (true);
 
-  for  (row = 0;  row < height;  ++row)
+  for  (kkint32 row = 0;  row < height;  ++row)
   {
     curRow        = green[row];
     curRowBlobIds = blobIds[row];
 
     curBlob = NULL;
 
-    col = 0;
+    kkint32 col = 0;
     while  (col < width)
     {
       if  (ForegroundPixel (curRow[col]))
@@ -3306,7 +3168,6 @@ RasterPtr  Raster::CreateColorWithBlobsLabeldByColor (BlobListPtr  blobs)
   {
     BlobPtr  blob = blobPair.second;
     kkint32  blobId = blob->Id ();
-    kkint32  row = 0, col = 0;
 
     PixelValue  paintColor;
     switch  (blobId % 8)
@@ -3326,9 +3187,9 @@ RasterPtr  Raster::CreateColorWithBlobsLabeldByColor (BlobListPtr  blobs)
     kkint32  colStart = Min (blob->ColLeft  (), width  - 1);
     kkint32  colEnd   = Min (blob->ColRight (), width  - 1);
 
-    for  (row = rowStart;  row <= rowEnd;  ++row)
+    for  (kkint32 row = rowStart;  row <= rowEnd;  ++row)
     {
-      for  (col = colStart;  col <= colEnd;  ++col)
+      for  (kkint32 col = colStart;  col <= colEnd;  ++col)
       {
         if  (blobIds[row][col] == blobId)
         {
@@ -3479,8 +3340,6 @@ void  Raster::ReduceToMostCompleteBlob (uchar connectedComponentDist)
   if  (connectedComponentDist < 1)
     connectedComponentDist = 3;
 
-  kkint32  row = 0, col = 0;
-
   BlobListPtr  blobs = ExtractBlobs (connectedComponentDist);
 
   BlobPtr largestBlob = blobs->LocateMostComplete ();
@@ -3494,11 +3353,11 @@ void  Raster::ReduceToMostCompleteBlob (uchar connectedComponentDist)
 
     uchar**  newRows = new uchar*[height];
 
-    for  (row = 0; row < height; row++)
+    for  (kkint32 row = 0; row < height;  ++row)
     {
       newRows[row] = newImageAreaPtr;
       
-      for  (col = 0; col < width; col++)
+      for  (kkint32 col = 0; col < width; ++col)
       {
         if  (blobIds[row][col] == blobId)
         {
@@ -3516,7 +3375,7 @@ void  Raster::ReduceToMostCompleteBlob (uchar connectedComponentDist)
     green = newRows;
   }
 
-  for  (row = 0; row < height; row++)
+  for  (kkint32 row = 0;   row < height;  ++row)
     delete  blobIds[row];
   delete  blobIds;
   blobIds = NULL;
@@ -3563,7 +3422,6 @@ void  Raster::ConnectedComponent8Conected ()
     curRow         = green[row];
     curRowBlobIds  = blobIds[row];
     prevRowBlobIds = blobIds[row - 1];
-
 
     curBlob = NULL;
 
@@ -3907,7 +3765,7 @@ void   Raster::CalcAreaAndIntensityFeatures16 (kkint32&  area,
 
   for  (x = 0;  x < 16;  x++)
   {
-   intensityHistBuckets[x] = 0;
+    intensityHistBuckets[x] = 0;
   }
 
   maxPixVal = 0;
@@ -3939,20 +3797,18 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
                                             )  
                                               const
 {
-  kkint32  x;
-
   long  totalPixelValues = 0;
 
   area          = 0;
   weightedSize  = 0.0f;
 
-  for  (x = 0;  x < 8;  x++)
+  for  (kkint32 x = 0;  x < 8;  ++x)
    intensityHistBuckets[x] = 0;
 
   maxPixVal = 0;
   uchar  pixVal;
 
-  for  (x = 0;  x < totPixels;  x++)
+  for  (kkint32 x = 0;  x < totPixels;  x++)
   {
     pixVal = greenArea [x];
     if  (pixVal > 0)
@@ -3974,7 +3830,6 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 
 float  Raster::CalcWeightedArea ()  const
 {
-  kkint32  r, c;
 
   float  area = 0;
 
@@ -3983,9 +3838,9 @@ float  Raster::CalcWeightedArea ()  const
 
   //foregroundPixelCount = 0;
 
-  for  (r = 0; r < height; r++)
+  for  (kkint32 r = 0;  r < height;  ++r)
   {
-    for  (c = 0; c < width; c++)
+    for  (kkint32 c = 0; c < width; ++c)
     {
       pixVal = green[r][c];
       if  (ForegroundPixel (pixVal))
@@ -5079,14 +4934,7 @@ RasterPtr  Raster::SwapQuadrants ()  const
 
 void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
 {
-  if  (!fourierMagArea)
-  {
-     cerr << std::endl
-          << "*** ERROR ***    This Raster image is not the result of a fast Fourier" << std::endl
-          << std::endl;
-     osWaitForEnter ();
-     exit (-1);
-  }
+  KKCheck(fourierMagArea, "Raster::FourierExtractFeatures     This Raster image is not the result of a fast Fourier")
 
   float  cr = (float)height / (float)2.0;
   float  cw = (float)width  / (float)2.0;

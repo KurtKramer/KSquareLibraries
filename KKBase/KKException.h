@@ -30,6 +30,11 @@ namespace KKB
   {
   public:
     KKException ();
+
+    KKException (const char*   _fileName,
+                 kkuint32      _lineNum,
+                 const KKStr&  _exceptionStr
+                );
     
     KKException (const KKException&  _exception);
     
@@ -59,11 +64,11 @@ namespace KKB
 
     virtual const char*  what () const throw ();
 
-
   private:
     KKStr  exceptionStr;
   };  /* KKException */
 
+#define KKCheck(condition, errMsg)  if  (condition)  {throw KKB::KKException (__FILE__, __LINE__, errMsg);}
 }  /* namespace KKB; */
 
 #endif

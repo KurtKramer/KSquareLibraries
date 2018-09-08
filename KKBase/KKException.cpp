@@ -12,10 +12,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
 #include "MemoryDebug.h"
 using namespace std;
-
 
 #include "KKException.h"
 using namespace KKB;
@@ -28,11 +26,13 @@ KKException::KKException ():
 }
 
 
+
 KKException::KKException (const KKException&  _exception):
   std::exception (),
   exceptionStr (_exception.exceptionStr)
 {
 }
+
 
 
 KKException::KKException (const char*  _exceptionStr):
@@ -42,11 +42,13 @@ KKException::KKException (const char*  _exceptionStr):
 }
 
 
+
 KKException::KKException (const KKStr&  _exceptionStr):
   std::exception (),
   exceptionStr (_exceptionStr)
 {
 }
+
 
 
 KKException::KKException (const KKStr&           _exceptionStr,
@@ -80,6 +82,7 @@ KKException::KKException (const char*         _exceptionStr,
 }
 
 
+
 KKException::KKException (const KKStr&        _exceptionStr,
                           const KKException&  _innerException
                          ):
@@ -89,10 +92,23 @@ KKException::KKException (const KKStr&        _exceptionStr,
 }
 
 
+KKException::KKException (const char*   _fileName,
+                          kkuint32      _lineNum,
+                          const KKStr&  _exceptionStr
+                         ):
+    std::exception (),
+    exceptionStr ()
+{
+  exceptionStr << "Exception " << _fileName << ":" << _lineNum << " " <<  _exceptionStr;
+}
+   
+    
+
 
 KKException::~KKException ()  throw ()
 {
 }
+
 
 
 const KKStr&  KKException::ToString ()  const
@@ -101,10 +117,10 @@ const KKStr&  KKException::ToString ()  const
 }
 
 
+
 const char*  KKException::what () const throw ()
 {
   return  exceptionStr.Str ();
 }
-
 
 
