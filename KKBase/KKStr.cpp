@@ -1874,9 +1874,9 @@ kkint32  KKStr::InstancesOfChar (char ch)  const
 
 kkint32  MemCompare (const char* s1,
                      const char* s2,
-                     kkint32     s1Idx,
-                     kkint32     s2Idx,
-                     kkint32     len
+                     kkuint32    s1Idx,
+                     kkuint32    s2Idx,
+                     kkuint32    len
                     )
 {
   for  (kkint32 x = 0;  x < len;  x++)
@@ -2380,7 +2380,6 @@ bool  KKStr::ValidNum (double&  value)  const
 
 
 
-
 bool   KKStr::CharInStr (char  ch)
 {
   if  (!val)
@@ -2406,62 +2405,18 @@ bool   KKStr::StrInStr (const KKStr&  searchField)  const
 
 
 
-/*
-KKStr  KKStr::SubStr (kkint32  firstChar,
-                      kkint32  subStrLen
-                     )
-{
-  kkuint32  lastChar;
-  KKStr  subStr;
-  kkuint32  x;
-  kkuint32  y;
-
-
-  if  ((subStrLen < 1)  ||  (!val))
-  {
-    subStr = "";
-    return  subStr;
-  }
-   
-
-  lastChar = firstChar + subStrLen - 1;
-
-  if  (lastChar >= len)
-     lastChar = len - 1;   
-
-  kkint32  neededSpace = 1 + subStrLen;
-
-  subStr.AllocateStrSpace (neededSpace);
-
-  y = 0;
-  for  (x = firstChar; x <= lastChar; x++)
-  {
-    subStr.val[y] = val[x];
-    y++;
-  }
-
-  subStr.val[subStrLen] = 0;
-  subStr.len = subStrLen;
-  return  subStr;
-} 
-*/
-
-
-
-
-
-KKStr  KKStr::SubStrPart (kkStrUint  firstChar)  const
+KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx)  const
 {
   #ifdef  KKDEBUG
   ValidateLen ();
   #endif
 
-  if  (firstChar >= len)
+  if  (firstCharIdx >= len)
     return "";
 
-  kkStrUint  subStrLen = len - (kkStrUint)firstChar;
+  kkStrUint  subStrLen = len - firstCharIdx;
   KKStr  subStr (subStrLen + 1);
-  subStr.Append (((char*)&(val[firstChar])), subStrLen);
+  subStr.Append (((char*)&(val[firstCharIdx])), subStrLen);
 
   return  subStr;
 }  /* SubStrPart */
@@ -2473,12 +2428,6 @@ KKStr  KKStr::SubStrPart (kkint32  firstChar)  const
   return SubStrPart ((kkStrUint)Max ((kkint32)0, firstChar));
 }
 
-
-
-KKStr  KKStr::SubStrPart (kkint64  firstChar)  const
-{
-  return SubStrPart ((kkStrUint)Max ((kkint64)0, firstChar));
-}
 
 
 KKStr  KKStr::SubStrPart (kkStrUint  firstChar,
@@ -2522,13 +2471,13 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstChar,
  *       test.Tail (2) will return "d.".
  *@endcode
  */
-KKStr  KKStr::Tail (kkint32 tailLen)  const   // Return back the last 'len' characters.
+KKStr  KKStr::Tail (kkStrUint tailLen)  const
 {
-  if  (tailLen <= 0)
-    return "";
+  if  (tailLen > len)
+    return *this;
 
-  kkStrUint  firstChar = Max ((kkStrUint)(len - (kkStrUint)tailLen), (kkStrUint)0);
-  return  SubStrPart (firstChar);
+  kkStrUint  firstCharIdx = len - tailLen;
+  return  SubStrPart (firstCharIdx);
 }  /* Tail */
 
 

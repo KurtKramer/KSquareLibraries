@@ -506,9 +506,7 @@ namespace  KKB
 
     KKStr     SubStrPart (kkint32    firstChar)  const;
 
-    KKStr     SubStrPart (kkint64    firstChar)  const;
-
-
+  
     /**
      *@brief returns a SubString consisting of all characters starting at index 'firstChar' and ending at 'lastIndex'
      *@details  If the index 'firstChar' is past the end of the string a empty string will be returned. If 'lastIndex 
@@ -522,7 +520,7 @@ namespace  KKB
                           kkStrUint  lastChar
                          )  const;
 
-    KKStr     Tail (kkint32 tailLen)  const;      /**< Return back the last 'tailLen' characters. */
+    KKStr     Tail (kkStrUint tailLen)  const;      /**< Return back the last 'tailLen' characters. */
 
 
     bool      ToBool       () const;   /**< @brief Returns the bool equivalent of the string,  ex 'Yes' = true, 'No' = false, 'True' = true, etc.  */
