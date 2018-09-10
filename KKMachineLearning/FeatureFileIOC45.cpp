@@ -57,14 +57,13 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
   if  (_maxCount < 0)
     _maxCount = int32_max;
 
-
   KKStr  namesFileName;
   KKStr  dataFileName;
 
   {
     // First determine the name of the names and data file.
-    kkint64 lastDotPos = _fileName.LocateLastOccurrence ('.');
-    if  (lastDotPos < 0)
+    auto lastDotPos = _fileName.LocateLastOccurrence ('.');
+    if  (lastDotPos.None ())
     {
       namesFileName = _fileName + ".names";
       dataFileName  = _fileName;
@@ -73,8 +72,8 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     }
     else
     {
-      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos - 1);
-      KKStr extension   = _fileName.SubStrPart (lastDotPos + 1);
+      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos.value - 1);
+      KKStr extension   = _fileName.SubStrPart (lastDotPos.value + 1);
       extension.Upper ();
       if  (extension == "NAMES")
       {
@@ -172,9 +171,9 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
-  kkint64  lastBarPos = ln.LocateLastOccurrence ('|');
-  if  (lastBarPos >= 0)
-    ln = ln.SubStrPart (0, lastBarPos - 1);
+  auto  lastBarPos = ln.LocateLastOccurrence ('|');
+  if  (lastBarPos.Exists ())
+    ln = ln.SubStrPart (0, lastBarPos.value - 1);
 
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
@@ -936,9 +935,9 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 {
   KKStr  c45Name;
 
-  kkint64  lastDotPos = fileName.LocateLastOccurrence ('.');
+  auto  lastDotPos = fileName.LocateLastOccurrence ('.');
 
-  if  (lastDotPos < 0)
+  if  (lastDotPos.None ())
   {
     // First try file name with ".data" extension, then with no extension
     namesFileName = fileName + ".names";
@@ -946,8 +945,8 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
   }
   else
   {
-    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos);
-    KKStr  extension   = fileName.SubStrPart (lastDotPos + 1);
+    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos.value);
+    KKStr  extension   = fileName.SubStrPart (lastDotPos.value + 1);
     extension.Upper ();
     if  ((extension == "NAMES")  ||  (extension == "NAME"))
     {

@@ -202,10 +202,10 @@ namespace KKB
      *                             stored row major.
      *@param[in]  _Rows   Two dimensional array where each entry will point into the respective image row data in '_Data'.
      */
-    Raster (kkint32  _height,
-            kkint32  _width,
-            uchar*   _Data,
-            uchar**  _Rows
+    Raster (kkint32    _height,
+            kkint32    _width,
+            kkuint8*   _Data,
+            kkuint8**  _Rows
            );
 
     /**
@@ -214,9 +214,9 @@ namespace KKB
      *@param[in] _width  Image Width.
      *@param[in] _Data 8 Bit  data, Row Major, that is to be used to populate new instance.
      */
-    Raster (kkint32       _height,
-            kkint32       _width,
-            const uchar*  _Data
+    Raster (kkint32         _height,
+            kkint32         _width,
+            const kkuint8*  _Data
            );
 
     /**
@@ -227,11 +227,11 @@ namespace KKB
      *@param[in] _greenChannel 8 Bit data, Row Major, that is to be used to populate the green channel.
      *@param[in] _blueChannel  8 Bit data, Row Major, that is to be used to populate the blue channel.
      */
-    Raster (kkint32       _height,
-            kkint32       _width,
-            const uchar*  _redChannel,
-            const uchar*  _greenChannel,
-            const uchar*  _blueChannel
+    Raster (kkint32         _height,
+            kkint32         _width,
+            const kkuint8*  _redChannel,
+            const kkuint8*  _greenChannel,
+            const kkuint8*  _blueChannel
            );
 
 
@@ -264,11 +264,11 @@ namespace KKB
      *           to by '_Data' and '_Rows'; if set to true will delete them in the
      *           destructor.
      */
-    void  Initialize (kkint32  _height,
-                      kkint32  _width,
-                      uchar*   _Data,
-                      uchar**  _Rows,
-                      bool     _takeOwnership
+    void  Initialize (kkint32    _height,
+                      kkint32    _width,
+                      kkuint8*   _Data,
+                      kkuint8**  _Rows,
+                      bool       _takeOwnership
                      );
 
     /** 
@@ -291,15 +291,15 @@ namespace KKB
      *@param[in] _blue  Two dimensional accessor to '_blueArea'.
      *@param[in] _takeOwnership  Indicates whether this instance of 'Raster' will own the supplied raster data.
      */
-    void  Initialize (kkint32  _height,
-                      kkint32  _width,
-                      uchar*   _redArea,
-                      uchar**  _red,
-                      uchar*   _greenArea,
-                      uchar**  _green,
-                      uchar*   _blueArea,
-                      uchar**  _blue,
-                      bool     _takeOwnership
+    void  Initialize (kkint32    _height,
+                      kkint32    _width,
+                      kkuint8*   _redArea,
+                      kkuint8**  _red,
+                      kkuint8*   _greenArea,
+                      kkuint8**  _green,
+                      kkuint8*   _blueArea,
+                      kkuint8**  _blue,
+                      bool       _takeOwnership
                      );
 
 
@@ -322,34 +322,34 @@ namespace KKB
     kkint32  ForegroundPixelCount () const {return foregroundPixelCount;}
 
     kkint32      Height    ()    const  {return  height;}
-    uchar        MaxPixVal ()    const  {return  maxPixVal;} /**< The maximum  pixel value encountered in the image. */
-    uchar**      Rows      ()    const  {return  green;}     /**< returns a pointer to a 2D array that allows the caller to access the raster data by row and column. */
+    kkuint8      MaxPixVal ()    const  {return  maxPixVal;} /**< The maximum  pixel value encountered in the image. */
+    kkuint8**    Rows      ()    const  {return  green;}     /**< returns a pointer to a 2D array that allows the caller to access the raster data by row and column. */
     const KKStr& Title     ()    const  {return  title;}
     kkint32      TotPixels ()    const  {return  totPixels;} /**< The total number of pixels  (Height * Width). */
     kkint32      Width     ()    const  {return  width;}
 
-    uchar**      Red       ()    const  {return  red;}        /**< returns a pointer to two dimensional array for 'Red' color channel. */
-    uchar**      Green     ()    const  {return  green;}      /**< returns a pointer to two dimensional array for 'Green' color channel; note this is the same as 'Rows'.  */
-    uchar**      Blue      ()    const  {return  blue;}       /**< returns a pointer to two dimensional array for 'Blue' color channel. */
-    uchar*       RedArea   ()    const  {return  redArea;}
-    uchar*       GreenArea ()    const  {return  greenArea;}
-    uchar*       BlueArea  ()    const  {return  blueArea;}
+    kkuint8**    Red       ()    const  {return  red;}        /**< returns a pointer to two dimensional array for 'Red' color channel. */
+    kkuint8**    Green     ()    const  {return  green;}      /**< returns a pointer to two dimensional array for 'Green' color channel; note this is the same as 'Rows'.  */
+    kkuint8**    Blue      ()    const  {return  blue;}       /**< returns a pointer to two dimensional array for 'Blue' color channel. */
+    kkuint8*     RedArea   ()    const  {return  redArea;}
+    kkuint8*     GreenArea ()    const  {return  greenArea;}
+    kkuint8*     BlueArea  ()    const  {return  blueArea;}
 
     float*       FourierMagArea ()  const {return fourierMagArea;}
 
-    uchar        BackgroundPixelTH    () const {return backgroundPixelTH;}
-    uchar        BackgroundPixelValue () const {return backgroundPixelValue;}
-    uchar        ForegroundPixelValue () const {return foregroundPixelValue;}
+    kkuint8      BackgroundPixelTH    () const {return backgroundPixelTH;}
+    kkuint8      BackgroundPixelValue () const {return backgroundPixelValue;}
+    kkuint8      ForegroundPixelValue () const {return foregroundPixelValue;}
 
     kkint32  TotalBackgroundPixels () const;
 
-    void     BackgroundPixelTH    (uchar          _backgroundPixelTH)    {backgroundPixelTH    = _backgroundPixelTH;}
-    void     BackgroundPixelValue (uchar          _backgroundPixelValue) {backgroundPixelValue = _backgroundPixelValue;}
+    void     BackgroundPixelTH    (kkuint8          _backgroundPixelTH)    {backgroundPixelTH    = _backgroundPixelTH;}
+    void     BackgroundPixelValue (kkuint8          _backgroundPixelValue) {backgroundPixelValue = _backgroundPixelValue;}
     void     Divisor              (kkint32        _divisor)              {divisor              = _divisor;}
     void     ForegroundPixelCount (kkint32        _foregroundPixelCount) {foregroundPixelCount = _foregroundPixelCount;}
-    void     ForegroundPixelValue (uchar          _foregroundPixelValue) {foregroundPixelValue = _foregroundPixelValue;}
+    void     ForegroundPixelValue (kkuint8          _foregroundPixelValue) {foregroundPixelValue = _foregroundPixelValue;}
     void     FileName             (const KKStr&   _fileName)             {fileName             = _fileName;}
-    void     MaxPixVal            (uchar          _maxPixVal)            {maxPixVal            = _maxPixVal;}
+    void     MaxPixVal            (kkuint8          _maxPixVal)            {maxPixVal            = _maxPixVal;}
     void     Title                (const KKStr&   _title)                {title                = _title;}
     void     WeOwnRasterData      (bool           _weOwnRasterData)      {weOwnRasterData      = _weOwnRasterData;}
 
@@ -358,14 +358,14 @@ namespace KKB
                              )  const;
 
 
-    uchar         GetPixelValue (kkint32 row,  kkint32 col)  const;
+    kkuint8         GetPixelValue (kkint32 row,  kkint32 col)  const;
 
 
-    void          GetPixelValue (kkint32 row,
-                                 kkint32 col,
-                                 uchar&  r,
-                                 uchar&  g,
-                                 uchar&  b
+    void          GetPixelValue (kkint32   row,
+                                 kkint32   col,
+                                 kkuint8&  r,
+                                 kkuint8&  g,
+                                 kkuint8&  b
                                 )  const;
 
 
@@ -375,10 +375,10 @@ namespace KKB
                                 )  const;
 
 
-    uchar         GetPixelValue (ColorChannels  channel,
-                                 kkint32        row,
-                                 kkint32        col
-                                )  const;
+    kkuint8         GetPixelValue (ColorChannels  channel,
+                                   kkint32        row,
+                                   kkint32        col
+                                  )  const;
 
 
     void          SetPixelValue (const Point&       point,
@@ -388,7 +388,7 @@ namespace KKB
 
     void          SetPixelValue (kkint32  row,
                                  kkint32  col,
-                                 uchar  pixVal
+                                 kkuint8  pixVal
                                 );
 
 
@@ -400,16 +400,16 @@ namespace KKB
 
     void          SetPixelValue (kkint32  row,
                                  kkint32  col,
-                                 uchar  r,
-                                 uchar  g,
-                                 uchar  b
+                                 kkuint8  r,
+                                 kkuint8  g,
+                                 kkuint8  b
                                 );
 
 
     void          SetPixelValue (ColorChannels  channel,
                                  kkint32        row,
                                  kkint32        col,
-                                 uchar          pixVal
+                                 kkuint8        pixVal
                                 );
 
 
@@ -436,8 +436,8 @@ namespace KKB
                            );
 
 
-    RasterPtr     BinarizeByThreshold (uchar  min,
-                                       uchar  max
+    RasterPtr     BinarizeByThreshold (kkuint8  min,
+                                       kkuint8  max
                                       )  const;
 
     /**
@@ -492,7 +492,7 @@ namespace KKB
 
 
     void          CalcAreaAndIntensityFeatures16 (kkint32&  area,
-                                                  float&  weighedSize,
+                                                  float&    weighedSize,
                                                   kkuint32  intensityHistBuckets[16]
                                                  );
 
@@ -611,7 +611,7 @@ namespace KKB
                                         )  
                                           const;
 
-    void          ConnectedComponent (uchar connectedComponentDist);
+    void          ConnectedComponent (kkuint8 connectedComponentDist);
 
     void          ConnectedComponent8Conected ();
 
@@ -765,13 +765,13 @@ namespace KKB
 
     void          DrawLine (kkint32 bpRow,    kkint32 bpCol,
                             kkint32 epRow,    kkint32 epCol,
-                            uchar pixelVal
+                            kkuint8 pixelVal
                            );
 
 
     void          DrawLine (const Point&  beginPoint,
                             const Point&  endPoint,
-                            uchar         pixelVal
+                            kkuint8       pixelVal
                            );
 
     void          DrawLine (const Point&       beginPoint,
@@ -782,18 +782,18 @@ namespace KKB
 
     void          DrawLine (kkint32 bpRow,    kkint32 bpCol,
                             kkint32 epRow,    kkint32 epCol,
-                            uchar  r,
-                            uchar  g,
-                            uchar  b
+                            kkuint8 r,
+                            kkuint8 g,
+                            kkuint8 b
                            );
 
 
     void          DrawLine (kkint32 bpRow,    kkint32 bpCol,
                             kkint32 epRow,    kkint32 epCol,
-                            uchar  r,
-                            uchar  g,
-                            uchar  b,
-                            float  alpha
+                            kkuint8 r,
+                            kkuint8 g,
+                            kkuint8 b,
+                            float   alpha
                            );
 
 
@@ -826,17 +826,17 @@ namespace KKB
 
 
     void          DrawPointList (const PointList&  borderPixs,
-                                 uchar             redVal,
-                                 uchar             greenVal,
-                                 uchar             blueVal
+                                 kkuint8           redVal,
+                                 kkuint8           greenVal,
+                                 kkuint8           blueVal
                                 );
 
 
     void          DrawPointList (Point             offset,
                                  const PointList&  borderPixs,
-                                 uchar             redVal,
-                                 uchar             greenVal,
-                                 uchar             blueVal
+                                 kkuint8           redVal,
+                                 kkuint8           greenVal,
+                                 kkuint8           blueVal
                                 );
 
     PointListPtr  DeriveImageLength () const;
@@ -1027,8 +1027,8 @@ namespace KKB
      * @brief Creates a raster from a compressedBuff created by 'SimpleCompression'.
      */
     static
-    RasterPtr     FromSimpleCompression (const uchar*  compressedBuff,
-                                         kkuint32      compressedBuffLen
+    RasterPtr     FromSimpleCompression (const kkuint8* compressedBuff,
+                                         kkuint32       compressedBuffLen
                                         ); 
 
     /**
@@ -1040,15 +1040,15 @@ namespace KKB
      *@see  ToCompressor
      */
     static
-    RasterPtr     FromCompressor (const uchar*  compressedBuff,
-                                  kkuint32      compressedBuffLen
+    RasterPtr     FromCompressor (const kkuint8*  compressedBuff,
+                                  kkuint32        compressedBuffLen
                                  ); 
 
-    uchar**       GetSubSet (uchar** _src,
-                             kkint32 _row,
-                             kkint32 _col,
-                             kkint32 _height,
-                             kkint32 _width
+    kkuint8**     GetSubSet (kkuint8** _src,
+                             kkint32   _row,
+                             kkint32   _col,
+                             kkint32   _height,
+                             kkint32   _width
                             )  const;
 
     RasterPtr     HalfSize ();
@@ -1102,7 +1102,7 @@ namespace KKB
      *@brief  Locates most complete blob; that is the one with the largest (Height x Width); and removes all
      * other images from the blob.
      */
-    void          ReduceToMostCompleteBlob (uchar connectedComponentDist);
+    void          ReduceToMostCompleteBlob (kkuint8 connectedComponentDist);
 
     RasterPtr     Rotate (float  turnAngle);
 
@@ -1139,8 +1139,8 @@ namespace KKB
      ///
      /// <param name="buffLen"> [in,out] Length of the compressed buffer returned. </param>
      ///
-     /// <returns>  pointer to compressed data;  null if it fails, else an uchar*. </returns>
-     uchar*       SimpleCompression (kkuint32&  buffLen)  const;
+     /// <returns>  pointer to compressed data;  null if it fails, else an kkuint8*. </returns>
+     kkuint8*       SimpleCompression (kkuint32&  buffLen)  const;
     
 
     RasterPtr     SobelEdgeDetector () const;
@@ -1199,7 +1199,7 @@ namespace KKB
      *@param[out]  compressedBuffLen Length of the compressed buffer returned.
      *@return pointer to compressed data.
      */
-    uchar*        ToCompressor (kkuint32&  compressedBuffLen)  const;
+    kkuint8*      ToCompressor (kkuint32&  compressedBuffLen)  const;
 
 
     /**
@@ -1232,7 +1232,7 @@ namespace KKB
     void   CleanUpMemory ();
 
     inline
-    bool   BackgroundPixel (uchar  pixel)  const;
+    bool   BackgroundPixel (kkuint8  pixel)  const;
 
 
     // Used by the Gaussian Smoothing algorithm.
@@ -1243,10 +1243,10 @@ namespace KKB
 
 
     inline
-    void   CalcDialatedValue (kkint32 row,
-                              kkint32 col,
+    void   CalcDialatedValue (kkint32   row,
+                              kkint32   col,
                               kkint32&  totVal,
-                              uchar&  numNeighbors
+                              kkuint8&  numNeighbors
                              )  const;
 
 
@@ -1259,7 +1259,7 @@ namespace KKB
     void  DeleteExistingBlobIds ();
 
 
-    uchar  DeltaMagnitude (uchar c1, uchar c2);
+    kkuint8  DeltaMagnitude (kkuint8 c1, kkuint8 c2);
 
 
     void   FillHoleGrow (kkint32  _row, 
@@ -1272,10 +1272,10 @@ namespace KKB
                )  const;
 
     
-    bool   ForegroundPixel (uchar  pixel)  const;
+    bool   ForegroundPixel (kkuint8  pixel)  const;
 
 
-    uchar    Hit (MaskTypes  mask,
+    kkuint8  Hit (MaskTypes  mask,
                   kkint32    row, 
                   kkint32    col
                  )  const;
@@ -1326,49 +1326,49 @@ namespace KKB
                                      );
 
 
-    void     SmoothImageChannel (uchar**  src,
-                                 uchar**  dest,
-                                 kkint32  maskSize
+    void     SmoothImageChannel (kkuint8** src,
+                                 kkuint8** dest,
+                                 kkint32   maskSize
                                 )  const;
 
-    void     SmoothUsingKernel (MatrixD&  kernel,
-                                uchar**   src,
-                                uchar**   dest
+    void     SmoothUsingKernel (MatrixD&   kernel,
+                                kkuint8**  src,
+                                kkuint8**  dest
                                )  const;
 
 
   protected:
-    uchar          backgroundPixelValue;
-    uchar          backgroundPixelTH;     /**< Threshold used to split Background and foreground pixel/ */
-    kkint32**      blobIds;               /**< Used when searching for connected components  */
-    mutable        float  centroidCol;
-    mutable        float  centroidRow;
-    bool           color;
-    kkint32        divisor;
-    KKStr          fileName;
-    mutable        kkint32  foregroundPixelCount;
-    uchar          foregroundPixelValue;
-    float**        fourierMag;           /**< Only used if image is result of a Fourier Transform   */
-    float*         fourierMagArea;       /**< Only used if image is result of a Fourier Transform   */
-    kkint32        height;
-    mutable uchar  maxPixVal;
-    KKStr          title;                /**< Title such as 'Class" that can be assigned to an image. */
-    mutable kkint32    totPixels;
-    bool           weOwnRasterData;
-    kkint32        width;
+    kkuint8         backgroundPixelValue;
+    kkuint8         backgroundPixelTH;     /**< Threshold used to split Background and foreground pixel/ */
+    kkint32**       blobIds;               /**< Used when searching for connected components  */
+    mutable float   centroidCol;
+    mutable float   centroidRow;
+    bool            color;
+    kkint32         divisor;
+    KKStr           fileName;
+    mutable kkint32 foregroundPixelCount;
+    kkuint8         foregroundPixelValue;
+    float**         fourierMag;           /**< Only used if image is result of a Fourier Transform   */
+    float*          fourierMagArea;       /**< Only used if image is result of a Fourier Transform   */
+    kkint32         height;
+    mutable kkuint8 maxPixVal;
+    KKStr           title;                /**< Title such as 'Class" that can be assigned to an image. */
+    mutable kkint32 totPixels;
+    bool            weOwnRasterData;
+    kkint32         width;
 
-    uchar*         redArea;        // Each color channel is allocated as a single block
-    uchar*         greenArea;      // for 2 dimensional access use corresponding 2d variables
-    uchar*         blueArea;       // red for redAreas, green for grenArea.  If 
-                                   // image then only green channel is used.
+    kkuint8*        redArea;        // Each color channel is allocated as a single block
+    kkuint8*        greenArea;      // for 2 dimensional access use corresponding 2d variables
+    kkuint8*        blueArea;       // red for redAreas, green for grenArea.  If 
+                                    // image then only green channel is used.
 
     // The next three variables provide row indexing into there respective color channels.  For performance
     // and simplicity purposes I allocate each channel in a continuous block of memory but to allow for
     // simple accessing by 'row' and 'col' I create the following 3 variables.  Depending on what you
     // are trying to do you could use the appropriate variable.
-    uchar**        red;            // Provides row indexes into 'redArea'.
-    uchar**        green;          // Provides row indexes into 'greenArea'.
-    uchar**        blue;           // Provides row indexes into 'blueArea'.
+    kkuint8**       red;            // Provides row indexes into 'redArea'.
+    kkuint8**       green;          // Provides row indexes into 'greenArea'.
+    kkuint8**       blue;           // Provides row indexes into 'blueArea'.
 
 
     //  The following code is being added to support the tracking down of memory leaks in Raster.

@@ -123,7 +123,7 @@ namespace KKB
   KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
   
 
-  KKStr          osGetFileExtension (KKStr  fullFileName);
+  KKStr          osGetFileExtension (const KKStr&  fullFileName);
 
 
   /** @brief  returns the name and path of the current running application. */
@@ -212,7 +212,7 @@ namespace KKB
    *@param[in]  fullFileName    The full file specification including directory path, root-name, and extension.
    *@return  Path part of fullFileName.
    */
-  KKStr          osGetPathPartOfFile (KKStr  fullFileName);   
+  KKStr          osGetPathPartOfFile (const KKStr&  fullFileName);   
 
   kkint32        osGetProcessId ();
 
@@ -238,9 +238,9 @@ namespace KKB
 
   double         osGetUserTimeUsed   ();
 
-  kkint64        osLocateFirstSlashChar (const KKStr&  fileSpec);
+  OptionUInt32   osLocateFirstSlashChar (const KKStr&  fileSpec);
 
-  kkint64        osLocateLastSlashChar (const KKStr&  fileSpec);
+  OptionUInt32   osLocateLastSlashChar (const KKStr&  fileSpec);
 
 
   /** 

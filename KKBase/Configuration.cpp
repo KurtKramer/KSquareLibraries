@@ -501,9 +501,9 @@ void  Configuration::LoadFile (RunLog&  log)
         sections->AddConfSection (curSection);
       }
 
-      kkint64  equalIdx = line.LocateCharacter ('=');
+      auto  equalIdx = line.LocateCharacter ('=');
 
-      if  (equalIdx < 0)
+      if  (equalIdx.None ())
       {
         // We have a improperly formated line.
         log.Level (-1) << endl
@@ -514,12 +514,12 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrPart (0, equalIdx - 1));
+        KKStr  settingName (line.SubStrPart (0, equalIdx.value - 1));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();
 
-        KKStr  settingValue (line.SubStrPart (equalIdx + 1));
+        KKStr  settingValue (line.SubStrPart (equalIdx.value + 1));
         settingValue.TrimLeft ();
         settingValue.TrimRight ();
 
@@ -536,7 +536,6 @@ void  Configuration::LoadFile (RunLog&  log)
 
   std::fclose (inFile);
 }  /* LoadFile */
-
 
 
 
@@ -559,7 +558,6 @@ kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)  const
 
 
 
-
 kkint32  Configuration::NumOfSettings (kkint32  sectionNum)  const
 {
   if  ((sectionNum < 0)  ||  (sectionNum >= sections->QueueSize ()))
@@ -567,9 +565,6 @@ kkint32  Configuration::NumOfSettings (kkint32  sectionNum)  const
 
   return  sections->IdxToPtr (sectionNum) ->NumOfSettings ();
 }
-
-
-
 
 
    

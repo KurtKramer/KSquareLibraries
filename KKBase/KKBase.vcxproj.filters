@@ -189,6 +189,9 @@
     <ClCompile Include="MorphOpThinContour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KKOption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -396,6 +399,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RestoreConversionWarning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KKOption.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

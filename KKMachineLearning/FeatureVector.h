@@ -62,7 +62,7 @@ namespace KKMLL
     typedef  float  FVFloat;
     typedef  FeatureVector*  FeatureVectorPtr;
 
-    FeatureVector (kkint32  _numOfFeatures);
+    FeatureVector (kkuint32  _numOfFeatures);
 
     FeatureVector (const FeatureVector&  _example);
 

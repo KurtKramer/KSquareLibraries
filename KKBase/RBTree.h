@@ -1660,23 +1660,16 @@ KKB::Iterator<Entry,CompareNodes,KeyType>::~Iterator ()
 
 
 
-
 template <class Entry,class CompareNodes,typename KeyType>
 void  KKB::Iterator<Entry,CompareNodes,KeyType>::IsTreeStillThere ()
 {
   if  (tree == NULL)
   {
-    std::cerr << std::endl
-         << "*** ERROR ***"  << std::endl
-         << std::endl
-         << "***  RBTree<Entry,CompareNodes,KeyType>::Iterator::IsTreeStillThere ***"  << std::endl
-         << std::endl
-         << "Tree is no longer available"  << std::endl
-         << std::endl;
-     exit (-1);
+    string errMsg = "*** ERROR ***  RBTree<Entry,CompareNodes,KeyType>::Iterator::IsTreeStillThere tree == NULL"
+    std::cerr << errMsg << std::endl;
+    throw std:exception  (errMsg);
   }
 }  /* IsTreeStillThere */
-
 
 
 

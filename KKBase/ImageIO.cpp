@@ -20,10 +20,7 @@ using namespace Gdiplus;
 #include "MemoryDebug.h"
 using namespace std;
 
-
-
 #include "ImageIO.h"
-
 #include "BMPImage.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -96,7 +93,6 @@ void  KKB::DisplayImage  (const Raster& image)
 
 
 
-
 void  KKB::DisplayImage (const Raster&  raster,
                          const KKStr&  title
                         )
@@ -104,86 +100,6 @@ void  KKB::DisplayImage (const Raster&  raster,
   cout << std::endl  << title << std::endl;
   DisplayImage (raster);
 }
-
-
-
-
-#ifdef  USE_CIMG
-RasterPtr  KKB::ReadImage (const KKStr& imageFileName)
-{
-  kkint32 row, col;
-
-  CImg<short> img = imageFileName.Str ();
-
-  bool  color;
-
-  if  (img.dimv () == 1)
-     color = false;
-  else
-     color = true;
-  
-  RasterPtr  image = new Raster (img.dimy (), img.dimx ());
-
-  kkint32  grayValue;
-  kkint32  r, g, b;
-
-  for  (row = 0;  row < img.dimy(); row++)
-  {
-    for (col = 0;  col < img.dimx();  col++)
-    {
-      if  (color)
-      {
-        r = *img.ptr (col, row, 0, 0);
-        g = *img.ptr (col, row, 0, 1);
-        b = *img.ptr (col, row, 0, 2);
-
-        grayValue = (kkint32)((float)r * (float)0.30 + 
-                          (float)g * (float)0.59 + 
-                          (float)b * (float)0.11 +
-                          (float)(0.50)
-                         );
-
-        image->SetPixelValue (row, col, grayValue);
-      }
-      else
-      {
-        image->SetPixelValue (row, col, *img.ptr (col, row, 0, 0));
-      }
-    }
-  }
-
-  image->FileName (imageFileName);
-
-  return image;
-}  /* ReadImage */
-
-
-
-void  KKB::SaveImage  (const Raster&  image, 
-                       const KKStr&   imageFileName
-                      )
-{
-  kkint32 row, col;
-
-  CImg<short> img (image.Width (), image.Height (), 1, 1);
-
-  for  (row = 0;  row < image.Height (); row++)
-  {
-    for  (col = 0;  col < image.Width ();  col++)
-    {
-      img.data[img.offset (col, row, 0, 0)] = image.GetPixelValue (row, col);
-    }
-  }
-
-  img.save_other (imageFileName.Str ());
-}  /* SaveImage */
-
-
-
-
-#else
-
-
 
 
 
@@ -322,14 +238,12 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
       kkint32  nOffset = stride - width;
 
       uchar  index = 255;
-      
-      kkuint32  row, col;
 
       uchar*  ptr = (uchar*)(void*)scan0;
 
-      for  (row = 0;  row < height;  ++row)
+      for  (kkuint32 row = 0;  row < height;  ++row)
       {
-        for  (col = 0;  col < width;  ++col)
+        for  (kkuint32 col = 0;  col < width;  ++col)
         {
           index = *ptr;  ++ptr;
 
@@ -357,9 +271,6 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
   imageFileNameWide = NULL;
   return  r;
 }
-
-#endif
-
 
 
 
@@ -442,7 +353,6 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
 
 
 
-
 KKStr  KKB::ReadImagePpmField (FILE*   in,
                                bool&   eof
                               )
@@ -503,7 +413,6 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
   }
   return  token;
 }  /* ReadImagePpmField */
-
 
 
 
@@ -608,7 +517,6 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
 
 
 
-
 void  KKB::SaveImage  (const Raster&  image, 
                        const KKStr&   imageFileName
                       )
@@ -709,13 +617,8 @@ void  KKB::SaveImagePNG (const Raster&  image,
                         )
 {
   FILE* o = osFOPEN (imageFileName.Str (), "wb");
-  if  (!o)
-  {
-    KKStr  errMsg = "SaveImagePNG   Error opening File[" + imageFileName + "]";
-    cerr << std::endl << errMsg  << std::endl << std::endl;
-    throw KKException (errMsg);
-  }
-
+  KKCheck (o, "SaveImagePNG   Error opening File: " << imageFileName)
+ 
   {
     KKStr  headerStr (15);
     headerStr << "P6"            << endl
@@ -771,13 +674,8 @@ void  KKB::SaveImagePPM (const Raster&  image,
                         )
 {
   FILE* o = osFOPEN (imageFileName.Str (), "wb");
-  if  (!o)
-  {
-    KKStr  errMsg = "SaveImagePNG   Error opening File[" + imageFileName + "]";
-    cerr << std::endl << errMsg  << std::endl << std::endl;
-    throw KKException (errMsg);
-  }
-
+  KKCheck (o, "SaveImagePPM   Error opening File: " << imageFileName)
+ 
   {
     KKStr  headerStr (15);
     headerStr << "P6"            << endl
@@ -831,8 +729,6 @@ void  KKB::SaveImagePPM (const Raster&  image,
 
 
 
-
-
 void  KKB::SaveImageInverted (Raster&       raster, 
                               const KKStr&  imageFileName
                              )
@@ -865,19 +761,12 @@ void  KKB::SaveImageInverted (Raster&       raster,
 
 
 
-
 void  KKB::SaveImageGrayscaleInverted4Bit (const Raster&  image, 
                                            const KKStr&  _fileName
                                           )
 {
   KKStr  ext = osGetFileExtension (_fileName);
-  if  (!ext.EqualIgnoreCase ("BMP"))
-  {
-    KKStr msg;
-    msg << "KKB::SaveImageGrayscaleInverted4Bit   Only 'BMP' files are supported;  FileName[" << _fileName << "].";
-    cerr << endl << "***ERROR***    " << msg << endl << endl;
-    throw KKException (msg);
-  }
+  KKCheck (ext.EqualIgnoreCase ("BMP"), "SaveImageGrayscaleInverted4Bit   Only 'BMP' files are supported;  FileName: " << _fileName)
 
   try
   {
@@ -897,7 +786,6 @@ void  KKB::SaveImageGrayscaleInverted4Bit (const Raster&  image,
     throw  KKException (errMsg);
   }
 }  /* SaveImageGrayscaleInverted4Bit */
-
 
 
 
@@ -954,7 +842,6 @@ bool  KKB::SupportedImageFileFormat (const KKStr&  imageFileName)
 
 
 
-
 void  KKB::ImageIoFinaleCleanUp ()
 {
 #if  defined(KKOS_WINDOWS)
@@ -965,4 +852,3 @@ void  KKB::ImageIoFinaleCleanUp ()
   }
 #endif
 }
-

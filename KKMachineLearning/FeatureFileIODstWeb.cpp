@@ -138,8 +138,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     line.TrimLeft ();
     line.TrimRight ();
 
-    kkint64  equalLoc = line.LocateCharacter ('=');
-    if  (equalLoc < 0)
+    auto  equalLoc = line.LocateCharacter ('=');
+    if  (equalLoc.None ())
     {
       _errorMessage = "First Line is not Class Identifier.";
       _log.Level (-1) << endl << endl
@@ -148,8 +148,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       return  NULL;
     }
 
-    KKStr  leftSide  = line.SubStrPart ((kkint64)0, equalLoc - 1);
-    KKStr  rightSide = line.SubStrPart (equalLoc + 1);
+    KKStr  leftSide  = line.SubStrPart ((kkint64)0, equalLoc.value - 1);
+    KKStr  rightSide = line.SubStrPart (equalLoc.value + 1);
 
     leftSide.Upper ();
     if  (leftSide != "CLASS")

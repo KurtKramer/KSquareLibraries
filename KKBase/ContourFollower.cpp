@@ -278,7 +278,6 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
   lastRow = startRow;
   lastCol = startCol;
 
-
   while  (true)  
   {
     if  (numOfBorderPixels > absoluteMaximumEdgePixels)

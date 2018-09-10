@@ -202,11 +202,11 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
     if  (endPairChar != 0)
     {
       KKStr pairStr = "";
-      kkint64  idx = s.Find (endPairChar);
-      if  (idx >= 0)
+      auto  idx = s.Find (endPairChar);
+      if  (idx.Exists ())
       {
-        pairStr = s.SubStrPart (0L, idx - 1);
-        s = s.SubStrPart (idx + 1);
+        pairStr = s.SubStrPart (0, idx.value - 1);
+        s = s.SubStrPart (idx.value + 1);
       }
       else
       {

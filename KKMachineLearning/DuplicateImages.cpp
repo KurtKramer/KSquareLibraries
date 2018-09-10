@@ -403,7 +403,6 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
   kkint32  smallestScanLine = 99999999;
   FeatureVectorPtr  imageWithSmallestScanLine = NULL;
 
-
   for  (auto i: duplicatedImages)
   {
     KKStr  rootName = osGetRootName (i->ExampleFileName ());
@@ -414,23 +413,26 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     if  (rootName.SubStrPart (0, 4) == "FRAME")
     {
       // Scan line will be last seq number in name.
-      kkint64 x = rootName.LocateLastOccurrence ('_');
-      if  (x > 0)
+      auto x = rootName.LocateLastOccurrence ('_');
+      if  (x.Exists () &&  (x.value > 0))
       {
-        KKStr  scanLineStr = rootName.SubStrPart (x + 1);
+        KKStr  scanLineStr = rootName.SubStrPart (x.value + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
     }
     else
     {
       // Scan should be 2nd to last seq number in name.
-      kkint64 x = rootName.LocateLastOccurrence ('_');
-      if  (x > 0)
+      auto x = rootName.LocateLastOccurrence ('_');
+      if  (x.Exists ()  &&  (x.value > 0))
       {
-        KKStr  workStr = rootName.SubStrPart (0, x - 1);
-        kkint64 y = workStr.LocateLastOccurrence ('_');
-        KKStr  scanLineStr = workStr.SubStrPart (y + 1);
-        scanLine = atoi (scanLineStr.Str ());
+        KKStr  workStr = rootName.SubStrPart (0, x.Value () - 1);
+        auto y = workStr.LocateLastOccurrence ('_');
+        if  (y.Exists ())
+        {
+          KKStr  scanLineStr = workStr.SubStrPart (y.Value () + 1);
+          scanLine = atoi (scanLineStr.Str ());
+        }
       }
     }
 

@@ -316,9 +316,9 @@ MLClass::MLClass (const KKStr&  _name):
 
   upperName = name.ToUpper ();
   KKStr  topLevel = upperName;
-  kkint64 x = upperName.LocateCharacter ('_');
-  if  (x >= 0)
-    topLevel = upperName.SubStrPart ((kkint64)0, x - 1);
+  auto x = upperName.LocateCharacter ('_');
+  if  (x.Exists ())
+    topLevel = upperName.SubStrPart ((kkint64)0, x.value - 1);
 
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
@@ -368,15 +368,15 @@ KKStr  MLClass::ToString ()  const
 KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
-  kkint64 x = className.LocateLastOccurrence ('_');
-  if  (x > 0)
+  auto x = className.LocateLastOccurrence ('_');
+  if  (x.Exists ()  &&  (x.value > 0))
   {
     // Now lets eliminate any sequence number in name
     // We are assuming that a underscore{"_") character separates the class name from the sequence number.
     // So if there is an underscore character,  and all the characters to the right of it are
     // numeric characters,  then we will remove the underscore and the following numbers.
 
-    kkStrUint  y = (kkStrUint)(x + 1);
+    kkStrUint  y = x.value + 1;
 
     bool  allFollowingCharsAreNumeric = true;
     while  ((y < className.Len ()) &&  (allFollowingCharsAreNumeric))
@@ -388,7 +388,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
     if  (allFollowingCharsAreNumeric)
     {
-      className = className.SubStrPart (0, x - 1);
+      className = className.SubStrPart (0, x.value - 1);
     }
   }
 
@@ -1024,15 +1024,15 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
     }
 
     KKStr  className = IdxToPtr (x)->Name ();
-    kkint64  y = className.LocateCharacter ('_');
-    if  (y < 0)
+    auto  y = className.LocateCharacter ('_');
+    if  (y.None ())
     {
       titleLine2 << className;
     }
     else
     {
-      titleLine1 << className.SubStrPart (0, y - 1);
-      titleLine2 << className.SubStrPart (y + 1);
+      titleLine1 << className.SubStrPart (0, y.value - 1);
+      titleLine2 << className.SubStrPart (y.value + 1);
     }
   }
 }  /* ExtractTwoTitleLines */

@@ -20,6 +20,7 @@
 
 
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "RandomNumGenerator.h"
 
 
@@ -51,9 +52,9 @@ namespace  KKB
     typedef  Entry const * EntryConstPtr;
 
   private:
-      bool       owner;       /**< if True the KKQueue structure owns the objects and is responsible for
-                               *   deleting them when the KKQueue structure is deleted.
-                               */
+      bool  owner;       /**< if True the KKQueue structure owns the objects and is responsible for
+                          *   deleting them when the KKQueue structure is deleted.
+                          */
 
   public:
       typedef  typename std::vector<Entry*>::iterator        iterator;
@@ -101,7 +102,7 @@ namespace  KKB
       bool      Owner        () const;
 
       kkint32   LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
-      EntryPtr  IdxToPtr     (kkuint32      idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
+      EntryPtr  IdxToPtr     (size_t        idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
       kkint32   PtrToIdx     (EntryConstPtr _entry)  const;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
 
       // Basic Queue operators.
@@ -126,7 +127,7 @@ namespace  KKB
       virtual void   DeleteContents ();                       /**< Empties the container,  if 'owner' is set to true will call the destructor on each element.  */
 
       void      DeleteEntry    (EntryPtr _entry);             /**< Removes from KKQueue the entry who's pointer = '_entry'                                      */
-      void      DeleteEntry    (kkuint32 _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                         */
+      void      DeleteEntry    (size_t   _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                         */
 
       void      Owner          (bool     _owner);             /**< specifies who owns the contents of the container; when true the contents will
                                                                 *  be deleted when the container is deleted.  
@@ -136,8 +137,8 @@ namespace  KKB
       void      RandomizeOrder (kkint64   seed);
       void      RandomizeOrder (RandomNumGenerator&  randomVariable);
 
-      void      SetIdxToPtr    (kkuint32 _idx,
-                                Entry*   _ptr
+      void      SetIdxToPtr    (size_t _idx,
+                                Entry* _ptr
                                );
 
       void      SwapIndexes    (size_t idx1,  size_t idx2);
@@ -158,7 +159,7 @@ namespace  KKB
       KKQueue<T>*  Map(T* (*f)(const Entry* e)) const;
 
 
-      Entry&    operator[] (kkuint32 i)  const;       /**< Returns reference to element indexed by 'i'; similar to IdxToPtr 
+      Entry&    operator[] (size_t i)  const;       /**< Returns reference to element indexed by 'i'; similar to IdxToPtr 
                                                        * except returns reference rather than a pointer. 
                                                        */
 
@@ -196,7 +197,6 @@ namespace  KKB
 
 
 
-
   template <class Entry>
   KKQueue<Entry>::KKQueue (bool  _owner):
       owner (_owner)
@@ -222,6 +222,7 @@ namespace  KKB
   }
 
 
+
   template <class Entry>
   KKQueue<Entry>::KKQueue (const KKQueue&  q,
                            bool            _owner
@@ -239,7 +240,6 @@ namespace  KKB
         PushOnBack (*x); 
     }
   }
-
 
   
 
@@ -345,7 +345,6 @@ namespace  KKB
 
 
 
-
   template <class Entry>
   void  KKQueue<Entry>::PushOnFront (EntryPtr _entry)
   {
@@ -361,6 +360,7 @@ namespace  KKB
   }
 
 
+
   template <class Entry>
   void  KKQueue<Entry>::PushOnBack  (EntryPtr _entry)
   {
@@ -374,7 +374,6 @@ namespace  KKB
     }
     //vector<Entry*>  x;
   }
-
 
 
 
@@ -397,7 +396,6 @@ namespace  KKB
     }
     return *this;
   }  /* operator= */
-
 
 
 
@@ -459,7 +457,6 @@ namespace  KKB
     SRand48 (seed);
     RandomizeOrder ();
   }  /* RandomizeOrder */
-
 
 
 
@@ -605,8 +602,7 @@ namespace  KKB
     return left;
   }
 
-
-
+  
 
   template <class Entry>
   typename  KKQueue<Entry>::EntryPtr KKQueue<Entry>::PopFromFront ()
@@ -621,6 +617,7 @@ namespace  KKB
     KKQueue<Entry>::erase (beg);
     return  e;
   }
+
 
 
   template <class Entry>
@@ -681,9 +678,7 @@ namespace  KKB
     return KKQueue<Entry>::back ();
   }
 
-
-
-
+  
 
   template <class Entry>
   typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::FrontOfQueue () const
@@ -711,27 +706,34 @@ namespace  KKB
 
 
 
-
   template <class Entry>
-  void   KKQueue<Entry>::SetIdxToPtr (kkuint32  _idx,
-                                      Entry*  _ptr
-                                     )
+  void  KKQueue<Entry>::SetIdxToPtr (size_t  _idx,
+                                     Entry*  _ptr
+                                    )
   {
-    if  ((kkuint32)_idx >=  KKQueue<Entry>::size ())
-      return;
+    if  (_idx >=  KKQueue<Entry>::size ())
+    {
+      stringstream errMsg;
+      errMsg << "KKQueue<Entry>::SetIdxToPtr  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
+      std::cerr << errMsg.str () << std::endl;
+      throw std::exception (errMsg.str ().c_str ());
+    }
     
     std::vector<Entry*>::operator[] (_idx) = _ptr;
   }  /* SetIdxToPtr */
 
 
 
-
-
   template <class Entry>
-  void   KKQueue<Entry>::DeleteEntry (kkuint32 _idx)
+  void  KKQueue<Entry>::DeleteEntry (size_t _idx)
   {
-    if  ((kkuint32)_idx >=  KKQueue<Entry>::size ())
-      return;
+    if  (_idx >=  KKQueue<Entry>::size ())
+    {
+      stringstream errMsg;
+      errMsg << "KKQueue<Entry>::DeleteEntry  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
+      std::cerr << errMsg.str () << std::endl;
+      throw std::exception (errMsg.str ().c_str ());
+    }
 
     iterator  i =  KKQueue<Entry>::begin ();
 
@@ -745,13 +747,12 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (kkuint32 idx)  const
+  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (size_t idx)  const
   {
     if  (idx >= KKQueue<Entry>::size ())
       return NULL;
 
     return  &((*this)[idx]);
-    //return  (typename Entry*)(vector<Entry*>::operator[] (idx));
   }  /* IdxToPtr */
 
 
@@ -782,27 +783,18 @@ namespace  KKB
 
 
   template <class Entry>
-  void  KKQueue<Entry>::SwapIndexes (size_t  idx1,  size_t idx2)
+  void  KKQueue<Entry>::SwapIndexes (size_t idx1,  size_t idx2)
   {
-    if  ((idx1 < 0)  ||  (idx1 >= KKQueue<Entry>::size ())  ||
-         (idx2 < 0)  ||  (idx2 >= KKQueue<Entry>::size ())
-        )
+    if  ((idx1 >= KKQueue<Entry>::size ()) || (idx2 >= KKQueue<Entry>::size ()))
     {
-      std::cerr << std::endl;
-
-      std::cerr << "  ***  ERROR  ***  (KKQueue::SwapIndexes)  Indexes[" 
-                << (kkint32)idx1 << ", " << (kkint32)idx2 << "] Out of Range."
-                << std::endl;
-
-      std::cerr << "                   KKQueue Size[" << (kkint32)KKQueue<Entry>::size () << "]." 
-                << std::endl
-                << std::endl;
-
-      exit (1);
+      std::stringstream errMsg;
+      errMsg << "KKQueue<Entry>::SwapIndexes  idx1: " << idx1 << " and/or idx2: " << idx2
+             << " exceeds QueueSize: " << KKQueue<Entry>::size ();
+      std::cerr << errMsg.str () << std::endl;
+      throw std::exception (errMsg.str ().c_str ());
     }
 
     EntryPtr  tempPtr = std::vector<Entry*>::operator[] (idx1);
-
     std::vector<EntryPtr>::operator[] (idx1) = std::vector<EntryPtr>::operator[] (idx2);
     std::vector<EntryPtr>::operator[] (idx2) = tempPtr;
   }  /* SwapIndexes */
@@ -810,16 +802,16 @@ namespace  KKB
 
 
   template <class Entry>
-  Entry&   KKQueue<Entry>::operator[] (kkuint32 idx)  const
+  Entry&   KKQueue<Entry>::operator[] (size_t idx)  const
   {
     //KKQueue<Entry>::Entry*  entry;
 
-    if  ((idx < 0)  ||  (idx >= KKQueue<Entry>::size ()))
+    if  (idx >= KKQueue<Entry>::size ())
     {
-      std::cerr << std::endl 
-                << "*** ERROR ***   KKQueue<Entry>::operator[], Index [" << idx << "] out of bounds." << std::endl
-                << std::endl;
-      exit (-1);
+      std::stringstream errMsg;
+      errMsg << "KKQueue<Entry>::operator[]  idx: " << idx << " exceeds QueueSize: " << KKQueue<Entry>::size ();
+      std::cerr << errMsg.str () << std::endl;
+      throw std::exception (errMsg.str ().c_str ());
     }
 
     return  (Entry&)*(std::vector<Entry*>::operator[] (idx));
