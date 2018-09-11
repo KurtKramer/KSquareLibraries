@@ -414,9 +414,9 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     {
       // Scan line will be last seq number in name.
       auto x = rootName.LocateLastOccurrence ('_');
-      if  (x.Exists () &&  (x.value > 0))
+      if  (x  &&  (x.value () > 0))
       {
-        KKStr  scanLineStr = rootName.SubStrPart (x.value + 1);
+        KKStr  scanLineStr = rootName.SubStrPart (x.value () + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
     }
@@ -424,13 +424,13 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     {
       // Scan should be 2nd to last seq number in name.
       auto x = rootName.LocateLastOccurrence ('_');
-      if  (x.Exists ()  &&  (x.value > 0))
+      if  (x  &&  (x.value () > 0))
       {
-        KKStr  workStr = rootName.SubStrPart (0, x.Value () - 1);
+        KKStr  workStr = rootName.SubStrPart (0, x.value () - 1);
         auto y = workStr.LocateLastOccurrence ('_');
-        if  (y.Exists ())
+        if  (y)
         {
-          KKStr  scanLineStr = workStr.SubStrPart (y.Value () + 1);
+          KKStr  scanLineStr = workStr.SubStrPart (y.value () + 1);
           scanLine = atoi (scanLineStr.Str ());
         }
       }

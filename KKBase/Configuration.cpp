@@ -12,11 +12,9 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #ifdef  WIN32
 #include <windows.h>
 #endif
-
 
 #include "Configuration.h"
 #include "KKQueue.h"
@@ -501,9 +499,8 @@ void  Configuration::LoadFile (RunLog&  log)
         sections->AddConfSection (curSection);
       }
 
-      auto  equalIdx = line.LocateCharacter ('=');
-
-      if  (equalIdx.None ())
+      auto equalIdx = line.LocateCharacter ('=');
+      if  (!equalIdx)
       {
         // We have a improperly formated line.
         log.Level (-1) << endl
@@ -514,12 +511,12 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrPart (0, equalIdx.value - 1));
+        KKStr  settingName (line.SubStrPart (0, equalIdx.value() - 1));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();
 
-        KKStr  settingValue (line.SubStrPart (equalIdx.value + 1));
+        KKStr  settingValue (line.SubStrPart (equalIdx.value() + 1));
         settingValue.TrimLeft ();
         settingValue.TrimRight ();
 

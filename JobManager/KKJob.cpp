@@ -227,7 +227,7 @@ KKStr  KKJob::PrerequisitesToStr ()  const
   if  (prerequisites.size () < 1)
     return  "None";
 
-  KKStr  s (5 + prerequisites.size () * 5);
+  KKStr  s (5 + (kkStrUint)prerequisites.size () * 5);
   for  (kkuint32 x = 0;  x < prerequisites.size ();  ++x)
   {
     if  (x > 0)

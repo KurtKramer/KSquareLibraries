@@ -267,7 +267,7 @@ void   KKJobManager::EndBlock ()
      if  (!SetFileAttributes (lockFileName.Str (), fileAttributes))
      {
        DWORD  lastErrorNum = GetLastError ();
-       log.Level (-1) << "KKJobManager::EndBlock - *** ERROR *** Could not set Lock File  to  Normal." << endl;
+       log.Level (-1) << "KKJobManager::EndBlock - *** ERROR *** Could not set Lock File  to  Normal  lastErrorNum: " << (kkuint64)lastErrorNum << endl;
      }
      else
      {
@@ -318,8 +318,8 @@ void  KKJobManager::StatusFileProcessLineJobStatusChange (KKStr&    statusLineSt
   KKStr statusStr = statusLineStr.ExtractToken2 ("\t");
   statusStr.TrimLeft ();
   statusStr.TrimRight ();
-  KKJob::JobStatus  status = KKJob::JobStatusFromStr (statusStr);
-  if  (status == jsNULL)
+  KKJob::JobStatus  jobStatus = KKJob::JobStatusFromStr (statusStr);
+  if  (jobStatus == jsNULL)
   {
     log.Level (-1) << endl << endl << endl 
                    << "ProcessStatusLineJobStatusChange    ***Error***      Invalid Status Specified" << endl
@@ -332,7 +332,7 @@ void  KKJobManager::StatusFileProcessLineJobStatusChange (KKStr&    statusLineSt
     exit (-1);
   }
   
-  j->Status (status);
+  j->Status (jobStatus);
 }  /* ProcessStatusLineJobStatusChange */
 
 
@@ -511,8 +511,7 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
   s.ChopLastChar ();
 
   KKStr  jobTypeStr = "";
-  kkint32 jobId = -1;
-
+  kkint32 thisJobId = -1;
 
   VectorKKStr  parameters = s.Split (',');
   for  (kkuint32 x = 0;  x < parameters.size ();  ++x)
@@ -531,11 +530,11 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
       jobTypeStr = fieldValue;
 
     else if  (fieldName.CompareIgnoreCase ("JobId") == 0)
-      jobId = fieldValue.ToInt ();
+      thisJobId = fieldValue.ToInt ();
   }
 
   
-  if  (jobTypeStr.Empty () ||  (jobId < 0))
+  if  (jobTypeStr.Empty () ||  (thisJobId < 0))
   {
     log.Level (-1) << endl 
                    << "KKJobManager::ProcessJobXmlBlockOfText   ***ERROR***   StartStr[" << startStr << "]." << endl
@@ -545,11 +544,11 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
   }
 
 
-  KKJobPtr  j = jobs->LookUpByJobId (jobId);
+  KKJobPtr  j = jobs->LookUpByJobId (thisJobId);
   if  (j == NULL)
   {
     // We do not have this job in memory yet.  We will have to create it now.
-    KKStr  emptyStatusStr = "JobId\t" + StrFormatInt (jobId, "ZZZZ0");
+    KKStr  emptyStatusStr = "JobId\t" + StrFormatInt (thisJobId, "ZZZZ0");
     j = KKJob::CallAppropriateConstructor (this, jobTypeStr, emptyStatusStr);
   }
 
@@ -703,9 +702,6 @@ void  KKJobManager::StatusFileInitialize ()
 
 
 
-
-
-
 kkint32  KKJobManager::AllocateNextJobId ()
 {
   kkint32  jobId = nextJobId;
@@ -715,13 +711,10 @@ kkint32  KKJobManager::AllocateNextJobId ()
 
 
 
-
 void   KKJobManager::Update (JobManagerPtr  p)
 {
   status = p->status;
 }
-
-
 
 
 
@@ -737,11 +730,6 @@ KKStr  KKJobManager::ToStatusStr ()
 
   return  statusStr;
 }  /* ToStatusStr */
-
-
-
-
-
 
 
 
@@ -799,7 +787,6 @@ void  KKJobManager::SetQuitRunningFlag ()
 
 
 
-
 void   KKJobManager::ProcessNextExpansion (ostream&  o)
 {
   KKJobListPtr jobsJustCompleted = new KKJobList (this);
@@ -844,7 +831,6 @@ void   KKJobManager::ProcessNextExpansion (ostream&  o)
     << "ExpansionFirstJobId"  << "\t" << expansionFirstJobId  << endl;
 
 }  /* ProcessNextExpansion */
-
 
 
 
@@ -893,8 +879,7 @@ KKJobListPtr  KKJobManager::GetNextSetOfJobs (KKJobListPtr  completedJobs)
     statusFile->close ();
     delete  statusFile;  statusFile = NULL;
   }
-
-
+  
   KKJobListPtr  jobsToExecute = new KKJobList (this);
   jobsToExecute->Owner (false);
 
@@ -950,7 +935,6 @@ KKJobListPtr  KKJobManager::GetNextSetOfJobs (KKJobListPtr  completedJobs)
 
 
 
-
 bool  KKJobManager::AreAllJobsDone ()
 {
   if  (jobs)
@@ -963,7 +947,6 @@ bool  KKJobManager::AreAllJobsDone ()
     return  false;
   }
 }  /* AreAllJobsAreDone */
-
 
 
 
@@ -1014,7 +997,6 @@ void   KKJobManager::Run ()
     delete  executedJobs;  executedJobs = NULL;
   }
 
-
   Block ();
   StatusFileRefresh ();
   if  ((!quitRunning)  &&  (status != KKJob::jsDone))
@@ -1036,7 +1018,6 @@ void   KKJobManager::Run ()
     }
   }
   EndBlock ();
-
 
   log.Level (10) << "KKJobManager::Run    Exiting." << endl;
 }  /* Run */

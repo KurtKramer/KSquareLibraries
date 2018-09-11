@@ -1060,7 +1060,7 @@ bool  KKStr::Contains (const char*  value)
   if  ((value == NULL)  ||  (*value == 0))
     return true;
   else
-    return (Find (value, 0).Exists ());
+    return (Find (value, 0).has_value ());
 }
 
 
@@ -1833,20 +1833,17 @@ char  KKStr::LastChar ()  const
 OptionUInt32  KKStr::LocateCharacter (char ch)  const
 {
   if  (!val)
-    return  UInt32Result ();
+    return  {};
 
   kkStrUint idx = 0;
   while  (idx < len)
   {
     if  (val[idx] == ch)
-    {
-      UInt32Result  returnCode (idx);
-      return  returnCode;
-    }
+      return  idx;
     idx++;
   }
 
-  return  UInt32Result ();
+  return  {};
 }  /* LocateCharacter */
 
 
@@ -1907,7 +1904,7 @@ OptionUInt32  KKStr::LocateLastOccurrence (char  ch)  const
   #endif
 
   if  (!val  ||  (len < 1))
-    return  kkNone;
+    return  {};
 
   kkStrUint  lastIdx = len;
   while  (lastIdx > 0)
@@ -1917,7 +1914,7 @@ OptionUInt32  KKStr::LocateLastOccurrence (char  ch)  const
       return  lastIdx;
   }
 
-  return kkNone;
+  return {};
 }  /* LocateLastOccurrence */
 
 
@@ -1931,7 +1928,7 @@ OptionUInt32  KKStr::LocateLastOccurrence (const KKStr&  s)  const
   kkStrUint  sLen = s.Len ();
 
   if  ((!val)  ||  (!s.val)  ||  (sLen <= 0)  ||  (sLen > len))
-    return kkNone;
+    return {};
 
   kkStrUint  lastIdx = len - sLen;
   const char* curPos = val + lastIdx;
@@ -1947,7 +1944,7 @@ OptionUInt32  KKStr::LocateLastOccurrence (const KKStr&  s)  const
     --curPos;
     --lastIdx;
   }
-  return  kkNone;
+  return  {};
 }  /* LocateLastOccurrence */
 
 
@@ -1955,7 +1952,7 @@ OptionUInt32  KKStr::LocateLastOccurrence (const KKStr&  s)  const
 OptionUInt32  KKStr::LocateNthOccurrence (char ch,  kkint32 n)  const
 {
   if  (!val)
-    return kkNone;
+    return {};
 
   kkint32 numInstances = 0;
   kkStrUint  x = 0;
@@ -1967,7 +1964,7 @@ OptionUInt32  KKStr::LocateNthOccurrence (char ch,  kkint32 n)  const
   }
 
   if  (numInstances < n)
-    return kkNone;
+    return {};
   else
     return (x - 1);
 }
@@ -1982,7 +1979,7 @@ OptionUInt32  KKStr::LocateStr (const KKStr&  searchStr)  const
 {
   kkStrUint  searchStrLen = searchStr.Len ();
   if  ((!val)  ||  (!searchStr.val) ||  (searchStrLen > len))
-    return  kkNone;
+    return {};
 
   kkStrUint  maxPossibilities = 1 + len - searchStrLen;
   const char* curPos = val;
@@ -1991,7 +1988,7 @@ OptionUInt32  KKStr::LocateStr (const KKStr&  searchStr)  const
     if (std::memcmp (curPos, searchStr.val, searchStrLen) == 0)
       return x;
   }
-  return kkNone;
+  return {};
 } /* LocateStr */
 
 
@@ -3258,7 +3255,7 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
   while  (!field.Empty ())
   {
     auto  dashPos = field.LocateCharacter ('-');
-    if  (dashPos.None  ())
+    if  (!dashPos)
     {
       // This is not a range
       results->push_back (field.ToInt32 ());
@@ -3266,8 +3263,8 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
     else
     {
       // We are looking at a range
-      kkint32  startNum = field.SubStrPart (0, dashPos.value - 1).ToInt32 ();
-      kkint32  endNum   = field.SubStrPart (dashPos.value + 1).ToInt32 ();
+      kkint32  startNum = field.SubStrPart (0, dashPos.value () - 1).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos.value () + 1).ToInt32 ();
       for  (kkint32 z = startNum;   z <= endNum;  ++z)
         results->push_back (z);
     }
@@ -3346,21 +3343,21 @@ double  KKStr::ToLatitude ()  const
   KKStr  secondsStr  = "";
 
   auto  x = latitudeStr.LocateCharacter (':');
-  if  (x.Exists())
+  if  (x.has_value ())
   {
-    degreesStr = latitudeStr.SubStrPart (0, x.value - 1);
+    degreesStr = latitudeStr.SubStrPart (0, x.value() - 1);
     degreesStr.TrimRight ();
-    minutesStr = latitudeStr.SubStrPart (x.value + 1);
+    minutesStr = latitudeStr.SubStrPart (x.value () + 1);
     minutesStr.Trim ();
   }
   else
   {
     x = latitudeStr.LocateCharacter (' ');
-    if  (x.Exists ())
+    if  (x)
     {
-      degreesStr = latitudeStr.SubStrPart (0, x.value - 1);
+      degreesStr = latitudeStr.SubStrPart (0, x.value () - 1);
       degreesStr.TrimRight ();
-      minutesStr = latitudeStr.SubStrPart (x.value + 1);
+      minutesStr = latitudeStr.SubStrPart (x.value () + 1);
       minutesStr.Trim ();
     }
     else
@@ -3371,19 +3368,19 @@ double  KKStr::ToLatitude ()  const
   }
 
   x = minutesStr.LocateCharacter (':');
-  if  (x.Exists ())
+  if  (x)
   {
-    secondsStr = minutesStr.SubStrPart (x.value + 1);
-    minutesStr = minutesStr.SubStrPart (0, x.value - 1);
+    secondsStr = minutesStr.SubStrPart (x.value() + 1);
+    minutesStr = minutesStr.SubStrPart (0, x.value() - 1);
     secondsStr.Trim ();
   }
   else
   {
     x = minutesStr.LocateCharacter (' ');
-    if  (x.Exists ())
+    if  (x)
     {
-      secondsStr = minutesStr.SubStrPart (x.value + 1);
-      minutesStr = minutesStr.SubStrPart (0, x.value - 1);
+      secondsStr = minutesStr.SubStrPart (x.value () + 1);
+      minutesStr = minutesStr.SubStrPart (0, x.value () - 1);
       secondsStr.Trim ();
     }
   }
@@ -3435,21 +3432,21 @@ double  KKStr::ToLongitude ()  const
   KKStr  secondsStr  = "";
 
   auto  x = longitudeStr.LocateCharacter (':');
-  if  (x.Exists ())
+  if  (x)
   {
-    degreesStr = longitudeStr.SubStrPart (0, (x.value - 1));
+    degreesStr = longitudeStr.SubStrPart (0, (x.value () - 1));
     degreesStr.TrimRight ();
-    minutesStr = longitudeStr.SubStrPart (x.value + 1);
+    minutesStr = longitudeStr.SubStrPart (x.value () + 1);
     minutesStr.Trim ();
   }
   else
   {
     x = longitudeStr.LocateCharacter (' ');
-    if  (x.Exists ())
+    if  (x)
     {
-      degreesStr = move(longitudeStr.SubStrPart (0, x.value - 1));
+      degreesStr = move(longitudeStr.SubStrPart (0, x.value () - 1));
       degreesStr.TrimRight ();
-      minutesStr = longitudeStr.SubStrPart (x.value + 1);
+      minutesStr = longitudeStr.SubStrPart (x.value () + 1);
       minutesStr.Trim ();
     }
     else
@@ -3460,19 +3457,19 @@ double  KKStr::ToLongitude ()  const
   }
 
   x = minutesStr.LocateCharacter (':');
-  if  (x.Exists ())
+  if  (x)
   {
-    secondsStr = minutesStr.SubStrPart (x.value + 1);
-    minutesStr = minutesStr.SubStrPart (0, x.value - 1);
+    secondsStr = minutesStr.SubStrPart (x.value () + 1);
+    minutesStr = minutesStr.SubStrPart (0, x.value () - 1);
     secondsStr.Trim ();
   }
   else
   {
     x = minutesStr.LocateCharacter (' ');
-    if  (x.Exists ())
+    if  (x)
     {
-      secondsStr = minutesStr.SubStrPart (x.value + 1);
-      minutesStr = minutesStr.SubStrPart (0, x.value - 1);
+      secondsStr = minutesStr.SubStrPart (x.value () + 1);
+      minutesStr = minutesStr.SubStrPart (0, x.value () - 1);
       secondsStr.Trim ();
     }
   }
@@ -3500,11 +3497,11 @@ OptionUInt32  SearchStr (const char*   src,
                         )
 {
   if  ((!src)  ||  (!srchStr))
-    return kkNone;
+    return {};
 
   kkuint32  zed = (startPos + srchStrLen - 1);
   if  (zed > srcLen)
-    return  kkNone;
+    return  {};
 
   kkuint32 numIter = (srcLen - zed);
   const char* startCh = src + startPos;
@@ -3514,7 +3511,7 @@ OptionUInt32  SearchStr (const char*   src,
     if  (strncmp (startCh, srchStr, srchStrLen) == 0)
       return  startPos + x;
   }
-  return kkNone;
+  return {};
 }
 
 
@@ -3547,7 +3544,7 @@ OptionUInt32  KKStr::Find (char c, kkStrUint pos) const
     if  (val[x] == c)
       return  x;
   }
-  return kkNone;
+  return {};
 }
 
 
@@ -4401,7 +4398,7 @@ OptionUInt32  LocateLastOccurrence (const char*  str,
                                    )
 {
   if  (!str)
-    return kkNone;
+    return {};
 
   kkStrUint  idx = (kkStrUint)strlen (str);
   while  (idx > 0)
@@ -4411,7 +4408,7 @@ OptionUInt32  LocateLastOccurrence (const char*  str,
       return idx;
   }
 
-  return kkNone;
+  return {};
 }  /* LocateLastOccurrence */
 
 
@@ -4448,12 +4445,12 @@ KKStr  KKB::StrFormatDouble (double       val,
 
   kkuint32  nextDigit = 0;
 
-  if  (decimalPosition.Exists ())
+  if  (decimalPosition)
   {
-    numOfDecimalPlaces = maskLen - decimalPosition.value - 1;
+    numOfDecimalPlaces = maskLen - decimalPosition.value () - 1;
     printDecimalPoint = true;
-    maskPtr = mask + decimalPosition.value - 1;
-    maskLen = decimalPosition.value;
+    maskPtr = mask + decimalPosition.value () - 1;
+    maskLen = decimalPosition.value ();
   }
 
   if  (printDecimalPoint)

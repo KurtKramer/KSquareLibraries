@@ -83,9 +83,8 @@ namespace  KKB
   class  KKStr 
   {
   public:
-    typedef  KKStr*              KKStrPtr;
-    typedef  const KKStr*        KKStrConstPtr;
-    typedef  KKOption<kkuint32>  UInt32Result; 
+    typedef  KKStr*             KKStrPtr;
+    typedef  const KKStr*       KKStrConstPtr;
 
     //typedef  std::vector<KKStr>  VectorKKStr;
 

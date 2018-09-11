@@ -203,10 +203,10 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
     {
       KKStr pairStr = "";
       auto  idx = s.Find (endPairChar);
-      if  (idx.Exists ())
+      if  (idx)
       {
-        pairStr = s.SubStrPart (0, idx.value - 1);
-        s = s.SubStrPart (idx.value + 1);
+        pairStr = s.SubStrPart (0, idx.value () - 1);
+        s = s.SubStrPart (idx.value () + 1);
       }
       else
       {
@@ -226,7 +226,6 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
 
   return  result;
 }  /* FromDelStr */
-
 
 
 

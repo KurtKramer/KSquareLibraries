@@ -46,6 +46,7 @@
 #endif
 
 #include <limits>
+#include <optional>
 #include <vector>
 
 
@@ -164,6 +165,10 @@ namespace KKB
 
   typedef kkuint64  kkMemSize;
 
+
+  typedef std::optional<kkint32>  OptionInt32;
+
+  typedef std::optional<kkuint32> OptionUInt32;
 
 
   /** @brief Generic Min function,  Both parameters must be of the same type.  */

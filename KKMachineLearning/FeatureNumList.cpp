@@ -497,7 +497,7 @@ FeatureNumList::VectorIntType*  FeatureNumList::StrToUInt16Vetor (const KKStr&  
     if  (field.Empty ())
       continue;
     auto dashPos = field.LocateCharacter ('-');
-    if  (dashPos.None ())
+    if  (!dashPos)
     {
       kkint32 n = field.ToInt32 ();
       if ((n < 0) || ((kkuint32)n > maxIntType))
@@ -510,8 +510,8 @@ FeatureNumList::VectorIntType*  FeatureNumList::StrToUInt16Vetor (const KKStr&  
     else
     {
       // We are looking at a range
-      kkint32  startNum = field.SubStrPart (0, dashPos.value - 1).ToInt32 ();
-      kkint32  endNum   = field.SubStrPart (dashPos.value + 1).ToInt32 ();
+      kkint32  startNum = field.SubStrPart (0, dashPos.value () - 1).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos.value () + 1).ToInt32 ();
 
       if  ((startNum > endNum)  ||  (startNum < 0)  ||  ((kkuint32)endNum > maxIntType))
       {

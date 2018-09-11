@@ -63,7 +63,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
   {
     // First determine the name of the names and data file.
     auto lastDotPos = _fileName.LocateLastOccurrence ('.');
-    if  (lastDotPos.None ())
+    if  (!lastDotPos)
     {
       namesFileName = _fileName + ".names";
       dataFileName  = _fileName;
@@ -72,8 +72,8 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     }
     else
     {
-      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos.value - 1);
-      KKStr extension   = _fileName.SubStrPart (lastDotPos.value + 1);
+      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos.value () - 1);
+      KKStr extension   = _fileName.SubStrPart (lastDotPos.value () + 1);
       extension.Upper ();
       if  (extension == "NAMES")
       {
@@ -172,8 +172,8 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
   auto  lastBarPos = ln.LocateLastOccurrence ('|');
-  if  (lastBarPos.Exists ())
-    ln = ln.SubStrPart (0, lastBarPos.value - 1);
+  if  (lastBarPos)
+    ln = ln.SubStrPart (0, lastBarPos.value () - 1);
 
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
@@ -937,7 +937,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 
   auto  lastDotPos = fileName.LocateLastOccurrence ('.');
 
-  if  (lastDotPos.None ())
+  if  (!lastDotPos)
   {
     // First try file name with ".data" extension, then with no extension
     namesFileName = fileName + ".names";
@@ -945,8 +945,8 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
   }
   else
   {
-    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos.value);
-    KKStr  extension   = fileName.SubStrPart (lastDotPos.value + 1);
+    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos.value ());
+    KKStr  extension   = fileName.SubStrPart (lastDotPos.value () + 1);
     extension.Upper ();
     if  ((extension == "NAMES")  ||  (extension == "NAME"))
     {

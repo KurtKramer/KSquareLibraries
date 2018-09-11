@@ -11,6 +11,7 @@ namespace  KKB
    *@brief Enspired by the Option type in Scala; idea is to use as a way
    * of returning a value from a method; or a flag indicating no return.
    */
+  /*
   template<typename T>
   class KKOption
   {
@@ -124,6 +125,7 @@ namespace  KKB
       return  a.value < b.value;
   }
 
+  */
 
 }
 

@@ -933,7 +933,7 @@ OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
   while  (y < len)
   {
     if  (s[y] == 0)
-      return kkNone;
+      return {};
 
     if  (s[x] == '$')
     {
@@ -945,7 +945,7 @@ OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
     ++y;
   }
 
-  return  kkNone;
+  return  {};
 }  /* osLocateEnvStrStart */
 
 
@@ -953,26 +953,26 @@ OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
 KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 {
   auto  nextEnvVarIdx = osLocateEnvStrStart (src, 0);
-  if  (nextEnvVarIdx.None ())  return  src;
+  if  (!nextEnvVarIdx)  return  src;
 
   KKStr  str (src);
 
-  while  (nextEnvVarIdx.Exists ())
+  while  (nextEnvVarIdx)
   {
-    char  startChar = src[(kkint16)(nextEnvVarIdx.value + 1)];
+    char  startChar = src[(kkint16)(nextEnvVarIdx.value () + 1)];
     char  endChar = ')';
 
     if       (startChar == '(')   endChar = ')';
     else if  (startChar == '{')   endChar = '}';
     else if  (startChar == '[')   endChar = ']';
 
-    KKStr  beforeEnvStr = str.SubStrPart (0, nextEnvVarIdx.value - 1);
-    str = str.SubStrPart (nextEnvVarIdx.value + 2);
+    KKStr  beforeEnvStr = str.SubStrPart (0, nextEnvVarIdx.value () - 1);
+    str = str.SubStrPart (nextEnvVarIdx.value () + 2);
     auto endCharIdx = str.LocateCharacter (endChar);
-    if  (endCharIdx.None ())  return  src;
+    if  (!endCharIdx)  return  src;
 
-    KKStr  envStrName   = str.SubStrPart (0, endCharIdx.value - 1);
-    KKStr  afterStrName = str.SubStrPart (endCharIdx.value + 1);
+    KKStr  envStrName   = str.SubStrPart (0, endCharIdx.value () - 1);
+    KKStr  afterStrName = str.SubStrPart (endCharIdx.value () + 1);
 
     KKStrPtr envStrValue = osGetEnvVariable (envStrName);
     if  (envStrValue == NULL)
@@ -1003,14 +1003,14 @@ OptionUInt32  KKB::osLocateFirstSlashChar (const KKStr&  fileSpec)
   auto  firstForewardSlash  = fileSpec.LocateCharacter ('/');
   auto  firstBackSlash = fileSpec.LocateCharacter ('\\');
 
-  if  (firstForewardSlash.None ())
+  if  (!firstForewardSlash)
     return firstBackSlash;
 
-  else if (firstBackSlash.None ())
+  else if (!firstBackSlash)
     return firstForewardSlash;
 
   else
-    return  OptionUInt32 (Min (firstForewardSlash.value, firstBackSlash.value));
+    return  Min (firstForewardSlash, firstBackSlash);
 }  /* LastSlashChar */
 
 
@@ -1032,7 +1032,6 @@ KKStr  KKB::osAddSlash (const KKStr&  fileSpec)
      result << DS;
   return  result;
 }  /* OsAddLastSlash */
-
 
 
 
@@ -1074,27 +1073,27 @@ void   KKB::osParseFileName (KKStr   _fileName,
                             )
 {
   auto  x = osLocateLastSlashChar (_fileName);
-  if  (x.None ())
+  if  (!x)
   {
     _dirPath = "";
   }
 
   else
   {
-    _dirPath  = _fileName.SubStrPart (0, x.value - 1);
-    _fileName = _fileName.SubStrPart (x.value + 1);
+    _dirPath  = _fileName.SubStrPart (0, x.value () - 1);
+    _fileName = _fileName.SubStrPart (x.value () + 1);
   }
       
   x = _fileName.LocateLastOccurrence ('.');
-  if  (x.None ())
+  if  (!x)
   {
     _rootName  = _fileName;
     _extension = "";
   }
   else
   {
-    _rootName  = _fileName.SubStrPart (0, x.value - 1);
-    _extension = _fileName.SubStrPart (x.value + 1);
+    _rootName  = _fileName.SubStrPart (0, x.value () - 1);
+    _extension = _fileName.SubStrPart (x.value () + 1);
   }
 
   return;
@@ -1105,14 +1104,14 @@ void   KKB::osParseFileName (KKStr   _fileName,
 KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
 {
   auto  lastPeriodChar = _fullFileName.LocateLastOccurrence ('.');
-  if  (lastPeriodChar.None ())
+  if  (!lastPeriodChar)
     return _fullFileName;
 
   auto  lastSlashChar = osLocateLastSlashChar (_fullFileName);
-  if  (lastSlashChar.Exists ()  &&  lastSlashChar.value >  lastPeriodChar.value)
+  if  (lastSlashChar  &&  (lastSlashChar > lastPeriodChar))
     return _fullFileName;
 
-  return _fullFileName.SubStrPart (0L, lastPeriodChar.value - 1);
+  return _fullFileName.SubStrPart (0L, lastPeriodChar.value () - 1);
 }  /* osRemoveExtension */
 
 
@@ -1124,17 +1123,17 @@ KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
   auto  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
-  if  (lastSlashOrColon.None ())
+  if  (!lastSlashOrColon)
     lastPart = fullFileName;
   else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value + 1);
+    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value () + 1);
 
   auto  periodIdx = lastPart.LocateLastOccurrence ('.');
 
-  if  (periodIdx.None ())
+  if  (!periodIdx)
     return  lastPart;
 
-  return  lastPart.SubStrPart (0, periodIdx.value);
+  return  lastPart.SubStrPart (0, periodIdx.value ());
 }  /*  osGetRootName */
 
 
@@ -1150,10 +1149,10 @@ KKStr  KKB::osGetRootNameOfDirectory (KKStr  fullDirName)
   auto  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
-  if  (lastSlashOrColon.None ())
+  if  (!lastSlashOrColon)
     lastPart = fullDirName;
   else
-    lastPart = fullDirName.SubStrPart (lastSlashOrColon.value + 1);
+    lastPart = fullDirName.SubStrPart (lastSlashOrColon.value () + 1);
 
   return  lastPart;
 }  /*  osGetRootNameOfDirectory */
@@ -1168,10 +1167,10 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
   auto  x1 = path.LocateLastOccurrence (DSchar);
   auto  x2 = path.LocateLastOccurrence (':');
   auto  x = Max (x1, x2);
-  if  (x.None ()  ||  (x.value < 1))
+  if  (!x  ||  (x.value () < 1))
     return KKStr::EmptyStr ();
 
-  return  path.SubStrPart (0, x.value);
+  return  path.SubStrPart (0, x.value ());
 }  /* osGetParentDirectoryOfDirPath */
 
 
@@ -1183,10 +1182,10 @@ KKStr  KKB::osGetRootNameWithExtension (const KKStr&  fullFileName)
   auto  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
-  if  (lastSlashOrColon.None ())
+  if  (!lastSlashOrColon)
     lastPart = fullFileName;
   else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value + 1);
+    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value () + 1);
 
   return  lastPart;
 }  /* osGetRootNameWithExtension */
@@ -1207,10 +1206,10 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
 
   // Look for Drive Letter
   auto  driveLetterPos = fullFileName.LocateCharacter (':');
-  if  (driveLetterPos.Exists ())
+  if  (driveLetterPos)
   {
-    driveLetter  = fullFileName.SubStrPart (0, driveLetterPos.value - 1);
-    fullFileName = fullFileName.SubStrPart (driveLetterPos.value + 1);
+    driveLetter  = fullFileName.SubStrPart (0, driveLetterPos.value () - 1);
+    fullFileName = fullFileName.SubStrPart (driveLetterPos.value () + 1);
   }
 
   KKStr  fileName;
@@ -1225,27 +1224,27 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
   }
 
   auto  lastSlash =  osLocateLastSlashChar (fullFileName);
-  if  (lastSlash.None ())
+  if  (!lastSlash)
   {
     path = "";
     fileName = fullFileName;
   }
   else 
   {
-    path     = fullFileName.SubStrPart (0, lastSlash.value - 1);
-    fileName = fullFileName.SubStrPart (lastSlash.value + 1);
+    path     = fullFileName.SubStrPart (0, lastSlash.value () - 1);
+    fileName = fullFileName.SubStrPart (lastSlash.value () + 1);
   }
 
   auto  period = fileName.LocateLastOccurrence ('.');
-  if  (period.None ()  ||  (period.value <= 0))
+  if  (!period  ||  (period.value () <= 0))
   {
     root = fileName;
     extension = "";
   }
   else 
   {
-    root      = fileName.SubStrPart (0, period.value - 1);
-    extension = fileName.SubStrPart (period.value + 1);
+    root      = fileName.SubStrPart (0, period.value () - 1);
+    extension = fileName.SubStrPart (period.value () + 1);
   }
 
   return;
@@ -1257,14 +1256,14 @@ KKStr  KKB::osGetPathPartOfFile (const KKStr&  fullFileName)
 {
   auto  lastSlash =  osLocateLastSlashChar (fullFileName);
 
-  if  (lastSlash.Exists ())
+  if  (lastSlash)
   {
-    return  fullFileName.SubStrPart (0, lastSlash.value - 1);
+    return  fullFileName.SubStrPart (0, lastSlash.value () - 1);
   }
 
   auto  lastColon = fullFileName.LocateLastOccurrence (':');
-  if  (lastColon.Exists ())
-    return  fullFileName.SubStrPart (0, lastColon.value);
+  if  (lastColon)
+    return  fullFileName.SubStrPart (0, lastColon.value ());
   else
     return  KKStr ("");
 }  /* GetPathPartOfFile */
@@ -1287,16 +1286,16 @@ KKStr  KKB::osGetParentDirPath (KKStr  dirPath)
   
   auto x = Max (dirPath.LocateLastOccurrence ('\\'), dirPath.LocateLastOccurrence ('/'));
   
-  if  (x.None ())
+  if  (!x)
   {
     x = dirPath.LocateLastOccurrence (':');
-    if  (x.Exists ())
-      return  dirPath.SubStrPart (0, x.value - 1);
+    if  (x)
+      return  dirPath.SubStrPart (0, x.value () - 1);
     else
       return  KKStr::EmptyStr ();
   }
 
-  return  dirPath.SubStrPart (0, x.value - 1);
+  return  dirPath.SubStrPart (0, x.value () - 1);
 }
 
 
@@ -1420,17 +1419,17 @@ KKStr  KKB::osGetFileNamePartOfFile (KKStr  fullFileName)
     return  KKStr ("");
 
   auto  lastSlash =  osLocateLastSlashChar (fullFileName);
-  if  (lastSlash.None ())
+  if  (!lastSlash)
   {
    auto  colon = fullFileName.LocateCharacter (':');
-   if  (colon.None ())
+   if  (!colon)
      return fullFileName;
    else
-     return fullFileName.SubStrPart (colon.value + 1);
+     return fullFileName.SubStrPart (colon.value () + 1);
   }
   else
   {
-    return  fullFileName.SubStrPart (lastSlash.value + 1);
+    return  fullFileName.SubStrPart (lastSlash.value () + 1);
   }
 }  /* FileNamePartOfFile */
 
@@ -1674,7 +1673,6 @@ KKStrListPtr  KKB::osGetListOfImageFiles (KKStr  fileSpec)
 
 
 
-
 #ifdef  WIN32
 KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 {
@@ -1685,7 +1683,7 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
     fileSpec << "*.*";
   }
 
-  else if  (fileSpec.LocateCharacter ('*').None ())
+  else if  (!fileSpec.LocateCharacter ('*'))
   {
     if  (osValidDirectory (&fileSpec))
     {
