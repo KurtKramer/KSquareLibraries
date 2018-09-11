@@ -1879,7 +1879,7 @@ kkint32  MemCompare (const char* s1,
                      kkuint32    len
                     )
 {
-  for  (kkint32 x = 0;  x < len;  x++)
+  for  (kkuint32 x = 0;  x < len;  x++)
   {
     if  (s1[s1Idx] < s2[s2Idx])
       return -1;

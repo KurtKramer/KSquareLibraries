@@ -30,22 +30,8 @@ namespace  KKLSC
     static  KKStr  ConfigurationDir       ();  /**< Where application configuration files go;  NOT training models.     */
     static  KKStr  ScannerFilesDefaultDir ();
 
-
-    /**
-     *@brief  Expands the supplied string by substituting in Environment variable values.
-     *@details  Similar to the 'osSubstituteInEvironmentVariables' method defined in 'osServices' except that if 'HomeDir' is
-     *           not defined then the string 'c:\\Temp' will be used.  If a environment variable other than "HomeDir" is not
-     *           defined then the original string will be returned.
-     *           ex:  '$(HomeDir)\\TrainingLibraries\\Shrimp9G'  will expand to: 'SCS\\TrainingLibraries\\Shrimp9G'
-     *
-     *@param[in]  src  String that is to be search for environment variables and expanded.
-     *@return  returns the expanded string.
-     */
-    static  KKStr  SubstituteInEnvironmentVariables (const KKStr&  src);
-
   private:
-    static  kkint64  LocateEnvStrStart (const KKStr&  str);
-    static  KKStr    homeDir;
+    static  KKStr   homeDir;
 
   };  /* Variables */
 }

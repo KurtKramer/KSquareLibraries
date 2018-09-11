@@ -921,19 +921,19 @@ KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
  * @param startIdx  Index search is to start at.
  * @returns  Index of 1st character of a Environment String specifier or -1 if none was found.
  */
-int  osLocateEnvStrStart (const KKStr&  str,
-                          kkint32       startIdx  /**<  Index in 'str' to start search from. */
-                         )
+OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
+                                   kkuint32      startIdx  /**<  Index in 'str' to start search from. */
+                                  )
 {
-  int  x = startIdx;
-  int  y = startIdx + 1;
-  int  len = str.Len ();
+  kkStrUint  x = startIdx;
+  kkStrUint  y = startIdx + 1;
+  kkStrUint  len = str.Len ();
   const char*  s = str.Str ();
 
   while  (y < len)
   {
     if  (s[y] == 0)
-      return -1;
+      return kkNone;
 
     if  (s[x] == '$')
     {
@@ -945,29 +945,29 @@ int  osLocateEnvStrStart (const KKStr&  str,
     ++y;
   }
 
-  return  -1;
-}  /* LocateEnvStrStart */
+  return  kkNone;
+}  /* osLocateEnvStrStart */
 
 
 
 KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 {
-  kkint64  x = osLocateEnvStrStart (src, 0);
-  if  (x < 0)  return  src;
+  auto  nextEnvVarIdx = osLocateEnvStrStart (src, 0);
+  if  (nextEnvVarIdx.None ())  return  src;
 
   KKStr  str (src);
 
-  while  (x >= 0)
+  while  (nextEnvVarIdx.Exists ())
   {
-    char  startChar = src[(kkint16)(x + 1)];
+    char  startChar = src[(kkint16)(nextEnvVarIdx.value + 1)];
     char  endChar = ')';
 
     if       (startChar == '(')   endChar = ')';
     else if  (startChar == '{')   endChar = '}';
     else if  (startChar == '[')   endChar = ']';
 
-    KKStr  beforeEnvStr = str.SubStrPart (0, x - 1);
-    str = str.SubStrPart (x + 2);
+    KKStr  beforeEnvStr = str.SubStrPart (0, nextEnvVarIdx.value - 1);
+    str = str.SubStrPart (nextEnvVarIdx.value + 2);
     auto endCharIdx = str.LocateCharacter (endChar);
     if  (endCharIdx.None ())  return  src;
 
@@ -981,7 +981,7 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
     kkuint32  idxToStartAtNextTime = beforeEnvStr.Len () + envStrValue->Len ();
     str = beforeEnvStr + (*envStrValue)  + afterStrName;
     delete  envStrValue;
-    x = osLocateEnvStrStart (str, idxToStartAtNextTime);
+    nextEnvVarIdx = osLocateEnvStrStart (str, idxToStartAtNextTime);
   }
 
   return  str;

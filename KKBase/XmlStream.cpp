@@ -708,7 +708,7 @@ const KKStr&  XmlTag::AttributeValueKKStr (const KKStr& attributeName)  const
 
 KKStr  XmlTag::ToString ()  const
 {
-  KKStr  s (name.Len () + attributes.size () * 30);
+  KKStr  s (name.Len () + (kkStrUint)attributes.size () * 30);
   s << "<";
   
   if  (tagType == TagTypes::tagEnd)
