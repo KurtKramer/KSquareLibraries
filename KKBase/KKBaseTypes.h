@@ -173,74 +173,26 @@ namespace KKB
   template<class T> 
   std::optional<T> Max (const std::optional<T>& a, const std::optional<T>& b)
   {
-    if  (!a)  
-      return b
-
-    else if  (!b)
-      return a;
-
-    else if  (a.value () > b.value ())
-      return a
-
-    else
-      return b;
+    if  (!a)  return b; else if  (!b) return a; else return (a.value () > b.value ()) ? a : b;
   }
 
-
-
-
+  
 
   /** @brief Generic Min function,  Both parameters must be of the same type.  */
-  template <class T> T  Min (T  a, 
-                             T  b
-                            )
-  {
-    if  (a <= b)
-      return  a;
-    else
-      return  b;
-  }
+  template <class T> T  Min (T  a, T  b)  { return (a <= b) ? a : b; }
 
 
 
   /** @brief generic Max function,  Both parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b
-                            )
-  {
-    if  (a >= b)
-      return  a;
-    else
-      return  b;
-  }
+  template <class T> T  Max (T  a, T  b)  { return (a >= b) ? a : b; }
 
 
-
-
-  /** @brief Generic Max function, that takes three parameters.  All three parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b,
-                             T  c
-                            )
-  {
-    if  ((a >= b)  &&  (a >= c))
-      return  a;
-
-    if  (b >= c)
-      return b;
-    else
-      return c;
-  }
-
+  template <class T> T  Max (T x1,  T x2,  T x3) { return Max (Max (x1, x2), x3); }
 
 
 
   /** @brief Generic Max function, that takes four parameters.  All four parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b,
-                             T  c,
-                             T  d
-                            )
+  template <class T> T  Max (T a,  T b,  T c,  T d)
   {
     return  Max (Max (a, b), Max (c, d));
   }
@@ -278,15 +230,8 @@ namespace KKB
 
 
 
-  template <class T>  T  Swap (T&  x,
-                               T&  y
-                              )
-  {
-    T z = x;
-    x = y;
-    y = z;
-  }  /* Swap */
-
+  template <class T>  T  Swap (T& x, T& y)  { T z = x;  x = y;  y = z; }
+  
 
 
   /** @brief  A implementations of the Unix version of rand48 returning a 32 bit integer. */
