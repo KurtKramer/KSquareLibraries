@@ -170,6 +170,25 @@ namespace KKB
 
   typedef std::optional<kkuint32> OptionUInt32;
 
+  template<class T> 
+  std::optional<T> Max (const std::optional<T>& a, const std::optional<T>& b)
+  {
+    if  (!a)  
+      return b
+
+    else if  (!b)
+      return a;
+
+    else if  (a.value () > b.value ())
+      return a
+
+    else
+      return b;
+  }
+
+
+
+
 
   /** @brief Generic Min function,  Both parameters must be of the same type.  */
   template <class T> T  Min (T  a, 

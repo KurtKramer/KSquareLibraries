@@ -5,8 +5,6 @@
 
 namespace  KKB
 {
-  class KKNone {};
-
   /**
    *@brief Enspired by the Option type in Scala; idea is to use as a way
    * of returning a value from a method; or a flag indicating no return.

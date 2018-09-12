@@ -655,7 +655,7 @@ FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 
 
 
-FeatureNumList&  FeatureNumList::operator=  (FeatureNumList&&  _features)
+FeatureNumList&  FeatureNumList::operator= (FeatureNumList&&  _features)
 {
   delete featureNums;
   featureNums              = _features.featureNums;

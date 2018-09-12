@@ -227,8 +227,6 @@ namespace  KKJobManagment
 
 
 
-
-
   class  KKJobList: public KKQueue<KKJob>
   {
   public:
@@ -237,10 +235,6 @@ namespace  KKJobManagment
     KKJobList (const KKJobList& jobs);
 
     KKJobList (JobManagerPtr  _manager);
-
-    KKJobList (JobManagerPtr _manager,
-               KKStr         _fileName
-              );
 
     bool              AllPrequisitesDone (KKJobPtr job);
 

@@ -1,8 +1,6 @@
 #include "FirstIncludes.h"
-
 #include <stdlib.h>
 #include <stdio.h>
-
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -16,12 +14,8 @@
 #include <unistd.h>
 #endif
 
-
 #include "MemoryDebug.h"
-
 using namespace std;
-
-
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -30,8 +24,6 @@ using namespace std;
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace KKB;
-
-
 
 #include "KKJob.h"
 #include "KKJobManager.h"
@@ -54,7 +46,7 @@ KKJob::KKJob (const KKJob&  j):
 }
  
 
-  
+
 //  To create a brand new job that has not been proceesed yet.  
 KKJob::KKJob (JobManagerPtr  _manager,
               kkint32        _jobId,
@@ -77,8 +69,6 @@ KKJob::KKJob (JobManagerPtr  _manager,
 
 
 
-
-
 KKJob::KKJob (JobManagerPtr  _manager):
   manager              (_manager),
   jobId                (-1),
@@ -93,11 +83,9 @@ KKJob::KKJob (JobManagerPtr  _manager):
 
 
 
-
 KKJob::~KKJob ()
 {
 }
-
 
 
 
@@ -105,7 +93,6 @@ const char*   KKJob::JobType ()  const
 {
   return  "KKJob";
 }
-
 
 
 
@@ -125,7 +112,6 @@ void  KKJob::ProcessNode ()
 
 
 
-
 typedef  KKJobPtr (*ConstructorPtr)(const KKStr&);
 
 map<KKStr, KKJob::ConstructorPtr>  KKJob::registeredConstructors;
@@ -138,7 +124,6 @@ void  KKJob::RegisterConstructor (const KKStr&    _name,
 {
   registeredConstructors.insert (pair<KKStr, ConstructorPtr>(_name, _constructor));
 }
-                                       
 
 
 
@@ -155,8 +140,6 @@ KKJobPtr  KKJob::CallAppropriateConstructor (JobManagerPtr  _manager,
   j->ProcessStatusStr (_statusStr);
   return  j;
 }  /* CallAppropriateConstructor */
-
-
 
 
 
@@ -194,7 +177,6 @@ KKStr  KKJob::JobStatusToStr (JobStatus  status)
 
 
 
-
 KKJob::JobStatus  KKJob::JobStatusFromStr (const KKStr&  statusStr)
 {
   if  (statusStr.CompareIgnoreCase ("OPEN") == 0)
@@ -211,7 +193,6 @@ KKJob::JobStatus  KKJob::JobStatusFromStr (const KKStr&  statusStr)
 
   return jsNULL;
 }  /* JobStatusToStr */
-
 
 
 
@@ -239,7 +220,6 @@ KKStr  KKJob::PrerequisitesToStr ()  const
 
 
 
-
 void  KKJob::PrerequisitesFromStr (const KKStr&  s)
 {
   prerequisites.clear ();
@@ -257,7 +237,6 @@ void  KKJob::PrerequisitesFromStr (const KKStr&  s)
 
 
 
-
 KKStr  KKJob::ToStatusStr ()
 {
   KKStr  statusStr (200);  // Preallocating 200 bytes.
@@ -271,7 +250,6 @@ KKStr  KKJob::ToStatusStr ()
 
   return  statusStr;
 }  /* ToStatusStr */
-
 
 
 
@@ -329,20 +307,18 @@ void  KKJob::ProcessStatusStr (const KKStr&  statusStr)
 
 
 
-
-
 void  KKJob::ProcessStatusField (const KKStr&  fieldName,
                                  const KKStr&  fieldValue
                                 )
 {
-   log.Level (-1) << "KKJob::ProcessStatusField  Invalid Field Name[" << fieldName << "]." << endl;
+   log.Level (-1) << "KKJob::ProcessStatusField  Invalid Field Name: " << fieldName << "  fieldValue: " << fieldValue << endl;
 }  /* ProcessStatusField */
-
 
 
 
 void  KKJob::CompletedJobDataWrite (ostream& o)
 {
+  o << "KKJob" << "\t" << JobId () << "\t" << "Completed" << "\t" << StatusStr () << std::endl;
 }
 
 
@@ -350,18 +326,18 @@ void  KKJob::CompletedJobDataWrite (ostream& o)
 // Works with 'WriteCompletedJobData';  You use this to load in data written by 'WriteCompletedJobData'
 void  KKJob::CompletedJobDataRead (istream& i)
 {
+  KKCheck (!i.bad (), "KKJob::CompletedJobDataRead   inpt stream is bad.")
 }
-
-
 
 
 
 KKJobList::KKJobList (JobManagerPtr  _manager):
 
    KKQueue<KKJob> (true),
-   log            (_manager->Log ()),
-   manager        (_manager)
-
+   jobIdLookUpTable    (),
+   jobIdLookUpTableIdx (),
+   log                 (_manager->Log ()),
+   manager             (_manager)
 {
 }
 
@@ -373,7 +349,6 @@ KKJobList::KKJobList (const KKJobList&  jobs):
      jobIdLookUpTableIdx (),
      log                 (jobs.log),
      manager             (jobs.manager)
-  
 {
   KKJobList::const_iterator  idx;
   for  (idx = jobs.begin ();  idx != jobs.end ();  idx++)
@@ -399,8 +374,6 @@ KKJobPtr  KKJobList::LookUpByJobId (kkint32  jobId)
 
 
 
-
-
 bool  KKJobList::AllPrequisitesDone (KKJobPtr job)
 {
   const VectorInt&  p = job->Prerequisites ();
@@ -413,7 +386,6 @@ bool  KKJobList::AllPrequisitesDone (KKJobPtr job)
   }
   return true;
 }  /* AllPrequisitesDone */
-
 
 
 
@@ -432,7 +404,6 @@ KKJobPtr  KKJobList::LocateOpenJob ()
 
 
 
-
 bool  KKJobList::AreAllJobsDone ()
 {
   kkint32  x;
@@ -445,11 +416,6 @@ bool  KKJobList::AreAllJobsDone ()
 
   return  true;
 }  /* AreAllJobsAreDone */
-
-
-
-
-
 
 
 
@@ -476,9 +442,6 @@ void   KKJobList::PushOnBack (KKJobPtr  j)
 
 
 
-
-
-
 bool  KKJobList::JobsStillRunning ()
 {
   KKJobList::iterator  idx;
@@ -490,5 +453,3 @@ bool  KKJobList::JobsStillRunning ()
   }
   return  false;
 }  /* JobsStillRunning */
-
-

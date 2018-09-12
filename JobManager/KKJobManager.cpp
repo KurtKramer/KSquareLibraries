@@ -231,7 +231,6 @@ void    KKJobManager::Block ()
 
 
 
-
 void   KKJobManager::EndBlock ()
 {
   blockLevel--;
@@ -240,8 +239,7 @@ void   KKJobManager::EndBlock ()
   kkint32  returnCd;
   #endif
   
- 
-  log.Level (20) << "KKJobManager::EndBlock - Ending Block    blockLevel[" << blockLevel << "]" << endl;
+   log.Level (20) << "KKJobManager::EndBlock - Ending Block    blockLevel[" << blockLevel << "]" << endl;
 
   if  (blockLevel > 0)
   {
@@ -288,14 +286,12 @@ void   KKJobManager::EndBlock ()
 
 
 
-
 kkint32  KKJobManager::GetNextJobId ()
 {
   kkint32  jobIdToReturn = nextJobId;
   nextJobId++;
   return  jobIdToReturn;
 }
-
 
 
 
@@ -334,7 +330,6 @@ void  KKJobManager::StatusFileProcessLineJobStatusChange (KKStr&    statusLineSt
   
   j->Status (jobStatus);
 }  /* ProcessStatusLineJobStatusChange */
-
 
 
 
@@ -423,7 +418,6 @@ void  KKJobManager::StatusFileProcessLine (const KKStr&  ln,
 
 
 
-
 void  KKJobManager::StatusFileLoad ()
 {
   log.Level (10) << "KKJobManager::StatusFileLoad." << endl;
@@ -493,7 +487,6 @@ void  KKJobManager::StatusFileRefresh ()
 
 
 
-
 void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
                                                istream&      i
                                               )
@@ -558,12 +551,7 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
 
 
 
-
-
-
-
-
-ofstream*    KKJobManager::StatusFileOpen (ios::openmode  openMode)
+ofstream*   KKJobManager::StatusFileOpen (ios::openmode  openMode)
 {
   log.Level (20) << "KKJobManager::StatusFileOpen."  << endl;
 
@@ -600,7 +588,6 @@ ofstream*    KKJobManager::StatusFileOpen (ios::openmode  openMode)
 
 
 
-
 void  KKJobManager::StatusFileWrite ()
 {
   log.Level (10) << "KKJobManager::StatusFileWrite" << endl;
@@ -634,8 +621,6 @@ void  KKJobManager::StatusFileWrite ()
 
 
 
-
-
 void  KKJobManager::ReportCpuTimeUsed (ofstream* statusFile)
 {
   // While we have the status file open lets report CPU time used so far
@@ -647,9 +632,6 @@ void  KKJobManager::ReportCpuTimeUsed (ofstream* statusFile)
               << endl
               << "CurrentDateTime" << "\t" << osGetLocalDateTime () << endl;
 }  /* ReportCpuTimeUsed */
-
-
-
 
 
 
@@ -1021,4 +1003,3 @@ void   KKJobManager::Run ()
 
   log.Level (10) << "KKJobManager::Run    Exiting." << endl;
 }  /* Run */
-
