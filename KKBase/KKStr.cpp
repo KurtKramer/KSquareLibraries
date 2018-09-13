@@ -1783,7 +1783,7 @@ void  KKStr::AppendUInt32 (kkuint32  i)
 
 char  KKStr::FirstChar ()  const
 {
-  if  (val == NULL)
+  if  ((val == NULL)  ||  (len < 1))
     return 0;
 
   return  val[0];
@@ -1819,13 +1819,9 @@ void  KKStr::FreeUpUnUsedSpace()
 
 char  KKStr::LastChar ()  const
 {
-  if  (!val)
+  if  ((val == NULL)  ||  (len < 1))
     return 0;
-
-  if  (val[0] == 0)
-    return 0;
-  else
-    return val[len - 1];
+  return val[len - 1];
 }  /* LastChar */
 
 
@@ -2750,7 +2746,7 @@ kkuint32  KKStr::ExtractTokenUint (const char* delStr)
   #endif
 
   KKStr  workStr = ExtractToken2 (delStr);
-  return  (kkuint32)atol (workStr.Str ());
+  return workStr.ToUint32 ();
 }
 
 
@@ -2837,8 +2833,10 @@ char  KKStr::ExtractLastChar ()
     return 0;
 
   --len;
+  char lastChar = val[len];
+  val[len] = 0;
 
-  return val[len];
+  return lastChar;
 }  /* ExtractLastChar */
 
 
@@ -3137,8 +3135,10 @@ kkint32  KKStr::ToInt () const
   if  (!val)
     return 0;
 
-  kkint32  i = atoi (val);
-  return i;
+  kkint64 l = atoll (val);
+  KKCheck ((l >= INT_MIN) && (l <= INT_MAX), "KKStr::ToInt   val: " << val << " exceeds capacity of 32 bit int.")
+
+  return (kkint32)l;
 }  /* ToInt*/
 
 
@@ -3148,9 +3148,11 @@ kkint16  KKStr::ToInt16 () const
   if  (!val)
     return 0;
 
-  kkint16  i = (kkint16)atoi (val);
-  return i;
-}  /* ToInt32*/
+  kkint64 ll = atoll (val);
+  KKCheck ((ll >= INT16_MIN) && (ll <= INT16_MAX), "KKStr::ToInt16   val: " << val << " exceeds capacity of 16 bit int.")
+
+  return (kkint16)ll;
+}  /* ToInt16*/
 
 
 
@@ -3159,8 +3161,10 @@ kkint32  KKStr::ToInt32 () const
   if  (!val)
     return 0;
 
-  kkint32  i = atoi (val);
-  return i;
+  kkint64 ll = atoll (val);
+  KKCheck ((ll >= INT32_MIN) && (ll <= INT32_MAX), "KKStr::ToInt32   val: " << val << " exceeds capacity of 32 bit int.")
+
+  return (kkint32)ll;
 }  /* ToInt32*/
 
 
@@ -3178,13 +3182,15 @@ KKB::kkint64  KKStr::ToInt64 () const
 
 
 
-long   KKStr::ToLong   () const
+long  KKStr::ToLong   () const
 {
   if  (!val)
     return 0;
 
-  long  l = atol (val);
-  return l;
+  kkint64  ll = atoll (val);
+  KKCheck ((ll >= LONG_MIN)  &&  (ll <= LONG_MAX), "KKStr::ToLong  val: " << val << " exceeds capacity of long.")
+
+  return (long)ll;
 }  /* ToLong */
 
 
@@ -3202,34 +3208,40 @@ float  KKStr::ToPercentage () const
 
 
 
-kkuint32 KKStr::ToUint () const
+uint  KKStr::ToUint () const
 {
   if  (!val)  return 0;
-  return  (kkuint32)atol (val);
+
+  kkint64 ll = atoll(val);
+  KKCheck ((ll >= 0)  &&  (ll <= UINT_MAX), "KKStr::ToUint ()    val: " << val << " exceeds capacity of uint.")
+  return  (kkuint32)ll;
 }
 
 
 
 KKB::ulong  KKStr::ToUlong () const
 {
-  if  (!val)  return 0;
-  return  (ulong)atol (val);
+  kkint64 ll = atoll(val);
+  KKCheck ((ll >= 0)  &&  (ll <= ULONG_MAX), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
+  return  (ulong)ll;
 }
 
 
 
-KKB::kkuint32  KKStr::ToUint16 () const
+KKB::kkuint16  KKStr::ToUint16 () const
 {
-  if  (!val)  return 0;
-  return  (kkuint16)atol (val);
+  kkint64 ll = atoll(val);
+  KKCheck ((ll >= 0)  &&  (ll <= UINT16_MAX), "KKStr::ToUint16 ()    val: " << val << " exceeds capacity of uint16.")
+  return  (kkuint16)ll;
 }
 
 
 
 KKB::kkuint32  KKStr::ToUint32 () const
 {
-  if  (!val)  return 0;
-  return  (kkuint32)atol (val);
+  kkint64 ll = atoll(val);
+  KKCheck ((ll >= 0)  &&  (ll <= UINT32_MAX), "KKStr::ToUint32 ()    val: " << val << " exceeds capacity of uint32.")
+  return  (kkuint32)ll;
 }
 
 
@@ -3950,33 +3962,17 @@ void  KKStr::MemCpy (void*      dest,
                      kkStrUint  size
                     )
 {
+  KKCheck (dest, "KKStr::MemCpy   ***ERROR***    (dest == NULL)")
+  KKCheck (src,  "KKStr::MemCpy   ***ERROR***    (src  == NULL)")
 
-  if  (dest == NULL)
-  {
-    cerr << endl << "KKStr::MemCpy   ***ERROR***    (dest == NULL)" << endl << endl;
-  }
-
-  else if  (src == NULL)
-  {
-    cerr << endl << "KKStr::MemCpy   ***ERROR***    (src == NULL)" << endl << endl;
-  }
-
-  else
-  {
-    memcpy (dest, src, size);
-  }
+  memcpy (dest, src, size);
 }
 
 
 
 void  KKStr::MemSet (void* dest,  kkuint8  byte, kkStrUint  size)
 {
-  if  (dest == NULL)
-  {
-    cerr << "KKStr::MemSet  ***ERROR***    (dest == NULL)" << endl;
-    return;
-  }
-
+  KKCheck (dest, "KKStr::MemCpy   ***ERROR***    (dest == NULL)")
   memset (dest, byte, size);
 }
 
@@ -3991,7 +3987,7 @@ void  KKStr::StrCapitalize (char*  str)
   while  (*ch)
   {
     *ch = (char)toupper (*ch);
-    ch++;
+    ++ch;
   }
 }
 

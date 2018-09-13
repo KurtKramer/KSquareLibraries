@@ -144,9 +144,7 @@ namespace KKB
    */
   KKStr          osGetParentDirPath (KKStr  dirPath);
 
-
-
-  KKStr          osGetHostName ();
+  OptionKKStr    osGetHostName ();
 
   KKStr          osGetUserName ();
 

@@ -83,10 +83,9 @@ namespace  KKB
   class  KKStr 
   {
   public:
-    typedef  KKStr*             KKStrPtr;
-    typedef  const KKStr*       KKStrConstPtr;
-
-    //typedef  std::vector<KKStr>  VectorKKStr;
+    typedef  KKStr*                 KKStrPtr;
+    typedef  const KKStr*           KKStrConstPtr;
+    typedef  std::optional<KKStr>   OptionKKStr;
 
   private:
     static  const  kkStrUint  MaxStrLen;
@@ -534,9 +533,9 @@ namespace  KKB
     long      ToLong       () const;
     float     ToPercentage () const;
     KKStr     ToQuotedStr  () const  {return QuotedStr ();}
-    kkuint32  ToUint       () const;
+    uint      ToUint       () const;
     ulong     ToUlong      () const;
-    kkuint32  ToUint16     () const;
+    kkuint16  ToUint16     () const;
     kkuint32  ToUint32     () const;
     kkuint64  ToUint64     () const;
 
@@ -707,6 +706,7 @@ namespace  KKB
   typedef  KKStr::KKStrPtr         KKStrPtr;
   typedef  KKStr::KKStrConstPtr    KKStrConstPtr;
   typedef  std::pair<KKStr,KKStr>  KKStrPair;
+  typedef  KKStr::OptionKKStr      OptionKKStr;
 
 #define  _KKStr_Defined_
 

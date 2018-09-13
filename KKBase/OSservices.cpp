@@ -1300,7 +1300,7 @@ KKStr  KKB::osGetParentDirPath (KKStr  dirPath)
 
 
 
-KKStr   KKB::osGetHostName ()
+OptionKKStr   KKB::osGetHostName ()
 {
 #if  defined(KKOS_WINDOWS)
   char  buff[1024];
@@ -1309,7 +1309,6 @@ KKStr   KKB::osGetHostName ()
  
   KKStr  compName = "";
 
-  //BOOL returnCd = GetComputerNameEx (ComputerNameDnsFullyQualified, buff, &buffSize);
   BOOL returnCd = GetComputerNameA (buff, &buffSize);
   if  (returnCd != 0)
   {
@@ -1326,7 +1325,7 @@ KKStr   KKB::osGetHostName ()
     }
     else
     {
-      compName = "";
+      return {};
     }
   }  
 
@@ -1339,7 +1338,7 @@ KKStr   KKB::osGetHostName ()
   memset (buff, 0, sizeof (buff));
   kkint32  returnCd = gethostname (buff, sizeof (buff) - 2);
   if  (returnCd != 0)
-    return "";
+    return {};
   else
     return buff;
 
@@ -1387,8 +1386,6 @@ KKStr  KKB::osGetUserName ()
   return "NoImplemented";
 #endif
 }  /* osGetUserName */
-
-
 
 
 
