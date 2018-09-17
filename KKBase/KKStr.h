@@ -28,7 +28,6 @@
 #endif
 
 #include "KKBaseTypes.h"
-#include "KKOption.h"
 #include "KKQueue.h"
 
 #define  EnterChar   13
@@ -287,7 +286,7 @@ namespace  KKB
     ///<param name='delStr'> List of delimiting characters. </param>
     ///<returns>  Extracted Token. </returns>
     ///<seealso cref='ExtractToken2'/>
-    KKStr   ExtractToken  (const char* delStr = "\n\t\r ");  
+    KKStr  ExtractToken  (const char* delStr = "\n\t\r ");  
     
 
     /**
@@ -778,7 +777,7 @@ namespace  KKB
     
     void      AddString (KKStrPtr  str);
 
-    KKStrPtr  BinarySearch (const KKStr&  searchStr);
+    std::optional<KKStrPtr>  BinarySearch (const KKStr&  searchStr);
 
     KKStrListPtr  DuplicateListAndContents ()  const;
 

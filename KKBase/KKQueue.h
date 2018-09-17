@@ -757,7 +757,6 @@ namespace  KKB
 
 
 
-
   template <class Entry>
   kkint32 KKQueue<Entry>::LocateEntry (EntryConstPtr _entry)  const
   {

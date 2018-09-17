@@ -4208,7 +4208,7 @@ void  KKStrList::WriteXML (const KKStr&  varName,
 
 
 
-KKStrPtr  KKStrList::BinarySearch (const KKStr&  searchStr)
+optional<KKStrPtr>  KKStrList::BinarySearch (const KKStr&  searchStr)
 {
   if  (!sorted)
   {
@@ -4245,7 +4245,7 @@ KKStrPtr  KKStrList::BinarySearch (const KKStr&  searchStr)
     }
   }
 
-  return  NULL;
+  return  {};
 }  /* BinarySearch */
 
 

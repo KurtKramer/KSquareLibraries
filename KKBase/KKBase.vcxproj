@@ -194,7 +194,6 @@
     <ClCompile Include="KKException.cpp" />
     <ClCompile Include="KKObservable.cpp" />
     <ClCompile Include="KKObserver.cpp" />
-    <ClCompile Include="KKOption.cpp" />
     <ClCompile Include="KKStr.cpp" />
     <ClCompile Include="KKStrMatrix.cpp" />
     <ClCompile Include="KKStrParser.cpp" />
@@ -260,7 +259,6 @@
     <ClInclude Include="KKException.h" />
     <ClInclude Include="KKObservable.h" />
     <ClInclude Include="KKObserver.h" />
-    <ClInclude Include="KKOption.h" />
     <ClInclude Include="KKQueue.h" />
     <ClInclude Include="KKStr.h" />
     <ClInclude Include="KKStrMatrix.h" />

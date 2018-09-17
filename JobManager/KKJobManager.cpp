@@ -10,11 +10,8 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include <strstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include <sys/types.h>
@@ -26,7 +23,6 @@ using namespace std;
 #include <unistd.h>
 #endif
 
-
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
 #include "OSservices.h"
@@ -34,10 +30,9 @@ using namespace std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
-
 #include "KKJobManager.h"
 using namespace  KKJobManagment;
+
 
 
 KKJobManager::KKJobManager (const KKJobManager& j):
