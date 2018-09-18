@@ -444,15 +444,14 @@ void  Orderings::Load (const KKStr&  _indexFileName,
       i >> imagesInOrdering;
     }
 
-
     i >> field;
     field.Upper ();
 
     while  ((field != "//ENDOFORDERING") &&  (!i.eof ()))
     {
-      kkint32  imageIdx = atoi (field.Str ());
+      kkuint32  imageIdx = field.ToUint32 ();
 
-      if  ((imageIdx < 0)  ||  (imageIdx >= data->QueueSize ()))
+      if  (imageIdx >= data->QueueSize ())
       {
         log.Level (-1) << endl << endl
                        << "Orderings::Load  *** ERROR ***  Invalid Index Encountered." << endl
@@ -546,15 +545,13 @@ void  Orderings::Save (const KKStr&  _indexFileName,
 
 
 
-
-
 void  Orderings::Save ()
 {
   // Build an index by relative location in master list data, so that we can 
   // quickly determine index for other orderings.
   map<FeatureVectorPtr,kkint32> index;
-  kkint32  idx = 0;
-  for  (idx = 0;  idx < data->QueueSize ();  idx++)
+
+  for  (kkuint32 idx = 0;  idx < data->QueueSize ();  idx++)
   {
     FeatureVectorPtr  example = data->IdxToPtr (idx);
     index.insert (pair<FeatureVectorPtr,kkint32>(example, idx));
@@ -575,9 +572,7 @@ void  Orderings::Save ()
   o << "//DateCreated"     << "\t" << osGetLocalDateTime () << endl;
   o << "//EndOfHeader"                                      << endl;
 
-  kkuint32  orderingIDX;
-
-  for  (orderingIDX = 0;  orderingIDX < orderings.size ();  orderingIDX++)
+  for  (kkuint32 orderingIDX = 0;  orderingIDX < orderings.size ();  orderingIDX++)
   {
     FeatureVectorListPtr  ordering = orderings[orderingIDX];
     o << "//OrderingNum" << "\t" << orderingIDX << "\t" << "Count" << "\t" << ordering->QueueSize () << endl;
@@ -620,4 +615,3 @@ FeatureVectorListPtr  Orderings::Ordering (kkuint32  orderingIdx)  const
 
   return  orderings[orderingIdx];
 }  /* Ordering */
-

@@ -344,9 +344,6 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
 
 void  Model::AllocatePredictionVariables ()
 {
-  kkint32 x = 0;
-  kkint32 y = 0;
-
   DeAllocateSpace ();
 
   if  (classes == NULL)
@@ -367,12 +364,12 @@ void  Model::AllocatePredictionVariables ()
     classProbs    = new double[numOfClasses];
     votes         = new kkint32 [numOfClasses];
     crossClassProbTable = new double*[numOfClasses];
-    for  (x = 0;  x < numOfClasses;  x++)
+    for  (kkuint32 x = 0;  x < numOfClasses;  x++)
     {
       classProbs         [x] = 0.0;
       votes              [x] = 0;
       crossClassProbTable[x] = new double[numOfClasses];
-      for  (y = 0;  y < numOfClasses;  y++)
+      for  (kkuint32 y = 0;  y < numOfClasses;  y++)
         crossClassProbTable[x][y] = 0.0f;
     }
   }
@@ -380,14 +377,11 @@ void  Model::AllocatePredictionVariables ()
 
 
 
-
-
 void  Model::DeAllocateSpace ()
 {
-  kkint32 x = 0;
   if  (crossClassProbTable)
   {
-    for  (x = 0;  x < numOfClasses;  x++)
+    for  (kkuint32 x = 0;  x < numOfClasses;  x++)
     {
       delete  [] crossClassProbTable[x];
       crossClassProbTable[x] = NULL;
@@ -420,6 +414,7 @@ FeatureNumListConstPtr   Model::GetFeatureNums ()  const
     throw KKException ("Model::GetFeatureNums  'param == NULL'.");
   return  param->SelectedFeatures ();
 }
+
 
 
 bool  Model::NormalizeNominalAttributes ()  const
@@ -758,21 +753,15 @@ void  Model::RetrieveCrossProbTable (MLClassList&   _classes,
                                      RunLog&        log
                                     )
 {
-  if  (_classes.QueueSize () != crossClassProbTableSize)
-  {
-    // There Class List does not have the same number of entries as our 'CrossProbTable'
-    log.Level (-1) << endl
-                   << "SVMModel::RetrieveCrossProbTable   ***ERROR***" << endl
-                   << "            classes.QueueSize ()[" << _classes.QueueSize () << "] != crossClassProbTableSize[" << crossClassProbTableSize << "]" << endl
-                   << endl;
-    return;
-  }
+  KKCheck (_classes.QueueSize () == crossClassProbTableSize,
+           "SVMModel::RetrieveCrossProbTable   classes.QueueSize:," << _classes.QueueSize () << " != crossClassProbTableSize: " << crossClassProbTableSize
+          )
 
   kkint32*  indexTable = new kkint32[_classes.QueueSize ()];
-  kkint32  x, y;
-  for  (x = 0;  x < _classes.QueueSize ();  x++)
+
+  for  (kkuint32 x = 0;  x < _classes.QueueSize ();  x++)
   {
-    for  (y = 0;  y < _classes.QueueSize ();  y++)
+    for  (kkuint32 y = 0;  y < _classes.QueueSize ();  y++)
        _crossClassProbTable[x][y] = 0.0;
 
     indexTable[x] = classesIndex->GetClassIndex (_classes.IdxToPtr (x));
@@ -798,12 +787,12 @@ void  Model::RetrieveCrossProbTable (MLClassList&   _classes,
 
   // x,y         = 'Callers'   Class Indexes..
   // xIdx, yIdx  = 'SVMNodel'  Class Indexed.
-  for  (x = 0;  x < _classes.QueueSize ();  ++x)
+  for  (kkuint32 x = 0;  x < _classes.QueueSize ();  ++x)
   {
     kkint32 xIdx = indexTable[x];
     if  (xIdx >= 0)
     {
-      for  (y = 0;  y < _classes.QueueSize ();  y++)
+      for  (kkuint32 y = 0;  y < _classes.QueueSize ();  y++)
       {
         kkint32  yIdx = indexTable[y];
         if  (yIdx >= 0)
@@ -850,7 +839,6 @@ void  Model::WriteModelXMLFields (ostream&  o)  const
   XmlElementMLClassNameList::WriteXML (*classes, "classes", o);
   if  (classesIndex)
     classesIndex->WriteXML ("ClassesIndex", o);
-
 
   if  (factoryFVProducer)
     XmlElementKKStr::WriteXML (factoryFVProducer->Name (), "FvFactoryProducer", o);

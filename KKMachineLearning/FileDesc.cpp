@@ -265,22 +265,17 @@ MLClassPtr  FileDesc::GetMLClassPtr (const KKStr& className)
 
 
 
-void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
+void  FileDesc::ValidateFieldNum (kkuint32     fieldNum,
                                   const char*  funcName
                                  )  const
 {
-  if  ((fieldNum < 0)  ||  (fieldNum >= attributes.QueueSize ()))
-  {
-    KKStr  errMsg (128);
-    errMsg << "FileDesc::" << funcName << "   ***ERROR***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined.";
-    cerr  << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
+  KKCheck (fieldNum < attributes.QueueSize (),
+    "FileDesc::" << funcName << "  Invalid FieldNum: " << fieldNum << "; number defined: " << attributes.QueueSize () << ".")
 }  /* ValidateFieldNum */
 
 
 
-kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum, 
+kkint32 FileDesc::LookUpNominalCode (kkuint32      fieldNum, 
                                      const KKStr&  nominalValue
                                     )  const
 {
@@ -298,19 +293,13 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 
 
 
-kkint32  FileDesc::Cardinality (kkint32  fieldNum)  const
+kkint32  FileDesc::Cardinality (kkuint32  fieldNum)  const
 {
   ValidateFieldNum (fieldNum, "Type");
 
   AttributePtr a = attributes.IdxToPtr (fieldNum);
-
-  if  (!a)
-  {
-    KKStr  errMsg;
-    errMsg << "FileDesc::Cardinality    ***ERROR***    Could not locate attribute[" << fieldNum << "]";
-    cerr << errMsg;
-    throw  KKException (errMsg);
-  }
+  
+  KKCheck(a != NULL, "FileDesc::Cardinality    Field Num: " <<  fieldNum << " not defined in attribute table.");
 
   switch  (a->Type ())
   {
@@ -362,7 +351,7 @@ const KKStr&   FileDesc::GetNominalValue (kkint32  fieldNum,
 AttributePtr*  FileDesc::CreateAAttributeTable ()
 {
   AttributePtr*  table = new AttributePtr[attributes.QueueSize ()];
-  for  (kkint32 x = 0;  x < attributes.QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < attributes.QueueSize ();  x++)
     table[x] = attributes.IdxToPtr (x);
   
   return  table;
@@ -373,7 +362,7 @@ AttributePtr*  FileDesc::CreateAAttributeTable ()
 AttributeConstPtr*  FileDesc::CreateAAttributeConstTable ()  const
 {
   AttributeConstPtr*  table = new AttributeConstPtr[attributes.QueueSize ()];
-  for (kkint32 x = 0; x < attributes.QueueSize (); x++)
+  for (kkuint32 x = 0; x < attributes.QueueSize (); x++)
     table[x] = attributes.IdxToPtr (x);
 
   return  table;
@@ -383,9 +372,8 @@ AttributeConstPtr*  FileDesc::CreateAAttributeConstTable ()  const
 
 AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
 {
-  kkint32  x;
   AttributeTypeVector  attributeTypes ((kkuint32)attributes.size (), AttributeType::NULLAttribute);
-  for  (x = 0;  x < attributes.QueueSize ();  x++)
+  for  (kkuint32  x = 0;  x < attributes.QueueSize ();  x++)
     attributeTypes[x] = attributes[x].Type ();
   return attributeTypes;
 }  /* CreateAttributeTypeTable () */
@@ -394,9 +382,8 @@ AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
 
 VectorInt32   FileDesc::CreateCardinalityTable ()  const
 {
-  kkint32  x;
   VectorInt32  cardinalityTable (attributes.QueueSize (), 0);
-  for  (x = 0;  x < attributes.QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < attributes.QueueSize ();  ++x)
     cardinalityTable[x] = attributes[x].Cardinality ();
   return cardinalityTable;
 }  /* CreateCardinalityTable */

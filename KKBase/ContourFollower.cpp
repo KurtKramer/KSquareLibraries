@@ -1137,17 +1137,15 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
 
   numOfEdgePixels = points->QueueSize ();
   
-  kkint32  x;
-
   minDistance = FloatMax;
   maxDistance = FloatMin;
 
-  for  (x = 0;  x < numOfBuckets;  x++)
+  for  (kkuint32 x = 0;  x < numOfBuckets;  x++)
     buckets[x] = 0;
 
   float*  distances = new float[points->QueueSize ()];
 
-  for  (x = 0;  x < points->QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < points->QueueSize ();  x++)
   {
     Point& point = (*points)[x];
 
@@ -1170,7 +1168,7 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
   }
   else
   {
-    for  (x = 0;  x < points->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < points->QueueSize ();  x++)
     {
       kkint32 bucketIDX = (kkint32)((distances[x] - minDistance) / bucketSize);
       buckets[bucketIDX]++;
@@ -1195,13 +1193,10 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
      KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[points.QueueSize()];
   #endif
 
-
   kkint32  totalRow = 0;
   kkint32  totalCol = 0;
 
-  kkint32  x = 0;
-
-  for  (x = 0;  x < points.QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < points.QueueSize ();  x++)
   {
     Point&  point (points[x]);
 
@@ -1243,7 +1238,7 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
   vector<ComplexDouble>  dest;
 
-  for  (kkint32  l = 0;  l < points.QueueSize ();  l++)
+  for  (kkuint32   l = 0;  l < points.QueueSize ();  l++)
   {
     #if  defined(FFTW_AVAILABLE)
     dest.push_back (ComplexDouble (destFFTW[l][0] / (double)(points.QueueSize ()), destFFTW[l][1] / (double)(points.QueueSize ())));

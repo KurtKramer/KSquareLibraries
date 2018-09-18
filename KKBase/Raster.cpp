@@ -7658,10 +7658,9 @@ RasterPtr  RasterList::CreateSmoothedFrame ()
   kkuint32*  totGreenArea = new kkuint32[totPixels];
   memset (totGreenArea, 0, totPixels * sizeof (kkuint32));
 
-  kkint32 idx = 0;
   kkint32 rastersAdded = 0;
 
-  for  (idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     RasterPtr raster = IdxToPtr (idx);
     if  ((raster->Height () != height)  ||

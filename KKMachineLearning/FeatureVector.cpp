@@ -673,8 +673,8 @@ FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForAGivenClass (MLClassP
   FeatureVectorListPtr  extractedImages = this->ManufactureEmptyList (false);
   KKCheck (extractedImages, "ExtractExamplesForAGivenClass,  Could not allocate more space.")
 
-  kkint32 qSize = QueueSize ();
-  for  (kkint32 idx = 0;  ((idx < qSize));  idx++)
+  kkuint32 qSize = QueueSize ();
+  for  (kkuint32 idx = 0;  ((idx < qSize));  idx++)
   {
     FeatureVectorPtr example = IdxToPtr (idx);
     if  (((example->MLClass () == _mlClass)  ||  (!_mlClass)))
@@ -968,7 +968,7 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
 FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
   FeatureVectorListPtr  copyiedList = ManufactureEmptyList (true);
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     FeatureVectorPtr  curImage = IdxToPtr (idx);
     copyiedList->AddSingleExample (new FeatureVector (*curImage));
@@ -1232,17 +1232,14 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOf
 
 FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                                   kkint32         maxImagesPerClass,
-                                                                  kkint32         numOfFolds,
+                                                                  kkuint32        numOfFolds,
                                                                   RunLog&         log
                                                                  )
 {
   log.Level (10) << "FeatureVectorList::StratifyAmoungstClasses" << endl;
 
-  kkint32  foldNum;
-  kkint32  x;
-
   FeatureVectorListPtr*  folds = new FeatureVectorListPtr[numOfFolds];
-  for  (x = 0; x < numOfFolds; x++)
+  for  (kkuint32 x = 0;  x < numOfFolds;  ++x)
     folds[x] =  ManufactureEmptyList (false);
 
   MLClassPtr  mlClass = NULL;
@@ -1283,7 +1280,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
 
   FeatureVectorListPtr stratafiedImages = ManufactureEmptyList (false);
 
-  for  (foldNum = 0; foldNum < numOfFolds; foldNum++)
+  for  (kkuint32 foldNum = 0; foldNum < numOfFolds;  foldNum++)
   {
     folds[foldNum]->RandomizeOrder ();
     folds[foldNum]->RandomizeOrder ();
@@ -1392,8 +1389,7 @@ void  FeatureVectorList::PrintClassStatisticsHTML (ostream&  o)  const
 
   o << "</tbody>" << endl;
   o << "</table>" << endl;
-
-
+  
   delete  stats;
   return;
 }  /* PrintClassStatisticsHTML */
@@ -1479,8 +1475,8 @@ VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     percentage,   // 0.0 -> 100.0
-                                                                 kkint32   minClassCount
+FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float      percentage,   // 0.0 -> 100.0
+                                                                 kkuint32   minClassCount
                                                                 )
 {
 
@@ -1506,10 +1502,11 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     perce
     FeatureVectorListPtr  examplesThisClass = ExtractExamplesForAGivenClass (ic);
     examplesThisClass->RandomizeOrder ();
 
-    kkint32  numExamplesThisClass = Max (minClassCount, ((kkint32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
+    kkuint32  numExamplesThisClass = Max (minClassCount, ((kkuint32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
     if  (numExamplesThisClass > examplesThisClass->QueueSize ())
       numExamplesThisClass = examplesThisClass->QueueSize ();
-    for  (kkint32 zed = 0;  zed < numExamplesThisClass;  zed++)
+
+    for  (kkuint32 zed = 0;  zed < numExamplesThisClass;  zed++)
       randomSampled->PushOnBack (examplesThisClass->IdxToPtr (zed));
     delete  examplesThisClass;  examplesThisClass = NULL;
   }

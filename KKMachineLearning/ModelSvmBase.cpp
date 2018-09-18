@@ -200,7 +200,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   // Build the Label array that libSVM expects.
   float*  y = new float[trainExamples->QueueSize ()];
   {
-    for  (kkint32 labelIndex = 0;  labelIndex < trainExamples->QueueSize ();  labelIndex++)
+    for  (kkuint32 labelIndex = 0;  labelIndex < trainExamples->QueueSize ();  labelIndex++)
     {
       kkint16  label = classesIndex->GetClassIndex (trainExamples->IdxToPtr (labelIndex)->MLClass ());
       if  (label < 0)
@@ -335,7 +335,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
   numOfWinners = 0;
   kkint32  winnerNumVotes = 0;
 
-  for  (kkint32 idx = 0;  idx < numOfClasses;  ++idx)
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  ++idx)
   {
     if  (classProbs[idx] > maxProb1)
     {
@@ -421,10 +421,10 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example,
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkint32 idx = 0;
-  for  (idx = 0;  idx < numOfClasses;  idx++)
+
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
-    MLClassPtr  ic = classesIndex->GetMLClass (idx);
+    MLClassPtr  ic = classesIndex->GetMLClass ((kkint32)idx);
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
   }
 

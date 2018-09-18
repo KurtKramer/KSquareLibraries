@@ -139,7 +139,7 @@ namespace KKMLL
     MatrixDPtr      counts;
     DateTime        dateTimeFileWritten;
     VectorKKStr     errMsgs;
-    kkint32         numClasses;
+    kkuint32        numClasses;
     MatrixDPtr      probabilities;
     RunLog&         runLog;
     bool            valid;

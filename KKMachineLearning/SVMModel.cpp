@@ -1,5 +1,4 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -13,7 +12,6 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -22,7 +20,6 @@ using namespace  std;
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace  KKB;
-
 
 #include "SVMModel.h"
 #include "KKMLLTypes.h"
@@ -651,8 +648,6 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
 
 
 
-
-
 void  SVMModel::BuildCrossClassProbTable ()
 {
   kkint32  x, y;
@@ -679,7 +674,6 @@ void  SVMModel::BuildCrossClassProbTable ()
     }
   }
 }  /* BuildCrossClassProbTable */
-
 
 
 
@@ -2218,10 +2212,10 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
   }
 
   kkint32*  indexTable = new kkint32[classes.QueueSize ()];
-  kkint32  x, y;
-  for  (x = 0;  x < classes.QueueSize ();  x++)
+
+  for  (kkuint32 x = 0;  x < classes.QueueSize ();  x++)
   {
-    for  (y = 0;  y < classes.QueueSize ();  y++)
+    for  (kkuint32 y = 0;  y < classes.QueueSize ();  y++)
        crossProbTable[x][y] = 0.0;
 
     indexTable[x] = assignments.GetNumForClass (classes.IdxToPtr (x));
@@ -2248,12 +2242,12 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
 
   // x,y         = 'Callers'   Class Indexes..
   // xIdx, yIdx  = 'SVMNodel'  Class Indexed.
-  for  (x = 0;  x < classes.QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < classes.QueueSize ();  x++)
   {
     kkint32 xIdx = indexTable[x];
     if  (xIdx >= 0)
     {
-      for  (y = 0;  y < classes.QueueSize ();  y++)
+      for  (kkuint32 y = 0;  y < classes.QueueSize ();  y++)
       {
         kkint32  yIdx = indexTable[y];
         if  (yIdx >= 0)

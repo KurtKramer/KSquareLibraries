@@ -59,7 +59,6 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
   FileDescConstPtr  fileDesc = _data.FileDesc ();
   auto  attrTable = fileDesc->CreateAAttributeConstTable ();
 
-  kkint32  x;
   {
     _out << "% ARFF Format Definition: http://www.cs.waikato.ac.nz/~ml/weka/arff.html"  << endl
          << "%"                                                             << endl
@@ -73,7 +72,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     
     ClassStatisticListPtr  classStatistics = _data.GetClassStatistics ();
     KKStr  classListStr (classStatistics->QueueSize () * 15);
-    for  (x = 0;  x < classStatistics->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < classStatistics->QueueSize ();  x++)
     {
       ClassStatisticPtr  classStatistic = classStatistics->IdxToPtr (x);
       _out << "%  " << classStatistic->Name () << "\t" << classStatistic->Count () << endl;
@@ -102,7 +101,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
           )
       {
         _out << "(";
-        for (x = 0;  x < attr->Cardinality ();  x++)
+        for (kkint32 x = 0;  x < attr->Cardinality ();  x++)
         {
           if  (x > 0)
             _out << ",";
@@ -138,12 +137,11 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
 
   FeatureVectorPtr   example = NULL;
 
-  kkint32 idx;
-  for  (idx = 0; idx < _data.QueueSize (); idx++)
+  for  (kkuint32 idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
 
-    for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
+    for  (kkuint32 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
 

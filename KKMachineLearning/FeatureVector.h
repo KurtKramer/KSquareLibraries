@@ -384,8 +384,8 @@ namespace KKMLL
      *@param[in] percentage  The percentage between 0.0 and 100.0 of each class to randomly sample.
      *@param[in] minClassCount The minimum per class to keep.
      */
-    FeatureVectorListPtr  ExtractRandomSampling (float    percentage,    /**<  A percentage between 0.0 and 100.0 */
-                                                 kkint32  minClassCount
+    FeatureVectorListPtr  ExtractRandomSampling (float     percentage,    /**<  A percentage between 0.0 and 100.0 */
+                                                 kkuint32  minClassCount
                                                 );
 
     /**
@@ -517,7 +517,7 @@ namespace KKMLL
 
     FeatureVectorListPtr  StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                    kkint32         maxImagesPerClass,
-                                                   kkint32         numOfFolds,
+                                                   kkuint32        numOfFolds,
                                                    RunLog&         log
                                                   );
    

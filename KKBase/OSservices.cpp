@@ -202,9 +202,7 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
   const char*  cp = fileName.Str ();
   kkuint32     lenLeftToCheck = fileName.Len ();
 
-  kkint32  fieldNum;
-
-  for  (fieldNum = 0;  fieldNum < searchFields->QueueSize ();  fieldNum++)
+  for  (kkuint32 fieldNum = 0;  fieldNum < searchFields->QueueSize ();  fieldNum++)
   {
     const KKStr&  field = *(searchFields->IdxToPtr (fieldNum));
     

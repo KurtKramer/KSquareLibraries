@@ -251,7 +251,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
   {
     // Lets first write out the ClassName row
 
-    kkint32  lineNum = 0;
+    kkuint32  lineNum = 0;
 
     while  (lineNum < _data.QueueSize ())
     {

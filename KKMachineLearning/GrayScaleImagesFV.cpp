@@ -494,7 +494,7 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::DuplicateListAndContents ()  co
 {
   GrayScaleImagesFVListPtr  copyiedList = new GrayScaleImagesFVList (FileDesc (), true);
 
-  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     GrayScaleImagesFVPtr  curImage = (GrayScaleImagesFVPtr)IdxToPtr (idx);
     copyiedList->PushOnBack (new GrayScaleImagesFV (*curImage));

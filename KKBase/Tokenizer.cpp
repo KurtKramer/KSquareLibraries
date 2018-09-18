@@ -91,7 +91,7 @@ void  Tokenizer::Initialize ()
   GetNextChar ();
   GetNextChar ();
 
-  tokenListLen = 10;
+  kkuint32 tokenListLen = 10;
 
   while  (tokenList.QueueSize () < tokenListLen)
   {

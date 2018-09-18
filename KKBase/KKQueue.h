@@ -98,7 +98,7 @@ namespace  KKB
       EntryPtr  GetLast      () const;   /**< Same as BackOfQueue.  */
       EntryPtr  LookAtBack   () const;   /**< Same as BackOfQueue.  */
       EntryPtr  LookAtFront  () const;   /**< Same as FrontOfQueue. */
-      kkint32   QueueSize    () const;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
+      kkuint32  QueueSize    () const;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
       bool      Owner        () const;
 
       kkint32   LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
@@ -277,7 +277,7 @@ namespace  KKB
 
 
   template <class Entry>
-  kkint32  KKQueue<Entry>::QueueSize ()  const    
+  kkuint32  KKQueue<Entry>::QueueSize ()  const    
   {
     return  (kkint32)this->size ();
   }

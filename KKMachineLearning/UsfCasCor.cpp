@@ -545,7 +545,7 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
     FULL_FORWARD_PASS (TestInputs[i]);
     
     /* Find max. output (predicted class) */
-    int max_pred = 0;
+    kkuint32  max_pred = 0;
     for  (int j = 0;  j < Noutputs;  j++)
     {
       if  (Outputs[max_pred] < Outputs[j]) 

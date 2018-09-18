@@ -595,7 +595,7 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&          _fileNa
     if  ((_examples.QueueSize () % 64000) > 0)
       numPartsNeeded++;
 
-    kkint32  maxPartSize = (_examples.QueueSize () / numPartsNeeded) + 1;
+    kkuint32  maxPartSize = (_examples.QueueSize () / numPartsNeeded) + 1;
 
     kkint32  partNum = 0;
     FeatureVectorList::const_iterator idx = _examples.begin ();
@@ -879,8 +879,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStrPtr  imageFileName;
 
-  kkint32  numImagesFoundInOrigFeatureData = 0;
-  kkint32  numOfNewFeatureExtractions = 0;
+  kkuint32  numImagesFoundInOrigFeatureData = 0;
+  kkuint32  numOfNewFeatureExtractions = 0;
 
   for  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!_cancelFlag);  ++fnIDX)
   {

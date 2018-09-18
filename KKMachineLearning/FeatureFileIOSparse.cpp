@@ -254,7 +254,7 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
 
   kkint32  minFeatureNum = fileDesc->SparseMinFeatureNum ();
 
-  for  (kkint32 idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
+  for  (kkuint32 idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
   {
     example = _data.IdxToPtr (idx);
 

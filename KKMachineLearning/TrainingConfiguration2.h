@@ -392,7 +392,7 @@ namespace KKMLL
                                                  );
 
 
-    FeatureNumListPtr      DeriveFeaturesSelected (kkint32  sectionNum);
+    FeatureNumListPtr      DeriveFeaturesSelected (kkuint32  sectionNum);
 
     void                   DetermineWhatTheRootDirectoryIs ();
 
@@ -408,14 +408,14 @@ namespace KKMLL
 
     void                   SyncronizeMLClassListWithTrainingClassList ();
 
-    TrainingClassPtr       ValidateClassConfig    (kkint32  sectionNum,
-                                                   RunLog&  log
+    TrainingClassPtr       ValidateClassConfig    (kkuint32  sectionNum,
+                                                   RunLog&   log
                                                   );
 
     void                   ValidateConfiguration (RunLog&  log);
     
-    void                   ValidateGlobalSection (kkint32  sectionNum,
-                                                  RunLog&  log
+    void                   ValidateGlobalSection (kkuint32  sectionNum,
+                                                  RunLog&   log
                                                  );
 
     void                   ValidateOtherClass (MLClassPtr  classToValidate,
@@ -429,12 +429,12 @@ namespace KKMLL
                                                   RunLog&       log
                                                  );
 
-    void                   ValidateTrainingClassConfig (kkint32  sectionNum,
-                                                        RunLog&  log
+    void                   ValidateTrainingClassConfig (kkuint32  sectionNum,
+                                                        RunLog&   log
                                                        );
 
-    void                   ValidateTwoClassParameters (kkint32  sectionNum,
-                                                       RunLog&  log
+    void                   ValidateTwoClassParameters (kkuint32  sectionNum,
+                                                       RunLog&   log
                                                       );
 
     ModelParamOldSVMPtr    OldSvmParameters ()  const;

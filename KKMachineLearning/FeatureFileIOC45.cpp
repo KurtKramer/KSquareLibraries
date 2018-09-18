@@ -1018,12 +1018,11 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
 
   AttributeConstPtr*  attrTable = fileDesc->CreateAAttributeConstTable ();
 
-  kkint32  x;
   {
     // Write out names file
     ofstream  nf (namesFileName.Str ());
     MLClassListPtr  classes = _data.ExtractListOfClasses ();
-    for  (x = 0;  x < classes->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < classes->QueueSize ();  x++)
     {
       if  (x > 0)
         nf << ", ";
@@ -1031,7 +1030,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
     }
     nf << "." << endl;
 
-    for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
+    for  (kkuint16 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
       auto attr = attrTable[featureNum];
@@ -1098,12 +1097,11 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
 
   FeatureVectorPtr   example = NULL;
 
-  kkint32 idx;
-  for  (idx = 0;  (idx < _data.QueueSize ())  &&  (!_cancelFlag);  idx++)
+  for  (kkuint32 idx = 0;  (idx < _data.QueueSize ())  &&  (!_cancelFlag);  ++idx)
   {
     example = _data.IdxToPtr (idx);
 
-    for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+    for  (kkuint16 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
 

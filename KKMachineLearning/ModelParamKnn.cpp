@@ -95,9 +95,6 @@ void  ModelParamKnn::WriteXML (const KKStr&  varName,
 
   WriteXMLFields (o);
 
-
-
-
   XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;

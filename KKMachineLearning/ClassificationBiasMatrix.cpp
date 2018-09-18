@@ -1,5 +1,4 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
@@ -10,10 +9,8 @@
 #include <ostream>
 #include <string>
 #include <vector>
-using namespace  std;
-
 #include "MemoryDebug.h"
-
+using namespace  std;
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -22,7 +19,6 @@ using namespace  std;
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
-
 
 #include "MLClass.h"
 using namespace  KKMLL;
@@ -208,9 +204,9 @@ void  ClassificationBiasMatrix::DeclareMatrix ()
   numClasses = classes->QueueSize ();
   probabilities = new MatrixD (numClasses, numClasses);
   counts        = new MatrixD (numClasses, numClasses);
-  for  (kkint32 r = 0;  r < numClasses;  r++)
+  for  (kkuint32 r = 0;  r < numClasses;  r++)
   {
-    for  (kkint32 c = 0;  c < numClasses;  c++)
+    for  (kkuint32 c = 0;  c < numClasses;  c++)
     {
       (*probabilities)[r][c] = 0.0;
       (*counts)[r][c] = 0.0;
@@ -366,7 +362,7 @@ void  ClassificationBiasMatrix::ReadXML (istream&  sr)
 
       else if  (lineName.CompareIgnoreCase ("NumClasses") == 0)
       {
-        numClasses = fieldValue.ToInt ();
+        numClasses = fieldValue.ToUint32 ();
       }
 
       else if  (lineName.CompareIgnoreCase ("<SimpleConfusionMatrix>") == 0)
@@ -451,7 +447,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
       kkint32  classesRowIdx = classesIdx;
 
       VectorKKStr  dataFields = data.Split (',');
-      if  (dataFields.size () != (kkuint32)numClasses)
+      if  (dataFields.size () != numClasses)
       {
         KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow Class[" + className + "]  number[" + StrFormatInt ((kkint32)dataFields.size (), "ZZZ0") + "] of values provided does not match number of Classes.";
         runLog.Level (-1) << errMsg << endl;
@@ -459,7 +455,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         throw KKException (errMsg);
       }
 
-      for  (kkint32 c = 0;  c < numClasses;  c++)
+      for  (kkuint32 c = 0;  c < numClasses;  c++)
       {
         pc = fileClasses->IdxToPtr (c);
         classesColIdx = classes->PtrToIdx (pc);
@@ -477,7 +473,6 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
 
 
 
-
 void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
 {
   o << "<ClassificationBiasMatrix>" << std::endl;
@@ -491,8 +486,8 @@ void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
   }
 
   if  ((numClasses != classes->QueueSize ())  ||  
-       (numClasses != (kkint32)counts->NumOfRows  ())  ||  
-       (numClasses != (kkint32)probabilities->NumOfRows ())
+       (numClasses != counts->NumOfRows  ())  ||  
+       (numClasses != probabilities->NumOfRows ())
       )
   {
     runLog.Level (-1) << "ClassificationBiasMatrix::WriteXML    ***ERROR***   Disagreement in variable dimensions." << endl;
@@ -506,12 +501,12 @@ void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
   o << "DateTimeFileWritten" << "\t" << dateTimeFileWritten             << std::endl;
 
   o << "<SimpleConfusionMatrix>" << std::endl;
-  for  (kkint32 rowIdx = 0;  rowIdx < numClasses;  rowIdx++)
+  for  (kkuint32 rowIdx = 0;  rowIdx < numClasses;  rowIdx++)
   {
     o << "DataRow"                  << "\t" 
       << (*classes)[rowIdx].Name () << "\t";
 
-    for  (kkint32 colIdx = 0;  colIdx < numClasses;  colIdx++)
+    for  (kkuint32 colIdx = 0;  colIdx < numClasses;  colIdx++)
     {
       if  (colIdx > 0)
         o << ",";
@@ -528,13 +523,10 @@ void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
 
 
 
-
-
-
 void  ClassificationBiasMatrix::BuildFromConfusionMatrix (const ConfusionMatrix2&  cm)
 {
-  kkint32  classesRowIdx = 0;
-  kkint32  classesColIdx = 0;
+  kkuint32  classesRowIdx = 0;
+  kkuint32  classesColIdx = 0;
 
   for  (classesRowIdx = 0;  classesRowIdx < numClasses;  classesRowIdx++)
   {
@@ -555,7 +547,6 @@ void  ClassificationBiasMatrix::BuildFromConfusionMatrix (const ConfusionMatrix2
 
 
 
-
 void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classifiedCounts,
                                                     VectorDouble&        adjCounts,
                                                     VectorDouble&        stdErrors
@@ -568,7 +559,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   //     Marine Ecology Progress Series
   //     published 2006-july-06;  vol 216:309-311
 
-  if  (classifiedCounts.size () != (kkuint32)numClasses)
+  if  (classifiedCounts.size () != numClasses)
   {
     KKStr errMsg = "ClassificationBiasMatrix::PerformAdjustmnts  ***ERROR***   Disagreement in length of classifiedCounts[" + 
                    StrFormatInt ((kkint32)classifiedCounts.size (), "ZZZ0") + 
@@ -578,13 +569,9 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
     throw KKException (errMsg);
   }
 
-  kkint32 x = 0;
-  kkint32  i, j, k;
-
-
   // We need to deal with the special case when one entry in the probability diagonal is zero.
   {
-    for (x = 0;  x < numClasses;  x++)
+    for (kkuint32 x = 0;  x < numClasses;  x++)
     {
       if  ((*probabilities)[x][x] == 0.0)
       {
@@ -594,7 +581,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
 
         double  totalAmtStolen = 0.0;
         double  percentToSteal = 0.01;
-        for (i = 0;  i < numClasses;  i++)
+        for (kkuint32 i = 0;  i < numClasses;  i++)
         {
           if  ((*probabilities)[x][i] != 0.0)
           {
@@ -610,7 +597,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   }
 
   MatrixD  m (numClasses, 1);
-  for  (x = 0;  x < numClasses;  x++)
+  for  (kkuint32 x = 0;  x < numClasses;  x++)
     m[x][0] = classifiedCounts[x];
 
   MatrixD  transposed = probabilities->Transpose ();
@@ -618,10 +605,10 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   MatrixD  n = Q * m;
 
   MatrixD  varM (numClasses, numClasses);
-  for  (j = 0;  j < numClasses;  j++)
+  for  (kkuint32 j = 0;  j < numClasses;  j++)
   {
     double  varM_j = 0.0;
-    for  (i = 0;  i < numClasses;  i++)
+    for  (kkuint32 i = 0;  i < numClasses;  i++)
     {
       double  p = (*probabilities)[i][j];
       varM_j += n[i][0] * p * (1.0 - p);
@@ -629,14 +616,14 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
     varM[j][j] = varM_j;
   }
 
-  for (j = 0;  j < numClasses;  j++)
+  for (kkuint32 j = 0;  j < numClasses;  j++)
   {
-    for  (k = 0;  k < numClasses;  k++)
+    for  (kkuint32 k = 0;  k < numClasses;  k++)
     {
       if  (j != k)
       {
         double  covM_jk = 0.0;
-        for  (i = 0;  i < numClasses;  i++)
+        for  (kkuint32 i = 0;  i < numClasses;  i++)
           covM_jk -= n[i][0] * (*probabilities)[i][j] * (*probabilities)[j][k];
         varM[j][k] = covM_jk;
       }
@@ -648,7 +635,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   adjCounts.clear ();
   stdErrors.clear ();
     
-  for  (x = 0;  x < numClasses;  x++)
+  for  (kkuint32 x = 0;  x < numClasses;  x++)
   {
     adjCounts.push_back (n[x][0]);
     stdErrors.push_back (sqrt (varN[x][x]));
@@ -685,18 +672,15 @@ void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
     sw << "Name"  << "\t" << "Count" << "\t" << tl3 << endl;
   }
 
-  kkint32  row = 0;
-  kkint32  col = 0;
-  
   double  total = 0.0;
 
   VectorDouble  colTotals (numClasses, 0.0);
   VectorDouble  rowTotals (numClasses, 0.0);
 
-  for  (row = 0;  row < numClasses;  row++)
+  for  (kkuint32 row = 0;  row < numClasses;  row++)
   {
     double  rowTotal = 0;
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  col++)
     {
       rowTotal += (*counts)[row][col];
       colTotals[col] += (*counts)[row][col];
@@ -704,31 +688,30 @@ void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
     rowTotals[row] = rowTotal;
 
     sw << (*classes)[row].Name () << "\t" << StrFormatDouble (rowTotal, "zzz,zz0.00");
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  col++)
       sw << "\t" << StrFormatDouble ((*counts)[row][col], "###,##0.00");
     sw << endl;
     total += rowTotal;
   }
   sw << "Total" << "\t" << StrFormatDouble (total, "###,##0.00");
-  for  (col = 0;  col < numClasses;  col++)
+  for  (kkuint32 col = 0;  col < numClasses;  ++col)
      sw << "\t" << StrFormatDouble (colTotals[col], "ZZZ,ZZ0.00");
   sw << endl;
  
   sw << endl;
  
-  for  (row = 0; row < numClasses;  row++)
+  for  (kkuint32 row = 0; row < numClasses;  ++row)
   {
     sw << (*classes)[row].Name ();
     double  rowPercent = 100.0 * rowTotals[row] / total;
     sw << "\t" << StrFormatDouble (rowPercent, "ZZ0.0000") + "%";
 
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  ++col)
       sw << "\t" << StrFormatDouble (100.0 * (*probabilities)[row][col], "ZZZ,ZZ0.00") << "%";
     sw << endl;
   }
   sw << endl;
 }  /* PrintBiasMatrix */
-
 
 
 
@@ -757,20 +740,18 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
     sw << ""             << "\t" << "\t" << tl2 << endl;
     sw << "Description"  << "\t" << "\t" << tl3 << endl;
    
-    kkint32  col = 0;
-
     sw << "Classified Results" << "\t";
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  col)
       sw << "\t" << StrFormatDouble (classifiedCounts[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
 
     sw << "Adjusted Results" << "\t";
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  col)
       sw << "\t" << StrFormatDouble (adjustedReults[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
 
     sw << "Standard Errors" << "\t";
-    for  (col = 0;  col < numClasses;  col++)
+    for  (kkuint32 col = 0;  col < numClasses;  ++col)
       sw << "\t" << StrFormatDouble (stdErrors[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
   }

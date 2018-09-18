@@ -73,7 +73,6 @@ namespace  KKB
 
     char const *     operatorChars;
 
-    kkint32          tokenListLen;
     KKStrList        tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
                                       * As end of stream is approached will fill with end of file
                                       * Tokens as a flag.

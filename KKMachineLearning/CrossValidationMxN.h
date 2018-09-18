@@ -87,8 +87,8 @@ namespace KKMLL
 
     ConfusionMatrix2ConstPtr  ConfussionMatrix ()  const;
 
-    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining,
-                           RunLog&  log
+    void  RunTrainAndTest (kkuint32  numExamplsToUseForTraining,
+                           RunLog&   log
                           );
 
     void  RunValidations (RunLog&  log);

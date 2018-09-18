@@ -182,7 +182,6 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
 
   _numExamplesWritten = 0;
 
-  kkint32  idx;
   kkint32  x;
 
   FileDescConstPtr  fileDesc = _data.FileDesc ();
@@ -195,7 +194,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   }
   _out << "," << "ClassLabel" << endl;
 
-  for  (idx = 0; idx < _data.QueueSize (); idx++)
+  for  (kkuint32 idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
 

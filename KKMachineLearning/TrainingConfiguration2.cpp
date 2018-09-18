@@ -383,9 +383,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   validateDirectories        (tc.validateDirectories)
 {
   {
-    kkint32  x;
-
-    for  (x = 0;  x < tc.trainingClasses.QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < tc.trainingClasses.QueueSize ();  x++)
     {
       TrainingClassPtr  trainingClass = tc.trainingClasses.IdxToPtr (x);
       trainingClasses.PushOnBack (new TrainingClass (*trainingClass));
@@ -1371,11 +1369,13 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
 
 
 
-TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionNum,
-                                                               RunLog&  log
+TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  sectionNum,
+                                                               RunLog&   log
                                                               )
 {
-  kkint32  numOfSettings = NumOfSettings ((kkint32)sectionNum);
+  auto  numOfSettings = NumOfSettings (sectionNum);
+  if  (!numOfSettings)
+    return NULL;
 
   kkint32  classNameLineNum     = 0;
   kkint32  countFactorLineNum   = 0;
@@ -1391,7 +1391,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
   float        weight = 1.0f;
   float        countFactor = 0.0f;
 
-  for  (kkint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
+  for  (kkuint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
   {
     KKStrConstPtr  settingNamePtr = SettingName (sectionNum, settingNum);
     if  (!settingNamePtr)
@@ -1523,7 +1523,7 @@ void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr  classToValidate,
 
 
 
-void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum,
+void  TrainingConfiguration2::ValidateTrainingClassConfig (kkuint32  sectionNum,
                                                            RunLog&  log
                                                           )
 {
@@ -1537,7 +1537,7 @@ void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum,
 
 
 
-FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sectionNum)
+FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkuint32  sectionNum)
 {
   kkint32  featuresIncludedLineNum = 0;
 
@@ -1569,8 +1569,8 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
 
 
 
-void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
-                                                      RunLog&  log
+void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
+                                                      RunLog&   log
                                                      )
 {
   kkint32  methodLineNum  = 0;
@@ -1757,8 +1757,8 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
 
 
 
-void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
-                                                           RunLog&  log
+void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
+                                                           RunLog&   log
                                                           )
 {
   if  (!modelParameters)

@@ -388,7 +388,7 @@ namespace KKMLL
  
     double**               crossClassProbTable;   /*!< Probabilities  between Binary Classes From last Prediction */
 
-    kkint32                crossClassProbTableSize;
+    kkuint32               crossClassProbTableSize;
 
     FeatureEncoder2Ptr     encoder;
 
@@ -400,7 +400,7 @@ namespace KKMLL
 
     NormalizationParmsPtr  normParms;
 
-    kkint32                numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
+    kkuint32               numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
 
     ModelParamPtr          param;          /**< Will own this instance,                           */
 

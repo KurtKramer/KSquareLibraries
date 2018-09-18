@@ -154,8 +154,8 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkint32 idx;
-  for  (idx = 0;  idx < numOfClasses;  idx++)
+
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);
     results->PushOnBack (new ClassProb (ic, 0.0, 0.0f));
@@ -166,11 +166,11 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
 
 
 
-void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
-                                      const MLClassList&  _mlClasses,
-                                      kkint32*            _votes,
-                                      double*             _probabilities,
-                                      RunLog&             log
+void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr,
+                                      const MLClassList& ,
+                                      kkint32*,
+                                      double*,
+                                      RunLog&
                                      )
 {
 }

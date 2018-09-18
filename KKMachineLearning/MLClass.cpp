@@ -908,7 +908,7 @@ KKStr  MLClassList::ToString ()  const
 {
   KKStr s (10 * QueueSize ());
 
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)
       s << "\t";
@@ -924,7 +924,7 @@ KKStr  MLClassList::ToString ()  const
 KKStr  MLClassList::ToTabDelimitedStr ()  const
 {
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << "\t";
     s << IdxToPtr (i)->Name ();
@@ -941,7 +941,7 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
     return "NULL";
 
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << ",";
     s << IdxToPtr (i)->Name ();
@@ -955,7 +955,7 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
 KKStr  MLClassList::ToCommaDelimitedQuotedStr ()  const
 {
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << ",";
     s << IdxToPtr (i)->Name ().QuotedStr ();
@@ -1014,8 +1014,7 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
   titleLine1 = "";
   titleLine2 = "";
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     if  (x > 0)
     {
@@ -1048,8 +1047,7 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
   titleLine2 = "";
   titleLine3 = "";
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     if  (x > 0)
     {
@@ -1113,8 +1111,7 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
   KKStr blankField;
   blankField.RightPad (fieldWidth);
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     KKStr  part1, part2, part3;
     part1 = part2 = part3 = "";
@@ -1280,7 +1277,7 @@ bool  MLClassList::operator== (const MLClassList&  right)  const
   if  (QueueSize () != right.QueueSize ())
     return  false;
 
-  for  (kkint32 i = 0;  i < QueueSize ();  i++)
+  for  (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     MLClassPtr  mlClass = IdxToPtr (i);
 

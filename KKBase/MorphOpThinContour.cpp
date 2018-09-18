@@ -179,9 +179,9 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
 
     PointPtr  tempPoint = NULL;
 
-    for (iCountX = 0; iCountX < pointList.QueueSize (); iCountX++)
+    for (kkuint32 pointListIdx = 0;  pointListIdx < pointList.QueueSize ();  pointListIdx++)
     {
-      tempPoint = pointList.IdxToPtr (iCountX);
+      tempPoint = pointList.IdxToPtr (pointListIdx);
       if (tempPoint == NULL)
         continue;
 
@@ -193,10 +193,10 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
         prem2++;
         PointsRemoved = true;
 
-        //pointList.DeleteEntry (iCountX);
-        pointList.SetIdxToPtr (iCountX, NULL);
+        //pointList.DeleteEntry (pointListIdx);
+        pointList.SetIdxToPtr (pointListIdx, NULL);
         removeList.PushOnBack (tempPoint);
-        //iCountX--; /* Must decrease iCountX when a point has been removed */
+        //pointListIdx--; /* Must decrease pointListIdx when a point has been removed */
       }
     }
   }
@@ -232,9 +232,9 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
     Iter++;
     PointsRemoved = false;
 
-    for (iCountX = 0; iCountX < pointList.QueueSize (); iCountX++)
+    for (kkuint32 pointListIdx = 0;  pointListIdx < pointList.QueueSize ();  pointListIdx++)
     {
-      tempPoint = pointList.IdxToPtr (iCountX);
+      tempPoint = pointList.IdxToPtr (pointListIdx);
       if (tempPoint == NULL)
         continue;
 
@@ -246,12 +246,12 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
         prem1++;
         PointsRemoved = true;
 
-        /*k_RemovePosFromGroupSlow(iCountX,&PointList);*/
+        /*k_RemovePosFromGroupSlow(pointListIdx,&PointList);*/
 
-        //pointList.DeleteEntry (iCountX);
-        pointList.SetIdxToPtr (iCountX, NULL);
+        //pointList.DeleteEntry (pointListIdx);
+        pointList.SetIdxToPtr (pointListIdx, NULL);
         removeList.PushOnBack (tempPoint);
-        //iCountX--;  /* Must decrease iCountX when a point has been removed */
+        //pointListIdx--;  /* Must decrease pointListIdx when a point has been removed */
       }
     }
 
@@ -279,9 +279,9 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
     cout.flush ();
 #endif
     /* step 2 */
-    for (iCountX = 0; iCountX < pointList.QueueSize (); iCountX++)
+    for (kkuint32 pointListIdx = 0; pointListIdx < pointList.QueueSize (); pointListIdx++)
     {
-      tempPoint = pointList.IdxToPtr (iCountX);
+      tempPoint = pointList.IdxToPtr (pointListIdx);
       if (tempPoint == NULL)
         continue;
 
@@ -293,11 +293,11 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
         prem2++;
         PointsRemoved = true;
 
-        /*k_RemovePosFromGroupSlow(iCountX,&PointList);*/
-        //pointList.DeleteEntry (iCountX);
-        pointList.SetIdxToPtr (iCountX, NULL);
+        /*k_RemovePosFromGroupSlow(pointListIdx,&PointList);*/
+        //pointList.DeleteEntry (pointListIdx);
+        pointList.SetIdxToPtr (pointListIdx, NULL);
         removeList.PushOnBack (tempPoint);
-        //iCountX--; /* Must decrease iCountX when a point has been removed */
+        //pointListIdx--; /* Must decrease pointListIdx when a point has been removed */
       }
     }
 
