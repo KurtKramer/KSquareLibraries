@@ -816,7 +816,7 @@ namespace  KKB
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
-template<typename T>
+template<typename T, const char* ZZZZTypeName>
 class  XmlElementArray: public XmlElement
 {
 public:
@@ -901,7 +901,7 @@ public:
                          std::ostream&  o
                         )
   {
-    XmlTag startTag (TypeName (), XmlTag::TagTypes::tagStart);
+    XmlTag startTag (ZZZZTypeName, XmlTag::TagTypes::tagStart);
     if  (!varName.Empty ())
       startTag.AddAtribute ("VarName", varName);
     startTag.AddAtribute ("Count", (kkint32)count);
@@ -924,26 +924,29 @@ private:
 };
 
 
+#define STR(tok) #tok
+ 
 
 
-#define  XmlElementArrayHeader2(T,TypeName,ParserNextTokenMethod)   \
-  class  XmlElement##TypeName:  public  XmlElementArray<T>          \
+#define  XmlElementArrayHeader2(T,TypeNameX,ParserNextTokenMethod)   \
+  extern const char  zedzed[] = #TypeNameX;         \
+  class  XmlElement##TypeNameX:  public  XmlElementArray<kkint32,zedzed>          \
   {                                                                 \
   public:                                                           \
-    XmlElement##TypeName (XmlTagPtr       tag,                      \
-                          XmlStream&      s,                        \
-                          VolConstBool&   cancelFlag,               \
-                          RunLog&         log                       \
-                         ):                                         \
-        XmlElementArray<T> (tag, s, cancelFlag, log)                \
+    XmlElement##TypeNameX (XmlTagPtr       tag,                      \
+                           XmlStream&      s,                        \
+                           VolConstBool&   cancelFlag,               \
+                           RunLog&         log                       \
+                          ):                                         \
+        XmlElementArray<T,zedzed> (tag, s, cancelFlag, log)           \
     {}                                                              \
                                                                     \
     virtual  KKStr TypeName ()                                      \
     {                                                               \
-      return #TypeName;                                             \
+      return #TypeNameX;                                             \
     }                                                               \
   };                                                                \
-  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
+  typedef  XmlElement##TypeNameX*   XmlElement##TypeNameX##Ptr;
 
 
 
@@ -1062,6 +1065,7 @@ XmlElementBuiltInTypeHeader(double,   Double)
 XmlElementArrayHeader(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
 
 XmlElementArrayHeader2(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
+
 
 XmlElementArrayHeader(kkuint32, ArrayUInt32,   GetNextTokenUint)     // XmlElementArrayUInt32
 

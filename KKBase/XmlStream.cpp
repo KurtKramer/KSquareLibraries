@@ -1923,7 +1923,6 @@ XmlElementArrayBody (kkuint16, ArrayUint16, GetNextTokenUint)     // XmlElementA
 //XmlElementArrayBody (kkint32, ArrayInt32, GetNextTokenInt)       // XmlElementArrayInt32
 XmlFactoryMacro(ArrayInt32)
 
-
 XmlElementArrayBody (double, ArrayDouble, GetNextTokenDouble)
 
 XmlElementArrayBody (float, ArrayFloat, GetNextTokenDouble)
