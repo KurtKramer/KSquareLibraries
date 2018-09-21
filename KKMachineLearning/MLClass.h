@@ -494,11 +494,11 @@ namespace KKMLL
     */
     MLClassPtr  GetMLClass (kkint32 classIndex);
 
+    MLClassPtr  GetMLClass (kkuint32 classIndex)  { return GetMLClass((kkint32)classIndex); }
     
     void  ParseClassIndexList (const KKStr&  s,
                                RunLog&       log
                               );
-
 
     /** 
      *@brief Returns string consisting of all contained classes indicating ClassIndex assigned to each class.

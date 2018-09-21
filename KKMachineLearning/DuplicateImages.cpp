@@ -393,7 +393,7 @@ bool  DuplicateImage::AllTheSameClass ()
 
 bool  DuplicateImage::AlreadyHaveExample (FeatureVectorPtr example)
 {
-  return  (duplicatedImages.PtrToIdx (example) >= 0);
+  return  duplicatedImages.PtrToIdx (example).has_value ();
 }
 
 

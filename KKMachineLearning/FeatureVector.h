@@ -370,7 +370,7 @@ namespace KKMLL
 
 
     FeatureVectorListPtr  ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
-                                                         kkint32     _maxToExtract = -1,
+                                                         kkuint32    _maxToExtract = 0,
                                                          float       _minSize      = -1.0f
                                                         )  const;
 

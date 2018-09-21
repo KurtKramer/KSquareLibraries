@@ -661,12 +661,12 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
 
 
 FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
-                                                                        kkint32     _maxToExtract,
+                                                                        kkuint32    _maxToExtract,
                                                                         float       _minSize
                                                                        )  const
 {
   if  (_maxToExtract < 1)
-    _maxToExtract = QueueSize ();
+    _maxToExtract = uint32_max;
 
   // Create a new list structure that does not own the Images it contains.  This way when 
   // this structure is deleted.  The example it contains are not deleted.

@@ -395,8 +395,6 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
     throw KKException (errMsg);
   }
 
-  kkint32  classesColIdx = 0;
-
   char  buff[10240];
   KKStr  l;
   while  (!sr.eof ())
@@ -425,26 +423,14 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
       KKStr  data      = l.ExtractToken2 ("\t");
 
       MLClassPtr  pc = MLClass::CreateNewMLClass (className);
-      kkint32  classesIdx     = classes->PtrToIdx (pc);
-      kkint32  fileClassesIdx = fileClasses->PtrToIdx (pc);
+      auto  classesIdx     = classes->PtrToIdx (pc);
+      auto  fileClassesIdx = fileClasses->PtrToIdx (pc);
 
-      if  (classesIdx < 0)
-      {
-        KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow specifies class[" + className + "] which is not defined by caller";
-        runLog.Level (-1) << errMsg << endl;
-        valid = false;
-        throw KKException (errMsg);
-      }
+      KKCheck (classesIdx, "ReadSimpleConfusionMatrix  DataRow specifies class: " << className << " which is not defined by caller")
 
-      if  (fileClassesIdx < 0)
-      {
-        KKStr errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow specifies class[" + className + "] was not defined in 'Classes' line.";
-        runLog.Level (-1) << errMsg << endl;
-        valid = false;
-        throw KKException (errMsg);
-      }
+      KKCheck (fileClassesIdx, "ReadSimpleConfusionMatrix   DataRow specifies class: " << className << ".")
 
-      kkint32  classesRowIdx = classesIdx;
+      auto  classesRowIdx = classesIdx;
 
       VectorKKStr  dataFields = data.Split (',');
       if  (dataFields.size () != numClasses)
@@ -458,13 +444,13 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
       for  (kkuint32 c = 0;  c < numClasses;  c++)
       {
         pc = fileClasses->IdxToPtr (c);
-        classesColIdx = classes->PtrToIdx (pc);
+        auto classesColIdx = classes->PtrToIdx (pc);
 
         VectorKKStr   parts = dataFields[c].Split (':');
         if  (parts.size () > 1)
         {
-          (*counts)       [classesRowIdx][classesColIdx] = parts[0].ToDouble ();
-          (*probabilities)[classesRowIdx][classesColIdx] = parts[1].ToDouble ();
+          (*counts)       [classesRowIdx.value ()][classesColIdx.value ()] = parts[0].ToDouble ();
+          (*probabilities)[classesRowIdx.value ()][classesColIdx.value ()] = parts[1].ToDouble ();
         }
       }
     }

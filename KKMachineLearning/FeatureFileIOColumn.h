@@ -41,7 +41,7 @@ public:
                                            FileDescConstPtr  _fileDesc,
                                            MLClassList&      _classes, 
                                            istream&          _in,
-                                           kkint32           _maxCount,    // Maximum # images to load.
+                                           OptionUInt32      _maxCount,    // Maximum # images to load.
                                            VolConstBool&     _cancelFlag,
                                            bool&             _changesMade,
                                            KKStr&            _errorMessage,

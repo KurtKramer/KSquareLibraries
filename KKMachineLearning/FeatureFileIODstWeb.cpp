@@ -229,7 +229,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    /**< Maximum # images to load. */
+                                                     OptionUInt32      _maxCount,    /**< Maximum # images to load. */
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -239,7 +239,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;
 
   _changesMade = false;
-  if (_maxCount < 0)
+  if (!_maxCount)
     _maxCount = INT_MAX;
 
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");

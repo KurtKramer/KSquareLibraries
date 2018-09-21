@@ -60,7 +60,7 @@ namespace KKMLL
 
     MLClassList     GetMLClasses (kkint32 num)  const;
 
-    kkint32         GetNumForClass (MLClassPtr  mlClass)  const;
+    OptionUInt32    GetNumForClass (MLClassPtr  mlClass)  const;
 
     VectorInt32     GetUniqueListOfAssignments ()  const;
     

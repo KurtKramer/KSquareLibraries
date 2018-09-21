@@ -212,7 +212,7 @@ void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass,
   {
       MLClassListPtr  list = idx->first;
       auto  classInList = list->PtrToIdx (mlClass);
-      if  (classInList >= 0)
+      if  (classInList)
       {
         bool  nameChangedInList = false;
         list->ChangeNameOfClass (mlClass, oldName, newName, nameChangedInList);
@@ -1199,7 +1199,7 @@ MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkin
     MLClassPtr c = *idx;
     MLClassPtr classForLevel = c->MLClassForGivenHierarchialLevel (level);
 
-    if  (newList->PtrToIdx (classForLevel) < 0)
+    if  (!newList->PtrToIdx (classForLevel))
       newList->AddMLClass (classForLevel);
   }
 
@@ -1219,7 +1219,7 @@ MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
   for  (idx = list2.begin ();  idx != list2.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (result->PtrToIdx (ic) < 0)
+    if  (!result->PtrToIdx (ic))
     {
       // This entry (*idx) from list2 was not in list 1
       result->AddMLClass (ic);
@@ -1329,7 +1329,7 @@ MLClassList&  MLClassList::operator+= (const MLClassList&  right)  // add all cl
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (PtrToIdx (ic) < 0)
+    if  (!PtrToIdx (ic))
       PushOnBack (ic);
   }
 
@@ -1365,7 +1365,7 @@ MLClassList  MLClassList::operator- (const MLClassList&  right)  const
   for  (idx = begin ();  idx != end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (right.PtrToIdx (ic) < 0)
+    if  (!right.PtrToIdx (ic))
        result.PushOnBack (ic);
   }
 

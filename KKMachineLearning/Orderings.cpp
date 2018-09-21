@@ -390,7 +390,7 @@ void  Orderings::Load (const KKStr&  _indexFileName,
   {
     vector<bool>  indexLoaded (data->QueueSize (), false);
 
-    kkint32  imagesInOrdering = 0;
+    kkuint32  imagesInOrdering = 0;
 
     FeatureVectorListPtr  ordering = new FeatureVectorList (fileDesc, false);
     orderings.push_back (ordering);

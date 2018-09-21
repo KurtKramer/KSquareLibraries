@@ -501,7 +501,7 @@ void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
   for  (auto idx: trainingClasses)
   {
     MLClassPtr  ic = idx->MLClass ();
-    if  (mlClasses->PtrToIdx (ic) < 0)
+    if  (!mlClasses->PtrToIdx (ic))
       mlClasses->AddMLClass (ic);
   }
 }  /* SyncronizeMLClassListWithTrainingClassList */
@@ -515,7 +515,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchia
   {
     MLClassPtr  ic = tc->MLClass ();
     MLClassPtr  claassForGivenLevel = ic->MLClassForGivenHierarchialLevel ((kkuint16)level);
-    if  (classes->PtrToIdx (claassForGivenLevel) < 0)
+    if  (!classes->PtrToIdx (claassForGivenLevel))
       classes->AddMLClass (claassForGivenLevel);
   }
   return  classes;
@@ -679,7 +679,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
   {
     TrainingClassPtr  tc = *idx;
 
-    if  (classes->PtrToIdx (tc->MLClass ()) < 0)
+    if  (!classes->PtrToIdx (tc->MLClass ()))
       classes->PushOnBack (tc->MLClass ());
   }
 
@@ -690,7 +690,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 
 
 
-MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
+MLClassListPtr  TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 {
   TrainingClassList::const_iterator  idx;
 
@@ -701,7 +701,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
     TrainingClassPtr  tc = *idx;
     if  (tc->SubClassifier () == NULL)
     {
-      if  (classes->PtrToIdx (tc->MLClass ()) < 0)
+      if  (!classes->PtrToIdx (tc->MLClass ()))
         classes->PushOnBack (tc->MLClass ());
     }
     else
@@ -711,7 +711,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
       for  (idx2 = subClassifierClasses->begin();  idx2 != subClassifierClasses->end ();  ++idx2)
       {
         MLClassPtr       subClass = *idx2;
-        if  (classes->PtrToIdx (subClass) < 0)
+        if  (!classes->PtrToIdx (subClass))
           classes->PushOnBack (subClass);
       }
       delete  subClassifierClasses;
@@ -1010,7 +1010,7 @@ SVMparamPtr  TrainingConfiguration2::SVMparamToUse ()  const
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
   {
-    SVMparamPtr s =  oldSVMparms->SvmParameters  ();
+    SVMparamPtr s = oldSVMparms->SvmParameters  ();
     return  s;
   }
   else
@@ -1021,7 +1021,7 @@ SVMparamPtr  TrainingConfiguration2::SVMparamToUse ()  const
 
 
 
-float   TrainingConfiguration2::A_Param () const
+float  TrainingConfiguration2::A_Param () const
 {
   if  (modelParameters)
     return  modelParameters->A_Param ();
@@ -1145,6 +1145,8 @@ void  TrainingConfiguration2::SetFeatureNums (const  FeatureNumList&  features)
   if  (modelParameters)
     modelParameters->SelectedFeatures (features);
 }  /* SetFeatureNums */
+
+
 
 void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
                                               MLClassPtr             class2,
@@ -1467,14 +1469,14 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  section
     }
   }
 
-    if  (weight <= 0.0f)
-    {
+  if  (weight <= 0.0f)
+  {
     KKStr  errMsg = "Class[" + className + "]    Invalid Weight Parameter.";
-      log.Level (-1) << "ValidateClassConfig   " << errMsg << endl;
-      FormatErrorsAdd (weightLineNum, errMsg);
-      FormatGood (false);
-      return  NULL;
-    }
+    log.Level (-1) << "ValidateClassConfig   " << errMsg << endl;
+    FormatErrorsAdd (weightLineNum, errMsg);
+    FormatGood (false);
+    return  NULL;
+  }
 
   TrainingClassPtr tc = new TrainingClass (directories, className, weight,  countFactor, subClassifer, *mlClasses);
   tc->ClassNameLineNum     (classNameLineNum);

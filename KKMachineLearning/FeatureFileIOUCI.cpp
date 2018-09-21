@@ -108,7 +108,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
                                                   istream&          _in,
-                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  OptionUInt32      _maxCount,    // Maximum # images to load.
                                                   VolConstBool&     _cancelFlag,
                                                   bool&             _changesMade,
                                                   KKStr&            _errorMessage,
@@ -125,10 +125,13 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
   KKStr  ln (256);
   bool  eof;
 
+  if  (!_maxCount)
+    _maxCount = UINT_MAX;
+
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   GetLine (_in, ln, eof);
-  while  (!eof)
+  while  (!eof  &&  (examples->QueueSize () < _maxCount))
   {
     ln.TrimLeft ();
     ln.TrimRight ();

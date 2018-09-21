@@ -86,7 +86,7 @@ namespace KKMLL
     virtual  
       FeatureVectorListPtr  LoadFeatureFile (const KKStr&   _fileName,
                                              MLClassList&   _mlClasses,
-                                             kkint32        _maxCount,
+                                             OptionUInt32   _maxCount,
                                              VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
                                              bool&          _successful,
                                              bool&          _changesMade,
@@ -248,7 +248,7 @@ namespace KKMLL
                                              FileDescConstPtr  _fileDesc,
                                              MLClassList&      _classes, 
                                              std::istream&     _in,
-                                             kkint32           _maxCount,    /**< Maximum # images to load. */
+                                             OptionUInt32      _maxCount,    /**< Maximum # images to load. */
                                              VolConstBool&     _cancelFlag,
                                              bool&             _changesMade,
                                              KKStr&            _errorMessage,

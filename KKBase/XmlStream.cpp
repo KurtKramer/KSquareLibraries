@@ -1250,12 +1250,20 @@ void  XmlElementKeyValuePairs::Add (const KKStr&  key,
 
 
 
-
 void  XmlElementKeyValuePairs::Add (const KKStr&  key,
                                     kkint32       v
                                    )
 {
   Add (key, KKB::StrFromInt32 (v));
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    kkuint32      v
+                                   )
+{
+  Add (key, KKB::StrFromUint32 (v));
 }
 
 
@@ -1269,14 +1277,12 @@ void  XmlElementKeyValuePairs::Add (const KKStr&  key,
 
 
 
-
 void  XmlElementKeyValuePairs::Add (const KKStr&  key,
                                     double        v
                                    )
 {
   Add (key, KKB::StrFromDouble (v));
 }
-
 
 
 
@@ -1326,9 +1332,6 @@ void  XmlElementKeyValuePairs::WriteXML (const KKStr&  varName,
 
 
 XmlFactoryMacro(KeyValuePairs)
-
-
-
 
 
 XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr      tag,
@@ -1512,7 +1515,6 @@ KKStr  TurnIntoKKStr (const void* value)
 
 
 
-
 /**
  * Works with matching Marco (XmlElementBuiltInTypeHeader) defined in XmlStream.h  
  * XmlElementBuiltInTypeBody(kkint32,Int32,ToInt32)  // XmlElementInt32
@@ -1670,12 +1672,6 @@ XmlFactoryMacro(TypeName)
 
 
 
-
-
-
-
-
-
 /**
  *@details  Works with corresponding macro (XmlElementArray2DHeader) defined in header file "XmlStream.h"
  *@param  T  The Built-In type,  examples: float, kkint32, double, ...
@@ -1821,12 +1817,6 @@ XmlFactoryMacro(TypeName)
 
 
 
-
-
-
-
-
-
 #define  XmlElementVectorBody(T,TypeName,ParserNextTokenMethod)            \
 XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
                                             XmlStream&     s,              \
@@ -1915,20 +1905,24 @@ XmlFactoryMacro(TypeName)
 
 
 // Integral Types
-XmlElementBuiltInTypeBody (kkint32, Int32, ToInt32)  // XmlElementInt32
+XmlElementBuiltInTypeBody (kkint32,  Int32,  ToInt32)  // XmlElementInt32
 
-XmlElementBuiltInTypeBody (kkint64, Int64, ToInt64)  // XmlElementInt64
+XmlElementBuiltInTypeBody (kkuint32, UInt32, ToUint32)  // XmlElementInt32
 
-XmlElementBuiltInTypeBody (float, Float, ToDouble)   // XmlElementFloat
+XmlElementBuiltInTypeBody (kkint64,  Int64,  ToInt64)  // XmlElementInt64
 
-XmlElementBuiltInTypeBody (double, Double, ToDouble) // XmlElementDouble
+XmlElementBuiltInTypeBody (float,    Float,  ToDouble)   // XmlElementFloat
+
+XmlElementBuiltInTypeBody (double,   Double, ToDouble) // XmlElementDouble
 
 
 
 // Arrays
 XmlElementArrayBody (kkuint16, ArrayUint16, GetNextTokenUint)     // XmlElementArrayUint16
 
-XmlElementArrayBody (kkint32, ArrayInt32, GetNextTokenInt)      // XmlElementArrayInt32
+//XmlElementArrayBody (kkint32, ArrayInt32, GetNextTokenInt)       // XmlElementArrayInt32
+XmlFactoryMacro(ArrayInt32)
+
 
 XmlElementArrayBody (double, ArrayDouble, GetNextTokenDouble)
 
@@ -1943,3 +1937,62 @@ XmlElementArray2DBody (float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElemen
 
 XmlElementVectorBody (kkint32, VectorInt32, GetNextTokenInt)
 XmlElementVectorBody (float, VectorFloat, GetNextTokenFloat)
+
+
+
+VectorUint32*  XmlArrayToVectorUInt32 (XmlElementPtr e)
+{
+  auto sectionName = e->SectionName ();
+  auto varName = e->VarName ();
+
+  auto nameTag = e->NameTag ();
+  if  (!nameTag)
+    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " missing attributes; can not be an array!");
+
+  auto countAttribute = nameTag->AttributeValueByName("Count");
+  if  (!countAttribute)
+    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " missing 'Count' attribute; can not be an array!");
+
+  auto count = countAttribute->ToInt32 ();
+
+  VectorUint32* result = new VectorUint32(count);
+
+  if  (typeid(*e) == typeid(XmlElementArrayUInt32))
+  {
+    auto uint32Array = dynamic_cast<XmlElementArrayUInt32Ptr>(e);
+    auto a = uint32Array->Value ();
+    for (int x = 0;  x < count;  ++x)
+      (*result)[x] = a[x];
+  }
+
+  else if  (typeid(*e) == typeid(XmlElementArrayInt32))
+  {
+    auto a = dynamic_cast<XmlElementArrayUInt32Ptr>(e)->Value ();
+    for (int x = 0;  x < count;  ++x)
+    {
+      auto z = a[x];
+      if  (z < 0)
+        throw KKException ("XmlIntArrayToVectorUInt32  element index: " + StrFromInt32(x) + " value: " + StrFromInt32(z) + " negative value!");
+      (*result)[x] = (kkuint32)a[x];
+    }
+  }
+
+  else if  (typeid(*e) == typeid(XmlElementArrayFloat))
+  {
+    auto a = dynamic_cast<XmlElementArrayFloatPtr>(e)->Value ();
+    for (int x = 0;  x < count;  ++x)
+    {
+      auto z = (kkuint64)a[x];
+      if  ((z < 0.)  ||  (z > UINT32_MAX))
+        throw KKException ("XmlIntArrayToVectorUInt32  element index: " + StrFromInt32(x) + " value: " + StrFromFloat(a[x]) + " not in 'uint32' range!");
+      (*result)[x] = (kkuint32)a[x];
+    }
+  }
+
+  else
+  {
+    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " conversion to VectorUInt32 not suppoted!");
+  }
+
+  return result;
+}

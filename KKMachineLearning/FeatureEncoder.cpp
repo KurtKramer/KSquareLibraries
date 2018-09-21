@@ -559,7 +559,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
  
   FeatureVectorPtr  example      = NULL;
   MLClassPtr        lastMlClass  = NULL;
-  kkint32           lastClassNum = -1;
+  OptionUInt32      lastClassNum = {};
 
   kkint32  bytesOfxSpacePerExample = xSpaceNeededPerExample * (kkint32)sizeof (struct svm_node);
 
@@ -580,7 +580,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
       lastClassNum = assignments.GetNumForClass (lastMlClass);
     }
 
-    prob.y[i]     = lastClassNum;
+    prob.y[i]     = lastClassNum.value ();
     prob.index[i] = i;
     prob.exampleNames.push_back (osGetRootName (example->ExampleFileName ()));
 

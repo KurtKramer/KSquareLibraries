@@ -457,11 +457,6 @@ void  UsfCasCor::CleanUpMemory ()
 
 
 
-
-
-
-
-
 kkMemSize  UsfCasCor::MemoryConsumedEstimated ()  const
 {
   kkMemSize  memoryConsumedEstimated = sizeof (*this);
@@ -510,13 +505,10 @@ kkMemSize  UsfCasCor::MemoryConsumedEstimated ()  const
 }  /* MemoryConsumedEstimated */
 
 
-
-
 /* Administrative variables */
 const char*  UsfCasCor::version="5.0";
 const char*  UsfCasCor::release_date="07-07-2012";
 const char*  UsfCasCor::progname="UsfCasCor";
-
 
 
 MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
@@ -565,7 +557,6 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
 
   return  predictedClass;
 }  /* PredictClass */
-
 
 
 
@@ -648,10 +639,10 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
   for  (idx = classOrder.begin ();  idx != classOrder.end ();  ++idx)
   {
     MLClassPtr  ic = *idx;
-    int  j = classes->PtrToIdx (ic);
-    if  (j >= 0)
+    auto  j = classes->PtrToIdx (ic);
+    if  (j)
     {
-      float  prob = (Outputs[j] - SigmoidMin) / totalDelta;
+      float  prob = (Outputs[j.value ()] - SigmoidMin) / totalDelta;
       probabilities.push_back (prob);
     }
     else
@@ -669,9 +660,6 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
 
   return;
 }  /* PredictConfidences */
-
-
-
 
 
 
@@ -741,8 +729,6 @@ ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
 
 
 
-
-
 void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
                                      kkint32                 _out_limit,
                                      kkint32                 _number_of_rounds,
@@ -791,9 +777,6 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
 
 
 
-
-
-
 /**
  *@brief Will create a list that excludes samples that have extreme values that can trip up the Neural net.
  */
@@ -829,7 +812,6 @@ FeatureVectorListPtr  UsfCasCor::FilterOutExtremeExamples (FeatureVectorListPtr 
 
 
 
-
 /*
  *  Get and initialize a network. 
  */
@@ -842,15 +824,13 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
      that can be taken from the training/testing files. 
   */
   load_namesfile (trainExamples);
-
-
+  
   /* At this point, it looks like the MaxUnits parameter is
      simply the sum of NInputs+1 and the max. number of units
      to add. Set this manually, since it doesn't seem to be
      set elsewhere.
   */
-
-
+  
   if  (number_of_rounds == -1)
      number_of_rounds=15;
 
@@ -881,7 +861,6 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
 
   return;
 }  /* setup_network */
-
 
 
 
@@ -969,7 +948,6 @@ void UsfCasCor::train_network (VolConstBool&  cancelFlag,
 
   return;
 }  /* train_network */
-
 
 
 
@@ -2789,20 +2767,18 @@ void  UsfCasCor::_load_training_example (FeatureVectorPtr  example,
       << endl;
   }
 
-  kkint32  j = 0;
-
   const float*     featureData = example->FeatureData ();
   const kkuint16*  featureNums = selectedFeatures->FeatureNums ();
 
   // at this point   nInputs should equal selecedFeatures->NumSelFeatures ()
-  for  (j = 0;  j < Ninputs;  ++j)
+  for  (int j = 0;  j < Ninputs;  ++j)
     TrainingInputs[i][j] = featureData[featureNums[j]];
 
-  kkint32  k =  classes->PtrToIdx (example->MLClass ());
+  auto  k = classes->PtrToIdx (example->MLClass ());
 
-  for  (j = 0;  j < Noutputs;  j++)
+  for  (kkuint32 j = 0;  j < (kkuint32)Noutputs;  ++j)
   {
-    if  (j == k) 
+    if  (k  &&  (j == k.value ())) 
       TrainingOutputs[i][j] = SigmoidMax;
     else
       TrainingOutputs[i][j] = SigmoidMin; 

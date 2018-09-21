@@ -313,7 +313,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
     throw KKException (errMsg);
   }
 
-  kkint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
+  kkuint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);

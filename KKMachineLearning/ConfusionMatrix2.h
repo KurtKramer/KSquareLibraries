@@ -91,7 +91,7 @@ namespace  KKMLL
 
     void     FactorCounts (double  factor);    /**< Will multiply all counts by 'factor'  You would use this in conjunction with 'AddIn'.  */
 
-    void     ComputeFundamentalStats (MLClassPtr ic,
+    void     ComputeFundamentalStats (MLClassPtr mlClass,
                                       double&    truePositives,
                                       double&    trueNegatives,
                                       double&    falsePositives,
@@ -170,9 +170,9 @@ namespace  KKMLL
     void  WriteSimpleConfusionMatrix (ostream&  f)  const;
 
   private:
-    kkint32 AddClassToConfusionMatrix (MLClassPtr  newClass,
-                                       RunLog&     log
-                                      );
+    kkuint32 AddClassToConfusionMatrix (MLClassPtr  newClass,
+                                        RunLog&     log
+                                       );
 
     void  InitializeMemory ();
 

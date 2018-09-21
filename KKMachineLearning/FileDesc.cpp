@@ -167,7 +167,7 @@ void  FileDesc::AddClasses (const MLClassList&  classesToAdd)
   for  (idx = classesToAdd.begin ();  idx != classesToAdd.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (classes.PtrToIdx (ic) < 0)
+    if  (!classes.PtrToIdx (ic))
       classes.AddMLClass (ic);
   }
 }  /* AddClasses */

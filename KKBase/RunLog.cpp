@@ -448,7 +448,6 @@ RunLog&  RunLog::operator<< (const VectorKKStr& right)
 
 
 
-
 RunLog& RunLog::operator<< (ostream& (* mf)(ostream &))
 {
   if  (curLevel <= loggingLevel)

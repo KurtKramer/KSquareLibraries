@@ -705,7 +705,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
                                                   istream&          _in,
-                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  OptionUInt32      _maxCount,    // Maximum # images to load.
                                                   VolConstBool&     _cancelFlag,
                                                   bool&             _changesMade,
                                                   KKStr&            _errorMessage,
@@ -913,7 +913,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
     if  ((lineCount % 1000) == 0)
       cout  << "Records Loaded " << lineCount << endl;
 
-    if  ((kkint32)examples->size () > _maxCount)
+    if  (examples->QueueSize () > _maxCount)
       break;
   }
 

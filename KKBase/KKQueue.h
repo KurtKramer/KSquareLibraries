@@ -60,6 +60,7 @@ namespace  KKB
       typedef  typename std::vector<Entry*>::iterator        iterator;
       typedef  typename std::vector<Entry*>::const_iterator  const_iterator;
 
+      typedef  KKB::OptionUInt32  OptionUInt32;
 
       KKQueue  (bool _owner = true);
 
@@ -101,9 +102,9 @@ namespace  KKB
       kkuint32  QueueSize    () const;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
       bool      Owner        () const;
 
-      kkint32   LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
-      EntryPtr  IdxToPtr     (size_t        idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
-      kkint32   PtrToIdx     (EntryConstPtr _entry)  const;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
+      OptionUInt32  LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
+      EntryPtr      IdxToPtr     (size_t        idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
+      OptionUInt32  PtrToIdx     (EntryConstPtr _entry)  const;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
 
       // Basic Queue operators.
       virtual   void      Add          (EntryPtr _entry);    /**< same as PushOnBack   */
@@ -758,7 +759,7 @@ namespace  KKB
 
 
   template <class Entry>
-  kkint32 KKQueue<Entry>::LocateEntry (EntryConstPtr _entry)  const
+  KKB::OptionUInt32 KKQueue<Entry>::LocateEntry (EntryConstPtr _entry)  const
   {
     kkint32  i = 0; 
 
@@ -768,13 +769,13 @@ namespace  KKB
         return i;
       i++;
     }
-    return -1;
+    return {};
   }  /* LocateEntry */
 
 
 
   template <class Entry>
-  kkint32  KKQueue<Entry>::PtrToIdx (EntryConstPtr _entry)  const
+  KKB::OptionUInt32  KKQueue<Entry>::PtrToIdx (EntryConstPtr _entry)  const
   {
     return  LocateEntry (_entry);
   }
