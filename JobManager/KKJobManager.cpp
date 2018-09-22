@@ -67,8 +67,6 @@ KKJobManager::KKJobManager (const KKJobManager& j):
 
 
 
-
-
 // Make sure the the _summaryResultsFileName is deleted before we start processing.
 KKJobManager::KKJobManager (JobManagerPtr _manager,                   // Ptr to job that is managing this 'KKJobManager'
                             kkint32       _jobId,
@@ -681,9 +679,9 @@ void  KKJobManager::StatusFileInitialize ()
 
 kkint32  KKJobManager::AllocateNextJobId ()
 {
-  kkint32  jobId = nextJobId;
+  kkint32  jobIdToReturn = nextJobId;
   nextJobId++;
-  return  jobId;
+  return  jobIdToReturn;
 }
 
 
