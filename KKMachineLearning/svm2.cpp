@@ -4453,7 +4453,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("nSV"))
         {
           delete nSV;
-          if  (typeid(*e) == typeid(XmlElementArrayInt32Ptr))
+          if  (typeid(*e) == typeid(XmlElementArrayInt32))
           {
             auto temp = dynamic_cast<XmlElementArrayInt32Ptr> (e);
             kkuint32  len = temp->Count ();

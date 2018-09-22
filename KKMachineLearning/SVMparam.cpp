@@ -7,13 +7,11 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKB;
-
 
 #include "SVMparam.h"
 #include "BinaryClassParms.h"

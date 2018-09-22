@@ -816,8 +816,30 @@ namespace  KKB
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
+class  XmlElementArrayBase: public XmlElement
+{
+public:
+    XmlElementArrayBase (XmlTagPtr   tag,
+                         XmlStream&  s,
+                         RunLog&     log
+                        ):
+      XmlElement (tag, s, log),
+      count (0)
+    {
+      count = tag->AttributeValueInt32 ("Count");
+    }
+
+    kkuint32  Count() const  {return count;}
+
+    virtual kkuint32*  ToUnit32Array () const  {return nullptr;}
+
+
+    kkuint32  count;
+};
+
+
 template<typename T, const char* ZZZZTypeName>
-class  XmlElementArray: public XmlElement
+class  XmlElementArray: public XmlElementArrayBase
 {
 public:
   XmlElementArray (XmlTagPtr      tag,
@@ -825,12 +847,9 @@ public:
                    VolConstBool&  cancelFlag,
                    RunLog&        log
                   ):
-      XmlElement (tag, s, log),
-      count (0),
+      XmlElementArrayBase (tag, s, log),
       value (NULL) 
   {
-    count = tag->AttributeValueInt32 ("Count");
-
     if  (count <= 0)
     {
       value = NULL;
@@ -841,7 +860,7 @@ public:
       value = new T[count];
     }
 
-    kkint32  fieldsExtracted = 0;
+    kkuint32  fieldsExtracted = 0;
     XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);
     while  (tok)
     {
@@ -879,11 +898,6 @@ public:
     value = NULL;
   }
 
-  virtual  KKStr  TypeName ()  
-  {
-    return "Not_Defined!";
-  };
-
   T*  TakeOwnership ()
   {
     T* v = value;
@@ -891,9 +905,7 @@ public:
     return v;
   }
 
-  kkuint32  Count ()  const  {return count;}
-
-  T*        Value ()  const  {return value;}
+  T*  Value ()  const  {return value;}
 
   static void  WriteXML (kkuint32       count,
                          const T*       d,
@@ -913,24 +925,39 @@ public:
         o << "\t";
       o << d[x];
     }
-    XmlTag  endTag (TypeName (), XmlTag::TagTypes::tagEnd);
+    XmlTag  endTag (ZZZZTypeName, XmlTag::TagTypes::tagEnd);
     endTag.WriteXML (o);
     o << endl;
    } 
 
+   virtual  kkuint32*  ToUnit32Array () const
+   {
+     KKCheck(value, "XmlElementArray::ToUnit32  value == NULL !")
+
+     kkuint32* result = new kkuint32 [count];
+
+     if  (typeid(T) == typeid(KKStr))
+     {
+       for  (kkuint32 x = 0;  x < count;  ++x)
+         result[x] = value[x].ToUint32 ()
+     }
+     else
+     {
+       for  (kkuint32 x = 0;  x < count;  ++x)
+         result[x] = (T)value[x];
+     }
+     return result;        
+   }
+
 private:
-  kkint32  count;
-  T*       value;
+  T*  value;
 };
 
 
-#define STR(tok) #tok
- 
-
 
 #define  XmlElementArrayHeader2(T,TypeNameX,ParserNextTokenMethod)   \
-  extern const char  zedzed[] = #TypeNameX;         \
-  class  XmlElement##TypeNameX:  public  XmlElementArray<kkint32,zedzed>          \
+  extern const char XmlElement##TypeNameX##TP[];                     \
+  class  XmlElement##TypeNameX:  public  XmlElementArray<kkint32,XmlElement##TypeNameX##TP>          \
   {                                                                 \
   public:                                                           \
     XmlElement##TypeNameX (XmlTagPtr       tag,                      \
@@ -938,13 +965,9 @@ private:
                            VolConstBool&   cancelFlag,               \
                            RunLog&         log                       \
                           ):                                         \
-        XmlElementArray<T,zedzed> (tag, s, cancelFlag, log)           \
+        XmlElementArray<T,XmlElement##TypeNameX##TP> (tag, s, cancelFlag, log)           \
     {}                                                              \
                                                                     \
-    virtual  KKStr TypeName ()                                      \
-    {                                                               \
-      return #TypeNameX;                                             \
-    }                                                               \
   };                                                                \
   typedef  XmlElement##TypeNameX*   XmlElement##TypeNameX##Ptr;
 

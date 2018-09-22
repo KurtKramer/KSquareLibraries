@@ -13,7 +13,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "BitString.h"
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
@@ -22,7 +21,6 @@ using namespace std;
 #include "XmlTokenizer.h"
 #include "XmlStream.h"
 using namespace KKB;
-
 
 
 
@@ -1575,6 +1573,12 @@ kkint64  XmlElement##TypeName::ToInt64  () const {return (kkint64)value;}  \
 XmlFactoryMacro(TypeName)
 
 
+
+
+#define  XmlElementArrayBody2(T,TypeName)                     \
+const char XmlElement##TypeNameX##TP[] = #TypeName;           \
+XmlFactoryMacro(TypeName)
+
 #define  XmlElementArrayBody(T,TypeName,ParserNextTokenMethod)                \
 XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,               \
                                             XmlStream&     s,                 \
@@ -1921,7 +1925,8 @@ XmlElementBuiltInTypeBody (double,   Double, ToDouble) // XmlElementDouble
 XmlElementArrayBody (kkuint16, ArrayUint16, GetNextTokenUint)     // XmlElementArrayUint16
 
 //XmlElementArrayBody (kkint32, ArrayInt32, GetNextTokenInt)       // XmlElementArrayInt32
-XmlFactoryMacro(ArrayInt32)
+XmlElementArrayBody2(kkint32, ArrayInt32)
+//XmlFactoryMacro(ArrayInt32)
 
 XmlElementArrayBody (double, ArrayDouble, GetNextTokenDouble)
 
@@ -1936,62 +1941,3 @@ XmlElementArray2DBody (float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElemen
 
 XmlElementVectorBody (kkint32, VectorInt32, GetNextTokenInt)
 XmlElementVectorBody (float, VectorFloat, GetNextTokenFloat)
-
-
-
-VectorUint32*  XmlArrayToVectorUInt32 (XmlElementPtr e)
-{
-  auto sectionName = e->SectionName ();
-  auto varName = e->VarName ();
-
-  auto nameTag = e->NameTag ();
-  if  (!nameTag)
-    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " missing attributes; can not be an array!");
-
-  auto countAttribute = nameTag->AttributeValueByName("Count");
-  if  (!countAttribute)
-    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " missing 'Count' attribute; can not be an array!");
-
-  auto count = countAttribute->ToInt32 ();
-
-  VectorUint32* result = new VectorUint32(count);
-
-  if  (typeid(*e) == typeid(XmlElementArrayUInt32))
-  {
-    auto uint32Array = dynamic_cast<XmlElementArrayUInt32Ptr>(e);
-    auto a = uint32Array->Value ();
-    for (int x = 0;  x < count;  ++x)
-      (*result)[x] = a[x];
-  }
-
-  else if  (typeid(*e) == typeid(XmlElementArrayInt32))
-  {
-    auto a = dynamic_cast<XmlElementArrayUInt32Ptr>(e)->Value ();
-    for (int x = 0;  x < count;  ++x)
-    {
-      auto z = a[x];
-      if  (z < 0)
-        throw KKException ("XmlIntArrayToVectorUInt32  element index: " + StrFromInt32(x) + " value: " + StrFromInt32(z) + " negative value!");
-      (*result)[x] = (kkuint32)a[x];
-    }
-  }
-
-  else if  (typeid(*e) == typeid(XmlElementArrayFloat))
-  {
-    auto a = dynamic_cast<XmlElementArrayFloatPtr>(e)->Value ();
-    for (int x = 0;  x < count;  ++x)
-    {
-      auto z = (kkuint64)a[x];
-      if  ((z < 0.)  ||  (z > UINT32_MAX))
-        throw KKException ("XmlIntArrayToVectorUInt32  element index: " + StrFromInt32(x) + " value: " + StrFromFloat(a[x]) + " not in 'uint32' range!");
-      (*result)[x] = (kkuint32)a[x];
-    }
-  }
-
-  else
-  {
-    throw KKException("XmlIntArrayToVectorUInt32   Xml element: " + sectionName + " Variable: " + varName + " conversion to VectorUInt32 not suppoted!");
-  }
-
-  return result;
-}
