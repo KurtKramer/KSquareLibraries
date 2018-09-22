@@ -367,27 +367,14 @@ kkMemSize Configuration::MemoryConsumedEstimated ()  const
 
 void  StripOutAnyComments (KKStr&  line)
 {
-  bool found = false;
-  kkuint32  len   = line.Len ();
-  kkuint32  x     = 0;
- 
-  while  ((x < (len - 1))  &&  (!found))
+  auto idx = line.LocateStr("//");
+  if  (idx)
   {
-    if  ((line[x]     == '/')  &&
-         (line[x + 1] == '/'))
-      found = true;
-    else
-      x++;
-  }
-
-  if  (found)
-  {
-    if  (x == 0)
+    if  (idx.value () < 1)
       line = "";
     else
-      line = line.SubStrPart (0, x - 1);
+      line = line.SubStrPart (0, idx.value () - 1);
   }
-
 } /* StripOutAnyComments */
  
 
@@ -633,7 +620,6 @@ KKStrConstPtr   Configuration::SettingName (const KKStr&  sectionName,
 
 
 
-
 KKStrConstPtr   Configuration::SettingName (kkuint32  sectionNum,
                                             kkuint32  settingNum
                                            )  const
@@ -667,6 +653,7 @@ KKStrConstPtr   Configuration::SettingValue (kkuint32      sectionNum,
   }
   return  result;
 }
+
 
 
 KKStr   Configuration::SettingValueToStr (kkuint32      sectionNum,

@@ -4453,19 +4453,9 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("nSV"))
         {
           delete nSV;
-          if  (typeid(*e) == typeid(XmlElementArrayInt32))
-          {
-            auto temp = dynamic_cast<XmlElementArrayInt32Ptr> (e);
-            kkuint32  len = temp->Count ();
-            auto nSVint32 = temp->TakeOwnership ();
-            nSV = new kkuint32[len];
-            for  (kkuint32 x = 0;  x < len;  ++x)
-              nSV[x] = (kkuint32)nSVint32[x];
-          }
-          else 
-          {
-            nSV = dynamic_cast<XmlElementArrayUInt32Ptr> (e)->TakeOwnership ();   // numBinaryCombos
-          }
+          auto nSVXml = dynamic_cast<XmlElementArrayBase*>(e);
+          KKCheck(nSVXml->Count() == nr_class, "SVM289_MFS::Svm_Model::ReadXML  nSVxml->Count: " << nSVXml->Count() << " expected nr_class: " << nr_class)
+          nSV = nSVXml->ToUnit32Array();
         }
 
         else if  (varName.EqualIgnoreCase ("SupportVector"))

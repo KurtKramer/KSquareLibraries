@@ -2423,8 +2423,8 @@ KKStr  KKStr::SubStrPart (kkint32  firstChar)  const
 
 
 
-KKStr  KKStr::SubStrPart (kkStrUint  firstChar,
-                          kkStrUint  lastChar
+KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx,
+                          kkStrUint  lastCharIdx
                          )  const
 {
   #ifdef  KKDEBUG
@@ -2434,18 +2434,20 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstChar,
   if  (len < 1)
     return EmptyStr ();
 
-  if  (lastChar >= len)  lastChar = len - 1;
+  KKCheck(lastCharIdx < MaxStrLen, "KKStr::SubStrPart  lastCharIdx: " << lastCharIdx << " Beyond max allowable stlen!")
 
-  if ((firstChar >= len) || (lastChar < firstChar))
+  if  (lastCharIdx >= len)  lastCharIdx = len - 1;
+
+  if ((firstCharIdx >= len) || (lastCharIdx < firstCharIdx))
     return  EmptyStr ();
 
-  kkStrUint  subStrLen = (kkStrUint)(lastChar - firstChar) + 1;
+  kkStrUint  subStrLen = (kkStrUint)(lastCharIdx - firstCharIdx) + 1;
   KKStr  subStr (subStrLen + 2);
 
-  kkStrUint  x = (kkStrUint)firstChar;
+  kkStrUint  x = (kkStrUint)firstCharIdx;
   kkStrUint  y = 0;
 
-  for  (x = firstChar; x <= lastChar;  x++, y++)
+  for  (x = firstCharIdx; x <= lastCharIdx;  x++, y++)
     subStr.val[y] = val[x];
   
   subStr.val[y] = 0;

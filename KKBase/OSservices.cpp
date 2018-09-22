@@ -964,12 +964,12 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
     else if  (startChar == '{')   endChar = '}';
     else if  (startChar == '[')   endChar = ']';
 
-    KKStr  beforeEnvStr = str.SubStrPart (0, nextEnvVarIdx.value () - 1);
+    KKStr  beforeEnvStr = (nextEnvVarIdx > 0) ? str.SubStrPart (0, nextEnvVarIdx.value () - 1) : KKStr::EmptyStr ();
     str = str.SubStrPart (nextEnvVarIdx.value () + 2);
     auto endCharIdx = str.LocateCharacter (endChar);
     if  (!endCharIdx)  return  src;
 
-    KKStr  envStrName   = str.SubStrPart (0, endCharIdx.value () - 1);
+    KKStr  envStrName   = (endCharIdx < 1) ? KKStr::EmptyStr () : str.SubStrPart (0, endCharIdx.value () - 1);
     KKStr  afterStrName = str.SubStrPart (endCharIdx.value () + 1);
 
     KKStrPtr envStrValue = osGetEnvVariable (envStrName);

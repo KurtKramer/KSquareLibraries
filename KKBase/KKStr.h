@@ -513,8 +513,8 @@ namespace  KKB
      *@param[in]  lastChar   Last character in include in the string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkStrUint  firstChar,
-                          kkStrUint  lastChar
+    KKStr     SubStrPart (kkStrUint  firstCharIdx,
+                          kkStrUint  lastCharIdx
                          )  const;
 
     KKStr     Tail (kkStrUint tailLen)  const;      /**< Return back the last 'tailLen' characters. */

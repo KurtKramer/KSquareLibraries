@@ -2280,7 +2280,7 @@ void  SVMModel::WriteXML (const KKStr&  varName,
     headerFields = NULL;
   }
   svmParam->WriteXML ("svmParam", o);
-
+   
   if  (svmParam->MachineType () == SVM_MachineType::OneVsOne)
   {
     //  "<OneVsOne>"

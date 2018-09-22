@@ -397,6 +397,8 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     }
     else if  (typeid (*t) == typeid (XmlContent))
     {
+      KKCheck(nr_class > 0, "SvmModel233::ReadXML  'nr_class'  less than 1!")
+
       XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
       KKStrParser p (*(content->Content ()));
       p.TrimWhiteSpace (" ");
