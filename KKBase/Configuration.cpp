@@ -19,6 +19,7 @@ using namespace std;
 #include "Configuration.h"
 #include "KKQueue.h"
 #include "OSservices.h"
+#include "Option.h"
 #include "RunLog.h"
 using namespace KKB;
 
@@ -369,12 +370,7 @@ void  StripOutAnyComments (KKStr&  line)
 {
   auto idx = line.LocateStr("//");
   if  (idx)
-  {
-    if  (idx.value () < 1)
-      line = "";
-    else
-      line = line.SubStrSeg (0, idx.value ());
-  }
+    line = line.SubStrSeg(0, idx);
 } /* StripOutAnyComments */
  
 
@@ -505,12 +501,12 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrSeg (0, equalIdx.value()));
+        KKStr  settingName (line.SubStrSeg (0, equalIdx));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();
 
-        KKStr  settingValue (line.SubStrPart (equalIdx.value() + 1));
+        KKStr  settingValue (line.SubStrPart (equalIdx + 1));
         settingValue.TrimLeft ();
         settingValue.TrimRight ();
 

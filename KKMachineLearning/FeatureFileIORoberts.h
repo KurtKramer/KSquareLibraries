@@ -40,7 +40,7 @@ namespace KKMLL
                               bool&                 _successful,
                               KKStr&                _errorMessage,
                               RunLog&               _log
-                             );
+                             )  override;
 
   private:
     static  FeatureFileIORoberts  driver;

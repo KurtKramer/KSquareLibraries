@@ -66,7 +66,7 @@ FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
   {
     ln.TrimLeft ();
     ln.TrimRight ();
-    if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
+    if  ((!ln.StartsWith ("//"))  &&  (!ln.Empty ()))
     {
       numFieldsThisLine = 0;
 
@@ -136,7 +136,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
     ln.TrimLeft ();
     ln.TrimRight ();
 
-    if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
+    if  ((!ln.StartsWith ("//"))  &&  (!ln.Empty ()))
     {
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
   

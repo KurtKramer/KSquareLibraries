@@ -3810,7 +3810,7 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
         line.TrimLeft ("\n\r\t ");
         line.TrimRight ("\n\r\t ");
 
-        if  ((line.Len () > 0)  &&  (line.SubStrPart (0, 1) != "//"))
+        if  ((line.Len () > 0)  &&  (!line.StartsWith ("//")))
         {
           // We have our first 'non blank'  'non commented line'
           break;

@@ -4393,7 +4393,7 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
 
     KKStr line = buff;
 
-    if  (line.SubStrPart (0, 1) == "//")
+    if  (line.StartsWith ("//"))
       continue;
 
     KKStr fieldName = line.ExtractToken2 ("\t\n\r");

@@ -35,7 +35,7 @@ public:
                                           kkint32&        _estSize,
                                           KKStr&          _errorMessage,
                                           RunLog&         log
-                                         );
+                                         )  override;
 
 
   virtual  
@@ -46,7 +46,7 @@ public:
                                            bool&          _successful,
                                            bool&          _changesMade,
                                            RunLog&        _log
-                                          );
+                                          )  override;
 
 
 
@@ -60,7 +60,7 @@ public:
                                     bool&             _changesMade,
                                     KKStr&            _errorMessage,
                                     RunLog&           _log
-                                   );
+                                   )  override;
 
 
   virtual  
@@ -73,7 +73,7 @@ public:
                      bool&                 _successful,
                      KKStr&                _errorMessage,
                      RunLog&               _log
-                    );
+                    )  override;
 
 
 

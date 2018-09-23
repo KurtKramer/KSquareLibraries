@@ -456,11 +456,11 @@ void  ExtractAttribute (KKStr&  tagStr,
     return;
   }
 
-  attributeName = tagStr.SubStrPart (startIdx, idx - 1);
+  attributeName = tagStr.SubStrSeg (startIdx, idx - startIdx);
 
   ++idx;  // Skip past '=' character.
   
-  // Skip over leading spaces
+  // Skip over leading white space
   while  (idx < len)
   {
     if  (strchr ("\n\t\r ", tagStr[idx]) == NULL)
@@ -483,7 +483,7 @@ void  ExtractAttribute (KKStr&  tagStr,
     ++idx;
   }
 
-  attributeValue = tagStr.SubStrPart (valueStartIdx, idx - 1);
+  attributeValue = tagStr.SubStrSeg (valueStartIdx, idx - valueStartIdx);
 
   tagStr = tagStr.SubStrPart (idx + 1);
 

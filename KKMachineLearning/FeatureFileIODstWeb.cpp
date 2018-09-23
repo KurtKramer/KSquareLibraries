@@ -13,6 +13,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -148,8 +149,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       return  NULL;
     }
 
-    KKStr  leftSide  = line.SubStrPart (0, equalLoc.value () - 1);
-    KKStr  rightSide = line.SubStrPart (equalLoc.value () + 1);
+    KKStr  leftSide  = line.SubStrSeg (0, equalLoc);
+    KKStr  rightSide = line.SubStrPart (equalLoc + 1);
 
     leftSide.Upper ();
     if  (leftSide != "CLASS")

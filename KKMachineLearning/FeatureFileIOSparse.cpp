@@ -72,7 +72,7 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a comment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))
@@ -169,7 +169,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a coment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))

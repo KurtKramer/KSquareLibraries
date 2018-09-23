@@ -12,6 +12,7 @@ using namespace  std;
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
@@ -318,7 +319,7 @@ MLClass::MLClass (const KKStr&  _name):
   KKStr  topLevel = upperName;
   auto x = upperName.LocateCharacter ('_');
   if  (x)
-    topLevel = upperName.SubStrPart (0, x.value () - 1);
+    topLevel = upperName.SubStrSeg (0, x);
 
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
@@ -369,7 +370,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
   auto x = className.LocateLastOccurrence ('_');
-  if  (x  &&  (x.value () > 0))
+  if  (x  &&  (x > 0U))
   {
     // Now lets eliminate any sequence number in name
     // We are assuming that a underscore{"_") character separates the class name from the sequence number.
@@ -388,7 +389,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
     if  (allFollowingCharsAreNumeric)
     {
-      className = className.SubStrPart (0, x.value () - 1);
+      className = className.SubStrSeg (0, x);
     }
   }
 
@@ -1030,8 +1031,8 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
     }
     else
     {
-      titleLine1 << className.SubStrPart (0, y.value () - 1);
-      titleLine2 << className.SubStrPart (y.value () + 1);
+      titleLine1 << className.SubStrSeg (0, y);
+      titleLine2 << className.SubStrPart (y + 1);
     }
   }
 }  /* ExtractTwoTitleLines */

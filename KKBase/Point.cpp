@@ -10,7 +10,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "Option.h"
 #include  "Point.h"
 using namespace KKB;
 
@@ -205,8 +205,8 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
       auto  idx = s.Find (endPairChar);
       if  (idx)
       {
-        pairStr = s.SubStrPart (0, idx.value () - 1);
-        s = s.SubStrPart (idx.value () + 1);
+        pairStr = s.SubStrSeg (0, idx);
+        s = s.SubStrPart (idx + 1);
       }
       else
       {

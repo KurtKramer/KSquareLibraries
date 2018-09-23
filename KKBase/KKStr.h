@@ -494,16 +494,18 @@ namespace  KKB
 
 
     /**
-     *@brief returns a SubString consisting of all characters starting at index 'firstChar' until the end of the string.
-     *@details  If the index 'firstChar' is past the end of the string a empty string will be returned. 
+     *@brief returns a SubString consisting of all characters starting at index [firstCharIdx] until the end of the string.
+     *@details  If the index [firstCharIdx] is past the end of the string a empty string will be returned. 
      *@param[in]  firstChar  First character in string to include in the sub-string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkStrUint  firstChar)  const;
+    KKStr     SubStrPart (kkStrUint     firstCharIdx)  const;
 
-    KKStr     SubStrPart (kkint32    firstChar)  const;
+    KKStr     SubStrPart (kkint32       firstCharIdx)  const;
 
-  
+    KKStr     SubStrPart (OptionUInt32  firstCharIdx)  const;
+
+
     /**
      *@brief returns a SubString consisting of all characters starting at index 'firstChar' and ending at 'lastIndex'
      *@details  If the index 'firstChar' is past the end of the string a empty string will be returned. If 'lastIndex 

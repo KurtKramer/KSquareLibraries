@@ -46,7 +46,7 @@ private:
                             bool&                 _successful,
                             KKStr&                _errorMessage,
                             RunLog&               _log
-                           );
+                           )  override;
   
 private:
   static  FeatureFileIOArff  driver;

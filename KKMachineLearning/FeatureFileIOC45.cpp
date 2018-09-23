@@ -14,6 +14,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -72,8 +73,8 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     }
     else
     {
-      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos.value () - 1);
-      KKStr extension   = _fileName.SubStrPart (lastDotPos.value () + 1);
+      KKStr leadingPart = _fileName.SubStrSeg (0, lastDotPos);
+      KKStr extension   = _fileName.SubStrPart (lastDotPos + 1);
       extension.Upper ();
       if  (extension == "NAMES")
       {
@@ -173,7 +174,7 @@ void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
   auto  lastBarPos = ln.LocateLastOccurrence ('|');
   if  (lastBarPos)
-    ln = ln.SubStrPart (0, lastBarPos.value () - 1);
+    ln = ln.SubStrSeg (0, lastBarPos);
 
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
@@ -277,7 +278,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     return;
   }
 
-  KKStr  name    = attrStr.SubStrPart (0, colPos - 1);
+  KKStr  name    = attrStr.SubStrSeg (0, colPos);
   KKStr  typeStr = attrStr.SubStrPart (colPos + 1);
   C45StrPreProcessName (name);
 
@@ -347,7 +348,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
       }
       else
       {
-        nominalValue = typeStr.SubStrPart (0, commaPos - 1);
+        nominalValue = typeStr.SubStrSeg (0, commaPos);
         typeStr = typeStr.SubStrPart (commaPos + 1);
       }
 
@@ -479,7 +480,7 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
       }
       else
       {
-        attrStr = ln.SubStrPart (0, dotPos - 1);
+        attrStr = ln.SubStrSeg (0, dotPos);
         ln = ln.SubStrPart (dotPos + 1);
       }
 
@@ -945,8 +946,8 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
   }
   else
   {
-    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos.value ());
-    KKStr  extension   = fileName.SubStrPart (lastDotPos.value () + 1);
+    KKStr  leedingPart = fileName.SubStrSeg (0, lastDotPos + 1);
+    KKStr  extension   = fileName.SubStrPart (lastDotPos + 1);
     extension.Upper ();
     if  ((extension == "NAMES")  ||  (extension == "NAME"))
     {

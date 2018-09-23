@@ -213,6 +213,7 @@
     <ClCompile Include="MorphOpStruct.cpp" />
     <ClCompile Include="MorphOpThinContour.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
+    <ClCompile Include="Option.cpp" />
     <ClCompile Include="OSservices.cpp" />
     <ClCompile Include="PixelValue.cpp" />
     <ClCompile Include="Point.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="MorphOpStruct.h" />
     <ClInclude Include="MorphOpThinContour.h" />
     <ClInclude Include="MsgQueue.h" />
+    <ClInclude Include="Option.h" />
     <ClInclude Include="OSservices.h" />
     <ClInclude Include="PixelValue.h" />
     <ClInclude Include="Point.h" />

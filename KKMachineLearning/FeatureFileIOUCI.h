@@ -42,7 +42,7 @@ namespace KKMLL
                                             kkint32&        _estSize,
                                             KKStr&          _errorMessage,
                                             RunLog&         _log
-                                           );
+                                           )  override;
 
 
     virtual  FeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
@@ -54,7 +54,7 @@ namespace KKMLL
                                              bool&             _changesMade,
                                              KKStr&            _errorMessage,
                                              RunLog&           _log
-                                            );
+                                            )  override;
 
 
     virtual  void   SaveFile (FeatureVectorList&    _data,
@@ -66,9 +66,7 @@ namespace KKMLL
                               bool&                 _successful,
                               KKStr&                _errorMessage,
                               RunLog&               _log
-                             );
-
-
+                             )  override;
 
   private:
     static  FeatureFileIOUCI  driver;

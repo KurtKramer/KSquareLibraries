@@ -24,6 +24,7 @@ using namespace std;
 #include "KKStr.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "Option.h"
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace KKB;
@@ -2416,9 +2417,16 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx)  const
 
 
 
-KKStr  KKStr::SubStrPart (kkint32  firstChar)  const
+KKStr  KKStr::SubStrPart (kkint32  firstCharIdx)  const
 {
-  return SubStrPart ((kkStrUint)Max ((kkint32)0, firstChar));
+  return SubStrPart ((kkStrUint)Max ((kkint32)0, firstCharIdx));
+}
+
+
+
+KKStr  KKStr::SubStrPart (OptionUInt32  firstCharIdx)  const
+{
+  return SubStrPart ((kkStrUint)Max (0U, firstCharIdx.value ()));
 }
 
 
@@ -2456,12 +2464,14 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx,
 }  /* SubStrPart */
 
 
+
 KKStr  KKStr::SubStrSeg (kkStrUint     firstCharIdx,
                          OptionUInt32  segmentLen
                         )  const
 {
   return SubStrSeg (firstCharIdx, segmentLen.value ());
 }
+
 
 
 KKStr  KKStr::SubStrSeg (kkStrUint  firstCharIdx,
@@ -2479,17 +2489,17 @@ KKStr  KKStr::SubStrSeg (kkStrUint  firstCharIdx,
   if (firstCharIdx >= len)
     return  EmptyStr ();
 
-  kkStrUint zed = Max (firstCharIdx + segmentLen, len);
-  segmentLen = zed - firstCharIdx;
+  kkuint64 zed = firstCharIdx + segmentLen;
+  KKCheck(zed < KKStr::MaxStrLen, "KKStr::SubStrSeg  numerical overflow occured!")
+  zed = Min (len, (kkStrUint)zed);
+
+  segmentLen = (kkStrUint)zed - firstCharIdx;
   KKStr  subStr (segmentLen + 2);
 
-  kkStrUint  x = (kkStrUint)firstCharIdx;
-  kkStrUint  y = 0;
-
-  for  (kkStrUint x = firstCharIdx, y = 0; x < zed;  ++x, ++y)
+  for  (kkStrUint x = firstCharIdx, y = 0;  x < zed;  ++x, ++y)
     subStr.val[y] = val[x];
   
-  subStr.val[y] = 0;
+  subStr.val[segmentLen] = 0;
   subStr.len = segmentLen;
   return  subStr;
 }
@@ -2757,8 +2767,7 @@ KKStr   KKStr::GetNextToken2 (const char* delStr) const
     if  (strchr (delStr, val[lastCharPos]) != NULL)
     {
       // We just found the first delimiter
-      --lastCharPos;
-      return  SubStrPart (startCharPos, lastCharPos);
+      return  SubStrSeg (startCharPos, lastCharPos - startCharPos);
     }
     lastCharPos++;
   }
@@ -3316,8 +3325,8 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
     else
     {
       // We are looking at a range
-      kkint32  startNum = field.SubStrSeg (0, dashPos.value ()).ToInt32 ();
-      kkint32  endNum   = field.SubStrPart (dashPos.value () + 1).ToInt32 ();
+      kkint32  startNum = field.SubStrSeg (0, dashPos).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
       for  (kkint32 z = startNum;  z <= endNum;  ++z)
         results->push_back (z);
     }
@@ -3398,9 +3407,9 @@ double  KKStr::ToLatitude ()  const
   auto  x = latitudeStr.LocateCharacter (':');
   if  (x.has_value ())
   {
-    degreesStr = latitudeStr.SubStrSeg (0, x.value());
+    degreesStr = latitudeStr.SubStrSeg (0, x);
     degreesStr.TrimRight ();
-    minutesStr = latitudeStr.SubStrPart (x.value () + 1);
+    minutesStr = latitudeStr.SubStrPart (x + 1);
     minutesStr.Trim ();
   }
   else
@@ -3408,9 +3417,9 @@ double  KKStr::ToLatitude ()  const
     x = latitudeStr.LocateCharacter (' ');
     if  (x)
     {
-      degreesStr = latitudeStr.SubStrSeg (0, x.value ());
+      degreesStr = latitudeStr.SubStrSeg (0, x);
       degreesStr.TrimRight ();
-      minutesStr = latitudeStr.SubStrPart (x.value () + 1);
+      minutesStr = latitudeStr.SubStrPart (x + 1);
       minutesStr.Trim ();
     }
     else
@@ -3423,8 +3432,8 @@ double  KKStr::ToLatitude ()  const
   x = minutesStr.LocateCharacter (':');
   if  (x)
   {
-    secondsStr = minutesStr.SubStrPart (x.value() + 1);
-    minutesStr = minutesStr.SubStrSeg (0, x.value());
+    secondsStr = minutesStr.SubStrPart (x + 1);
+    minutesStr = minutesStr.SubStrSeg (0, x);
     secondsStr.Trim ();
   }
   else
@@ -3432,8 +3441,8 @@ double  KKStr::ToLatitude ()  const
     x = minutesStr.LocateCharacter (' ');
     if  (x)
     {
-      secondsStr = minutesStr.SubStrPart (x.value () + 1);
-      minutesStr = minutesStr.SubStrSeg (0, x.value ());
+      secondsStr = minutesStr.SubStrPart (x + 1);
+      minutesStr = minutesStr.SubStrSeg (0, x);
       secondsStr.Trim ();
     }
   }
@@ -3487,9 +3496,9 @@ double  KKStr::ToLongitude ()  const
   auto  x = longitudeStr.LocateCharacter (':');
   if  (x)
   {
-    degreesStr = longitudeStr.SubStrSeg (0, x.value ());
+    degreesStr = longitudeStr.SubStrSeg (0, x);
     degreesStr.TrimRight ();
-    minutesStr = longitudeStr.SubStrPart (x.value () + 1);
+    minutesStr = longitudeStr.SubStrPart (x + 1);
     minutesStr.Trim ();
   }
   else
@@ -3497,9 +3506,9 @@ double  KKStr::ToLongitude ()  const
     x = longitudeStr.LocateCharacter (' ');
     if  (x)
     {
-      degreesStr = move(longitudeStr.SubStrSeg (0, x.value ()));
+      degreesStr = move(longitudeStr.SubStrSeg (0, x));
       degreesStr.TrimRight ();
-      minutesStr = longitudeStr.SubStrPart (x.value () + 1);
+      minutesStr = longitudeStr.SubStrPart (x + 1);
       minutesStr.Trim ();
     }
     else
@@ -3512,8 +3521,8 @@ double  KKStr::ToLongitude ()  const
   x = minutesStr.LocateCharacter (':');
   if  (x)
   {
-    secondsStr = minutesStr.SubStrPart (x.value () + 1);
-    minutesStr = minutesStr.SubStrSeg (0, x.value ());
+    secondsStr = minutesStr.SubStrPart (x + 1);
+    minutesStr = minutesStr.SubStrSeg (0, x);
     secondsStr.Trim ();
   }
   else
@@ -3521,8 +3530,8 @@ double  KKStr::ToLongitude ()  const
     x = minutesStr.LocateCharacter (' ');
     if  (x)
     {
-      secondsStr = minutesStr.SubStrPart (x.value () + 1);
-      minutesStr = minutesStr.SubStrSeg (0, x.value ());
+      secondsStr = minutesStr.SubStrPart (x + 1);
+      minutesStr = minutesStr.SubStrSeg (0, x);
       secondsStr.Trim ();
     }
   }

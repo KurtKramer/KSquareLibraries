@@ -887,7 +887,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
   {
     KKStr  txtLine (buff);
 
-    if  (txtLine.SubStrPart (0, 1) == "//")
+    if  (txtLine.StartsWith ("//"))
     {
       // Comment line, will ignore.
       continue;
