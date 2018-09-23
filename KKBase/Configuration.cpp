@@ -373,7 +373,7 @@ void  StripOutAnyComments (KKStr&  line)
     if  (idx.value () < 1)
       line = "";
     else
-      line = line.SubStrPart (0, idx.value () - 1);
+      line = line.SubStrSeg (0, idx.value ());
   }
 } /* StripOutAnyComments */
  

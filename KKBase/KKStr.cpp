@@ -2456,6 +2456,13 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx,
 }  /* SubStrPart */
 
 
+KKStr  KKStr::SubStrSeg (kkStrUint     firstCharIdx,
+                         OptionUInt32  segmentLen
+                        )  const
+{
+  return SubStrSeg (firstCharIdx, segmentLen.value ());
+}
+
 
 KKStr  KKStr::SubStrSeg (kkStrUint  firstCharIdx,
                          kkStrUint  segmentLen

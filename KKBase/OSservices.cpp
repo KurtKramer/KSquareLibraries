@@ -1726,9 +1726,9 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 {
   KKStr  rootDirName;
-  kkint64  x = fileSpec.LocateCharacter ('*');
-  if  (x > 0)
-    rootDirName = fileSpec.SubStrPart ((kkint64)0, (kkint64)(x - 1));
+  auto  x = fileSpec.LocateCharacter ('*');
+  if  (x)
+    rootDirName = fileSpec.SubStrSeg (0, x.value ());
   else
     rootDirName = fileSpec;
 

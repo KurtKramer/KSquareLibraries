@@ -521,6 +521,10 @@ namespace  KKB
                          kkStrUint  segmentLen
                         )  const;
 
+    KKStr     SubStrSeg (kkStrUint     firstCharIdx,
+                         OptionUInt32  segmentLen
+                        )  const;
+
     KKStr     Tail (kkStrUint tailLen)  const;      /**< Return back the last 'tailLen' characters. */
 
 
