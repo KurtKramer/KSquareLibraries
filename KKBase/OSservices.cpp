@@ -964,12 +964,12 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
     else if  (startChar == '{')   endChar = '}';
     else if  (startChar == '[')   endChar = ']';
 
-    KKStr  beforeEnvStr = (nextEnvVarIdx > 0U) ? str.SubStrPart (0, nextEnvVarIdx.value () - 1) : KKStr::EmptyStr ();
+    KKStr  beforeEnvStr = str.SubStrSeg (0, nextEnvVarIdx.value ());
     str = str.SubStrPart (nextEnvVarIdx.value () + 2);
     auto endCharIdx = str.LocateCharacter (endChar);
     if  (!endCharIdx)  return  src;
 
-    KKStr  envStrName   = (endCharIdx < 1U) ? KKStr::EmptyStr () : str.SubStrPart (0, endCharIdx.value () - 1);
+    KKStr  envStrName   = str.SubStrSeg (0, endCharIdx.value ());
     KKStr  afterStrName = str.SubStrPart (endCharIdx.value () + 1);
 
     KKStrPtr envStrValue = osGetEnvVariable (envStrName);
@@ -1078,7 +1078,7 @@ void   KKB::osParseFileName (KKStr   _fileName,
 
   else
   {
-    _dirPath  = _fileName.SubStrPart (0, x.value () - 1);
+    _dirPath  = _fileName.SubStrSeg (0, x.value ());
     _fileName = _fileName.SubStrPart (x.value () + 1);
   }
       
@@ -1090,7 +1090,7 @@ void   KKB::osParseFileName (KKStr   _fileName,
   }
   else
   {
-    _rootName  = _fileName.SubStrPart (0, x.value () - 1);
+    _rootName  = _fileName.SubStrSeg (0, x.value ());
     _extension = _fileName.SubStrPart (x.value () + 1);
   }
 
@@ -1109,7 +1109,7 @@ KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
   if  (lastSlashChar  &&  (lastSlashChar > lastPeriodChar))
     return _fullFileName;
 
-  return _fullFileName.SubStrPart (0L, lastPeriodChar.value () - 1);
+  return _fullFileName.SubStrSeg (0L, lastPeriodChar.value ());
 }  /* osRemoveExtension */
 
 
@@ -1131,7 +1131,7 @@ KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
   if  (!periodIdx)
     return  lastPart;
 
-  return  lastPart.SubStrPart (0, periodIdx.value ());
+  return  lastPart.SubStrSeg (0, periodIdx.value ());
 }  /*  osGetRootName */
 
 

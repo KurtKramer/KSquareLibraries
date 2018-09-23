@@ -459,7 +459,7 @@ void  Configuration::LoadFile (RunLog&  log)
 
       if  (line.LastChar () == ']')
       {
-        curSectionName = line.SubStrPart (1, line.Len () - 2);
+        curSectionName = line.SubStrSeg (1, line.Len () - 2);
         curSectionName.TrimLeft ();
         curSectionName.TrimRight ();
         curSectionName.Upper ();
@@ -505,7 +505,7 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrPart (0, equalIdx.value() - 1));
+        KKStr  settingName (line.SubStrSeg (0, equalIdx.value()));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();

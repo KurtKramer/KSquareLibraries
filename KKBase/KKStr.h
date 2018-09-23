@@ -242,10 +242,10 @@ namespace  KKB
     static
     const KKStr&  EmptyStr ();
 
-    bool     EndsWith (const KKStr& value);
-    bool     EndsWith (const char*  value);
-    bool     EndsWith (const KKStr& value,   bool ignoreCase);
-    bool     EndsWith (const char*  value,   bool ignoreCase);
+    bool     EndsWith (const KKStr& value) const;
+    bool     EndsWith (const char*  value) const;
+    bool     EndsWith (const KKStr& value,   bool ignoreCase) const;
+    bool     EndsWith (const char*  value,   bool ignoreCase) const;
 
     bool     EqualIgnoreCase (const KKStr&         s2)  const;
     bool     EqualIgnoreCase (const KKStrConstPtr  s2)  const;
@@ -516,6 +516,10 @@ namespace  KKB
     KKStr     SubStrPart (kkStrUint  firstCharIdx,
                           kkStrUint  lastCharIdx
                          )  const;
+
+    KKStr     SubStrSeg (kkStrUint  firstCharIdx,
+                         kkStrUint  segmentLen
+                        )  const;
 
     KKStr     Tail (kkStrUint tailLen)  const;      /**< Return back the last 'tailLen' characters. */
 

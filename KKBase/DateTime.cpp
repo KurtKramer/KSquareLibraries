@@ -798,9 +798,9 @@ TimeType::TimeType (KKStr  s):
 
   if  (s.Len () == 6)
   {
-    field1 = s.SubStrPart (0, 1);
-    field2 = s.SubStrPart (2, 3);
-    field3 = s.SubStrPart (4, 5);
+    field1 = s.SubStrSeg (0, 2);
+    field2 = s.SubStrSeg (2, 2);
+    field3 = s.SubStrSeg (4, 2);
   }
   else
   {

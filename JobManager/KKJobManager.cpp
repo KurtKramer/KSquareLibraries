@@ -330,7 +330,7 @@ void  KKJobManager::StatusFileProcessLine (const KKStr&  ln,
                                            istream&      statusFile
                                           )
 {
-  if  (ln.SubStrPart (0, 1) == "//")
+  if  (ln.StartsWith ("//"))
   {
     // A coment line;  we can ignore it.
     return;
@@ -454,7 +454,7 @@ void  KKJobManager::StatusFileRefresh ()
   while  (!statusFile->eof ())
   {
     statusStr = buff;
-    if  (statusStr.SubStrPart (0, 4) == "<KKJob ")
+    if  (statusStr.StartsWith ("<KKJob "))
     {
       ProcessJobXmlBlockOfText (statusStr, *statusFile);
     }
