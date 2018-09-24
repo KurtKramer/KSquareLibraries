@@ -268,17 +268,17 @@ void  ConfusionMatrix2::DeleteVectorDoublePtr (vector<double*>&  v)
 
 
 
-kkint32  ConfusionMatrix2::AddClassToConfusionMatrix (MLClassPtr  newClass,
-                                                      RunLog&     log
-                                                     )
+kkuint32  ConfusionMatrix2::AddClassToConfusionMatrix (MLClassPtr  newClass,
+                                                       RunLog&     log
+                                                      )
 {
-  kkint32 existingClassIdx = classes.PtrToIdx (newClass);
-  if  (existingClassIdx >= 0)
+  auto existingClassIdx = classes.PtrToIdx (newClass);
+  if  (existingClassIdx)
   {
     log.Level (-1) << endl
       << "ConfusionMatrix2::AddClassToConfusionMatrix  ***ERROR***  Class[" << newClass->Name () << "]  already in class list." << endl
       << endl;
-    return  existingClassIdx;
+    return  existingClassIdx.value ();
   }
 
   classes.PushOnBack (newClass);
@@ -297,7 +297,7 @@ kkint32  ConfusionMatrix2::AddClassToConfusionMatrix (MLClassPtr  newClass,
   totalPredProbsByKnownClass.push_back (0.0); 
   totalSizesByKnownClass.push_back     (0.0);
 
-  return classes.PtrToIdx (newClass);
+  return classes.PtrToIdx (newClass).value ();
 }  /* AddClassToConfusionMatrix */
 
 
@@ -359,8 +359,8 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
                                    RunLog&     _log
                                   )
 {
-  kkint32  knownClassNum = -1;
-  kkint32  predClassNum  = -1;
+  OptionUInt32  knownClassNum = {};
+  OptionUInt32  predClassNum  = {};
 
   if  (_probability < 0)
     _probability = 0;
@@ -386,52 +386,40 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
   }
 
   knownClassNum = classes.PtrToIdx (_knownClass);
-  if  (knownClassNum < 0)
+  if  (!knownClassNum)
     knownClassNum = AddClassToConfusionMatrix (_knownClass, _log);
 
   predClassNum  = classes.PtrToIdx (_predClass);
-  if  (predClassNum < 0)
+  if  (!predClassNum)
     predClassNum = AddClassToConfusionMatrix (_predClass, _log);
 
-  if  ((knownClassNum < 0)  ||  (knownClassNum >= classCount))
-  {
-    numInvalidClassesPredicted += 1.0;
-    _log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    knownClassNum[" << knownClassNum << "] out of bounds." << endl;
-    return;
-  }
+  auto knownClassIdx = knownClassNum.value ();
+  auto predClassIdx  = predClassNum.value ();
 
-  if  ((predClassNum < 0)  ||  (predClassNum >= classCount))
-  {
-    numInvalidClassesPredicted += 1.0;
-    _log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    predClassNum[" << predClassNum << "] out of bounds." << endl;
-    return;
-  }
-
-  if  (knownClassNum == predClassNum)
+  if  (knownClassIdx == predClassIdx)
      correctCount += 1.0;
 
   totalCount += 1.0;
+   
+  totalSizesByKnownClass[knownClassIdx] += _size;
 
-  totalSizesByKnownClass[knownClassNum] += _size;
-
-  totalPredProbsByKnownClass [knownClassNum] += _probability;
+  totalPredProbsByKnownClass [knownClassIdx] += _probability;
   totalPredProb                              += _probability;
 
-  countsByKnownClass [knownClassNum]++;
+  countsByKnownClass [knownClassIdx]++;
 
-  (predictedCountsCM [knownClassNum] [predClassNum])++;
-  totPredProbCM      [knownClassNum] [predClassNum] += _probability;
-
-
+  (predictedCountsCM [knownClassIdx] [predClassIdx])++;
+  totPredProbCM      [knownClassIdx] [predClassIdx] += _probability;
+  
   if  (_size > 0)
   {
     kkuint32  bucket = (_size - 1) / bucketSize;
     if  (bucket >= numOfBuckets)
       bucket = numOfBuckets - 1;
 
-    countByKnownClassBySize[knownClassNum][bucket]++;
-    if  (knownClassNum == predClassNum)
-      correctByKnownClassBySize [knownClassNum][bucket]++;
+    countByKnownClassBySize[knownClassIdx][bucket]++;
+    if  (knownClassIdx == predClassIdx)
+      correctByKnownClassBySize [knownClassIdx][bucket]++;
   }
   else
   {
@@ -449,9 +437,9 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
      if  (bucket >= numOfProbBuckets)
        bucket = numOfProbBuckets - 1;
 
-     countByKnownClassByProb [knownClassNum][bucket]++;
-    if  (knownClassNum == predClassNum)
-      correctByKnownClassByProb [knownClassNum][bucket]++;
+    countByKnownClassByProb [knownClassIdx][bucket]++;
+    if  (knownClassIdx == predClassNum)
+      correctByKnownClassByProb [knownClassIdx][bucket]++;
   }
 }  /* Increment */
 
@@ -1681,7 +1669,7 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)  cons
 
 
 
-void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr ic,
+void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr mlClass,
                                                   double&    truePositives,
                                                   double&    trueNegatives,
                                                   double&    falsePositives,
@@ -1694,21 +1682,23 @@ void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr ic,
   falsePositives = 0.0;
   falseNegatives = 0.0;
 
-  kkint32 x = classes.PtrToIdx (ic);
-  if  (x < 0)
+  auto mlClassNum = classes.PtrToIdx (mlClass);
+  if  (!mlClassNum)
     return;
+
+  auto mlClassIdx = mlClassNum.value ();
 
   kkuint32 numOfClasses = classes.QueueSize ();
 
-  truePositives  = predictedCountsCM [x][x];
+  truePositives  = predictedCountsCM [mlClassIdx][mlClassIdx];
 
   for  (kkuint32 y = 0;  y < numOfClasses;  y++)
   {
-    if  (y != x)
+    if  (y != mlClassIdx)
     {
-      falsePositives += predictedCountsCM [y][x];  // Was classified as x but was classed as x.
-      falseNegatives += predictedCountsCM [x][y];  // Should have been classed as x not y.
-      trueNegatives  += (countsByKnownClass [y] - predictedCountsCM [y][x]);
+      falsePositives += predictedCountsCM [y][mlClassIdx];  // Was classified as x but was classed as x.
+      falseNegatives += predictedCountsCM [mlClassIdx][y];  // Should have been classed as x not y.
+      trueNegatives  += (countsByKnownClass [y] - predictedCountsCM [y][mlClassIdx]);
     }
   }
   return;
@@ -1716,12 +1706,12 @@ void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr ic,
 
 
 
-float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
-                                   RunLog&              log
+float  ConfusionMatrix2::FMeasure (MLClassPtr  positiveClass,
+                                   RunLog&     log
                                   )  const
 {
-  kkint32 positiveIDX = classes.PtrToIdx (positiveClass);
-  if  (positiveIDX < 0)
+  auto positiveNum = classes.PtrToIdx (positiveClass);
+  if  (!positiveNum)
   {
     KKStr invalidClassName = "";
     if  (positiveClass)
@@ -1730,6 +1720,8 @@ float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
     log.Level (-1) << "ConfusionMatrix2::FMeasure         ***ERROR***      Invalid Positive Class Specified[" << invalidClassName << "]" << endl;
     return 0.0f;
   }
+
+  auto positiveIDX = positiveNum.value ();
 
   kkuint32  numOfClasses = classes.QueueSize ();
 
@@ -2306,14 +2298,13 @@ double  ConfusionMatrix2::AvgPredProb ()  const
 
 double  ConfusionMatrix2::Accuracy (MLClassPtr  mlClass)  const
 {
-  kkint32 classNum = classes.PtrToIdx (mlClass);
-  if  (classNum < 0)
+  auto classNum = classes.PtrToIdx (mlClass);
+  if  (!classNum)
     return 0.0f;
 
-  if  (countsByKnownClass [classNum] == 0)
-    return 0.0f;
+  auto classIdx = classNum.value ();
 
-  float  accuracy = (float)(100.0 * (predictedCountsCM[classNum] [classNum])  /  (countsByKnownClass [classNum]));
+  float  accuracy = (float)(100.0 * (predictedCountsCM[classIdx] [classIdx])  /  (countsByKnownClass [classIdx]));
 
   return  accuracy;
 }  /* Accuracy */
@@ -2575,7 +2566,7 @@ void  ConfusionMatrix2::MakeSureWeHaveTheseClasses (const MLClassList&  classLis
   for  (idx = classList.begin ();  idx != classList.end ();  ++idx)
   {
     MLClassPtr ic = *idx;
-    if  (classes.PtrToIdx (ic) < 0)
+    if  (!classes.PtrToIdx (ic))
       AddClassToConfusionMatrix (ic, log);
   }
 }  /* MakeSureWeHaveTheseClasses */
@@ -2588,56 +2579,54 @@ void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm,
 {
   MakeSureWeHaveTheseClasses (cm.classes, log);
 
-  kkint32  numOfClasses = classes.QueueSize ();
-  kkint32  classIDX = 0;
-
-
+  kkuint32  numOfClasses = classes.QueueSize ();
+  kkuint32  classIDX = 0;
+  
   //  Create indirection array to handle the situation where the mlClass list's of the two 
   // confusion matrixes '*this'  and  'cm'  are not in the same order.
 
-  vector<kkint32>  ind (numOfClasses, 0);
-  for  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
+  vector<OptionUInt32>  ind (numOfClasses, 0);
+  for  (classIDX = 0;  classIDX < numOfClasses;  ++classIDX)
   {
     MLClassPtr mlClass = classes.IdxToPtr (classIDX);
-    kkint32  cmsIDX = cm.classes.PtrToIdx (mlClass);
-    ind[classIDX] = cmsIDX;
+    ind[classIDX]  = cm.classes.PtrToIdx (mlClass);
   }
 
-  for  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
+  for  (classIDX = 0;  classIDX < numOfClasses;  ++classIDX)
   {
-    kkint32 cmsIDX = ind[classIDX];
-    if  (cmsIDX < 0)
+    auto cmsIdxValue = ind[classIDX];
+    if  (!cmsIdxValue)
     {
-      // cmsIDX < 0 indicates that the confusion matrix being added in does not include the class indicatd by 'classIDX'.
+      // !cmsIDX  indicates that the confusion matrix being added in does not include the class indicatd by 'classIDX'.
     }
     else
     {
-      countsByKnownClass         [classIDX] += cm.countsByKnownClass         [cmsIDX];
-      totalSizesByKnownClass     [classIDX] += cm.totalSizesByKnownClass     [cmsIDX];
-      totalPredProbsByKnownClass [classIDX] += cm.totalPredProbsByKnownClass [cmsIDX];
+      auto cmsIdx = cmsIdxValue.value ();
+      countsByKnownClass         [classIDX] += cm.countsByKnownClass         [cmsIdx];
+      totalSizesByKnownClass     [classIDX] += cm.totalSizesByKnownClass     [cmsIdx];
+      totalPredProbsByKnownClass [classIDX] += cm.totalPredProbsByKnownClass [cmsIdx];
 
-      kkint32 predictedClassIDX = 0;
-      for  (predictedClassIDX = 0;   predictedClassIDX  < numOfClasses;  predictedClassIDX++)
+      for  (kkuint32 predictedClassIDX = 0;   predictedClassIDX  < numOfClasses;  ++predictedClassIDX)
       {
-        kkint32  cmsPredictedClassIDX = ind[predictedClassIDX];
-        if  (cmsPredictedClassIDX >= 0)
+        auto  cmsPredictedValue = ind[predictedClassIDX];
+        if  (cmsPredictedValue)
         {
-           predictedCountsCM[classIDX][predictedClassIDX] += cm.predictedCountsCM[cmsIDX][cmsPredictedClassIDX];
-           totPredProbCM    [classIDX][predictedClassIDX] += cm.totPredProbCM    [cmsIDX][cmsPredictedClassIDX];
+           auto cmsPredictedIdx = cmsPredictedValue.value ();  
+           predictedCountsCM[classIDX][cmsPredictedIdx] += cm.predictedCountsCM[cmsIdx][cmsPredictedIdx];
+           totPredProbCM    [classIDX][cmsPredictedIdx] += cm.totPredProbCM    [cmsIdx][cmsPredictedIdx];
         }
       }
-
-
-      for  (kkuint32 bucketIDX = 0;  bucketIDX < numOfBuckets;  bucketIDX++)
+      
+      for  (kkuint32 bucketIDX = 0;  bucketIDX < numOfBuckets;  ++bucketIDX)
       {
-        countByKnownClassBySize   [classIDX][bucketIDX] += cm.countByKnownClassBySize   [cmsIDX][bucketIDX];
-        correctByKnownClassBySize [classIDX][bucketIDX] += cm.correctByKnownClassBySize [cmsIDX][bucketIDX];
+        countByKnownClassBySize   [classIDX][bucketIDX] += cm.countByKnownClassBySize   [cmsIdx][bucketIDX];
+        correctByKnownClassBySize [classIDX][bucketIDX] += cm.correctByKnownClassBySize [cmsIdx][bucketIDX];
       }
 
       for  (kkuint32 probIDX = 0;  probIDX < numOfProbBuckets;  probIDX++)
       {
-        countByKnownClassByProb   [classIDX][probIDX] += cm.countByKnownClassByProb   [cmsIDX][probIDX];
-        correctByKnownClassByProb [classIDX][probIDX] += cm.correctByKnownClassByProb [cmsIDX][probIDX];
+        countByKnownClassByProb   [classIDX][probIDX] += cm.countByKnownClassByProb   [cmsIdx][probIDX];
+        correctByKnownClassByProb [classIDX][probIDX] += cm.correctByKnownClassByProb [cmsIdx][probIDX];
       }
     }
   }
@@ -2692,7 +2681,7 @@ void   DelimitedStrToArray (vector<kkint32>&  v,
 {
   v.clear ();
   VectorKKStr  fields = l.Split (delimiter);
-  kkuint32 lastField = fields.size ();
+  kkuint32 lastField = (kkuint32)fields.size ();
   for  (kkuint32 idx = 0;  idx < lastField;  ++idx)
     v.push_back (fields[idx].ToInt32 ());
   while  (v.size () < minSize)
@@ -2709,7 +2698,7 @@ void   DelimitedStrToArray (vector<double>&  v,
 {
   v.clear ();
   VectorKKStr  fields = l.Split (delimiter);
-  kkuint32 lastField = fields.size ();
+  kkuint32 lastField = (kkuint32)fields.size ();
   for  (kkuint32 idx = 0;  idx < lastField;  idx++)
     v.push_back (fields[idx].ToDouble ());
   while  (v.size () < minSize)
@@ -2907,7 +2896,7 @@ void   ConfusionMatrix2::Read (istream&  f,
   numOfProbBuckets  = 0;
   probBucketSize    = 0;
 
-  kkint32  classIndex = 0;
+  kkuint32  classIndex = 0;
   KKStr  className = "";
 
   f.getline (buff, sizeof (buff));
@@ -2976,9 +2965,9 @@ void   ConfusionMatrix2::Read (istream&  f,
       className = l.ExtractToken ("\t");
 
       KKStr  classIndexLabel = l.ExtractToken ("\t");
-      classIndex = l.ExtractTokenInt ("\t");
+      classIndex = l.ExtractTokenUint ("\t");
 
-      if  ((classIndex < 0)  ||  (classIndex >= classCount))
+      if  (classIndex >= classCount)
       {
         log.Level (-1) << endl 
                        << "ConfusionMatrix2::Read    ***ERROR***    ClassIndex[" << classIndex << "]  out of range." << endl
@@ -3026,8 +3015,8 @@ void  ConfusionMatrix2::WriteSimpleConfusionMatrix (ostream&  f)  const
 
   f << "<SimpleConfusionMatrix>" << endl;
   f << "Classes"      << "\t" << classes.ToCommaDelimitedStr () << endl;
-  kkint32  row = 0;
-  kkint32  col = 0;
+  kkuint32  row = 0;
+  kkuint32  col = 0;
   MLClassList::const_iterator  idx;
   MLClassList::const_iterator  idx2;
   for  (idx = classes.begin ();  idx != classes.end ();  idx++)

@@ -129,7 +129,7 @@ namespace KKMLL
     virtual
     bool               NormalizeNominalAttributes ();  /**< Return true, if nominal fields need to be normalized.  */
 
-    kkint32            NumOfClasses ()  const  {return numOfClasses;}
+    kkuint32           NumOfClasses ()  const  {return numOfClasses;}
 
     kkint32            NumOfSupportVectors () const;
 
@@ -497,7 +497,7 @@ namespace KKMLL
 
     double**               crossClassProbTable;   /**< Probabilities  between Binary Classes From last Prediction */
 
-    kkint32                crossClassProbTableSize;  /**< Dimension of each side of 'crossClassProbTable'    */
+    kkuint32               crossClassProbTableSize;  /**< Dimension of each side of 'crossClassProbTable'    */
 
     FeatureEncoderPtr      featureEncoder;        /**< used when doing OneVsOne or OnevsAll processing
                                                    * When doing binary feature selection will use 
@@ -507,8 +507,8 @@ namespace KKMLL
 
     ModelPtr*              models;
 
-    kkint32                numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
-    kkint32                numOfModels;
+    kkuint32               numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
+    kkuint32               numOfModels;
 
     VectorInt32            oneVsAllAssignment;
     ClassAssignmentsPtr*   oneVsAllClassAssignments;

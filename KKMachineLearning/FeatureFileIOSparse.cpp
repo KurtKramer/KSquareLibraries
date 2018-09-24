@@ -72,7 +72,7 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a comment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))
@@ -120,7 +120,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     OptionUInt32      _maxCount,    // Maximum # images to load.
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -150,12 +150,12 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
   kkint32  minFeatureNum = _fileDesc->SparseMinFeatureNum ();
   kkint32  maxFeatureNum = minFeatureNum + numOfFeatures - 1;
 
-  if  (_maxCount < 1)
-    _maxCount = int32_max;
+  if  (!_maxCount)
+    _maxCount = UINT32_MAX;
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  ((!eof)   &&  (!_cancelFlag)  &&  ((kkint32)examples->size () < _maxCount))
+  while  ((!eof)   &&  (!_cancelFlag)  &&  (examples->QueueSize () < _maxCount))
   {
     KKStr  className;
     
@@ -169,7 +169,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a coment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))

@@ -150,6 +150,9 @@ namespace KKB
     RunLog&  operator<< (KKStrConstPtr  right);
     RunLog&  operator<< (const VectorKKStr& right);
 
+    template<typename T>
+    RunLog&  operator<< (std::optional<T> const&   right); 
+
     RunLog&  operator<< (std::ostream& (* mf)(std::ostream &));
 
     //friend  RunLog& endl (RunLog& _outs);
@@ -197,8 +200,23 @@ namespace KKB
     kkint32         procId;       // Processor Id assigned by OS
   };
 
-
   typedef  RunLog*  RunLogPtr;
+
+  
+  template<typename T>
+  RunLog&  RunLog::operator<< (std::optional<T> const&  right)
+  {
+    if  (curLevel <= loggingLevel)
+    {
+      if  (right.has_value ())
+        *this << right.value ();
+      else
+        Append("NONE!");
+    }
+    return *this;
+  }
+
+
 
 #define  _RunLog_Defined_
 

@@ -14,6 +14,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -45,7 +46,7 @@ FeatureFileIOC45::~FeatureFileIOC45()
 FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile 
                                       (const KKStr&   _fileName,
                                        MLClassList&   _mlClasses,
-                                       kkint32        _maxCount,
+                                       OptionUInt32   _maxCount,
                                        VolConstBool&  _cancelFlag,    /**< will be monitored,  if set to True  Load will terminate. */
                                        bool&          _successful,
                                        bool&          _changesMade,
@@ -54,9 +55,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFeatureFile  File[" << _fileName << "]  FileFormat[" << DriverName () << "]" << endl;
   
-  if  (_maxCount < 0)
-    _maxCount = int32_max;
-
   KKStr  namesFileName;
   KKStr  dataFileName;
 
@@ -72,8 +70,8 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     }
     else
     {
-      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos.value () - 1);
-      KKStr extension   = _fileName.SubStrPart (lastDotPos.value () + 1);
+      KKStr leadingPart = _fileName.SubStrSeg (0, lastDotPos);
+      KKStr extension   = _fileName.SubStrPart (lastDotPos + 1);
       extension.Upper ();
       if  (extension == "NAMES")
       {
@@ -88,7 +86,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
         }
       }
 
-      else if  ((extension == "DATA") ||  (extension == "TEST"))
+      else if  ((extension == "DATA")  ||  (extension == "TEST"))
       {
         dataFileName  = _fileName;
         namesFileName = leadingPart + ".names";
@@ -150,8 +148,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     _successful = false;
     return  NULL;
   }
-
-
+  
   FeatureVectorListPtr  examples = LoadFile (dataFileName, fileDesc, _mlClasses, dataFile, _maxCount, _cancelFlag, _changesMade, errorMessage, _log);
   if  (examples == NULL)
   {
@@ -173,7 +170,7 @@ void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
   auto  lastBarPos = ln.LocateLastOccurrence ('|');
   if  (lastBarPos)
-    ln = ln.SubStrPart (0, lastBarPos.value () - 1);
+    ln = ln.SubStrSeg (0, lastBarPos);
 
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
@@ -277,7 +274,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     return;
   }
 
-  KKStr  name    = attrStr.SubStrPart (0, colPos - 1);
+  KKStr  name    = attrStr.SubStrSeg (0, colPos);
   KKStr  typeStr = attrStr.SubStrPart (colPos + 1);
   C45StrPreProcessName (name);
 
@@ -347,7 +344,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
       }
       else
       {
-        nominalValue = typeStr.SubStrPart (0, commaPos - 1);
+        nominalValue = typeStr.SubStrSeg (0, commaPos);
         typeStr = typeStr.SubStrPart (commaPos + 1);
       }
 
@@ -479,7 +476,7 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
       }
       else
       {
-        attrStr = ln.SubStrPart (0, dotPos - 1);
+        attrStr = ln.SubStrSeg (0, dotPos);
         ln = ln.SubStrPart (dotPos + 1);
       }
 
@@ -705,7 +702,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
                                                   istream&          _in,
-                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  OptionUInt32      _maxCount,    // Maximum # images to load.
                                                   VolConstBool&     _cancelFlag,
                                                   bool&             _changesMade,
                                                   KKStr&            _errorMessage,
@@ -731,7 +728,9 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  ((!eof)  &&  (!_cancelFlag))
+  kkuint32 maxToLoad = (_maxCount  ? _maxCount.value () : uint32_max);
+
+  while  ((!eof)  &&  (!_cancelFlag)  &&  (examples->QueueSize () < maxToLoad))
   {
     lineIsValid = true;
     imageFileName = "";
@@ -912,9 +911,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
     if  ((lineCount % 1000) == 0)
       cout  << "Records Loaded " << lineCount << endl;
-
-    if  ((kkint32)examples->size () > _maxCount)
-      break;
   }
 
   _log.Level (50) << "FeatureFileIOC45::LoadFile   _changesMade: " << _changesMade << "   _changesMade: " << _changesMade  << endl 
@@ -945,8 +941,8 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
   }
   else
   {
-    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos.value ());
-    KKStr  extension   = fileName.SubStrPart (lastDotPos.value () + 1);
+    KKStr  leedingPart = fileName.SubStrSeg (0, lastDotPos + 1);
+    KKStr  extension   = fileName.SubStrPart (lastDotPos + 1);
     extension.Upper ();
     if  ((extension == "NAMES")  ||  (extension == "NAME"))
     {

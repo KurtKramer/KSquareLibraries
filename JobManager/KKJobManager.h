@@ -38,7 +38,7 @@ namespace  KKJobManagment
                   kkint32       _parentId,
                   kkint32       _numPorcessesAllowed,
                   const KKStr&  _managerName,           /**< Name of this 'KKJobManager' ; status and lock file will be based on it.               */
-                  kkint32       _numJobsAtATime,        /**< The number of jobs that can be allocated at one time for a single process to execute. */
+                  kkuint32      _numJobsAtATime,        /**< The number of jobs that can be allocated at one time for a single process to execute. */
                   RunLog&       _log
                  );
 
@@ -201,7 +201,7 @@ namespace  KKJobManagment
     kkint32         expansionCount;
     kkint32         expansionFirstJobId;      /**< jobId of first job in the current expansion. */
     kkint32         nextJobId;
-    kkint32         numJobsAtATime;
+    kkuint32        numJobsAtATime;
     kkint32         procId;                   /**< Processor Id  that O/S assigns to this thread.  */
     bool            quitRunning;              /**< If this flag is set true we are to terminate processing as soon as possible. */
   

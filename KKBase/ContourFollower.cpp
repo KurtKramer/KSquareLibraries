@@ -1126,7 +1126,7 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
 void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
                                                           float     pointCol,
-                                                          kkint32   numOfBuckets,
+                                                          kkuint32  numOfBuckets,
                                                           kkint32*  buckets,
                                                           float&    minDistance,
                                                           float&    maxDistance,

@@ -391,8 +391,7 @@ bool  KKJobList::AllPrequisitesDone (KKJobPtr job)
 
 KKJobPtr  KKJobList::LocateOpenJob ()
 {
-  kkint32  x;
-  for  (x = 0;  x < QueueSize (); x++)
+  for  (kkuint32 x = 0;  x < QueueSize (); x++)
   {
     KKJobPtr  j = IdxToPtr (x);
     if  (j->Status () == KKJob::jsOpen)
@@ -406,8 +405,7 @@ KKJobPtr  KKJobList::LocateOpenJob ()
 
 bool  KKJobList::AreAllJobsDone ()
 {
-  kkint32  x;
-  for  (x = 0;  x < QueueSize ();  ++x)
+  for  (kkuint32 x = 0;  x < QueueSize ();  ++x)
   {
     KKJobPtr  j = IdxToPtr (x);
     if  ((j->Status () != KKJob::jsDone)  &&  (j->Status () != KKJob::jsExpanded))

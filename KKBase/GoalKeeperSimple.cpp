@@ -222,7 +222,6 @@ void  GoalKeeperSimple::Create (const KKStr&                   _name,
 
 
 
-
 /**
  *@brief Create a new instance of a GoalKeeperSimple object if it has not already been done and locks it if we create it.
  *@param[in]     _name            Name to be assigned to GoalKeeperSimple object.
@@ -309,8 +308,6 @@ void  GoalKeeperSimple::CreateAndStartBlock (const KKStr&                   _nam
 
 
 
-
-
 void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInstance)
 {
 #if  defined(WIN32)
@@ -333,8 +330,8 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
   }
   else
   {
-    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
-    if  (existingInstanceIdx < 0)
+    auto  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    if  (!existingInstanceIdx)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
     }
@@ -398,7 +395,6 @@ void   GoalKeeperSimple::FinalCleanUp ()
     existingGoalKeepers = NULL;
   }
 }
-
 
 
 

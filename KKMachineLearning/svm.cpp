@@ -397,6 +397,8 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     }
     else if  (typeid (*t) == typeid (XmlContent))
     {
+      KKCheck(nr_class > 0, "SvmModel233::ReadXML  'nr_class'  less than 1!")
+
       XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
       KKStrParser p (*(content->Content ()));
       p.TrimWhiteSpace (" ");
@@ -3794,37 +3796,39 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
   kkint32  totalNumOfElements = -1;
   svm_node*  x_space = NULL;
 
-
   bool  validFormat = true;
 
-  KKStr  line (1024);  // Preallocating to at least 1024 characters.
-
-  // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
-  // an invalid Training Model.
   {
-    while  (f.getline (buff, bullAllocSize))
-    {
-      line = buff;
-      line.TrimLeft ("\n\r\t ");
-      line.TrimRight ("\n\r\t ");
+    KKStr  line (1024);  // Preallocating to at least 1024 characters.
 
-      if  ((line.Len () > 0)  &&  (line.SubStrPart (0, 1) != "//"))
+    // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
+    // an invalid Training Model.
+    {
+      while  (f.getline (buff, bullAllocSize))
       {
-        // We have our first 'non blank'  'non commented line'
-        break;
+        line = buff;
+        line.TrimLeft ("\n\r\t ");
+        line.TrimRight ("\n\r\t ");
+
+        if  ((line.Len () > 0)  &&  (!line.StartsWith ("//")))
+        {
+          // We have our first 'non blank'  'non commented line'
+          break;
+        }
       }
     }
-  }
 
-  if  (!line.EqualIgnoreCase ("<Svm233>"))
-  {
-    // We do not have a valid SVM239 model.   We will return a NULL
-    log.Level (-1) << endl << endl
-      << "SVM233::Svm_Load_Model    ***ERROR***    The '<Svm233>'  header is missing.  Not a valid model." << endl
-      << endl;
-    delete    model; model = NULL;
-    delete[]  buff;  buff  = NULL;
-    return NULL;
+    if  (!line.EqualIgnoreCase ("<Svm233>"))
+    {
+      // We do not have a valid SVM239 model.   We will return a NULL
+      log.Level (-1) << endl << endl
+        << "SVM233::Svm_Load_Model    ***ERROR***    The '<Svm233>'  header is missing.  Not a valid model." << endl
+        << endl;
+      delete    model; model = NULL;
+      delete[]  buff;  buff  = NULL;
+      return NULL;
+    }
+
   }
 
   /**

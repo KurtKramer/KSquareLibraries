@@ -165,6 +165,7 @@ namespace KKB
 
   typedef kkuint64  kkMemSize;
 
+  typedef std::optional<kkuint16> OptionUInt16;
 
   typedef std::optional<kkint32>  OptionInt32;
 

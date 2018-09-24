@@ -1,4 +1,4 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -12,7 +12,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -20,7 +19,6 @@ using namespace std;
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "ModelSvmBase.h"
 #include "ClassProb.h"
@@ -31,13 +29,13 @@ using namespace  KKMLL;
 
 
 
-
 ModelSvmBase::ModelSvmBase ():
   Model (),
   param     (NULL),
   svmModel  (NULL)
 {
 }
+
 
 
 ModelSvmBase::ModelSvmBase (FactoryFVProducerPtr  _factoryFVProducer):
@@ -77,8 +75,6 @@ ModelSvmBase::ModelSvmBase (const ModelSvmBase&   _model):
 
 
 
-
-
 /**
  * @brief Frees any memory allocated by, and owned by the ModelSvmBase
  */
@@ -109,12 +105,10 @@ kkMemSize  ModelSvmBase::MemoryConsumedEstimated ()  const
 
 
 
-
 ModelSvmBasePtr  ModelSvmBase::Duplicate ()  const
 {
   return new ModelSvmBase (*this);
 }
-
 
 
 
@@ -283,7 +277,6 @@ MLClassPtr  ModelSvmBase::Predict (FeatureVectorPtr  example,
 
 
 
-
 void  ModelSvmBase::Predict (FeatureVectorPtr  example,
                              MLClassPtr        knownClass,
                              MLClassPtr&       predClass1,
@@ -313,7 +306,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
     throw KKException (errMsg);
   }
 
-  kkint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
+  kkuint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);

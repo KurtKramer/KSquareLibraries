@@ -37,9 +37,11 @@
 using namespace std;
 
 #include "KKException.h"
-#include "OSservices.h"
-#include "ImageIO.h"
 #include "KKStr.h"
+#include "ImageIO.h"
+#include "Option.h"
+#include "OSservices.h"
+
 using namespace KKB;
 
 
@@ -957,20 +959,20 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 
   while  (nextEnvVarIdx)
   {
-    char  startChar = src[(kkint16)(nextEnvVarIdx.value () + 1)];
+    char  startChar = src[(nextEnvVarIdx.value () + 1)];
     char  endChar = ')';
 
     if       (startChar == '(')   endChar = ')';
     else if  (startChar == '{')   endChar = '}';
     else if  (startChar == '[')   endChar = ']';
 
-    KKStr  beforeEnvStr = str.SubStrPart (0, nextEnvVarIdx.value () - 1);
-    str = str.SubStrPart (nextEnvVarIdx.value () + 2);
+    KKStr  beforeEnvStr = str.SubStrSeg (0, nextEnvVarIdx);
+    str = str.SubStrPart (nextEnvVarIdx + 2);
     auto endCharIdx = str.LocateCharacter (endChar);
     if  (!endCharIdx)  return  src;
 
-    KKStr  envStrName   = str.SubStrPart (0, endCharIdx.value () - 1);
-    KKStr  afterStrName = str.SubStrPart (endCharIdx.value () + 1);
+    KKStr  envStrName   = str.SubStrSeg (0, endCharIdx);
+    KKStr  afterStrName = str.SubStrPart (endCharIdx + 1);
 
     KKStrPtr envStrValue = osGetEnvVariable (envStrName);
     if  (envStrValue == NULL)
@@ -1078,8 +1080,8 @@ void   KKB::osParseFileName (KKStr   _fileName,
 
   else
   {
-    _dirPath  = _fileName.SubStrPart (0, x.value () - 1);
-    _fileName = _fileName.SubStrPart (x.value () + 1);
+    _dirPath  = _fileName.SubStrSeg (0, x);
+    _fileName = _fileName.SubStrPart (x + 1);
   }
       
   x = _fileName.LocateLastOccurrence ('.');
@@ -1090,8 +1092,8 @@ void   KKB::osParseFileName (KKStr   _fileName,
   }
   else
   {
-    _rootName  = _fileName.SubStrPart (0, x.value () - 1);
-    _extension = _fileName.SubStrPart (x.value () + 1);
+    _rootName  = _fileName.SubStrSeg (0, x);
+    _extension = _fileName.SubStrPart (x + 1);
   }
 
   return;
@@ -1109,7 +1111,7 @@ KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
   if  (lastSlashChar  &&  (lastSlashChar > lastPeriodChar))
     return _fullFileName;
 
-  return _fullFileName.SubStrPart (0L, lastPeriodChar.value () - 1);
+  return _fullFileName.SubStrSeg (0L, lastPeriodChar);
 }  /* osRemoveExtension */
 
 
@@ -1124,14 +1126,14 @@ KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
   if  (!lastSlashOrColon)
     lastPart = fullFileName;
   else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value () + 1);
+    lastPart = fullFileName.SubStrPart (lastSlashOrColon + 1);
 
   auto  periodIdx = lastPart.LocateLastOccurrence ('.');
 
   if  (!periodIdx)
     return  lastPart;
 
-  return  lastPart.SubStrPart (0, periodIdx.value ());
+  return  lastPart.SubStrSeg (0, periodIdx);
 }  /*  osGetRootName */
 
 
@@ -1150,7 +1152,7 @@ KKStr  KKB::osGetRootNameOfDirectory (KKStr  fullDirName)
   if  (!lastSlashOrColon)
     lastPart = fullDirName;
   else
-    lastPart = fullDirName.SubStrPart (lastSlashOrColon.value () + 1);
+    lastPart = fullDirName.SubStrPart (lastSlashOrColon + 1);
 
   return  lastPart;
 }  /*  osGetRootNameOfDirectory */
@@ -1165,10 +1167,10 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
   auto  x1 = path.LocateLastOccurrence (DSchar);
   auto  x2 = path.LocateLastOccurrence (':');
   auto  x = Max (x1, x2);
-  if  (!x  ||  (x.value () < 1))
+  if  (!x)
     return KKStr::EmptyStr ();
 
-  return  path.SubStrPart (0, x.value ());
+  return  path.SubStrSeg (0, x);
 }  /* osGetParentDirectoryOfDirPath */
 
 
@@ -1183,7 +1185,7 @@ KKStr  KKB::osGetRootNameWithExtension (const KKStr&  fullFileName)
   if  (!lastSlashOrColon)
     lastPart = fullFileName;
   else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon.value () + 1);
+    lastPart = fullFileName.SubStrPart (lastSlashOrColon + 1);
 
   return  lastPart;
 }  /* osGetRootNameWithExtension */
@@ -1206,8 +1208,8 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
   auto  driveLetterPos = fullFileName.LocateCharacter (':');
   if  (driveLetterPos)
   {
-    driveLetter  = fullFileName.SubStrPart (0, driveLetterPos.value () - 1);
-    fullFileName = fullFileName.SubStrPart (driveLetterPos.value () + 1);
+    driveLetter  = fullFileName.SubStrSeg (0, driveLetterPos - 1);
+    fullFileName = fullFileName.SubStrPart (driveLetterPos + 1);
   }
 
   KKStr  fileName;
@@ -1229,20 +1231,20 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
   }
   else 
   {
-    path     = fullFileName.SubStrPart (0, lastSlash.value () - 1);
-    fileName = fullFileName.SubStrPart (lastSlash.value () + 1);
+    path     = fullFileName.SubStrSeg (0, lastSlash);
+    fileName = fullFileName.SubStrPart (lastSlash + 1);
   }
 
   auto  period = fileName.LocateLastOccurrence ('.');
-  if  (!period  ||  (period.value () <= 0))
+  if  (!period)
   {
     root = fileName;
     extension = "";
   }
   else 
   {
-    root      = fileName.SubStrPart (0, period.value () - 1);
-    extension = fileName.SubStrPart (period.value () + 1);
+    root      = fileName.SubStrSeg (0, period);
+    extension = fileName.SubStrPart (period + 1);
   }
 
   return;
@@ -1256,12 +1258,12 @@ KKStr  KKB::osGetPathPartOfFile (const KKStr&  fullFileName)
 
   if  (lastSlash)
   {
-    return  fullFileName.SubStrPart (0, lastSlash.value () - 1);
+    return  fullFileName.SubStrSeg (0, lastSlash);
   }
 
   auto  lastColon = fullFileName.LocateLastOccurrence (':');
   if  (lastColon)
-    return  fullFileName.SubStrPart (0, lastColon.value ());
+    return  fullFileName.SubStrSeg (0, lastColon + 1);
   else
     return  KKStr ("");
 }  /* GetPathPartOfFile */
@@ -1282,18 +1284,17 @@ KKStr  KKB::osGetParentDirPath (KKStr  dirPath)
   if  ((dirPath.LastChar () == '\\')  ||  (dirPath.LastChar () == '/'))
     dirPath.ChopLastChar ();
   
-  auto x = Max (dirPath.LocateLastOccurrence ('\\'), dirPath.LocateLastOccurrence ('/'));
-  
+  auto x = osLocateLastSlashChar (dirPath);
   if  (!x)
   {
     x = dirPath.LocateLastOccurrence (':');
     if  (x)
-      return  dirPath.SubStrPart (0, x.value () - 1);
+      return  dirPath.SubStrSeg (0, x);
     else
       return  KKStr::EmptyStr ();
   }
 
-  return  dirPath.SubStrPart (0, x.value () - 1);
+  return  dirPath.SubStrSeg (0, x);
 }
 
 
@@ -1420,11 +1421,11 @@ KKStr  KKB::osGetFileNamePartOfFile (KKStr  fullFileName)
    if  (!colon)
      return fullFileName;
    else
-     return fullFileName.SubStrPart (colon.value () + 1);
+     return fullFileName.SubStrPart (colon + 1);
   }
   else
   {
-    return  fullFileName.SubStrPart (lastSlash.value () + 1);
+    return  fullFileName.SubStrPart (lastSlash + 1);
   }
 }  /* FileNamePartOfFile */
 
@@ -1726,9 +1727,9 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 {
   KKStr  rootDirName;
-  kkint64  x = fileSpec.LocateCharacter ('*');
-  if  (x > 0)
-    rootDirName = fileSpec.SubStrPart ((kkint64)0, (kkint64)(x - 1));
+  auto  x = fileSpec.LocateCharacter ('*');
+  if  (x)
+    rootDirName = fileSpec.SubStrSeg (0, x);
   else
     rootDirName = fileSpec;
 
@@ -2716,9 +2717,10 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
 
   kkuint32  zed = 0;
 
-  if  (path[(kkuint16)1] == ':')
+  if  (path[1] == ':')
   {
-    parts.push_back (path.SubStrPart (0, 1));
+    // Add drive letter to result list.
+    parts.push_back (path.SubStrSeg (0, 2));
     zed += 2;
   }
 
@@ -2727,12 +2729,12 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
     if  (path[zed] == '\\')
     {
       parts.push_back ("\\");
-      zed++;
+      ++zed;
     }
     else if  (path[zed] == '/')
     {
       parts.push_back ("/");
-      zed++;
+      ++zed;
     }
     else
     {
@@ -2742,15 +2744,16 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
       {
         if  ((path[zed] == '\\')  ||  (path[zed] == '/'))
           break;
-        zed++;
+        ++zed;
       }
 
-      parts.push_back (path.SubStrPart (startPos, zed - 1));
+      parts.push_back (path.SubStrSeg (startPos, zed - startPos));
     }
   }
 
   return  parts;
 }  /* osSplitDirectoryPathIntoParts */
+
 
 
 KKStr  KKB::osGetFullPathOfApplication ()

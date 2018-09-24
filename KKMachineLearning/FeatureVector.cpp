@@ -226,7 +226,7 @@ const KKStr&  FeatureVector::MLClassNameUpper ()  const
 
 KKStr  FeatureVector::ExampleRootName () const
 {
-  return KKB::osGetRootNameWithExtension(exampleFileName);
+  return KKB::osGetRootName (exampleFileName);
 }
 
 
@@ -661,12 +661,12 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
 
 
 FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
-                                                                        kkint32     _maxToExtract,
+                                                                        kkuint32    _maxToExtract,
                                                                         float       _minSize
                                                                        )  const
 {
   if  (_maxToExtract < 1)
-    _maxToExtract = QueueSize ();
+    _maxToExtract = uint32_max;
 
   // Create a new list structure that does not own the Images it contains.  This way when 
   // this structure is deleted.  The example it contains are not deleted.
@@ -765,23 +765,32 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
   KKCheck ((curSortOrder == IFL_SortOrder::IFL_ByName)  ||  (curSortOrder == IFL_SortOrder::IFL_ByRootName),
            "FeatureVectorList::BinarySearchByName    Invalid Sort Order.");
 
-  kkint32  low  = 0;
-  kkint32  high = QueueSize () - 1;
-  kkint32  mid;
+  if  (QueueSize () < 1)
+    return NULL;
+
+  kkuint32  low  = 0;
+  kkuint32  high = QueueSize () - 1;
+  kkuint32  mid;
 
   FeatureVectorPtr  example = NULL;
 
-  while  (low <= high)
+  while  (true)
   {
     mid = (low + high) / 2;
 
     example = IdxToPtr (mid);
 
     if  (example->ExampleFileName () < _imageFileName)
+    {
+      if  (mid >= high)  break;
       low = mid + 1;
+    }
 
     else if  (example->ExampleFileName () > _imageFileName)
+    {
+      if  (mid <= low)  break;
       high = mid - 1;
+    }
 
     else
       return  example;
@@ -887,7 +896,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
   {
     KKStr  txtLine (buff);
 
-    if  (txtLine.SubStrPart (0, 1) == "//")
+    if  (txtLine.StartsWith ("//"))
     {
       // Comment line, will ignore.
       continue;

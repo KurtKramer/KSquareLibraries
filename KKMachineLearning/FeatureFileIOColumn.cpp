@@ -123,7 +123,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     OptionUInt32      _maxCount,    // Maximum # images to load.
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -141,7 +141,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
   kkint32     lineCount     = 0;
   kkint32     numOfFeatures = _fileDesc->NumOfFields ();
 
-  if (_maxCount < 0)
+  if (!_maxCount)
     _maxCount = INT_MAX;
 
   // Each row will represent a specific feature

@@ -1,5 +1,4 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -289,8 +288,8 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
   }
   
   ClassProbListPtr  results = new ClassProbList ();
-  kkint32 idx = 0;
-  for  (idx = 0;  idx < numOfClasses;  idx++)
+
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classes->IdxToPtr (idx);
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));

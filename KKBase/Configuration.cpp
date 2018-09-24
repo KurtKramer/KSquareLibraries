@@ -19,6 +19,7 @@ using namespace std;
 #include "Configuration.h"
 #include "KKQueue.h"
 #include "OSservices.h"
+#include "Option.h"
 #include "RunLog.h"
 using namespace KKB;
 
@@ -367,27 +368,9 @@ kkMemSize Configuration::MemoryConsumedEstimated ()  const
 
 void  StripOutAnyComments (KKStr&  line)
 {
-  bool found = false;
-  kkuint32  len   = line.Len ();
-  kkuint32  x     = 0;
- 
-  while  ((x < (len - 1))  &&  (!found))
-  {
-    if  ((line[x]     == '/')  &&
-         (line[x + 1] == '/'))
-      found = true;
-    else
-      x++;
-  }
-
-  if  (found)
-  {
-    if  (x == 0)
-      line = "";
-    else
-      line = line.SubStrPart (0, x - 1);
-  }
-
+  auto idx = line.LocateStr("//");
+  if  (idx)
+    line = line.SubStrSeg(0, idx);
 } /* StripOutAnyComments */
  
 
@@ -472,7 +455,7 @@ void  Configuration::LoadFile (RunLog&  log)
 
       if  (line.LastChar () == ']')
       {
-        curSectionName = line.SubStrPart (1, line.Len () - 2);
+        curSectionName = line.SubStrSeg (1, line.Len () - 2);
         curSectionName.TrimLeft ();
         curSectionName.TrimRight ();
         curSectionName.Upper ();
@@ -518,12 +501,12 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrPart (0, equalIdx.value() - 1));
+        KKStr  settingName (line.SubStrSeg (0, equalIdx));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();
 
-        KKStr  settingValue (line.SubStrPart (equalIdx.value() + 1));
+        KKStr  settingValue (line.SubStrPart (equalIdx + 1));
         settingValue.TrimLeft ();
         settingValue.TrimRight ();
 
@@ -633,7 +616,6 @@ KKStrConstPtr   Configuration::SettingName (const KKStr&  sectionName,
 
 
 
-
 KKStrConstPtr   Configuration::SettingName (kkuint32  sectionNum,
                                             kkuint32  settingNum
                                            )  const
@@ -667,6 +649,7 @@ KKStrConstPtr   Configuration::SettingValue (kkuint32      sectionNum,
   }
   return  result;
 }
+
 
 
 KKStr   Configuration::SettingValueToStr (kkuint32      sectionNum,

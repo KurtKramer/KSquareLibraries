@@ -12,6 +12,7 @@ using namespace  std;
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
@@ -212,7 +213,7 @@ void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass,
   {
       MLClassListPtr  list = idx->first;
       auto  classInList = list->PtrToIdx (mlClass);
-      if  (classInList >= 0)
+      if  (classInList)
       {
         bool  nameChangedInList = false;
         list->ChangeNameOfClass (mlClass, oldName, newName, nameChangedInList);
@@ -318,7 +319,7 @@ MLClass::MLClass (const KKStr&  _name):
   KKStr  topLevel = upperName;
   auto x = upperName.LocateCharacter ('_');
   if  (x)
-    topLevel = upperName.SubStrPart (0, x.value () - 1);
+    topLevel = upperName.SubStrSeg (0, x);
 
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
@@ -369,7 +370,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
   auto x = className.LocateLastOccurrence ('_');
-  if  (x  &&  (x.value () > 0))
+  if  (x  &&  (x > 0U))
   {
     // Now lets eliminate any sequence number in name
     // We are assuming that a underscore{"_") character separates the class name from the sequence number.
@@ -388,7 +389,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
     if  (allFollowingCharsAreNumeric)
     {
-      className = className.SubStrPart (0, x.value () - 1);
+      className = className.SubStrSeg (0, x);
     }
   }
 
@@ -1030,8 +1031,8 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
     }
     else
     {
-      titleLine1 << className.SubStrPart (0, y.value () - 1);
-      titleLine2 << className.SubStrPart (y.value () + 1);
+      titleLine1 << className.SubStrSeg (0, y);
+      titleLine2 << className.SubStrPart (y + 1);
     }
   }
 }  /* ExtractTwoTitleLines */
@@ -1199,7 +1200,7 @@ MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkin
     MLClassPtr c = *idx;
     MLClassPtr classForLevel = c->MLClassForGivenHierarchialLevel (level);
 
-    if  (newList->PtrToIdx (classForLevel) < 0)
+    if  (!newList->PtrToIdx (classForLevel))
       newList->AddMLClass (classForLevel);
   }
 
@@ -1219,7 +1220,7 @@ MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
   for  (idx = list2.begin ();  idx != list2.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (result->PtrToIdx (ic) < 0)
+    if  (!result->PtrToIdx (ic))
     {
       // This entry (*idx) from list2 was not in list 1
       result->AddMLClass (ic);
@@ -1329,7 +1330,7 @@ MLClassList&  MLClassList::operator+= (const MLClassList&  right)  // add all cl
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (PtrToIdx (ic) < 0)
+    if  (!PtrToIdx (ic))
       PushOnBack (ic);
   }
 
@@ -1365,7 +1366,7 @@ MLClassList  MLClassList::operator- (const MLClassList&  right)  const
   for  (idx = begin ();  idx != end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (right.PtrToIdx (ic) < 0)
+    if  (!right.PtrToIdx (ic))
        result.PushOnBack (ic);
   }
 

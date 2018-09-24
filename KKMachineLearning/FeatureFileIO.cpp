@@ -451,7 +451,7 @@ void  FeatureFileIO::GetToken (istream&     _in,
 FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile 
                                       (const KKStr&   _fileName,
                                        MLClassList&   _mlClasses,
-                                       kkint32        _maxCount,
+                                       OptionUInt32   _maxCount,
                                        VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
                                        bool&          _successful,
                                        bool&          _changesMade,
@@ -1034,7 +1034,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadFile (const KKStr&      _fileName,
                                                FileDescConstPtr  _fileDesc,
                                                MLClassList&      _classes, 
                                                istream&          _in,
-                                               kkint32           _maxCount,    // Maximum # images to load.
+                                               OptionUInt32      _maxCount,    // Maximum # images to load.
                                                VolConstBool&     _cancelFlag,
                                                bool&             _changesMade,
                                                KKStr&            _errorMessage,

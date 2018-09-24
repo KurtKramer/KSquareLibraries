@@ -182,8 +182,8 @@ namespace  SVM289_BFS
 
 
     svm_parameter      param;      // parameter
-    kkint32            nr_class;   /**< number of classes, = 2 in regression/one class svm           */
-    kkint32            l;          /**< total #SV                                                    */
+    kkuint32           nr_class;   /**< number of classes, = 2 in regression/one class svm           */
+    kkuint32           l;          /**< total #SV                                                    */
     FeatureVectorList  SV;         /**< SVs (SV[l])                                                  */
     double**           sv_coef;    /**< Coefficients for SVs in decision functions (sv_coef[k-1][l]) */
     double*            rho;        /**< constants in decision functions (rho[k*(k-1)/2])             */

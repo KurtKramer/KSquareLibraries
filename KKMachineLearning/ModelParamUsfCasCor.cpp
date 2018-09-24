@@ -13,12 +13,12 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ModelParamUsfCasCor.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "KKMLLTypes.h"
 using namespace  KKMLL;
+
 
 
 ModelParamUsfCasCor::ModelParamUsfCasCor  ():
@@ -34,13 +34,12 @@ ModelParamUsfCasCor::ModelParamUsfCasCor  ():
 
 
 
-
-ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
-                                           int       _out_limit,
-                                           int       _number_of_rounds,
-                                           int       _number_of_trials,
-                                           kkint64   _random_seed,
-                                           bool      _useCache
+ModelParamUsfCasCor::ModelParamUsfCasCor  (int      _in_limit,
+                                           int      _out_limit,
+                                           int      _number_of_rounds,
+                                           int      _number_of_trials,
+                                           kkint64  _random_seed,
+                                           bool     _useCache
                                           ):
       ModelParam (),
       in_limit         (_in_limit),
@@ -51,7 +50,6 @@ ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
       useCache         (_useCache)
 {}
   
-
 
 
 ModelParamUsfCasCor::~ModelParamUsfCasCor  ()

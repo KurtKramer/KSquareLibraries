@@ -3336,7 +3336,7 @@ Svm_Model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
     model->rho = new double[1];
     model->rho[0] = f.rho;
 
-    kkint32 nSV = 0;
+    kkuint32 nSV = 0;
     kkint32 i;
     for  (i = 0;  i < prob.numTrainExamples;  ++i)
     {
@@ -3513,13 +3513,13 @@ Svm_Model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
       model->probB = NULL;
     }
 
-    kkint32 total_sv = 0;
-    kkint32*  nz_count = new kkint32[nr_class];
+    kkuint32  total_sv = 0;
+    kkuint32*  nz_count = new kkuint32[nr_class];
 
-    model->nSV = new kkint32[nr_class];
+    model->nSV = new kkuint32[nr_class];
     for  (i = 0;  i < nr_class;  i++)
     {
-      kkint32 nSV = 0;
+      kkuint32 nSV = 0;
       for  (kkint32 j = 0;  j < count[i];  j++)
       {
         if  (nonzero[start[i] + j])
@@ -3822,7 +3822,7 @@ void  SVM289_MFS::svm_predict_values (const Svm_Model*      model,
   {
     double *sv_coef = model->sv_coef[0];
     double sum = 0;
-    for  (kkint32 i = 0;  i < model->numSVs;  i++)
+    for  (kkuint32 i = 0;  i < model->numSVs;  i++)
       sum += sv_coef[i] * Kernel::k_function (x, 
                                               model->SV[i], 
                                               model->param, 
@@ -3833,23 +3833,22 @@ void  SVM289_MFS::svm_predict_values (const Svm_Model*      model,
   }
   else
   {
-    kkint32 i = 0;
-    kkint32 nr_class = model->nr_class;
-    kkint32 numSVs = model->numSVs;
+    kkuint32 nr_class = model->nr_class;
+    kkuint32 numSVs   = model->numSVs;
     
     double *kvalue = new double[numSVs];
-    for  (i = 0;  i < numSVs;  i++)
+    for  (kkuint32 i = 0;  i < numSVs;  i++)
       kvalue[i] = Kernel::k_function (x, model->SV[i], model->param, model->selFeatures);
 
     kkint32 *start = new kkint32[nr_class];
     start[0] = 0;
-    for  (i = 1;  i < nr_class;  i++)
+    for  (kkuint32 i = 1;  i < nr_class;  i++)
       start[i] = start[i-1]+model->nSV[i-1];
 
     kkint32  p=0;
-    for  (i = 0;  i < nr_class;  i++)
+    for  (kkuint32 i = 0;  i < nr_class;  i++)
     {
-      for  (kkint32 j = i + 1;  j < nr_class;  j++)
+      for  (kkuint32  j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0;
         kkint32 si = start[i];
@@ -4087,7 +4086,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
     for  (kkuint32 j = 0;  j < m;  j++)
     {
       sv_coef[j] = new double[numSVs];
-      for  (kkint32 i = 0;   i < numSVs;  ++i)
+      for  (kkuint32 i = 0;   i < numSVs;  ++i)
        sv_coef[j][i] = _model.sv_coef[j][i];
     }
   }
@@ -4123,7 +4122,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
 
   if  (_model.nSV)
   {
-    nSV = new kkint32[nr_class];
+    nSV = new kkuint32[nr_class];
     for (kkuint32 i = 0;  i < nr_class;  i++)
       nSV[i] = _model.nSV[i];
   }
@@ -4226,7 +4225,7 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
 
 kkMemSize  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
 {
-  kkint32    numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
+  kkuint32   numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
   kkMemSize  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
 
   if  (sv_coef)         memoryConsumedEstimated += sizeof (double)  * (nr_class - 1) * numSVs;    // sv_coef
@@ -4316,11 +4315,11 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
      XmlElementArrayDouble::WriteXML (numBinaryCombos, probB, "probB", o);
 
   if  (nSV)
-      XmlElementArrayInt32::WriteXML (nr_class, nSV, "nSV", o);
+      XmlElementArrayUInt32::WriteXML (nr_class, nSV, "nSV", o);
 
   char buff[128];
 
-  for  (kkint32 i = 0;  i < numSVs;  ++i)
+  for  (kkuint32 i = 0;  i < numSVs;  ++i)
   {
     const  FeatureVector&  p = SV[i];
 
@@ -4379,13 +4378,17 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
       {
         KKStr  valueStr;
         double  valueDouble = 0.0;
-        kkint32  valueInt32 = 0;
+        OptionInt32   valueInt32  = {};
+        OptionUInt32  valueUint32 = {};
 
         if  (typeid(*e) == typeid(XmlElementKKStr))
           valueStr = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
 
         else if  (typeid(*e) == typeid(XmlElementInt32))
           valueInt32 = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+
+        else if  (typeid(*e) == typeid(XmlElementUInt32))
+          valueUint32 = dynamic_cast<XmlElementUInt32Ptr> (e)->Value ();
 
         else if  (typeid(*e) == typeid(XmlElementDouble))
           valueDouble = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
@@ -4403,7 +4406,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
           param.kernel_type = Kernel_Type_FromStr (valueStr);
 
         else if  (varName.EqualIgnoreCase ("degree"))
-          param.degree = valueInt32;
+          param.degree = valueInt32.value ();
 
         else if  (varName.EqualIgnoreCase ("gamma"))
           param.gamma = valueDouble;
@@ -4416,18 +4419,17 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
 
         else if  (varName.EqualIgnoreCase ("nr_class"))
         {
-          nr_class = valueInt32;
+          nr_class = valueUint32.value_or (valueInt32.value_or (0));
           numBinaryCombos = nr_class * (nr_class - 1) / 2;
         }
 
         else if  (varName.EqualIgnoreCase ("numSVs"))
-          numSVs = valueInt32;
+          numSVs = valueUint32.value_or (valueInt32.value_or (0));
 
         else if  (varName.EqualIgnoreCase ("rho"))
         {
           delete  rho;
           rho = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();
-          numSVs = valueInt32;
         }
 
         else if  (varName.EqualIgnoreCase ("label"))
@@ -4451,7 +4453,9 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("nSV"))
         {
           delete nSV;
-          nSV = dynamic_cast<XmlElementArrayInt32Ptr> (e)->TakeOwnership ();   // numBinaryCombos
+          auto nSVXml = dynamic_cast<XmlElementArrayBase*>(e);
+          KKCheck(nSVXml->Count() == nr_class, "SVM289_MFS::Svm_Model::ReadXML  nSVxml->Count: " << nSVXml->Count() << " expected nr_class: " << nr_class)
+          nSV = nSVXml->ToUnit32Array();
         }
 
         else if  (varName.EqualIgnoreCase ("SupportVector"))
@@ -4465,7 +4469,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
             for  (i = 0;  i < m;  i++)
             {
               sv_coef[i] = new double[numSVs];
-              for  (kkint32 j = 0;  j < numSVs;  j++)
+              for  (kkuint32 j = 0;  j < numSVs;  j++)
                 sv_coef[i][j] = 0.0;
             }
           }

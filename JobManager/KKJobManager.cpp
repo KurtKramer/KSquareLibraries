@@ -67,15 +67,13 @@ KKJobManager::KKJobManager (const KKJobManager& j):
 
 
 
-
-
 // Make sure the the _summaryResultsFileName is deleted before we start processing.
 KKJobManager::KKJobManager (JobManagerPtr _manager,                   // Ptr to job that is managing this 'KKJobManager'
                             kkint32       _jobId,
                             kkint32       _parentId,
                             kkint32       _numPorcessesAllowed,
                             const KKStr&  _managerName,               // Name of this 'KKJobManager' ; sttaus and lock file will be based on it.
-                            kkint32       _numJobsAtATime,            // The number of jobs that can be allocatd at one time for a single process to execute.
+                            kkuint32      _numJobsAtATime,            // The number of jobs that can be allocatd at one time for a single process to execute.
                             RunLog&       _log
                            ):
   KKJob (_manager, _jobId, _parentId, _numPorcessesAllowed, _log),
@@ -332,7 +330,7 @@ void  KKJobManager::StatusFileProcessLine (const KKStr&  ln,
                                            istream&      statusFile
                                           )
 {
-  if  (ln.SubStrPart (0, 1) == "//")
+  if  (ln.StartsWith ("//"))
   {
     // A coment line;  we can ignore it.
     return;
@@ -456,7 +454,7 @@ void  KKJobManager::StatusFileRefresh ()
   while  (!statusFile->eof ())
   {
     statusStr = buff;
-    if  (statusStr.SubStrPart (0, 4) == "<KKJob ")
+    if  (statusStr.StartsWith ("<KKJob "))
     {
       ProcessJobXmlBlockOfText (statusStr, *statusFile);
     }
@@ -486,7 +484,7 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
                                                istream&      i
                                               )
 {
-  if  ((startStr.SubStrPart (0, 4) != "<KKJob ")  ||  (startStr.LastChar () != '>'))
+  if  ((!startStr.StartsWith ("<KKJob "))  ||  (startStr.LastChar () != '>'))
   {
     log.Level (-1) << endl 
                    << "KKJobManager::ProcessJobXmlBlockOfText   ***ERROR***   StartStr[" << startStr << "] is not a KKJob String." << endl
@@ -600,8 +598,7 @@ void  KKJobManager::StatusFileWrite ()
               << "ExpansionFirstJobId" << "\t" << expansionFirstJobId           << endl
               << endl;
 
-  kkint32  x;
-  for  (x = 0;  x < jobs->QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < jobs->QueueSize ();  x++)
   {
     KKJobPtr  j = jobs->IdxToPtr (x);
     *statusFile << "KKJob" << "\t" << j->JobType () << "\t" << j->ToStatusStr () << endl;
@@ -681,9 +678,9 @@ void  KKJobManager::StatusFileInitialize ()
 
 kkint32  KKJobManager::AllocateNextJobId ()
 {
-  kkint32  jobId = nextJobId;
+  kkint32  jobIdToReturn = nextJobId;
   nextJobId++;
-  return  jobId;
+  return  jobIdToReturn;
 }
 
 

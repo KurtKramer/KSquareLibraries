@@ -242,7 +242,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 {
   log.Level (20) << "CrossValidationVoting::CrossValidate   FoldNum[" << foldNum  << "]." << endl;
 
-  kkint32  numOfClasses = mlClasses->QueueSize ();
+  kkuint32  numOfClasses = mlClasses->QueueSize ();
 
   bool   cancelFlag = false;
   KKStr  statusMessage;
@@ -315,11 +315,12 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
                                                     knownClassOneOfTheWinners,
                                                     breakTie
                                                    );
-      kkint32  predictedIdx = mlClasses->PtrToIdx (predictedClass);
+      auto  predictedNum = mlClasses->PtrToIdx (predictedClass);
 
-      KKCheck((predictedIdx >= 0)  &&  (predictedIdx < mlClasses->QueueSize ()),
-         "UnKnown Class: " << predictedClass->Name () << "  predictedIdx: " << predictedIdx)
+      KKCheck((predictedNum)  &&  (predictedNum.value () < mlClasses->QueueSize ()),
+              "UnKnown Class: " << predictedClass->Name () << "  predictedNum: " << predictedNum.value ())
 
+      auto predictedIdx = predictedNum.value ();
       voteTable[predictedIdx]++;
 
       if  (probTable[predictedIdx] == 0.0f)
@@ -330,24 +331,21 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
     {
       // Normalize Probability
-      kkint32 x = 0;
       double  probTotal = 0.0f;
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         probTotal += probTable[x];
 
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         probTable[x] = probTable[x] / probTotal;
     }
-
-
+    
     {
       // Determine winning vote
       kkint32  highVote = 0;
       numOfWinners = 0;
-      kkint32  winnerIdx       = -1;
-      kkint32  x;
+      kkint32  winnerIdx = -1;
 
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
       {
         if  (voteTable[x] > highVote)
         {
@@ -366,7 +364,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
         // Select winner by high probability
         double  highProbability = 0.0f;
 
-        for  (x = 0;  x < numOfClasses;  x++)
+        for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         {
           if  (voteTable[x] >= highVote)
           {

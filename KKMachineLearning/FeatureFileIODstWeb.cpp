@@ -13,6 +13,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -148,8 +149,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       return  NULL;
     }
 
-    KKStr  leftSide  = line.SubStrPart (0, equalLoc.value () - 1);
-    KKStr  rightSide = line.SubStrPart (equalLoc.value () + 1);
+    KKStr  leftSide  = line.SubStrSeg (0, equalLoc);
+    KKStr  rightSide = line.SubStrPart (equalLoc + 1);
 
     leftSide.Upper ();
     if  (leftSide != "CLASS")
@@ -229,7 +230,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    /**< Maximum # images to load. */
+                                                     OptionUInt32      _maxCount,    /**< Maximum # images to load. */
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -239,7 +240,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;
 
   _changesMade = false;
-  if (_maxCount < 0)
+  if (!_maxCount)
     _maxCount = INT_MAX;
 
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");

@@ -7,11 +7,11 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
@@ -510,8 +510,8 @@ FeatureNumList::VectorIntType*  FeatureNumList::StrToUInt16Vetor (const KKStr&  
     else
     {
       // We are looking at a range
-      kkint32  startNum = field.SubStrPart (0, dashPos.value () - 1).ToInt32 ();
-      kkint32  endNum   = field.SubStrPart (dashPos.value () + 1).ToInt32 ();
+      kkint32  startNum = field.SubStrSeg (0, dashPos).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
 
       if  ((startNum > endNum)  ||  (startNum < 0)  ||  ((kkuint32)endNum > maxIntType))
       {
@@ -519,7 +519,7 @@ FeatureNumList::VectorIntType*  FeatureNumList::StrToUInt16Vetor (const KKStr&  
         break;
       }
 
-      for  (kkint32 z = startNum;   z <= endNum;  ++z)
+      for  (kkint32 z = startNum;  z <= endNum;  ++z)
         results->push_back ((IntType)z);
     }
   }

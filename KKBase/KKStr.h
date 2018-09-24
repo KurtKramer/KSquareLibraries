@@ -242,10 +242,10 @@ namespace  KKB
     static
     const KKStr&  EmptyStr ();
 
-    bool     EndsWith (const KKStr& value);
-    bool     EndsWith (const char*  value);
-    bool     EndsWith (const KKStr& value,   bool ignoreCase);
-    bool     EndsWith (const char*  value,   bool ignoreCase);
+    bool     EndsWith (const KKStr& value) const;
+    bool     EndsWith (const char*  value) const;
+    bool     EndsWith (const KKStr& value,   bool ignoreCase) const;
+    bool     EndsWith (const char*  value,   bool ignoreCase) const;
 
     bool     EqualIgnoreCase (const KKStr&         s2)  const;
     bool     EqualIgnoreCase (const KKStrConstPtr  s2)  const;
@@ -494,16 +494,18 @@ namespace  KKB
 
 
     /**
-     *@brief returns a SubString consisting of all characters starting at index 'firstChar' until the end of the string.
-     *@details  If the index 'firstChar' is past the end of the string a empty string will be returned. 
+     *@brief returns a SubString consisting of all characters starting at index [firstCharIdx] until the end of the string.
+     *@details  If the index [firstCharIdx] is past the end of the string a empty string will be returned. 
      *@param[in]  firstChar  First character in string to include in the sub-string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkStrUint  firstChar)  const;
+    KKStr     SubStrPart (kkStrUint     firstCharIdx)  const;
 
-    KKStr     SubStrPart (kkint32    firstChar)  const;
+    KKStr     SubStrPart (kkint32       firstCharIdx)  const;
 
-  
+    KKStr     SubStrPart (OptionUInt32  firstCharIdx)  const;
+
+
     /**
      *@brief returns a SubString consisting of all characters starting at index 'firstChar' and ending at 'lastIndex'
      *@details  If the index 'firstChar' is past the end of the string a empty string will be returned. If 'lastIndex 
@@ -513,9 +515,17 @@ namespace  KKB
      *@param[in]  lastChar   Last character in include in the string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkStrUint  firstChar,
-                          kkStrUint  lastChar
+    KKStr     SubStrPart (kkStrUint  firstCharIdx,
+                          kkStrUint  lastCharIdx
                          )  const;
+
+    KKStr     SubStrSeg (kkStrUint  firstCharIdx,
+                         kkStrUint  segmentLen
+                        )  const;
+
+    KKStr     SubStrSeg (kkStrUint     firstCharIdx,
+                         OptionUInt32  segmentLen
+                        )  const;
 
     KKStr     Tail (kkStrUint tailLen)  const;      /**< Return back the last 'tailLen' characters. */
 

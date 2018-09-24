@@ -7,13 +7,12 @@
 using namespace std;
 
 #include "KKBaseTypes.h"
+#include "Option.h"
 #include "OSservices.h"
 using namespace KKB;
 
-
 #include "DuplicateImages.h"
-
-                
+               
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"
@@ -393,7 +392,7 @@ bool  DuplicateImage::AllTheSameClass ()
 
 bool  DuplicateImage::AlreadyHaveExample (FeatureVectorPtr example)
 {
-  return  (duplicatedImages.PtrToIdx (example) >= 0);
+  return  duplicatedImages.PtrToIdx (example).has_value ();
 }
 
 
@@ -410,13 +409,13 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
 
     kkint32  scanLine = 9999999;
 
-    if  (rootName.SubStrPart (0, 4) == "FRAME")
+    if  (rootName.StartsWith ("FRAME"))
     {
       // Scan line will be last seq number in name.
       auto x = rootName.LocateLastOccurrence ('_');
-      if  (x  &&  (x.value () > 0))
+      if  (x  &&  (x > 0U))
       {
-        KKStr  scanLineStr = rootName.SubStrPart (x.value () + 1);
+        KKStr  scanLineStr = rootName.SubStrPart (x + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
     }
@@ -424,13 +423,13 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     {
       // Scan should be 2nd to last seq number in name.
       auto x = rootName.LocateLastOccurrence ('_');
-      if  (x  &&  (x.value () > 0))
+      if  (x)
       {
-        KKStr  workStr = rootName.SubStrPart (0, x.value () - 1);
+        KKStr  workStr = rootName.SubStrSeg (0, x);
         auto y = workStr.LocateLastOccurrence ('_');
         if  (y)
         {
-          KKStr  scanLineStr = workStr.SubStrPart (y.value () + 1);
+          KKStr  scanLineStr = workStr.SubStrPart (y + 1);
           scanLine = atoi (scanLineStr.Str ());
         }
       }
