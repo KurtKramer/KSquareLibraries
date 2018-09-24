@@ -41,7 +41,7 @@ public:
   virtual  
     FeatureVectorListPtr  LoadFeatureFile (const KKStr&   _fileName,
                                            MLClassList&   _mlClasses,
-                                           kkint32        _maxCount,
+                                           OptionUInt32   _maxCount,
                                            VolConstBool&  _cancelFlag,
                                            bool&          _successful,
                                            bool&          _changesMade,

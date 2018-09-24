@@ -823,7 +823,9 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
     kkint32  prediction2    = -1;
 
     if  (knownClass)
-      knownClassNum = assignments.GetNumForClass (knownClass).value ();
+    {
+      knownClassNum = (kkint32)assignments.GetNumForClass (knownClass).value_or (-1);
+    }
 
     vector<kkint32>  winners;
 

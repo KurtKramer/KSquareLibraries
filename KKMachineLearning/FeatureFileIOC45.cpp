@@ -46,7 +46,7 @@ FeatureFileIOC45::~FeatureFileIOC45()
 FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile 
                                       (const KKStr&   _fileName,
                                        MLClassList&   _mlClasses,
-                                       kkint32        _maxCount,
+                                       OptionUInt32   _maxCount,
                                        VolConstBool&  _cancelFlag,    /**< will be monitored,  if set to True  Load will terminate. */
                                        bool&          _successful,
                                        bool&          _changesMade,
@@ -55,9 +55,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFeatureFile  File[" << _fileName << "]  FileFormat[" << DriverName () << "]" << endl;
   
-  if  (_maxCount < 0)
-    _maxCount = int32_max;
-
   KKStr  namesFileName;
   KKStr  dataFileName;
 
@@ -89,7 +86,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
         }
       }
 
-      else if  ((extension == "DATA") ||  (extension == "TEST"))
+      else if  ((extension == "DATA")  ||  (extension == "TEST"))
       {
         dataFileName  = _fileName;
         namesFileName = leadingPart + ".names";
@@ -151,8 +148,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     _successful = false;
     return  NULL;
   }
-
-
+  
   FeatureVectorListPtr  examples = LoadFile (dataFileName, fileDesc, _mlClasses, dataFile, _maxCount, _cancelFlag, _changesMade, errorMessage, _log);
   if  (examples == NULL)
   {
@@ -732,7 +728,9 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  ((!eof)  &&  (!_cancelFlag))
+  kkuint32 maxToLoad = (_maxCount  ? _maxCount.value () : uint32_max);
+
+  while  ((!eof)  &&  (!_cancelFlag)  &&  (examples->QueueSize () < maxToLoad))
   {
     lineIsValid = true;
     imageFileName = "";
@@ -913,9 +911,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
     if  ((lineCount % 1000) == 0)
       cout  << "Records Loaded " << lineCount << endl;
-
-    if  (examples->QueueSize () > _maxCount)
-      break;
   }
 
   _log.Level (50) << "FeatureFileIOC45::LoadFile   _changesMade: " << _changesMade << "   _changesMade: " << _changesMade  << endl 

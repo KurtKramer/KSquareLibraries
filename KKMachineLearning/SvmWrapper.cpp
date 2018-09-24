@@ -58,9 +58,9 @@ void saveData (svm_problem  ds,
 
 template<class T>
 kkint32  GetMaxIndex (vector<T>&   vote, 
-                    kkint32      voteLength,
-                    kkint32&     maxIndex2  // second highest indx
-                   )
+                      kkint32      voteLength,
+                      kkint32&     maxIndex2  // second highest indx
+                     )
 {
   T max=vote[0];
   kkint32 maxIndex=0;
@@ -162,7 +162,7 @@ bool  GreaterThan (kkint32 leftVotes,
 
 void  GreaterVotes (bool     useProbability,
                     kkint32  numClasses,
-                    kkint32*   votes,
+                    kkint32* votes,
                     double*  probabilities,
                     kkint32& pred1Idx,
                     kkint32& pred2Idx
@@ -388,7 +388,7 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                );
   if  (predClass1 >= 0)
   {
-    predClass1Votes    = votes[predClass1];
+    predClass1Votes  = votes[predClass1];
     predClass1Prob   = probabilities[predClass1];
   }
 

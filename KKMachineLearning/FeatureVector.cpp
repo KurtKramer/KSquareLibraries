@@ -226,7 +226,7 @@ const KKStr&  FeatureVector::MLClassNameUpper ()  const
 
 KKStr  FeatureVector::ExampleRootName () const
 {
-  return KKB::osGetRootNameWithExtension(exampleFileName);
+  return KKB::osGetRootName (exampleFileName);
 }
 
 
@@ -765,23 +765,32 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
   KKCheck ((curSortOrder == IFL_SortOrder::IFL_ByName)  ||  (curSortOrder == IFL_SortOrder::IFL_ByRootName),
            "FeatureVectorList::BinarySearchByName    Invalid Sort Order.");
 
-  kkint32  low  = 0;
-  kkint32  high = QueueSize () - 1;
-  kkint32  mid;
+  if  (QueueSize () < 1)
+    return NULL;
+
+  kkuint32  low  = 0;
+  kkuint32  high = QueueSize () - 1;
+  kkuint32  mid;
 
   FeatureVectorPtr  example = NULL;
 
-  while  (low <= high)
+  while  (true)
   {
     mid = (low + high) / 2;
 
     example = IdxToPtr (mid);
 
     if  (example->ExampleFileName () < _imageFileName)
+    {
+      if  (mid >= high)  break;
       low = mid + 1;
+    }
 
     else if  (example->ExampleFileName () > _imageFileName)
+    {
+      if  (mid <= low)  break;
       high = mid - 1;
+    }
 
     else
       return  example;
