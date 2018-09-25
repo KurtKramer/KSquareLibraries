@@ -731,7 +731,9 @@ KKStr  XmlTag::ToString ()  const
 }
 
 
+
 kkint32  xmlLevel = 0;
+
 
 
 void  XmlTag::WriteXML (std::ostream& o)
@@ -749,16 +751,16 @@ void  XmlTag::WriteXML (std::ostream& o)
 
 
 
-
-
 XmlToken::XmlToken ()
 {
 }
 
 
+
 XmlToken::~XmlToken ()
 {
 }
+
 
 
 XmlElement::XmlElement (const KKStr&      sectionName,
@@ -808,6 +810,7 @@ const KKStr&  XmlElement::SectionName ()  const
 }
 
 
+
 const KKStr&   XmlElement::VarName ()  const
 {
   if  (!nameTag)
@@ -822,7 +825,6 @@ const KKStr&   XmlElement::VarName ()  const
 
 
 
-
 KKStrConstPtr  XmlElement::AttributeValue (const KKStr&  attributeName)
 {
   if  (nameTag)
@@ -832,6 +834,7 @@ KKStrConstPtr  XmlElement::AttributeValue (const KKStr&  attributeName)
 }
 
 
+
 KKStrConstPtr  XmlElement::AttributeValue (const char* attributeName)
 {
   if  (nameTag)
@@ -839,7 +842,6 @@ KKStrConstPtr  XmlElement::AttributeValue (const char* attributeName)
   else
     return NULL;
 }
-
 
 
 
@@ -865,6 +867,7 @@ KKStrPtr  XmlContent::TakeOwnership ()
   content = NULL;
   return c;
 }
+
 
 
 void  XmlContent::WriteXml (const KKStr&   s,
@@ -944,12 +947,10 @@ void  XmlFactory::FinalCleanUp ()
 
 
 
-
 XmlFactory::XmlFactory (const KKStr&  _clasName):
    className (_clasName)
 {
 }
-
 
 
 
@@ -958,6 +959,7 @@ XmlFactoryManager::XmlFactoryManager (const KKStr&  _name):
   name      (_name)
 {
 }
+
 
 
 XmlFactoryManager::~XmlFactoryManager ()
@@ -993,6 +995,7 @@ void   XmlFactoryManager::RegisterFactory  (XmlFactory*  factory)
 }
       
 
+
 XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
 {
   GlobalGoalKeeper::StartBlock ();
@@ -1008,7 +1011,6 @@ XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
   GlobalGoalKeeper::EndBlock ();
   return  result;
 }  /* FactoryLookUp */
-
 
 
 
@@ -1037,9 +1039,11 @@ XmlElementBool::XmlElementBool (XmlTagPtr      tag,
 }
 
 
+
 XmlElementBool::~XmlElementBool ()
 {
 }
+
 
 
 bool  XmlElementBool::Value ()  const
@@ -1062,7 +1066,10 @@ void  XmlElementBool::WriteXML (const bool     b,
   o << endl;
 }
 
+
+
 XmlFactoryMacro(Bool)
+
 
 
 XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr      tag,
@@ -1080,6 +1087,7 @@ XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr      tag,
     t = s.GetNextToken (cancelFlag, log);
   }
 }
+
                 
 
 XmlElementUnKnown::~XmlElementUnKnown ()
@@ -1092,6 +1100,7 @@ XmlElementUnKnown::~XmlElementUnKnown ()
     value = NULL;
   }
 }
+
 
 
 deque<XmlTokenPtr>*  XmlElementUnKnown::TakeOwnership ()
@@ -1147,6 +1156,7 @@ void  XmlElementDateTime::WriteXML (const DateTime&  d,
 }
 
 
+
 kkuint16 XmlElementDateTime::ToUint16 () const 
 {
   auto zed = value.ToDays ();
@@ -1159,6 +1169,8 @@ kkuint16 XmlElementDateTime::ToUint16 () const
   }
   return  (kkuint16)zed;
 }
+
+
 
 kkint32 XmlElementDateTime::ToInt32 () const 
 {
@@ -1174,10 +1186,8 @@ kkint32 XmlElementDateTime::ToInt32 () const
 }
 
 
+
 XmlFactoryMacro(DateTime)
-
-
-
 
 
 
@@ -1186,6 +1196,7 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
     value (new vector<pair<KKStr,KKStr> > ())
 {
 }
+
 
 
 XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr      tag,
@@ -1225,11 +1236,13 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr      tag,
 }
 
 
+
 XmlElementKeyValuePairs::~XmlElementKeyValuePairs ()
 {
   delete  value;
   value = NULL;
 }
+
 
 
 vector<pair<KKStr,KKStr> >*  XmlElementKeyValuePairs::TakeOwnership ()
@@ -1238,6 +1251,7 @@ vector<pair<KKStr,KKStr> >*  XmlElementKeyValuePairs::TakeOwnership ()
   value = NULL;
   return  v;
 }
+
 
 
 void  XmlElementKeyValuePairs::Add (const KKStr&  key,
