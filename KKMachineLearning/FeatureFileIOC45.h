@@ -35,18 +35,18 @@ public:
                                           kkint32&        _estSize,
                                           KKStr&          _errorMessage,
                                           RunLog&         log
-                                         );
+                                         )  override;
 
 
   virtual  
     FeatureVectorListPtr  LoadFeatureFile (const KKStr&   _fileName,
                                            MLClassList&   _mlClasses,
-                                           kkint32        _maxCount,
+                                           OptionUInt32   _maxCount,
                                            VolConstBool&  _cancelFlag,
                                            bool&          _successful,
                                            bool&          _changesMade,
                                            RunLog&        _log
-                                          );
+                                          )  override;
 
 
 
@@ -55,12 +55,12 @@ public:
                                     FileDescConstPtr  _fileDesc,
                                     MLClassList&      _classes, 
                                     istream&          _in,
-                                    kkint32           _maxCount,    // Maximum # images to load.
+                                    OptionUInt32      _maxCount,    // Maximum # images to load.
                                     VolConstBool&     _cancelFlag,
                                     bool&             _changesMade,
                                     KKStr&            _errorMessage,
                                     RunLog&           _log
-                                   );
+                                   )  override;
 
 
   virtual  
@@ -73,7 +73,7 @@ public:
                      bool&                 _successful,
                      KKStr&                _errorMessage,
                      RunLog&               _log
-                    );
+                    )  override;
 
 
 

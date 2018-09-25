@@ -13,12 +13,12 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ModelParamUsfCasCor.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "KKMLLTypes.h"
 using namespace  KKMLL;
+
 
 
 ModelParamUsfCasCor::ModelParamUsfCasCor  ():
@@ -34,13 +34,12 @@ ModelParamUsfCasCor::ModelParamUsfCasCor  ():
 
 
 
-
-ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
-                                           int       _out_limit,
-                                           int       _number_of_rounds,
-                                           int       _number_of_trials,
-                                           kkint64   _random_seed,
-                                           bool      _useCache
+ModelParamUsfCasCor::ModelParamUsfCasCor  (int      _in_limit,
+                                           int      _out_limit,
+                                           int      _number_of_rounds,
+                                           int      _number_of_trials,
+                                           kkint64  _random_seed,
+                                           bool     _useCache
                                           ):
       ModelParam (),
       in_limit         (_in_limit),
@@ -53,10 +52,10 @@ ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
   
 
 
-
 ModelParamUsfCasCor::~ModelParamUsfCasCor  ()
 {
 }
+
 
 
 ModelParamUsfCasCorPtr  ModelParamUsfCasCor::Duplicate ()  const
@@ -70,8 +69,10 @@ void  ModelParamUsfCasCor::ParseCmdLineParameter (const KKStr&  parameter,
                                                   const KKStr&  value,
                                                   bool&         parameterUsed,
                                                   RunLog&       log
-                                               )
+                                                 )
 {
+  log.Level(50) << "ModelParamUsfCasCor::ParseCmdLineParameter  parameter: " << parameter << "  value: " << value << std::endl;
+
   parameterUsed = true;
   if  (parameter.EqualIgnoreCase ("-InLimit")  ||
        parameter.EqualIgnoreCase ("-IL")       ||
@@ -227,8 +228,6 @@ void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
   }
   delete  t;
   t = NULL;
-
-  bool  validFormat = false;
 }  /* ReadXML */
 
 

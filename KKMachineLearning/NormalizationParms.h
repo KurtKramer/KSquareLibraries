@@ -93,7 +93,7 @@ namespace KKMLL
 
     FeatureVectorPtr  ToNormalized (FeatureVectorPtr  example)  const;
 
-    kkint32 NumOfFeatures ()  const {return numOfFeatures;}
+    kkuint32 NumOfFeatures ()  const {return numOfFeatures;}
 
     float   NumOfExamples ()  const {return numOfExamples;}
 
@@ -115,12 +115,12 @@ namespace KKMLL
                    )  const;
 
 
-    double  Mean (kkint32  i,
-                  RunLog&  log
+    double  Mean (kkuint32  i,
+                  RunLog&   log
                  );
 
 
-    double  Sigma (kkint32 i,
+    double  Sigma (kkuint32 i,
                    RunLog&  log
                   );
 
@@ -141,7 +141,7 @@ namespace KKMLL
     double*              mean;
     bool*                normalizeFeature;
     bool                 normalizeNominalFeatures;
-    kkint32              numOfFeatures;
+    kkuint32             numOfFeatures;
     float                numOfExamples;
     double*              sigma;
   };  /* NormalizationParms */

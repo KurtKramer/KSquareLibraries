@@ -12,15 +12,14 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #ifdef  WIN32
 #include <windows.h>
 #endif
 
-
 #include "Configuration.h"
 #include "KKQueue.h"
 #include "OSservices.h"
+#include "Option.h"
 #include "RunLog.h"
 using namespace KKB;
 
@@ -90,9 +89,8 @@ namespace  KKB
 
     SettingConstPtr  LookUp (const KKStr&  name)  const
     {
-      kkint32  idx;
-      kkint32  qSize = QueueSize ();
-      for  (idx = 0;  idx < qSize;  idx++)
+      kkuint32  qSize = QueueSize ();
+      for  (kkuint32 idx = 0;  idx < qSize;  idx++)
       {
         SettingConstPtr setting = IdxToPtr (idx);
         if  (name.EqualIgnoreCase (setting->Name ()))
@@ -116,10 +114,12 @@ namespace  KKB
     }  /* LookUpLineNum */
 
   
+
     void  AddSetting (SettingPtr  setting)
     {
       PushOnBack (setting);
     }
+
 
 
     void  AddSetting (const KKStr&  _name,
@@ -130,7 +130,6 @@ namespace  KKB
       PushOnBack (new Setting (_name, _value, _lineNum));
     }
   };  /* SettingList */
-
 
 
 
@@ -162,25 +161,33 @@ namespace  KKB
     }
 
 
-    kkint32 NumOfSettings ()  const {return  settings.QueueSize ();}
+
+    kkuint32 NumOfSettings ()  const {return  settings.QueueSize ();}
 
 
-    KKStrConstPtr   SettingName (kkint32 settingNum)  const
+
+    KKStrConstPtr   SettingName (kkuint32 settingNum)  const
     {
-      if  (settingNum >= (kkint32)settings.size ())
+      if  (settingNum >= settings.size ())
         return NULL;
       return  settings[settingNum].Name ();
     }
 
-    KKStrConstPtr   SettingValue (kkint32 settingNum, kkint32& settingLineNum)  const
+
+
+    KKStrConstPtr   SettingValue (kkuint32 settingNum,
+                                  kkint32& settingLineNum
+                                 )  const
     {
-      if  (settingNum >= (kkint32)settings.size ())
+      if  (settingNum >= settings.size ())
         return NULL;
       settingLineNum = settings[settingNum].LineNum ();
       return  settings[settingNum].Value ();
     }
 
-    void  GetSettings (kkint32         settingNum,
+
+
+    void  GetSettings (kkuint32        settingNum,
                        KKStrConstPtr&  settingName,
                        KKStrConstPtr&  value,
                        kkint32&        settingLineNum
@@ -202,6 +209,7 @@ namespace  KKB
     } 
 
 
+
     void  AddSetting (const KKStr&  _name,
                       const KKStr&  _value,
                       kkint32       _lineNum
@@ -209,6 +217,8 @@ namespace  KKB
     {
       settings.AddSetting (_name, _value, _lineNum);
     }
+
+
 
     KKStrConstPtr  LookUpValue (const KKStr&  _name, kkint32& _lineNum)  const
     {
@@ -324,9 +334,7 @@ Configuration::Configuration (const Configuration&  c):
 {
   sections = new ConfSectionList ();
 
-  kkint32  x;
-
-  for  (x = 0;  x < sections->QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < sections->QueueSize ();  x++)
   {
     const ConfSectionPtr  cs = sections->IdxToPtr (x);
     sections->AddConfSection (new ConfSection (*cs));
@@ -360,28 +368,9 @@ kkMemSize Configuration::MemoryConsumedEstimated ()  const
 
 void  StripOutAnyComments (KKStr&  line)
 {
-  bool found = false;
-  kkint32  len   = line.Len ();
-  kkint32  x     = 0;
- 
-
-  while  ((x < (len - 1))  &&  (!found))
-  {
-    if  ((line[x]     == '/')  &&
-         (line[x + 1] == '/'))
-      found = true;
-    else
-      x++;
-  }
-
-  if  (found)
-  {
-    if  (x == 0)
-      line = "";
-    else
-      line = line.SubStrPart (0, x - 1);
-  }
-
+  auto idx = line.LocateStr("//");
+  if  (idx)
+    line = line.SubStrSeg(0, idx);
 } /* StripOutAnyComments */
  
 
@@ -396,7 +385,6 @@ void  Configuration::PrintFormatErrors (ostream& o)
     o << idx << "\t" << formatErrorsLineNums[idx]  << "\t"  << formatErrors[idx] << endl;
   }
 }  /* PrintFormatErrors */
-
 
 
 
@@ -467,7 +455,7 @@ void  Configuration::LoadFile (RunLog&  log)
 
       if  (line.LastChar () == ']')
       {
-        curSectionName = line.SubStrPart (1, line.Len () - 2);
+        curSectionName = line.SubStrSeg (1, line.Len () - 2);
         curSectionName.TrimLeft ();
         curSectionName.TrimRight ();
         curSectionName.Upper ();
@@ -501,9 +489,8 @@ void  Configuration::LoadFile (RunLog&  log)
         sections->AddConfSection (curSection);
       }
 
-      kkint64  equalIdx = line.LocateCharacter ('=');
-
-      if  (equalIdx < 0)
+      auto equalIdx = line.LocateCharacter ('=');
+      if  (!equalIdx)
       {
         // We have a improperly formated line.
         log.Level (-1) << endl
@@ -514,7 +501,7 @@ void  Configuration::LoadFile (RunLog&  log)
 
       else
       {
-        KKStr  settingName (line.SubStrPart (0, equalIdx - 1));
+        KKStr  settingName (line.SubStrSeg (0, equalIdx));
         settingName.TrimLeft ();
         settingName.TrimRight ();
         settingName.Upper ();
@@ -539,37 +526,32 @@ void  Configuration::LoadFile (RunLog&  log)
 
 
 
-
-kkint32  Configuration::NumOfSections ()
+kkuint32  Configuration::NumOfSections ()
 {
   return  sections->QueueSize ();
 }
 
 
 
-kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)  const
+OptionUInt32  Configuration::NumOfSettings (const KKStr&  sectionName)  const
 {
   ConfSectionPtr  section = sections->LookUp (sectionName);
 
   if  (!section)
-    return (-1);
+    return {};
 
   return  section->NumOfSettings ();
 }
 
 
 
-
-kkint32  Configuration::NumOfSettings (kkint32  sectionNum)  const
+OptionUInt32  Configuration::NumOfSettings (kkuint32  sectionNum)  const
 {
-  if  ((sectionNum < 0)  ||  (sectionNum >= sections->QueueSize ()))
-    return -1;
+  if  (sectionNum >= sections->QueueSize ())
+    return {};
 
   return  sections->IdxToPtr (sectionNum) ->NumOfSettings ();
 }
-
-
-
 
 
    
@@ -581,7 +563,7 @@ bool  Configuration::SectionDefined (const KKStr&  sectionName)  const
 
 
 
-KKStrConstPtr   Configuration::SectionName (kkint32 sectionNum)  const
+KKStrConstPtr   Configuration::SectionName (kkuint32 sectionNum)  const
 {
   ConfSectionPtr  section = sections->IdxToPtr (sectionNum);
 
@@ -592,7 +574,7 @@ KKStrConstPtr   Configuration::SectionName (kkint32 sectionNum)  const
 }
 
 
-kkint32  Configuration::SectionNum (const KKStr&  sectionName)  const
+OptionUInt32  Configuration::SectionNum (const KKStr&  sectionName)  const
 {
   if  (!sections)
     return -1;
@@ -601,15 +583,15 @@ kkint32  Configuration::SectionNum (const KKStr&  sectionName)  const
   while  (idx < sections->size ())
   {
     if  (sections->IdxToPtr(idx)->Name ()->EqualIgnoreCase (sectionName))
-      return  (kkint32)idx;
-    idx++;
+      return  idx;
+    ++idx;
   }
-  return -1;
+  return {};
 }
 
 
 
-kkint32  Configuration::SectionLineNum (kkint32 sectionNum)  const
+kkint32  Configuration::SectionLineNum (kkuint32 sectionNum)  const
 {
   ConfSectionPtr  section = sections->IdxToPtr (sectionNum);
 
@@ -622,7 +604,7 @@ kkint32  Configuration::SectionLineNum (kkint32 sectionNum)  const
 
 
 KKStrConstPtr   Configuration::SettingName (const KKStr&  sectionName,
-                                            kkint32       settingNum
+                                            kkuint32      settingNum
                                            )  const
 {
   ConfSectionPtr  section = sections->LookUp (sectionName);
@@ -634,24 +616,22 @@ KKStrConstPtr   Configuration::SettingName (const KKStr&  sectionName,
 
 
 
-
-KKStrConstPtr   Configuration::SettingName (kkint32  sectionNum,
-                                            kkint32  settingNum
+KKStrConstPtr   Configuration::SettingName (kkuint32  sectionNum,
+                                            kkuint32  settingNum
                                            )  const
 {
-  if  ((sectionNum < 0)  ||  (sectionNum >= sections->QueueSize ()))
+  if  (sectionNum >= sections->QueueSize ())
     return NULL;
 
-  if  ((settingNum < 0)  ||  (settingNum >= (*sections)[sectionNum].NumOfSettings ()))
+  if  (settingNum >= (*sections)[sectionNum].NumOfSettings ())
     return NULL;
-
 
   return  sections->IdxToPtr (sectionNum)->SettingName (settingNum);
 }
 
 
 
-KKStrConstPtr   Configuration::SettingValue (kkint32       sectionNum,
+KKStrConstPtr   Configuration::SettingValue (kkuint32      sectionNum,
                                              const KKStr&  settingName,
                                              kkint32&      lineNum
                                             )  const
@@ -671,7 +651,8 @@ KKStrConstPtr   Configuration::SettingValue (kkint32       sectionNum,
 }
 
 
-KKStr   Configuration::SettingValueToStr (kkint32       sectionNum,
+
+KKStr   Configuration::SettingValueToStr (kkuint32      sectionNum,
                                           const KKStr&  settingName,
                                           kkint32&      lineNum
                                          )  const
@@ -696,25 +677,19 @@ KKStr   Configuration::SettingValueToStr (kkint32       sectionNum,
 
 
 
-
-
-
-
-KKStrConstPtr   Configuration::SettingValue (kkint32 sectionNum,
-                                             kkint32 settingNum,
-                                             kkint32&  lineNum
+KKStrConstPtr   Configuration::SettingValue (kkuint32 sectionNum,
+                                             kkuint32 settingNum,
+                                             kkint32& lineNum
                                             )  const
 {
-  if  ((sectionNum < 0)  ||  (sectionNum >= sections->QueueSize ()))
+  if  (sectionNum >= sections->QueueSize ())
     return NULL;
 
-  if  ((settingNum < 0)  ||  (settingNum >= (*sections)[sectionNum].NumOfSettings ()))
+  if  (settingNum >= (*sections)[sectionNum].NumOfSettings ())
     return NULL;
-
 
   return  sections->IdxToPtr (sectionNum)->SettingValue (settingNum, lineNum);
 }
-
 
 
 
@@ -723,11 +698,11 @@ KKStrConstPtr   Configuration::SettingValue (const KKB::KKStr&  sectionName,
                                              kkint32&           lineNum
                                             )  const
 {
-  kkint32  sectionNum = SectionNum (sectionName);
-  if  (sectionNum < 0)
+  auto  sectionNum = SectionNum (sectionName);
+  if  (!sectionNum)
     return NULL;
 
-  return  SettingValue (sectionNum, settingName, lineNum);
+  return  SettingValue (sectionNum.value (), settingName, lineNum);
 }
 
 
@@ -737,19 +712,17 @@ KKStr  Configuration::SettingValueToStr (const KKB::KKStr&  sectionName,
                                          kkint32&           lineNum
                                         )  const
 {
-  kkint32  sectionNum = SectionNum (sectionName);
-  if  (sectionNum < 0)
+  auto  sectionNum = SectionNum (sectionName);
+  if  (!sectionNum)
     return KKStr::EmptyStr ();
 
-  return  SettingValueToStr (sectionNum, settingName, lineNum);
+  return  SettingValueToStr (sectionNum.value (), settingName, lineNum);
 }
 
 
 
-
-
 void  Configuration::GetSetting (const char*     sectionName,
-                                 kkint32         settingNum,
+                                 kkuint32        settingNum,
                                  KKStrConstPtr&  name,
                                  KKStrConstPtr&  value,
                                  kkint32&        lineNum
@@ -770,7 +743,6 @@ void  Configuration::GetSetting (const char*     sectionName,
 
 
 
-
 void  Configuration::FormatErrorsAdd (kkint32       lineNum,  
                                       const KKStr&  error
                                      )
@@ -778,7 +750,6 @@ void  Configuration::FormatErrorsAdd (kkint32       lineNum,
   formatErrors.push_back (error);
   formatErrorsLineNums.push_back (lineNum);
 }
-
 
 
 
@@ -803,5 +774,3 @@ VectorKKStr  Configuration::FormatErrorsWithLineNumbers ()  const
 
   return  errorMsgs;
 }  /* FormatErrorsWithLineNumbers */
-
-

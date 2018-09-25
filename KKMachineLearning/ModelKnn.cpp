@@ -94,6 +94,7 @@ MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example,
                                RunLog&           log
                               )
 {
+  log.Level (-1) << "ModelKnn::Predict  ***ERROR***   Not Supported   example: " << example->ExampleFileName () << endl;
   return NULL;
 }
 
@@ -114,6 +115,18 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
                          RunLog&           log
                         )
 {
+  log.Level (-1) << "ModelKnn::Predict  ***ERROR***   Not Supported" << endl
+      << "example: " << example->ExampleFileName () << endl
+      << (knownClass ? 1 : 0) << (predClass1 ? 1 : 0) << (predClass2 ? 1 : 0) << endl;
+
+  predClass1Votes = 0;
+  predClass2Votes = 0;
+  probOfKnownClass = 0;
+  predClass1Prob = 0.0;
+  predClass2Prob = 0.0;
+  numOfWinners = 0;
+  knownClassOneOfTheWinners = false;
+  breakTie = 0.0;
 }  /* Predict */
                         
 
@@ -141,8 +154,8 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkint32 idx;
-  for  (idx = 0;  idx < numOfClasses;  idx++)
+
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);
     results->PushOnBack (new ClassProb (ic, 0.0, 0.0f));
@@ -153,11 +166,11 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
 
 
 
-void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
-                                      const MLClassList&  _mlClasses,
-                                      kkint32*            _votes,
-                                      double*             _probabilities,
-                                      RunLog&             log
+void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr,
+                                      const MLClassList& ,
+                                      kkint32*,
+                                      double*,
+                                      RunLog&
                                      )
 {
 }

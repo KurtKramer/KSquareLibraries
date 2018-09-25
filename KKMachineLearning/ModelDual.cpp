@@ -126,7 +126,6 @@ kkMemSize ModelDual::MemoryConsumedEstimated ()  const
 
 
 
-
 KKStr   ModelDual::Description ()  const
 {
   KKStr  result = "Dual(" + Name () + ")";
@@ -158,6 +157,7 @@ ModelParamDualPtr   ModelDual::Param ()
 }
 
 
+
 void  ModelDual::DeleteExistingClassifiers ()
 {
   delete  config1;      config1     = NULL;
@@ -167,7 +167,6 @@ void  ModelDual::DeleteExistingClassifiers ()
   delete  classifier1;  classifier1 = NULL;
   delete  classifier2;  classifier2 = NULL;
 }  /* DeleteExistingClassifiers */
-
 
 
 
@@ -389,7 +388,6 @@ MLClassPtr  ModelDual::ReconcilePredictions (MLClassPtr  pred1,
 
 
 
-
 void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
                                         MLClassPtr        predClass,
                                         FeatureVectorPtr  encodedExample,
@@ -422,8 +420,6 @@ void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
 
 
 
-
-
 MLClassPtr  ModelDual::Predict (FeatureVectorPtr  example,
                                 RunLog&           log
                                )
@@ -452,7 +448,6 @@ MLClassPtr  ModelDual::Predict (FeatureVectorPtr  example,
 
   return  ReconcilePredictions (pred1, pred2, log);
 }  /* Predict */
-
 
 
 
@@ -541,7 +536,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                           );
   }
 
-
   if  (predClass2C1 != predClass2C2)
   {
     ReconcileProbAndVotes (classifier1,
@@ -581,8 +575,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
 
 
 
-
-
 ClassProbListPtr  ModelDual::ProbabilitiesByClass (FeatureVectorPtr  example,
                                                    RunLog&           log
                                                   )
@@ -615,8 +607,6 @@ ClassProbListPtr  ModelDual::ProbabilitiesByClass (FeatureVectorPtr  example,
 
   return  predictions1;
 }  /* ProbabilitiesByClass */
-
-
 
 
 
@@ -664,7 +654,6 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
   return;
 }  /* ProbabilitiesByClass */
-
 
 
 
@@ -730,8 +719,6 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 
 
-
-
 void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                         const MLClassList&  _mlClasses,
                                         double*             _probabilities,
@@ -789,7 +776,6 @@ void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr    _example,
   
 
 
-
 void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
                                          double**      _crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                          RunLog&       _log
@@ -836,7 +822,6 @@ void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
 
 
 
-
 kkint32 ModelDual::NumOfSupportVectors ()  const
 {
   float  totalSVs = 0.0;
@@ -863,8 +848,6 @@ kkint32 ModelDual::NumOfSupportVectors ()  const
 
 
 
-
-
 void  ModelDual::WriteXML (const KKStr&  varName,
                            ostream&      o
                           )  const
@@ -887,8 +870,6 @@ void  ModelDual::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 

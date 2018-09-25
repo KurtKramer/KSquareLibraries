@@ -232,8 +232,6 @@ void  KKB::tqli (kkint32   n,
           cerr << std::endl << std::endl
                << "EigenVector::tqli    **** ERROR ****            To many iterations in tqli" << std::endl
                << std::endl;
-          //osWaitForEnter ();
-          //exit (-1);
           return;
         }
         iter++;

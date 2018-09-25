@@ -14,11 +14,11 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureFileIOC45.h"
 #include "FileDesc.h"
@@ -46,7 +46,7 @@ FeatureFileIOC45::~FeatureFileIOC45()
 FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile 
                                       (const KKStr&   _fileName,
                                        MLClassList&   _mlClasses,
-                                       kkint32        _maxCount,
+                                       OptionUInt32   _maxCount,
                                        VolConstBool&  _cancelFlag,    /**< will be monitored,  if set to True  Load will terminate. */
                                        bool&          _successful,
                                        bool&          _changesMade,
@@ -55,17 +55,13 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFeatureFile  File[" << _fileName << "]  FileFormat[" << DriverName () << "]" << endl;
   
-  if  (_maxCount < 0)
-    _maxCount = int32_max;
-
-
   KKStr  namesFileName;
   KKStr  dataFileName;
 
   {
     // First determine the name of the names and data file.
-    kkint64 lastDotPos = _fileName.LocateLastOccurrence ('.');
-    if  (lastDotPos < 0)
+    auto lastDotPos = _fileName.LocateLastOccurrence ('.');
+    if  (!lastDotPos)
     {
       namesFileName = _fileName + ".names";
       dataFileName  = _fileName;
@@ -74,7 +70,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     }
     else
     {
-      KKStr leadingPart = _fileName.SubStrPart (0, lastDotPos - 1);
+      KKStr leadingPart = _fileName.SubStrSeg (0, lastDotPos);
       KKStr extension   = _fileName.SubStrPart (lastDotPos + 1);
       extension.Upper ();
       if  (extension == "NAMES")
@@ -90,7 +86,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
         }
       }
 
-      else if  ((extension == "DATA") ||  (extension == "TEST"))
+      else if  ((extension == "DATA")  ||  (extension == "TEST"))
       {
         dataFileName  = _fileName;
         namesFileName = leadingPart + ".names";
@@ -152,8 +148,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
     _successful = false;
     return  NULL;
   }
-
-
+  
   FeatureVectorListPtr  examples = LoadFile (dataFileName, fileDesc, _mlClasses, dataFile, _maxCount, _cancelFlag, _changesMade, errorMessage, _log);
   if  (examples == NULL)
   {
@@ -171,18 +166,15 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
 
 
-
-
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
-  kkint64  lastBarPos = ln.LocateLastOccurrence ('|');
-  if  (lastBarPos >= 0)
-    ln = ln.SubStrPart (0, lastBarPos - 1);
+  auto  lastBarPos = ln.LocateLastOccurrence ('|');
+  if  (lastBarPos)
+    ln = ln.SubStrSeg (0, lastBarPos);
 
   ln.TrimLeft  (" \n\r\t");
   ln.TrimRight (" \n\r\t");
 }  /* C45StripComments */
-
 
 
 
@@ -233,6 +225,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 }  /* C45StrPreProcessName */
 
 
+
 /**
  *@brief  Locates first 'ch' in 'txt' that is  not preceded by an escape character('\\').
  */
@@ -253,8 +246,6 @@ kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
 
   if  (x < txt.Len ())  return (kkint32)x;  else  return -1;
 }  /* C45LocateNextCharacter */
-
-
 
 
 
@@ -283,7 +274,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     return;
   }
 
-  KKStr  name    = attrStr.SubStrPart (0, colPos - 1);
+  KKStr  name    = attrStr.SubStrSeg (0, colPos);
   KKStr  typeStr = attrStr.SubStrPart (colPos + 1);
   C45StrPreProcessName (name);
 
@@ -338,7 +329,6 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     return;
   }
 
-
   if  (attributeType == AttributeType::Nominal)
   {
     // Will now parse out the nominal values.
@@ -354,7 +344,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
       }
       else
       {
-        nominalValue = typeStr.SubStrPart (0, commaPos - 1);
+        nominalValue = typeStr.SubStrSeg (0, commaPos);
         typeStr = typeStr.SubStrPart (commaPos + 1);
       }
 
@@ -446,7 +436,6 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
     return  NULL;
   }
 
-
   FileDescPtr  fileDesc = new FileDesc ();
   fileDesc->AddClasses (*_classes);
   _estSize = 0;
@@ -487,7 +476,7 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
       }
       else
       {
-        attrStr = ln.SubStrPart (0, dotPos - 1);
+        attrStr = ln.SubStrSeg (0, dotPos);
         ln = ln.SubStrPart (dotPos + 1);
       }
 
@@ -561,8 +550,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
       return "";
     }
   }
-
-
+  
   else if  (ch == '|')
   {
     // The rest of the line is meant to be a comment,  
@@ -581,7 +569,6 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     }
     eof = in.eof ();
   }
-
 
   kkint32 tokenLen = 0;
 
@@ -711,12 +698,11 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
 
 
-
 FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
                                                   istream&          _in,
-                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  OptionUInt32      _maxCount,    // Maximum # images to load.
                                                   VolConstBool&     _cancelFlag,
                                                   bool&             _changesMade,
                                                   KKStr&            _errorMessage,
@@ -742,7 +728,9 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  ((!eof)  &&  (!_cancelFlag))
+  kkuint32 maxToLoad = (_maxCount  ? _maxCount.value () : uint32_max);
+
+  while  ((!eof)  &&  (!_cancelFlag)  &&  (examples->QueueSize () < maxToLoad))
   {
     lineIsValid = true;
     imageFileName = "";
@@ -923,9 +911,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
     if  ((lineCount % 1000) == 0)
       cout  << "Records Loaded " << lineCount << endl;
-
-    if  ((kkint32)examples->size () > _maxCount)
-      break;
   }
 
   _log.Level (50) << "FeatureFileIOC45::LoadFile   _changesMade: " << _changesMade << "   _changesMade: " << _changesMade  << endl 
@@ -939,7 +924,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
 
 
-
 void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
                                                          KKStr&        namesFileName,
                                                          KKStr&        dataFileName
@@ -947,9 +931,9 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 {
   KKStr  c45Name;
 
-  kkint64  lastDotPos = fileName.LocateLastOccurrence ('.');
+  auto  lastDotPos = fileName.LocateLastOccurrence ('.');
 
-  if  (lastDotPos < 0)
+  if  (!lastDotPos)
   {
     // First try file name with ".data" extension, then with no extension
     namesFileName = fileName + ".names";
@@ -957,7 +941,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
   }
   else
   {
-    KKStr  leedingPart = fileName.SubStrPart (0, lastDotPos);
+    KKStr  leedingPart = fileName.SubStrSeg (0, lastDotPos + 1);
     KKStr  extension   = fileName.SubStrPart (lastDotPos + 1);
     extension.Upper ();
     if  ((extension == "NAMES")  ||  (extension == "NAME"))
@@ -1006,9 +990,6 @@ KKStr  FeatureFileIOC45::C45AdjName (const  KKStr&  oldName)
 
 
 
-
-
-
 void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
                                    const KKStr&          _fileName,
                                    FeatureNumListConst&  _selFeatures,
@@ -1033,12 +1014,11 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
 
   AttributeConstPtr*  attrTable = fileDesc->CreateAAttributeConstTable ();
 
-  kkint32  x;
   {
     // Write out names file
     ofstream  nf (namesFileName.Str ());
     MLClassListPtr  classes = _data.ExtractListOfClasses ();
-    for  (x = 0;  x < classes->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < classes->QueueSize ();  x++)
     {
       if  (x > 0)
         nf << ", ";
@@ -1046,7 +1026,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
     }
     nf << "." << endl;
 
-    for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
+    for  (kkuint16 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
       auto attr = attrTable[featureNum];
@@ -1113,12 +1093,11 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
 
   FeatureVectorPtr   example = NULL;
 
-  kkint32 idx;
-  for  (idx = 0;  (idx < _data.QueueSize ())  &&  (!_cancelFlag);  idx++)
+  for  (kkuint32 idx = 0;  (idx < _data.QueueSize ())  &&  (!_cancelFlag);  ++idx)
   {
     example = _data.IdxToPtr (idx);
 
-    for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+    for  (kkuint16 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
 

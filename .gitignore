@@ -63,9 +63,16 @@ KSquareLibraries.VC.db
 
 KSquareLibraries - Shortcut.lnk
 *.ipch
-.vs/KSquareLibraries/v15/Server/sqlite3/db.lock
-*.db
 *.tlog
-*.ide
-.vs/KSquareLibraries/v15/Solution.VC.db-shm
-*.db-wal
+.vs/*
+.vs/KSquareLibraries/v15/Browse.VC.db
+.vs/KSquareLibraries/v15/Solution.VC.db
+.vs/KSquareLibraries/v15/Server/sqlite3/db.lock
+.vs/KSquareLibraries/v15/Server/sqlite3/storage.ide
+.vs/KSquareLibraries/v15/Browse.VC.db
+*.lock
+.vs/KSquareLibraries/v15/Solution.VC.db
+*.tlog
+.vs/KSquareLibraries/v15/Server/sqlite3/storage.ide
+*.db-shm
+.vs/KSquareLibraries/v15/Solution.VC.db-wal

@@ -152,9 +152,7 @@ namespace KKMLL
 
     kkMemSize                MemoryConsumedEstimated    () const;
 
-    kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
-                                                         RunLog&           log
-                                                        ) const;
+    kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc) const;
 
     const svm_parameter&     Param                      () const {return param;}
 

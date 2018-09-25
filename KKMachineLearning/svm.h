@@ -102,7 +102,7 @@ namespace  SVM233
     kkint32  dimSelect;
     double*  featureWeight;
     kkint32  hist;
-    kkint32  nr_class;
+    kkuint32 nr_class;
     kkint32  numSVM;
     float    sample;      //random sample ratio
     kkint32  sampleSV;
@@ -135,7 +135,7 @@ namespace  SVM233
 struct SvmModel233
 {
   svm_parameter param;        // parameter
-  kkint32       nr_class;     // number of classes, = 2 in regression/one class svm
+  kkuint32      nr_class;     // number of classes, = 2 in regression/one class svm
   kkint32       l;            // total #SV
   VectorKKStr   exampleNames; /*!< allows the user to provide names to the labels  */
   svm_node**    SV;           /*!< SVs (SV[l])    Support vector feature numbers   */

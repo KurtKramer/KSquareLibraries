@@ -7,13 +7,12 @@
 using namespace std;
 
 #include "KKBaseTypes.h"
+#include "Option.h"
 #include "OSservices.h"
 using namespace KKB;
 
-
 #include "DuplicateImages.h"
-
-                
+               
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"
@@ -393,7 +392,7 @@ bool  DuplicateImage::AllTheSameClass ()
 
 bool  DuplicateImage::AlreadyHaveExample (FeatureVectorPtr example)
 {
-  return  (duplicatedImages.PtrToIdx (example) >= 0);
+  return  duplicatedImages.PtrToIdx (example).has_value ();
 }
 
 
@@ -403,7 +402,6 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
   kkint32  smallestScanLine = 99999999;
   FeatureVectorPtr  imageWithSmallestScanLine = NULL;
 
-
   for  (auto i: duplicatedImages)
   {
     KKStr  rootName = osGetRootName (i->ExampleFileName ());
@@ -411,11 +409,11 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
 
     kkint32  scanLine = 9999999;
 
-    if  (rootName.SubStrPart (0, 4) == "FRAME")
+    if  (rootName.StartsWith ("FRAME"))
     {
       // Scan line will be last seq number in name.
-      kkint64 x = rootName.LocateLastOccurrence ('_');
-      if  (x > 0)
+      auto x = rootName.LocateLastOccurrence ('_');
+      if  (x  &&  (x > 0U))
       {
         KKStr  scanLineStr = rootName.SubStrPart (x + 1);
         scanLine = atoi (scanLineStr.Str ());
@@ -424,13 +422,16 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     else
     {
       // Scan should be 2nd to last seq number in name.
-      kkint64 x = rootName.LocateLastOccurrence ('_');
-      if  (x > 0)
+      auto x = rootName.LocateLastOccurrence ('_');
+      if  (x)
       {
-        KKStr  workStr = rootName.SubStrPart (0, x - 1);
-        kkint64 y = workStr.LocateLastOccurrence ('_');
-        KKStr  scanLineStr = workStr.SubStrPart (y + 1);
-        scanLine = atoi (scanLineStr.Str ());
+        KKStr  workStr = rootName.SubStrSeg (0, x);
+        auto y = workStr.LocateLastOccurrence ('_');
+        if  (y)
+        {
+          KKStr  scanLineStr = workStr.SubStrPart (y + 1);
+          scanLine = atoi (scanLineStr.Str ());
+        }
       }
     }
 

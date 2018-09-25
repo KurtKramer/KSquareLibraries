@@ -11,12 +11,12 @@
 #include <string.h>
 #include <string>
 #include <vector>
-
 #include "MemoryDebug.h"
 using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "KKException.h"
 #include "KKStr.h"
 using namespace KKB;
 
@@ -384,7 +384,6 @@ char  KKStrParser::PeekLastChar ()  const
 
 
 
-
 char  KKStrParser::GetNextTokenChar (const char* delStr)
 {
   KKStr  nextToken = GetNextToken (delStr);
@@ -393,11 +392,37 @@ char  KKStrParser::GetNextTokenChar (const char* delStr)
 }
 
 
+
 KKB::DateTime  KKStrParser::GetNextTokenDateTime (const char* delStr)
 {
   return  KKB::DateTime (GetNextToken (delStr));
 }
 
+
+
+kkint16  KKStrParser::GetNextTokenInt16 (const char* delStr)
+{
+  auto token = GetNextToken (delStr);
+  auto zed = token.ToInt64 ();
+
+  if  (zed > INT16_MAX)
+  {
+    KKStr errMsg;
+    errMsg << "KKStrParser::GetNextTokenInt16  " << token << " greater than capacity of int16: " << INT16_MAX;
+    cerr << errMsg << endl;
+    throw KKException (errMsg);
+  }
+
+  if  (zed < INT16_MIN)
+  {
+    KKStr errMsg;
+    errMsg << "KKStrParser::GetNextTokenInt16  " << token << " less than capacity of int16: " << INT16_MIN;
+    cerr << errMsg << endl;
+    throw KKException (errMsg);
+  }
+
+  return  (kkint16)zed;
+}
 
 
 
@@ -431,6 +456,13 @@ float  KKStrParser::GetNextTokenFloat  (const char* delStr)
 kkuint32  KKStrParser::GetNextTokenUint (const char* delStr)
 {
   return  GetNextToken (delStr).ToUint ();
+}
+
+
+
+kkuint32  KKStrParser::GetNextTokenUint16 (const char* delStr)
+{
+  return  GetNextToken (delStr).ToUint16 ();
 }
 
 

@@ -10,11 +10,8 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include <strstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include <sys/types.h>
@@ -26,7 +23,6 @@ using namespace std;
 #include <unistd.h>
 #endif
 
-
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
 #include "OSservices.h"
@@ -34,10 +30,9 @@ using namespace std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
-
 #include "KKJobManager.h"
 using namespace  KKJobManagment;
+
 
 
 KKJobManager::KKJobManager (const KKJobManager& j):
@@ -72,15 +67,13 @@ KKJobManager::KKJobManager (const KKJobManager& j):
 
 
 
-
-
 // Make sure the the _summaryResultsFileName is deleted before we start processing.
 KKJobManager::KKJobManager (JobManagerPtr _manager,                   // Ptr to job that is managing this 'KKJobManager'
                             kkint32       _jobId,
                             kkint32       _parentId,
                             kkint32       _numPorcessesAllowed,
                             const KKStr&  _managerName,               // Name of this 'KKJobManager' ; sttaus and lock file will be based on it.
-                            kkint32       _numJobsAtATime,            // The number of jobs that can be allocatd at one time for a single process to execute.
+                            kkuint32      _numJobsAtATime,            // The number of jobs that can be allocatd at one time for a single process to execute.
                             RunLog&       _log
                            ):
   KKJob (_manager, _jobId, _parentId, _numPorcessesAllowed, _log),
@@ -231,7 +224,6 @@ void    KKJobManager::Block ()
 
 
 
-
 void   KKJobManager::EndBlock ()
 {
   blockLevel--;
@@ -240,8 +232,7 @@ void   KKJobManager::EndBlock ()
   kkint32  returnCd;
   #endif
   
- 
-  log.Level (20) << "KKJobManager::EndBlock - Ending Block    blockLevel[" << blockLevel << "]" << endl;
+   log.Level (20) << "KKJobManager::EndBlock - Ending Block    blockLevel[" << blockLevel << "]" << endl;
 
   if  (blockLevel > 0)
   {
@@ -267,7 +258,7 @@ void   KKJobManager::EndBlock ()
      if  (!SetFileAttributes (lockFileName.Str (), fileAttributes))
      {
        DWORD  lastErrorNum = GetLastError ();
-       log.Level (-1) << "KKJobManager::EndBlock - *** ERROR *** Could not set Lock File  to  Normal." << endl;
+       log.Level (-1) << "KKJobManager::EndBlock - *** ERROR *** Could not set Lock File  to  Normal  lastErrorNum: " << (kkuint64)lastErrorNum << endl;
      }
      else
      {
@@ -288,14 +279,12 @@ void   KKJobManager::EndBlock ()
 
 
 
-
 kkint32  KKJobManager::GetNextJobId ()
 {
   kkint32  jobIdToReturn = nextJobId;
   nextJobId++;
   return  jobIdToReturn;
 }
-
 
 
 
@@ -318,8 +307,8 @@ void  KKJobManager::StatusFileProcessLineJobStatusChange (KKStr&    statusLineSt
   KKStr statusStr = statusLineStr.ExtractToken2 ("\t");
   statusStr.TrimLeft ();
   statusStr.TrimRight ();
-  KKJob::JobStatus  status = KKJob::JobStatusFromStr (statusStr);
-  if  (status == jsNULL)
+  KKJob::JobStatus  jobStatus = KKJob::JobStatusFromStr (statusStr);
+  if  (jobStatus == jsNULL)
   {
     log.Level (-1) << endl << endl << endl 
                    << "ProcessStatusLineJobStatusChange    ***Error***      Invalid Status Specified" << endl
@@ -332,9 +321,8 @@ void  KKJobManager::StatusFileProcessLineJobStatusChange (KKStr&    statusLineSt
     exit (-1);
   }
   
-  j->Status (status);
+  j->Status (jobStatus);
 }  /* ProcessStatusLineJobStatusChange */
-
 
 
 
@@ -342,7 +330,7 @@ void  KKJobManager::StatusFileProcessLine (const KKStr&  ln,
                                            istream&      statusFile
                                           )
 {
-  if  (ln.SubStrPart (0, 1) == "//")
+  if  (ln.StartsWith ("//"))
   {
     // A coment line;  we can ignore it.
     return;
@@ -423,7 +411,6 @@ void  KKJobManager::StatusFileProcessLine (const KKStr&  ln,
 
 
 
-
 void  KKJobManager::StatusFileLoad ()
 {
   log.Level (10) << "KKJobManager::StatusFileLoad." << endl;
@@ -467,7 +454,7 @@ void  KKJobManager::StatusFileRefresh ()
   while  (!statusFile->eof ())
   {
     statusStr = buff;
-    if  (statusStr.SubStrPart (0, 4) == "<KKJob ")
+    if  (statusStr.StartsWith ("<KKJob "))
     {
       ProcessJobXmlBlockOfText (statusStr, *statusFile);
     }
@@ -493,12 +480,11 @@ void  KKJobManager::StatusFileRefresh ()
 
 
 
-
 void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
                                                istream&      i
                                               )
 {
-  if  ((startStr.SubStrPart (0, 4) != "<KKJob ")  ||  (startStr.LastChar () != '>'))
+  if  ((!startStr.StartsWith ("<KKJob "))  ||  (startStr.LastChar () != '>'))
   {
     log.Level (-1) << endl 
                    << "KKJobManager::ProcessJobXmlBlockOfText   ***ERROR***   StartStr[" << startStr << "] is not a KKJob String." << endl
@@ -511,8 +497,7 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
   s.ChopLastChar ();
 
   KKStr  jobTypeStr = "";
-  kkint32 jobId = -1;
-
+  kkint32 thisJobId = -1;
 
   VectorKKStr  parameters = s.Split (',');
   for  (kkuint32 x = 0;  x < parameters.size ();  ++x)
@@ -531,11 +516,11 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
       jobTypeStr = fieldValue;
 
     else if  (fieldName.CompareIgnoreCase ("JobId") == 0)
-      jobId = fieldValue.ToInt ();
+      thisJobId = fieldValue.ToInt ();
   }
 
   
-  if  (jobTypeStr.Empty () ||  (jobId < 0))
+  if  (jobTypeStr.Empty () ||  (thisJobId < 0))
   {
     log.Level (-1) << endl 
                    << "KKJobManager::ProcessJobXmlBlockOfText   ***ERROR***   StartStr[" << startStr << "]." << endl
@@ -545,11 +530,11 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
   }
 
 
-  KKJobPtr  j = jobs->LookUpByJobId (jobId);
+  KKJobPtr  j = jobs->LookUpByJobId (thisJobId);
   if  (j == NULL)
   {
     // We do not have this job in memory yet.  We will have to create it now.
-    KKStr  emptyStatusStr = "JobId\t" + StrFormatInt (jobId, "ZZZZ0");
+    KKStr  emptyStatusStr = "JobId\t" + StrFormatInt (thisJobId, "ZZZZ0");
     j = KKJob::CallAppropriateConstructor (this, jobTypeStr, emptyStatusStr);
   }
 
@@ -559,12 +544,7 @@ void   KKJobManager::ProcessJobXmlBlockOfText (const KKStr&  startStr,
 
 
 
-
-
-
-
-
-ofstream*    KKJobManager::StatusFileOpen (ios::openmode  openMode)
+ofstream*   KKJobManager::StatusFileOpen (ios::openmode  openMode)
 {
   log.Level (20) << "KKJobManager::StatusFileOpen."  << endl;
 
@@ -601,7 +581,6 @@ ofstream*    KKJobManager::StatusFileOpen (ios::openmode  openMode)
 
 
 
-
 void  KKJobManager::StatusFileWrite ()
 {
   log.Level (10) << "KKJobManager::StatusFileWrite" << endl;
@@ -619,8 +598,7 @@ void  KKJobManager::StatusFileWrite ()
               << "ExpansionFirstJobId" << "\t" << expansionFirstJobId           << endl
               << endl;
 
-  kkint32  x;
-  for  (x = 0;  x < jobs->QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < jobs->QueueSize ();  x++)
   {
     KKJobPtr  j = jobs->IdxToPtr (x);
     *statusFile << "KKJob" << "\t" << j->JobType () << "\t" << j->ToStatusStr () << endl;
@@ -635,8 +613,6 @@ void  KKJobManager::StatusFileWrite ()
 
 
 
-
-
 void  KKJobManager::ReportCpuTimeUsed (ofstream* statusFile)
 {
   // While we have the status file open lets report CPU time used so far
@@ -648,9 +624,6 @@ void  KKJobManager::ReportCpuTimeUsed (ofstream* statusFile)
               << endl
               << "CurrentDateTime" << "\t" << osGetLocalDateTime () << endl;
 }  /* ReportCpuTimeUsed */
-
-
-
 
 
 
@@ -703,16 +676,12 @@ void  KKJobManager::StatusFileInitialize ()
 
 
 
-
-
-
 kkint32  KKJobManager::AllocateNextJobId ()
 {
-  kkint32  jobId = nextJobId;
+  kkint32  jobIdToReturn = nextJobId;
   nextJobId++;
-  return  jobId;
+  return  jobIdToReturn;
 }
-
 
 
 
@@ -720,8 +689,6 @@ void   KKJobManager::Update (JobManagerPtr  p)
 {
   status = p->status;
 }
-
-
 
 
 
@@ -737,11 +704,6 @@ KKStr  KKJobManager::ToStatusStr ()
 
   return  statusStr;
 }  /* ToStatusStr */
-
-
-
-
-
 
 
 
@@ -799,7 +761,6 @@ void  KKJobManager::SetQuitRunningFlag ()
 
 
 
-
 void   KKJobManager::ProcessNextExpansion (ostream&  o)
 {
   KKJobListPtr jobsJustCompleted = new KKJobList (this);
@@ -844,7 +805,6 @@ void   KKJobManager::ProcessNextExpansion (ostream&  o)
     << "ExpansionFirstJobId"  << "\t" << expansionFirstJobId  << endl;
 
 }  /* ProcessNextExpansion */
-
 
 
 
@@ -893,8 +853,7 @@ KKJobListPtr  KKJobManager::GetNextSetOfJobs (KKJobListPtr  completedJobs)
     statusFile->close ();
     delete  statusFile;  statusFile = NULL;
   }
-
-
+  
   KKJobListPtr  jobsToExecute = new KKJobList (this);
   jobsToExecute->Owner (false);
 
@@ -950,7 +909,6 @@ KKJobListPtr  KKJobManager::GetNextSetOfJobs (KKJobListPtr  completedJobs)
 
 
 
-
 bool  KKJobManager::AreAllJobsDone ()
 {
   if  (jobs)
@@ -963,7 +921,6 @@ bool  KKJobManager::AreAllJobsDone ()
     return  false;
   }
 }  /* AreAllJobsAreDone */
-
 
 
 
@@ -1014,7 +971,6 @@ void   KKJobManager::Run ()
     delete  executedJobs;  executedJobs = NULL;
   }
 
-
   Block ();
   StatusFileRefresh ();
   if  ((!quitRunning)  &&  (status != KKJob::jsDone))
@@ -1037,7 +993,5 @@ void   KKJobManager::Run ()
   }
   EndBlock ();
 
-
   log.Level (10) << "KKJobManager::Run    Exiting." << endl;
 }  /* Run */
-

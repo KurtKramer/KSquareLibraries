@@ -1,5 +1,4 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -13,7 +12,6 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -21,7 +19,6 @@ using namespace  std;
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "ModelOldSVM.h"
 #include "BinaryClassParms.h"
@@ -45,7 +42,6 @@ ModelOldSVM::ModelOldSVM ():
 {
   Model::param = new ModelParamOldSVM ();
 }
-
 
 
 
@@ -83,7 +79,6 @@ ModelOldSVM::ModelOldSVM (const ModelOldSVM& _model)
 
 
 
-
 ModelOldSVM::~ModelOldSVM ()
 {
   delete  svmModel;
@@ -92,6 +87,7 @@ ModelOldSVM::~ModelOldSVM ()
   delete  assignments;
   assignments = NULL;
 }
+
 
 
 kkMemSize  ModelOldSVM::MemoryConsumedEstimated ()  const
@@ -107,11 +103,11 @@ kkMemSize  ModelOldSVM::MemoryConsumedEstimated ()  const
 
 
 
-
 ModelOldSVMPtr  ModelOldSVM::Duplicate ()  const
 {
   return new ModelOldSVM (*this);
 }
+
 
 
 KKStr  ModelOldSVM::Description ()  const
@@ -146,7 +142,6 @@ FeatureNumListConstPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
 
 
 
-
 FeatureNumListConstPtr   ModelOldSVM::GetFeatureNums ()  const
 {
   return svmModel->GetFeatureNums ();
@@ -167,6 +162,7 @@ void  ModelOldSVM::SupportVectorStatistics (kkint32& numSVs,
 {
   return  svmModel->SupportVectorStatistics (numSVs, totalNumSVs);
 }
+
 
 
 ModelParamOldSVMPtr   ModelOldSVM::Param () const
@@ -260,9 +256,6 @@ MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example,
 
 
 
-
-
-
 void  ModelOldSVM::PredictRaw (FeatureVectorPtr  example,
                                MLClassPtr     &  predClass,
                                double&           dist
@@ -270,8 +263,6 @@ void  ModelOldSVM::PredictRaw (FeatureVectorPtr  example,
 {
   svmModel->PredictRaw (example, predClass, dist);
 }  /* PredictRaw */
-
-
 
 
 
@@ -297,8 +288,8 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
   }
   
   ClassProbListPtr  results = new ClassProbList ();
-  kkint32 idx = 0;
-  for  (idx = 0;  idx < numOfClasses;  idx++)
+
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classes->IdxToPtr (idx);
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
@@ -311,9 +302,6 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
 
   return  results;
 }  /* ProbabilitiesByClass */
-
-
-
 
 
 
@@ -338,7 +326,6 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 
-
 void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    example,
                                          const MLClassList&  _mlClasses,
                                          kkint32*            _votes,
@@ -360,10 +347,6 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 
 
-
-
-
-
 vector<KKStr>  ModelOldSVM::SupportVectorNames (MLClassPtr  c1,
                                                 MLClassPtr  c2
                                                )  const
@@ -373,18 +356,10 @@ vector<KKStr>  ModelOldSVM::SupportVectorNames (MLClassPtr  c1,
 
 
 
-
-
-
-
 vector<KKStr>  ModelOldSVM::SupportVectorNames () const
 {
   return  svmModel->SupportVectorNames ();
 }  /* SupportVectorNames */
-
-
-
-
 
 
 
@@ -399,9 +374,6 @@ vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors (FeatureVectorPtr  ex
 
 
 
-
-
-
 vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors2 (FeatureVectorPtr  example,
                                                              kkint32           numToFind,
                                                              MLClassPtr        c1,
@@ -413,13 +385,10 @@ vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors2 (FeatureVectorPtr  e
 
 
 
-
-
 bool  ModelOldSVM::NormalizeNominalAttributes ()  const
 {
   return  svmModel->NormalizeNominalAttributes ();
 }  /* NormalizeNominalAttributes */
-
 
 
 
@@ -431,7 +400,6 @@ void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classesOfInterest,
   svmModel->RetrieveCrossProbTable (classesOfInterest, crossProbTable, log);
   return;
 }  /* RetrieveCrossProbTable */
-
 
 
 
@@ -507,7 +475,6 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
-
 FeatureVectorPtr  ModelOldSVM::PrepExampleForPrediction (FeatureVectorPtr  fv,
                                                          bool&             newExampleCreated
                                                         )
@@ -530,9 +497,6 @@ FeatureVectorPtr  ModelOldSVM::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
   return  fv;
 }  /* PrepExampleForPrediction */
-
-
-
 
 
 
@@ -646,7 +610,6 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
 
 
 
-
 class  XmlFactoryModelOldSVM: public XmlFactory                           
 {                                                                         
 public:                                                                   
@@ -680,7 +643,6 @@ public:
 };
 
 
+
 XmlFactoryModelOldSVM*   XmlFactoryModelOldSVM::factoryInstance
               = XmlFactoryModelOldSVM::FactoryInstance ();
-
-

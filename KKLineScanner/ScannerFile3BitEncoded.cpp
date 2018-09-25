@@ -8,7 +8,6 @@
 #include <map>
 #include <vector>
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include "GlobalGoalKeeper.h"
@@ -25,6 +24,7 @@ using namespace KKB;
 using namespace  KKLSC;
 
 
+
 struct  ScannerFile3BitEncoded::OpRecTextBlock  // OpCode = 0
 {
   kkuint16  opCode          : 3;
@@ -33,6 +33,7 @@ struct  ScannerFile3BitEncoded::OpRecTextBlock  // OpCode = 0
                                   *   the last one having this flag set to '1'.                      */
   kkuint16  length          : 12;  /**< Text Block length.  */
 };  /* OpRecTextBlock */
+
 
 
 struct  ScannerFile3BitEncoded::OpRec4RawPixels   // OpCode = 1
@@ -44,6 +45,7 @@ struct  ScannerFile3BitEncoded::OpRec4RawPixels   // OpCode = 1
   kkuint16  pix2   :3;
   kkuint16  pix3   :3;
 };  /* OpRec4RawPixels */
+
 
 
 struct  ScannerFile3BitEncoded::OpRecSpaces     // OpCode = 2
@@ -71,8 +73,6 @@ struct  ScannerFile3BitEncoded::OpRecRunLen     // OpCode = 4
   kkuint16  runLen  :9;
   kkuint16  pix     :3;
 };  /* OpRecBlackOuts */
-
-
 
 
 
@@ -203,7 +203,6 @@ void  ScannerFile3BitEncoded::ExitCleanUp ()
 
 
 
-
 void  ScannerFile3BitEncoded::AllocateWorkLineAndOutputBuf ()
 {
   delete  outputBuff;  outputBuff  = NULL;
@@ -218,12 +217,10 @@ void  ScannerFile3BitEncoded::AllocateWorkLineAndOutputBuf ()
 
 
 
-
 void  ScannerFile3BitEncoded::ScanRate (float  _scanRate)
 {
   ScannerFile::ScanRate (_scanRate);
 }
-
 
 
 
@@ -454,7 +451,6 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
 
 
 
-
 void  ScannerFile3BitEncoded::WriteBufferFrame ()
 {
   frameBufferFileOffsetLast = osFTELL (file);
@@ -469,7 +465,7 @@ void  ScannerFile3BitEncoded::WriteBufferFrame ()
     ++frameRow;
   }
  
-  #if  defined(OS_WINDOWS)
+  #if  defined(KKOS_WINDOWS)
     frameBufferFileOffsetNext = osFTELL (file);
   #else
     /**
@@ -685,9 +681,6 @@ void  ScannerFile3BitEncoded::WriteNextScanLine2 (const uchar*  buffer,
 
   fileSizeInBytes = osFTELL (file);
 }  /* WriteNextScanLine2 */
-
-
-
 
 
 

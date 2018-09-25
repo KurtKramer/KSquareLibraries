@@ -10,7 +10,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "OSservices.h"
@@ -18,12 +17,10 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
-
 #include "FeatureFileIOColumn.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace KKMLL;
-
 
 
 FeatureFileIOColumn  FeatureFileIOColumn::driver;
@@ -126,7 +123,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     OptionUInt32      _maxCount,    // Maximum # images to load.
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -144,7 +141,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
   kkint32     lineCount     = 0;
   kkint32     numOfFeatures = _fileDesc->NumOfFields ();
 
-  if (_maxCount < 0)
+  if (!_maxCount)
     _maxCount = INT_MAX;
 
   // Each row will represent a specific feature
@@ -254,7 +251,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
   {
     // Lets first write out the ClassName row
 
-    kkint32  lineNum = 0;
+    kkuint32  lineNum = 0;
 
     while  (lineNum < _data.QueueSize ())
     {

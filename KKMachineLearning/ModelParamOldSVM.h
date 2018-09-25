@@ -96,9 +96,7 @@ namespace KKMLL
     virtual SVM_KernalType           KernalType                 () const;
     virtual SVM_MachineType          MachineType                () const;
 
-    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
-                                                                 RunLog&           log
-                                                                ) const;
+    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc) const;
 
     virtual const svm_parameter&     Param                      () const;
     virtual float                    SamplingRate               () const;

@@ -157,7 +157,7 @@ namespace KKMLL
     void  AddAttributes (const KKMLL::AttributeList&  attributesToAdd);
 
 
-    kkint32                     Cardinality (kkint32  fieldNum)  const;
+    kkint32                     Cardinality (kkuint32  fieldNum)  const;
 
     KKMLL::AttributePtr*        CreateAAttributeTable ();  /**< Caller will be responsible for deleting  */
 
@@ -184,7 +184,7 @@ namespace KKMLL
 
     KKMLL::AttributeConstPtr    LookUpByName (const KKStr&  attributeName)  const;
 
-    kkint32                     LookUpNominalCode (kkint32       fieldNum, 
+    kkint32                     LookUpNominalCode (kkuint32      fieldNum, 
                                                    const KKStr&  nominalValue
                                                   )  const;
 
@@ -275,7 +275,7 @@ namespace KKMLL
     kkint32 NumOfAttributes ()  {return attributes.QueueSize ();}
 
 
-    void  ValidateFieldNum (kkint32      fieldNum,
+    void  ValidateFieldNum (kkuint32     fieldNum,
                             const char*  funcName
                            )  const;
 

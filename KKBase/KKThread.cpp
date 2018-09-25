@@ -296,7 +296,7 @@ extern "C"
     {
       tp->Crashed (true);
       const char* e2What = e2.what ();
-      KKStr  msg (30 + strlen (e2What));
+      KKStr  msg (30 + (kkStrUint)strlen (e2What));
       msg << "std::exception: " << e2What;
       tp->ExceptionText (msg);
     }

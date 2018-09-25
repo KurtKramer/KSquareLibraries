@@ -37,6 +37,7 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+
 Classifier2::Classifier2 (TrainingProcess2Ptr  _trainer,
                           RunLog&              _log
                          ):
@@ -274,8 +275,7 @@ void  Classifier2::ClassifyAExample (FeatureVector&  example,
   predClass2Prob = -1.0f;
 
   MLClassPtr origClass  = example.MLClass ();
-
-
+  
   trainedModel->Predict (&example,
                          origClass,
                          predClass1,
@@ -293,7 +293,6 @@ void  Classifier2::ClassifyAExample (FeatureVector&  example,
 
   if  (!predClass1)
     predClass1 = noiseMLClass;
-
 
   if  (subClassifiers)
   {
@@ -376,7 +375,6 @@ MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
 
 
 
-
 MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
                                          kkint32&        numOfWinners,
                                          bool&           knownClassOneOfTheWinners
@@ -451,7 +449,6 @@ vector<ProbNamePair>  Classifier2::FindWorstSupportVectors2 (FeatureVectorPtr  e
   return  trainedModelSVMModel->FindWorstSupportVectors2 (example, numToFind, c1, c2);
 }
 
- 
 
 
 void  Classifier2::PredictRaw (FeatureVectorPtr  example,

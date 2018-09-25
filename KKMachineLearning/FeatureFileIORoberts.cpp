@@ -1,19 +1,14 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
-
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
@@ -21,7 +16,6 @@ using namespace std;
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureFileIORoberts.h"
 #include "FileDesc.h"
@@ -45,45 +39,6 @@ FeatureFileIORoberts::~FeatureFileIORoberts(void)
 
 
 
-FileDescConstPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
-                                                     istream&        _in,
-                                                     MLClassListPtr  _classes,
-                                                     kkint32&        _estSize,
-                                                     KKStr&          _errorMessage,
-                                                     RunLog&         _log
-                                                    )
-{
-  _log.Level (10) << endl << endl 
-                  << "FeatureFileIORoberts::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-                  << endl;
-
-  _errorMessage = "ROBERTS read functionality not implemented.";
-  return NULL;
-}
-
-
-
-FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileName,
-                                                      FileDescConstPtr  _fileDesc,
-                                                      MLClassList&      _classes, 
-                                                      istream&          _in,
-                                                      kkint32           _maxCount,    // Maximum # images to load.
-                                                      VolConstBool&     _cancelFlag,
-                                                      bool&             _changesMade,
-                                                      KKStr&            _errorMessage,
-                                                      RunLog&           _log
-                                                     )
-{
-  _log.Level (10) << endl << endl 
-                  << "FeatureFileIORoberts::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl 
-                  << endl;
-                
-  _errorMessage = "ROBERTS read functionality not implemented.";
-  return NULL;
-}  /* LoadFile */
-
-
-
 void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
                                        const KKStr&          _fileName,
                                        FeatureNumListConst&  _selFeatures,
@@ -98,12 +53,13 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
   _log.Level (20) << "FeatureFileIORoberts::SaveFile    FileName[" << _fileName << "]" << endl;
 
   _numExamplesWritten = 0;
+
+  _errorMessage = "";
   
   FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   AttributeConstPtr*  attrTable = fileDesc->CreateAAttributeConstTable ();
 
-  kkint32  x;
   {
     KKStr  namesFileName = _fileName + ".names";
     // Write _out names file
@@ -111,7 +67,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
 
     MLClassListPtr classes = _data.ExtractListOfClasses ();
     classes->SortByName ();
-    for  (x = 0;  x < classes->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < classes->QueueSize ();  x++)
     {
       if  (x > 0)  nf << " ";
       nf << classes->IdxToPtr (x)->Name ();
@@ -120,7 +76,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
     classes = NULL;
     nf << endl << endl;
 
-    for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
+    for  (kkuint16 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
       AttributeConstPtr  attr = attrTable[featureNum];
@@ -144,12 +100,11 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
 
   FeatureVectorPtr   example = NULL;
 
-  kkint32 idx;
-  for  (idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
+  for  (kkuint32 idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
   {
     example = _data.IdxToPtr (idx);
 
-    for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+    for  (kkuint16 x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
       kkint32  featureNum = _selFeatures[x];
       AttributeConstPtr attr = attrTable[featureNum];

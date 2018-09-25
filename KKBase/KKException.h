@@ -17,7 +17,8 @@
 
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
-#include "KKStr.h"
+
+
 
 #define  EnterChar   13
 #define  EscapeChar  27
@@ -26,10 +27,21 @@
 namespace KKB
 {
 
+#if  !defined(_KKStr_Defined_)
+  class  KKStr;
+  typedef  KKStr*  KKStrPtr;
+#endif
+
+
   class  KKException: public std::exception
   {
   public:
     KKException ();
+
+    KKException (const char*   _fileName,
+                 kkuint32      _lineNum,
+                 const KKStr&  _exceptionStr
+                );
     
     KKException (const KKException&  _exception);
     
@@ -59,11 +71,17 @@ namespace KKB
 
     virtual const char*  what () const throw ();
 
-
   private:
-    KKStr  exceptionStr;
+    KKStrPtr  exceptionStr;
   };  /* KKException */
 
+#define KKCheck(condition, errMsg)  if  (!(condition))  {    \
+  std::stringstream  errMsgStream;                           \
+  errMsgStream << errMsg;                                    \
+  auto errMsgString = errMsgStream.str ();                   \
+  std::cerr << errMsgString << std::endl;                    \
+  throw KKB::KKException (__FILE__, __LINE__, errMsgString); \
+  }
 }  /* namespace KKB; */
 
 #endif

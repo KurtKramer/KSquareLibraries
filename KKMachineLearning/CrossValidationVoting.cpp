@@ -233,7 +233,6 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr  validation
 
 
 
-
 void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages, 
                                             FeatureVectorListPtr   trainingExamples,
                                             kkint32                foldNum,
@@ -243,7 +242,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 {
   log.Level (20) << "CrossValidationVoting::CrossValidate   FoldNum[" << foldNum  << "]." << endl;
 
-  kkint32  numOfClasses = mlClasses->QueueSize ();
+  kkuint32  numOfClasses = mlClasses->QueueSize ();
 
   bool   cancelFlag = false;
   KKStr  statusMessage;
@@ -251,8 +250,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   vector<TrainingProcess2Ptr>  trainers;
   vector<Classifier2Ptr>       classifiers;
 
-  kkint32  idx;
-  for  (idx = 0;  idx < configs->QueueSize ();  idx++)
+  for  (kkuint32 idx = 0;  idx < configs->QueueSize ();  idx++)
   {
     TrainingConfiguration2Ptr  config = configs->IdxToPtr (idx);
     
@@ -308,7 +306,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
     vector<kkint32>  voteTable (numOfClasses, 0);
     vector<double> probTable (numOfClasses, 0.0f);
     
-    for  (idx = 0;  idx < (kkint32)classifiers.size ();  idx++)
+    for  (kkuint32 idx = 0;  idx < classifiers.size ();  idx++)
     {
       classifier = classifiers[idx];
       predictedClass =  classifier->ClassifyAExample (*(*imageIDX), 
@@ -317,22 +315,12 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
                                                     knownClassOneOfTheWinners,
                                                     breakTie
                                                    );
-      kkint32  predictedIdx = mlClasses->PtrToIdx (predictedClass);
+      auto  predictedNum = mlClasses->PtrToIdx (predictedClass);
 
-      if  ((predictedIdx < 0)  ||  (predictedIdx >= mlClasses->QueueSize ()))
-      {
-        // We are screwed,  don't know what class was predicted.
-        log.Level (-1) << endl
-                       << endl
-                       << "CrossValidationVoting::CrossValidate    *** ERROR ***" << endl
-                       << endl
-                       << "UnKnown Class was returned[" << predictedClass->Name () << "]" << endl
-                       << "predictedIdx[" << predictedIdx << "]" << endl
-                       << endl;
-        osWaitForEnter ();
-        exit (-1);
-      }
+      KKCheck((predictedNum)  &&  (predictedNum.value () < mlClasses->QueueSize ()),
+              "UnKnown Class: " << predictedClass->Name () << "  predictedNum: " << predictedNum.value ())
 
+      auto predictedIdx = predictedNum.value ();
       voteTable[predictedIdx]++;
 
       if  (probTable[predictedIdx] == 0.0f)
@@ -343,24 +331,21 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
     {
       // Normalize Probability
-      kkint32 x = 0;
       double  probTotal = 0.0f;
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         probTotal += probTable[x];
 
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         probTable[x] = probTable[x] / probTotal;
     }
-
-
+    
     {
       // Determine winning vote
       kkint32  highVote = 0;
       numOfWinners = 0;
-      kkint32  winnerIdx       = -1;
-      kkint32  x;
+      kkint32  winnerIdx = -1;
 
-      for  (x = 0;  x < numOfClasses;  x++)
+      for  (kkuint32 x = 0;  x < numOfClasses;  x++)
       {
         if  (voteTable[x] > highVote)
         {
@@ -379,7 +364,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
         // Select winner by high probability
         double  highProbability = 0.0f;
 
-        for  (x = 0;  x < numOfClasses;  x++)
+        for  (kkuint32 x = 0;  x < numOfClasses;  x++)
         {
           if  (voteTable[x] >= highVote)
           {
@@ -446,18 +431,14 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   foldCounts     [foldNum] = foldCount;
 
 
-  for  (idx = 0;  idx < (kkint32)trainers.size ();  idx++)
+  for  (kkuint32 idx = 0;  idx < trainers.size ();  ++idx)
   {delete  trainers[idx];  trainers[idx] = NULL;}
 
-  for  (idx = 0;  idx < (kkint32)classifiers.size ();  idx++)
+  for  (kkuint32 idx = 0;  idx < classifiers.size ();  ++idx)
   {delete  classifiers[idx];  classifiers[idx] = NULL;}
 
   log.Level (20) << "CrossValidationVoting::CrossValidate - Done." << endl;
 }  /* CrossValidate */
-
-
-
-
 
 
 
@@ -468,7 +449,6 @@ float  CrossValidationVoting::Accuracy ()
   else
     return 0.0;
 }  /* Accuracy */
-
 
 
 
@@ -488,8 +468,6 @@ KKStr  CrossValidationVoting::FoldAccuracysToStr ()  const
 
 
 
-
-
 float  CrossValidationVoting::FoldAccuracy (kkint32 foldNum)  const
 {
   if  (!foldAccuracies)
@@ -500,7 +478,6 @@ float  CrossValidationVoting::FoldAccuracy (kkint32 foldNum)  const
 
   return  foldAccuracies[foldNum];
 }  /* FoldAccuracy */
-
 
 
 

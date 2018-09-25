@@ -54,6 +54,8 @@ namespace KKB
     KKB::DateTime  GetNextTokenDateTime (const char* delStr = "\n\t\r ");
 
     kkint32  GetNextTokenInt    (const char* delStr = "\n\t\r ");
+ 
+    kkint16  GetNextTokenInt16  (const char* delStr = "\n\t\r ");
 
     long     GetNextTokenLong   (const char* delStr = "\n\t\r ");
 
@@ -63,6 +65,8 @@ namespace KKB
 
     kkuint32 GetNextTokenUint   (const char* delStr = "\n\t\r ");
 
+    kkuint32 GetNextTokenUint16 (const char* delStr = "\n\t\r ");
+        
     bool     GetNextTokenBool   (const char* delStr = "\n\t\r ");
 
     KKStr    GetRestOfLine      ();

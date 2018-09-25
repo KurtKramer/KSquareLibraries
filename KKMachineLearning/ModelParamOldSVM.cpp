@@ -175,11 +175,9 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
-                                                      RunLog&           log
-                                                     ) const
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc) const
 {
-  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc, log);
+  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc);
 }
 
 

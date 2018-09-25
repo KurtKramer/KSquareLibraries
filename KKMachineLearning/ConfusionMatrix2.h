@@ -53,10 +53,10 @@ namespace  KKMLL
      */
     ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
                       istream&            f,
-                      kkint32             _bucketSize,
-                      kkint32             _numOfBuckets,
-                      kkint32             _numOfProbBuckets,
-                      kkint32             _probBucketSize,
+                      kkuint32            _bucketSize,
+                      kkuint32            _numOfBuckets,
+                      kkuint32            _numOfProbBuckets,
+                      kkuint32            _probBucketSize,
                       RunLog&             _log
                      );
                                            
@@ -81,17 +81,17 @@ namespace  KKMLL
 
     double   AvgPredProb ()  const;
 
-    kkint32  ClassCount ()  const {return  classCount;}
+    kkuint32  ClassCount ()  const {return  classCount;}
 
     double   Count (MLClassPtr  mlClass);
 
-    double   CountsByKnownClass (kkint32 knownClassIdx)  const;
+    double   CountsByKnownClass (kkuint32 knownClassIdx)  const;
 
     const    VectorDouble&   CountsByKnownClass ()  const;
 
     void     FactorCounts (double  factor);    /**< Will multiply all counts by 'factor'  You would use this in conjunction with 'AddIn'.  */
 
-    void     ComputeFundamentalStats (MLClassPtr ic,
+    void     ComputeFundamentalStats (MLClassPtr mlClass,
                                       double&    truePositives,
                                       double&    trueNegatives,
                                       double&    falsePositives,
@@ -109,13 +109,13 @@ namespace  KKMLL
     void     Increment (MLClassPtr  _knownClass,
                         MLClassPtr  _predClass,
                         kkint32     _size,
-                        double           _probability,
-                        RunLog&          _log
+                        double      _probability,
+                        RunLog&     _log
                        );
 
     VectorDouble   PredictedCounts ()  const;
 
-    double   PredictedCountsCM (kkint32 knownClassIdx, kkint32  predClassIdx)  const;
+    double   PredictedCountsCM (kkuint32 knownClassIdx, kkuint32  predClassIdx)  const;
 
     void     PrintAccuracyByProbByClassHTML (ostream&  o)  const;
 
@@ -170,19 +170,19 @@ namespace  KKMLL
     void  WriteSimpleConfusionMatrix (ostream&  f)  const;
 
   private:
-    kkint32 AddClassToConfusionMatrix (MLClassPtr  newClass,
-                                       RunLog&     log
-                                      );
+    kkuint32 AddClassToConfusionMatrix (MLClassPtr  newClass,
+                                        RunLog&     log
+                                       );
 
     void  InitializeMemory ();
 
     void  InitializeVector (vector<double>&  v,
-                            kkint32          x
+                            kkuint32         x
                            );
 
     void  InitializeVectorDoublePtr (vector<double*>& v,
-                                     kkint32          numClasses,
-                                     kkint32          numBuckets
+                                     kkuint32         numClasses,
+                                     kkuint32         numBuckets
                                     );
 
     void  CopyVector (const vector<double>&  src,
@@ -191,14 +191,14 @@ namespace  KKMLL
 
     void  CopyVectorDoublePtr (const vector<double*>&  src,
                                vector<double*>&        dest,
-                               kkint32                 numBuckets
+                               kkuint32                numBuckets
                               );
 
     void  DeleteVectorDoublePtr (vector<double*>&  v);
 
     void  IncreaseVectorDoublePtr (vector<double*>&  v,
-                                   int               numBucketsOld,
-                                   int               numBucketsNew
+                                   kkuint32          numBucketsOld,
+                                   kkuint32          numBucketsNew
                                   );
 
     void  MakeSureWeHaveTheseClasses (const MLClassList&  classList,
@@ -226,13 +226,13 @@ namespace  KKMLL
     void  PrintSingleLineHTML (ostream&     _outFile,
                                const KKStr& _name,
                                double       _lineTotal,
-                               kkint32      _knownClassNum,
+                               kkuint32     _knownClassNum,
                                double       _splits[]
                               )  const;
 
 
     void  PrintSingleLineLatexTable (ostream&      _outFile,
-                                     kkint32       _knownClassNum, 
+                                     kkuint32      _knownClassNum, 
                                      const KKStr&  _name,
                                      double        _lineTotal,
                                      double        _splits[]
@@ -254,7 +254,7 @@ namespace  KKMLL
 
 
     void  PrintPercentLineLatexTable (ostream&     _outFile,
-                                      kkint32      _rowNum,
+                                      kkuint32     _rowNum,
                                       const KKStr& _name,
                                       double       _lineTotal,
                                       double       _splits[]
@@ -263,8 +263,8 @@ namespace  KKMLL
 
     void  PrintPercentLineTabDelimited (ostream&     _outFile,
                                         const KKStr& _name,
-                                        double        _lineTotal,
-                                        double        _splits[]
+                                        double       _lineTotal,
+                                        double       _splits[]
                                        )  const;
 
 
@@ -272,7 +272,7 @@ namespace  KKMLL
                                     const KKStr&  _name,
                                     double        _totalAvgPredProbThisLine,
                                     double        _totalCountThisLine,
-                                    kkint32       _knownClassNum,
+                                    kkuint32      _knownClassNum,
                                     double        _avgPredProbs[],
                                     double        _numPredByClass[]
                                    )  const;
@@ -281,7 +281,7 @@ namespace  KKMLL
     void  PrintPercentLineHTML (ostream&      _outFile,
                                 const KKStr&  _name,
                                 double        _lineTotal,
-                                kkint32       _knownClassNum,
+                                kkuint32      _knownClassNum,
                                 double        _splits[]
                                )  const;
 
@@ -294,15 +294,15 @@ namespace  KKMLL
 
 
     void  PrintErrorBySizeRowReduced (ostream&  outFile,
-                                      kkint32   classNum
+                                      kkuint32  classNum
                                      )  const;
 
     void  Read (istream&  f,
                 RunLog&   log
                );
 
-    kkint32          bucketSize;
-    kkint32          classCount;
+    kkuint32         bucketSize;
+    kkuint32         classCount;
     MLClassList      classes;  /**< We will make our own unique copy of the MLClassList.
                                 * This way we know the ordering which represents the numbering
                                 * can not change behind our back.
@@ -315,16 +315,15 @@ namespace  KKMLL
     vector<double*>  countByKnownClassBySize;
     vector<double>   countsByKnownClass;
     double           numInvalidClassesPredicted;
-    kkint32          numOfBuckets;
-    kkint32          numOfProbBuckets;
+    kkuint32         numOfBuckets;
+    kkuint32         numOfProbBuckets;
     vector<double*>  predictedCountsCM;
-    kkint32          probBucketSize;
+    kkuint32         probBucketSize;
     double           totalCount;
     double           totalPredProb;
     vector<double>   totalPredProbsByKnownClass;     /**< Total Predicted Probabilities by Known Class. */
     vector<double>   totalSizesByKnownClass;
     vector<double*>  totPredProbCM;
-
   };
 
   typedef  ConfusionMatrix2::ConfusionMatrix2Ptr  ConfusionMatrix2Ptr;

@@ -4,16 +4,13 @@
 #include <fstream>
 #include <vector>
 #include <map>
-
 #include "MemoryDebug.h"
 using namespace  std;
-
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
 using namespace  KKB;
-
 
 #include "ClassAssignments.h"
 #include "MLClass.h"
@@ -101,7 +98,7 @@ MLClassList  ClassAssignments::GetMLClasses (kkint32 num)  const
 
 
 
-VectorInt32   ClassAssignments::GetUniqueListOfAssignments ()  const
+VectorInt32  ClassAssignments::GetUniqueListOfAssignments ()  const
 {
   VectorInt32  nums;
 
@@ -153,12 +150,12 @@ MLClassPtr  ClassAssignments::GetMLClassByIndex (kkint32 idx)
 
 
 
-kkint32  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
+OptionUInt32  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
 {
   ClassLookUp::const_iterator  idx;
   idx = classLookUp.find (mlClass);
   if  (idx == classLookUp.end ())
-    return -1;
+    return {};
   else
     return idx->second;
 }  /* GetNumForClass */

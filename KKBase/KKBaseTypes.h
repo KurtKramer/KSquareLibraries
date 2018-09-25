@@ -46,6 +46,7 @@
 #endif
 
 #include <limits>
+#include <optional>
 #include <vector>
 
 
@@ -164,105 +165,37 @@ namespace KKB
 
   typedef kkuint64  kkMemSize;
 
+  typedef std::optional<kkuint16> OptionUInt16;
+
+  typedef std::optional<kkint32>  OptionInt32;
+
+  typedef std::optional<kkuint32> OptionUInt32;
+
+  template<typename T>
+  T  Max (T x, T y) { return x > y ? x : y; }
+    
+  template<typename T, typename... Args>
+  T  Max (T x, T y, Args... args) { T zed = Max (x, y);  return Max (zed, args...); }
 
 
-  /** @brief Generic Min function,  Both parameters must be of the same type.  */
-  template <class T> T  Min (T  a, 
-                             T  b
-                            )
+
+  template<typename T>
+  T  Min (T x, T y) { return x < y ? x : y; }
+    
+  template<typename T, typename... Args>
+  T  Min (T x, T y, Args... args) { T zed = Min (x, y);  return Min (zed, args...); }
+
+
+
+  template<class T> 
+  std::optional<T> Max (const std::optional<T>& a, const std::optional<T>& b)
   {
-    if  (a <= b)
-      return  a;
-    else
-      return  b;
+    if  (!a)  return b; else if  (!b) return a; else return (a.value () > b.value ()) ? a : b;
   }
 
 
-
-  /** @brief generic Max function,  Both parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b
-                            )
-  {
-    if  (a >= b)
-      return  a;
-    else
-      return  b;
-  }
-
-
-
-
-  /** @brief Generic Max function, that takes three parameters.  All three parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b,
-                             T  c
-                            )
-  {
-    if  ((a >= b)  &&  (a >= c))
-      return  a;
-
-    if  (b >= c)
-      return b;
-    else
-      return c;
-  }
-
-
-
-
-  /** @brief Generic Max function, that takes four parameters.  All four parameters must be of the same type. */
-  template <class T> T  Max (T  a, 
-                             T  b,
-                             T  c,
-                             T  d
-                            )
-  {
-    return  Max (Max (a, b), Max (c, d));
-  }
-
-
-
-  /** @brief Generic Max function, that takes five parameters of the same type. */
-  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4)
-  {
-    return Max (Max(x0, x1, x2, x3), x4);
-  }
-
-
-
-  /** @brief Generic Max function, that takes six parameters of the same type. */
-  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5)
-  {
-    return Max (Max(x0, x1, x2), Max (x3, x4, x5));
-  }
-
-
-  /** @brief Generic Max function, that takes seven parameters of the same type. */
-  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5, T x6)
-  {
-    return Max (Max(x0, x1, x2, x3), Max (x4, x5, x6));
-  }
-
-
-
-  /** @brief Generic Max function, that takes eight parameters of the same type. */
-  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5, T x6, T x7)
-  {
-    return Max (Max(x0, x1, x2, x3), Max (x4, x5, x6, x7));
-  }
-
-
-
-  template <class T>  T  Swap (T&  x,
-                               T&  y
-                              )
-  {
-    T z = x;
-    x = y;
-    y = z;
-  }  /* Swap */
-
+  template <class T>  T  Swap (T& x, T& y)  { T z = x;  x = y;  y = z; }
+  
 
 
   /** @brief  A implementations of the Unix version of rand48 returning a 32 bit integer. */

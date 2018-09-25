@@ -28,38 +28,13 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
   // Formula was taken from MathWorld
   // http://mathworld.wolfram.com/Pairedt-Test.html
 
-  //ofstream  out ("T-Test_Stats.txt", ios_base::app);
+  KKCheck (set1.size () == set2.size (), "PairedTTest  two sets not the same length;  set1.size: " + StrFromUint64 (set1.size ()) + " set2.size: " << StrFromUint64 (set2.size ()))
+
   double  numOfPairs = (double)set1.size ();
-
-  if  (numOfPairs != set2.size ())
-  {
-    cerr << std::endl
-         << std::endl
-         << "PairedTTest     *** ERROR ***    The two sets are not the same length." << std::endl
-         << std::endl
-         << "                set1.size [" << set1.size () << "]   set2.size [" << set2.size () << "]" << std::endl
-         << std::endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-                    
-
-  double  xTotal = 0.0f;
+  double xTotal = 0.0f;
   double yTotal = 0.0f;
 
   kkint32  foldNum = 0;
-
-
-  //out << "X";
-  //for  (foldNum = 0;  foldNum < numOfPairs;  foldNum++)
-  //  out << "\t" << set1[foldNum];
-  //out << endl;
-
-  //out << "Y";
-  //for  (foldNum = 0;  foldNum < numOfPairs;  foldNum++)
-  //  out << "\t" << set2[foldNum];
-  //out << endl;
-
 
   for  (foldNum = 0;  foldNum < numOfPairs;  foldNum++)
   {
@@ -69,10 +44,6 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
 
   double  xMean = xTotal / numOfPairs;
   double  yMean = yTotal / numOfPairs;
-
-  //out  << endl
-  //     << "X_Mean = " << xMean << endl
-  //     << "Y_Mean = " << yMean << endl;
 
   double  totalDeltaSquared = 0.0f;
 
@@ -85,24 +56,12 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
     totalDeltaSquared += (deltaDelta * deltaDelta);
   }
 
-  //out  << endl 
-  //     << "totalDeltaSquared = " 
-  //     << totalDeltaSquared << endl;
-
-
   double  tValue = 0.0f;
   if  (totalDeltaSquared != 0.0)
     tValue = fabs ((xMean - yMean) * sqrt ((numOfPairs * (numOfPairs - 1.0)) / totalDeltaSquared));
 
-  //out  << endl 
-  //     << "tValue = " << tValue << endl
-  //     << endl;
-
-  //out.close ();
-
   return  float (tValue);
 }  /* PairedTTest */
-
 
 
 

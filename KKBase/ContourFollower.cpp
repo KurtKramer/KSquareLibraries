@@ -72,6 +72,7 @@ uchar  ContourFollower::PixelValue (kkint32 row,
 }
 
 
+
 kkint32  ContourFollower::PixelCountIn9PixelNeighborhood (kkint32  row, 
                                                           kkint32  col
                                                          )
@@ -214,9 +215,6 @@ void  ContourFollower::GetNextPixel (kkint32&  nextRow,
 
 
 
-
-
-
 kkint32  ContourFollower::FollowContour (float*  countourFreq,
                                          float   fourierDescriptors[15],
                                          kkint32 totalPixels,
@@ -279,7 +277,6 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
   lastRow = startRow;
   lastCol = startCol;
-
 
   while  (true)  
   {
@@ -828,9 +825,6 @@ PointListPtr  ContourFollower::GenerateContourList ()
 
 
 
-
-
-
 ComplexDouble**  GetFourierOneDimMask (kkint32  size)
 {
   static  
@@ -907,7 +901,6 @@ ComplexDouble**  GetFourierOneDimMask (kkint32  size)
 
 
 
-
 ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourier
 {
   static  
@@ -915,7 +908,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   static  
   ComplexDouble**  revFourierMask = NULL;
-
 
   if  (size == curRevMaskSize)
     return  revFourierMask;
@@ -925,7 +917,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   kkint32  x;
   
-
   if  (revFourierMask)
   {
     for  (x = 0;  x < curRevMaskSize;  x++)
@@ -937,7 +928,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
     delete[]  revFourierMask;
     revFourierMask = NULL;
   }
-
 
   revFourierMask = new ComplexDouble*[size];
   for  (x = 0;  x < size;  x++)
@@ -987,7 +977,6 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
   return  revFourierMask;
 }  /* GetRevFourierOneDimMask */
-
 
 
 
@@ -1052,7 +1041,6 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
     numOfBorderPixels++;
   }
-
 
   #if  defined(FFTW_AVAILABLE)
     fftwf_complex*  src = (fftwf_complex*)fftwf_malloc (sizeof (fftwf_complex) * numOfBuckets);
@@ -1136,10 +1124,9 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
 
 
-
 void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
                                                           float     pointCol,
-                                                          kkint32   numOfBuckets,
+                                                          kkuint32  numOfBuckets,
                                                           kkint32*  buckets,
                                                           float&    minDistance,
                                                           float&    maxDistance,
@@ -1150,17 +1137,15 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
 
   numOfEdgePixels = points->QueueSize ();
   
-  kkint32  x;
-
   minDistance = FloatMax;
   maxDistance = FloatMin;
 
-  for  (x = 0;  x < numOfBuckets;  x++)
+  for  (kkuint32 x = 0;  x < numOfBuckets;  x++)
     buckets[x] = 0;
 
   float*  distances = new float[points->QueueSize ()];
 
-  for  (x = 0;  x < points->QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < points->QueueSize ();  x++)
   {
     Point& point = (*points)[x];
 
@@ -1183,7 +1168,7 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
   }
   else
   {
-    for  (x = 0;  x < points->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < points->QueueSize ();  x++)
     {
       kkint32 bucketIDX = (kkint32)((distances[x] - minDistance) / bucketSize);
       buckets[bucketIDX]++;
@@ -1208,13 +1193,10 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
      KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[points.QueueSize()];
   #endif
 
-
   kkint32  totalRow = 0;
   kkint32  totalCol = 0;
 
-  kkint32  x = 0;
-
-  for  (x = 0;  x < points.QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < points.QueueSize ();  x++)
   {
     Point&  point (points[x]);
 
@@ -1256,7 +1238,7 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
   vector<ComplexDouble>  dest;
 
-  for  (kkint32  l = 0;  l < points.QueueSize ();  l++)
+  for  (kkuint32   l = 0;  l < points.QueueSize ();  l++)
   {
     #if  defined(FFTW_AVAILABLE)
     dest.push_back (ComplexDouble (destFFTW[l][0] / (double)(points.QueueSize ()), destFFTW[l][1] / (double)(points.QueueSize ())));
@@ -1269,8 +1251,6 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
   return  dest;
 }  /* CreateFourierFromPointList */
-
-
 
 
 
@@ -1331,7 +1311,6 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
        double  imagPart = (double)destFFTW[l].imag ();
        ComplexDouble  z (realPart, imagPart);
     #endif
-
     
     //  z = z / (double)(fourier.size ());
 

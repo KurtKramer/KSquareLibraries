@@ -7,12 +7,10 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "KKStr.h"
 using namespace KKB;
-
 
 #include "CrossValidationMxN.h"
 
@@ -181,8 +179,8 @@ void  CrossValidationMxN::RunValidations (RunLog&  log)
  *            that are to be used for training, the remaining examples will be 
  *            used as test data.
  */
-void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining,
-                                           RunLog&  log
+void  CrossValidationMxN::RunTrainAndTest (kkuint32  numExamplsToUseForTraining,
+                                           RunLog&   log
                                           )
 { 
   CleanUpMemory ();

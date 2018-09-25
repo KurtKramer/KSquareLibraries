@@ -1,4 +1,5 @@
 #include "FirstIncludes.h"
+#include <limits>
 #include <stdio.h>
 #include <math.h>
 #include <string>
@@ -79,7 +80,7 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
   _log.Level (20) << "FeatureNormalization - Creating instance from[" << _examples.FileName () << "]." << endl;
 
   fileDesc                 = _examples.FileDesc ();
-  numOfFeatures = _examples.NumOfFeatures ();
+  numOfFeatures            = _examples.NumOfFeatures ();
   attriuteTypes            = fileDesc->CreateAttributeTypeTable ();
   normalizeNominalFeatures = _param.NormalizeNominalFeatures ();
 
@@ -116,13 +117,13 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr _config,
 
 
 
-
 NormalizationParms::~NormalizationParms ()
 {
   delete [] mean;               mean             = NULL;
   delete [] sigma;              sigma            = NULL;
   delete [] normalizeFeature;   normalizeFeature = NULL;
 }
+
 
 
 kkMemSize  NormalizationParms::MemoryConsumedEstimated ()  const
@@ -147,20 +148,18 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
 
   double*  total    = new double [numOfFeatures];
   double*  sigmaTot = new double [numOfFeatures];
- 
-  kkint32 i;
 
-  for  (i = 0; i < numOfFeatures; i++)
+  for  (kkuint32 i = 0; i < numOfFeatures; i++)
   {
-    mean[i]     = 0.0;
-    sigma[i]    = 0.0;
-    total[i]    = 0.0;
-    sigmaTot[i] = 0.0;
+    mean     [i] = 0.0;
+    sigma    [i] = 0.0;
+    total    [i] = 0.0;
+    sigmaTot [i] = 0.0;
   }
 
-  double  featureValue;
+  double  featureValue = 0.0;
 
-  FeatureVectorPtr  image;
+  FeatureVectorPtr  image = NULL;
 
   FeatureVectorList::iterator imageIDX;
 
@@ -179,7 +178,7 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
     else
     {
       // Since this image is defined then we can use it in our normalization calculations.
-      for  (i = 0; i < numOfFeatures; i++)
+      for  (kkuint32 i = 0; i < numOfFeatures; i++)
       {
         featureValue = double (image->FeatureData (i));
         total[i]    += featureValue;
@@ -189,12 +188,11 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
     }
   }
 
-  for  (i = 0; i < numOfFeatures; i++)
+  for  (kkuint32 i = 0; i < numOfFeatures; i++)
   {
     double meanDouble  = total[i] / double (numOfExamples);
     mean[i]  = meanDouble;
   }
-
 
   for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
   {
@@ -210,7 +208,7 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
     else
     {
       // Since this image is defined then we can use it in our normalization calculations.
-      for  (i = 0; i < numOfFeatures; i++)
+      for  (kkuint32 i = 0; i < numOfFeatures; i++)
       {
         featureValue = double (image->FeatureData (i));
         double  delta = featureValue - mean[i];
@@ -219,13 +217,13 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
     }
   }
 
-  for  (i = 0; i < numOfFeatures; i++)
+  for  (kkuint32 i = 0; i < numOfFeatures; i++)
   {
     sigma[i] = sqrt (sigmaTot[i] / numOfExamples);
   }
 
-  delete[]  sigmaTot;
-  delete[]  total;
+  delete[]  sigmaTot;  sigmaTot = NULL;
+  delete[]  total;     total    = NULL;
 
   ConstructNormalizeFeatureVector ();
 
@@ -233,7 +231,7 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
 
 
 
-void  NormalizationParms::WriteToFile  (const KKStr&  _fileName,  bool& _successfull,  RunLog& _log)  const
+void  NormalizationParms::WriteToFile (const KKStr&  _fileName,  bool& _successfull,  RunLog& _log)  const
 {
   _log.Level (20) << "NormalizationParms::WriteToFile  FileName[" << _fileName << "]." << endl;
   fileName = _fileName;
@@ -269,8 +267,6 @@ NormalizationParmsConstPtr  NormalizationParms::ReadFromFile (const KKStr&  file
   delete stream; stream = NULL;
   return n;
 }
-
-
 
 
 
@@ -376,11 +372,12 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
 }  /* ReadXML */
 
 
-double  NormalizationParms::Mean (kkint32  i,
-                                  RunLog&  log
+
+double  NormalizationParms::Mean (kkuint32  i,
+                                  RunLog&   log
                                  )
 {
-  if  ((i < 0)  ||  (i > numOfFeatures))
+  if  ((i < 0)  ||  (i >= numOfFeatures))
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return  -99999.99;
@@ -392,14 +389,15 @@ double  NormalizationParms::Mean (kkint32  i,
 }  /* Mean */
 
 
-double  NormalizationParms::Sigma (kkint32  i,
-                                   RunLog&  log
+
+double  NormalizationParms::Sigma (kkuint32  i,
+                                   RunLog&   log
                                   )
 {
-  if  ((i < 0)  ||  (i > numOfFeatures))
+  if  ((i < 0)  ||  (i >= numOfFeatures))
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
-    return  (float)-99999.99;
+    return DBL_MIN;
   }
   else
   {
@@ -408,13 +406,13 @@ double  NormalizationParms::Sigma (kkint32  i,
 }  /* Sigma */
 
 
+
 void  NormalizationParms::ConstructNormalizeFeatureVector ()
 {
   delete  normalizeFeature;
   normalizeFeature = new bool [numOfFeatures];
 
-  kkint32  i;
-  for  (i = 0;  i < numOfFeatures;  i++)
+  for  (kkuint32 i = 0;  i < numOfFeatures;  i++)
   {
     if  (normalizeNominalFeatures)
     {
@@ -437,11 +435,12 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 }  /* ConstructNormalizeFeatureVector */
 
 
+
 void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)  const
 {
   float*  featureData = example->FeatureDataAlter ();
 
-  for  (kkint32 i = 0; i < numOfFeatures; i++)
+  for  (kkuint32 i = 0; i < numOfFeatures;  ++i)
   {
     if  (normalizeFeature[i])
     {
@@ -461,14 +460,10 @@ void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  examples,
 {
   if  (numOfFeatures != examples->NumOfFeatures ())
   {
-    log.Level (-1) << "NormalizationParms::NoralizeImage  **** ERROR ****     Mismatched Feature Count." << endl
-                   << "            NormalizationParms [" << numOfFeatures            << "]" << endl
-                   << "            ImageFeatiresList  [" << examples->NumOfFeatures () << "]."  << endl
-                   << endl;
-
-    osWaitForEnter ();
-    exit (-1);
-    return;
+    KKStr errMsg;
+    errMsg << "numOfFeatures [" << numOfFeatures << "] != ImageFeatiresList  [" << examples->NumOfFeatures () << "].";
+    log.Level (-1) << "NormalizationParms::NormalizeExamples  **** ERROR ****    " << errMsg << endl;
+    throw KKException("NormalizeExamples " + errMsg);
   }
 
   FeatureVectorList::iterator idx;
@@ -485,7 +480,7 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
 {
   FeatureVectorPtr  result = new FeatureVector (*example);
   float*  featureData = result->FeatureDataAlter ();
-  for  (kkint32 i = 0;  i < numOfFeatures;  ++i)
+  for  (kkuint32 i = 0;  i < numOfFeatures;  ++i)
   {
     if  (normalizeFeature[i])
     {

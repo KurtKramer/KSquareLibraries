@@ -37,13 +37,8 @@ Histogram::Histogram (float    _minValue,
   wrapArround       (_wrapArround)
 
 {
-  if  (numOfBuckets < 1)
-  {
-    cerr << std::endl 
-         << "*** ERROR ***   Histogram, Negative numOfBuckets["  << numOfBuckets << "."  << std::endl
-         << std::endl;
-    exit (-1);
-  }
+  KKCheck (numOfBuckets > 0, "Histogram, Negative _numOfBuckets: " << numOfBuckets)
+  KKCheck (_bucketSize > 0.0f, "Histogram,  _bucketSize: " << _bucketSize << " must be greaterthan zero.")
 
   range = bucketSize * (float)numOfBuckets;
 
@@ -59,8 +54,6 @@ Histogram::Histogram (float    _minValue,
 
 
 
-
-
 Histogram::~Histogram ()
 {
   delete  buckets;
@@ -68,8 +61,6 @@ Histogram::~Histogram ()
   if  (equalizedMapTable)
     delete  equalizedMapTable;
 }
-
-
 
 
 
@@ -94,7 +85,6 @@ kkint32  Histogram::MaxBucketIdx ()  const
 
 
 
-
 float  Histogram::AverageOfMaxBucket ()  const
 {
   kkint32 idx = MaxBucketIdx ();
@@ -105,7 +95,6 @@ float  Histogram::AverageOfMaxBucket ()  const
     return  bucketTotals[idx] / buckets[idx];
 
 }  /* AverageOfMaxBucket */
-
 
 
 
@@ -121,14 +110,7 @@ float   Histogram::CountOfMaxBucket ()  const
 
 float  Histogram::Bucket (kkint32  bucket)  const
 {
-  if  ((bucket < 0)  ||  (bucket >= numOfBuckets))
-  {
-    cerr << std::endl 
-         << "*** ERROR ***   Histogram::Bucket,  Bucket[" << bucket << "]  is out of range." << std::endl
-         << std::endl;
-    exit (-1);
-  }
-
+  KKCheck ((bucket >= 0)  &&  (bucket < numOfBuckets), "Histogram::Bucket,  bucket: " << bucket << " out of range.")
   return  buckets[bucket];
 }  /* Bucket */
 
@@ -136,13 +118,7 @@ float  Histogram::Bucket (kkint32  bucket)  const
 
 void  Histogram::Increment (float  val)
 {
-  if  (val < minValue) 
-  {
-    cerr << std::endl 
-         << "*** ERROR ***   val[" << val << "]  is out of range [" << minValue << "]." << std::endl
-         << std::endl;
-    exit (-1);
-  }
+  KKCheck ((val >= minValue), "Histogram::Increment,  val: " << val << " out of range.")
 
   kkint32 bucket  = (kkint32) ((val - minValue) / bucketSize);
   if  (bucket >= numOfBuckets)
@@ -181,8 +157,8 @@ RasterPtr  Histogram::CreateGraph ()  const
   uchar  hashColor2   =  45;
 
   kkint32  graphWidth  = numOfBuckets * (barWidth + interBarWidth) + 20; //  3 pixels per bar,  +
-                                                                       //  3 pixels space     +
-                                                                       // 10 pixel Padding on both sides.
+                                                                         //  3 pixels space     +
+                                                                         // 10 pixel Padding on both sides.
 
   // Set up where Grid lines should go
   bool*  vertGridLines = new bool[numOfBuckets];
@@ -239,7 +215,6 @@ RasterPtr  Histogram::CreateGraph ()  const
 
   graph->DrawLine (graphHeight - 10,              10,               10,              10, borderColor);  // BotLeft -> TopLeft
 
-
   x = 0;
   row = graphHeight - 10;
   
@@ -269,8 +244,6 @@ RasterPtr  Histogram::CreateGraph ()  const
     row--;
     x++;
   }
-
-
 
   col = 10;
 
@@ -400,8 +373,7 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
     if  (buckets[bucket] > maxCount)
       maxCount = buckets[bucket];
   }
-
-
+  
   kkint32  maxColHeight = Min ((kkint32)(maxCount * (float)(barWidth + interBarWidth) + 0.5f), (kkint32)512);
   kkint32  graphHeight = maxColHeight + 20;
 
@@ -501,15 +473,13 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
 
 
 
-
-
-
 void  Histogram::SaveGraphImage (const KKStr&  fileName)  const
 {
   RasterPtr  graphImage = CreateGraph ();
   SaveImage (*graphImage, fileName);
   delete  graphImage;
 }  /* SaveGraphImage */
+
 
 
 void  Histogram::SaveGraphImage (const KKStr&  fileName,
@@ -528,8 +498,7 @@ void  Histogram::Save (KKStr  fileName)  const
   ofstream o (fileName.Str ());
 
   kkint32  bucketIDX;
-
-
+  
   float  avgVal = totalVal / totalCount;
 
   o << "MinValue" << "\t" << "\t" << "BucketSize"  << "\t"  << "NumOfBuckets" << "\t" << "TotalCount" << "\t" << "Average"  << std::endl;
@@ -574,8 +543,6 @@ void  Histogram::Save (KKStr  fileName)  const
 
   o.close ();
 }  /* Save */
-
-
 
 
 
@@ -695,8 +662,6 @@ HistogramPtr  Histogram::Smooth (kkint32 smoothWidth)
 
 
 
-
-
 bool  Histogram::IsBucketAPeak (kkint32  bucket,
                                 kkint32  tolerance
                               )  const
@@ -747,9 +712,6 @@ bool  Histogram::IsBucketAPeak (kkint32  bucket,
 
 
 
-
-
-
 void  Histogram::CalculatePeaks (kkint32  threshold)
 {
   kkint32  bucket;
@@ -787,19 +749,15 @@ kkint32  Histogram::GetPeakByHighestOrder (kkint32 peakNum)
   if  (peakNum > (kkint32)peaks.size ())
     return -1;
 
-  kkint32  t;
-  kkint32  x;
-  kkint32  y;
-
   VectorInt32 sortedPeaks (peaks);
 
-  for  (x = 1;  x < (kkint32)sortedPeaks.size ();  x++)
+  for  (size_t x = 1;  x < sortedPeaks.size ();  ++x)
   {
-    for (y = x; y > 0; y--)
+    for (size_t y = x;  y > 0;  --y)
     {
       if  (buckets[sortedPeaks[y - 1]] < buckets[sortedPeaks[y]])
       {
-        t = sortedPeaks[y];
+        kkint32 t = sortedPeaks[y];
         sortedPeaks[y] = sortedPeaks[y - 1];
         sortedPeaks[y - 1] = t;
       }
@@ -841,7 +799,6 @@ float  Histogram::GetPeakAvgByHighestOrder (kkint32 peakNum)
 
 
 
-
 HistogramPtr  Histogram::Equalized ()
 {
   float*   histSumTable  = new float[numOfBuckets];
@@ -849,19 +806,16 @@ HistogramPtr  Histogram::Equalized ()
 
   HistogramPtr   newHist = new Histogram (minValue, numOfBuckets, bucketSize, wrapArround);
 
-  kkint32  x;
-
   newHist->equalizedMapTable = new kkint32[numOfBuckets];
 
   float  accumulatedCount = (float)0.0;
-  for  (x = 0; x < numOfBuckets; x++)
+  for  (kkint32 x = 0; x < numOfBuckets; x++)
   {
     accumulatedCount += buckets[x];
     histSumTable[x] = accumulatedCount;
   }
-
- 
-  for  (x = 0;  x < numOfBuckets;  x++)
+   
+  for  (kkint32 x = 0;  x < numOfBuckets;  x++)
   {
     idx = (kkint32)(0.5f + (((float)(histSumTable[x] * (float)(numOfBuckets - 1)) / totalCount)));
     if  (idx >= numOfBuckets)
@@ -871,11 +825,9 @@ HistogramPtr  Histogram::Equalized ()
     newHist->buckets[idx]         += buckets[x];
     newHist->bucketTotals[idx]    += bucketTotals[x];
   }
-
-
+  
   newHist->totalCount = totalCount;
   newHist->totalVal   = totalVal;
-
 
   delete[]  histSumTable;
 
@@ -884,29 +836,17 @@ HistogramPtr  Histogram::Equalized ()
 
 
 
-
 float   Histogram::AverageOfMaxBucketInRange (kkint32  minBucket,
-                                               kkint32  maxBucket
-                                              )  const
+                                              kkint32  maxBucket
+                                             )  const
 {
-  if  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
-       (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
-       (minBucket > maxBucket)
-      )
-  {
-    cerr << std::endl;
-    cerr << "Histogram::AverageOfMaxBucketInRange    *** ERROR ***  Invalid Parameters" << std::endl;
-    cerr << "NumOfBuckets[" << numOfBuckets << "]  MinBucket[" << minBucket << "]    MaxBucket[" << maxBucket << "]" << std::endl;
-    exit (-1);
-  }
-
-  
-  kkint32 b;
+  KKCheck ((minBucket >= 0)  &&  (minBucket < numOfBuckets)  &&  (maxBucket >= 0)  &&  (maxBucket < numOfBuckets)  &&  (minBucket <= maxBucket),
+           "Histogram::AverageOfMaxBucketInRange  Parameters out or range numOfBuckets: " << numOfBuckets << "  minBucket: " << minBucket << " maxBucket: " << maxBucket)
 
   kkint32 maxBucketIDX = minBucket;
   float maxBucketVal = buckets[minBucket];
 
-  for  (b = minBucket;  b <= maxBucket;  b++)
+  for  (kkint32 b = minBucket;  b <= maxBucket;  b++)
   {
     if  (buckets[b] > maxBucketVal)
     {
@@ -923,28 +863,18 @@ float   Histogram::AverageOfMaxBucketInRange (kkint32  minBucket,
 
 
 
-
 float   Histogram::AverageOfMinBucketInRange (kkint32  firstBucket,
                                               kkint32  lastBucket
                                              )  const
 {
-  if  ((firstBucket < 0)  ||  (firstBucket >= numOfBuckets)  ||
-       (lastBucket < 0)   ||  (lastBucket >= numOfBuckets)  ||
-       (firstBucket > lastBucket)
-      )
-  {
-    cerr << std::endl;
-    cerr << "Histogram::AverageOfMaxBucketInRange    *** ERROR ***  Invalid Parameters" << std::endl;
-    cerr << "NumOfBuckets[" << numOfBuckets << "]  FirstBucket[" << firstBucket << "]    LastBucket[" << lastBucket << "]" << std::endl;
-    exit (-1);
-  }
-  
-  kkint32 b;
+  KKCheck ((firstBucket >= 0)  &&  (firstBucket < numOfBuckets)  &&  (lastBucket >= 0)  &&  (lastBucket < numOfBuckets)  &&  (firstBucket <= lastBucket),
+           "Histogram::AverageOfMinBucketInRange  Parameters out or range numOfBuckets: " << numOfBuckets <<
+           "  minBucket: " << firstBucket << " maxBucket: " << lastBucket)
 
   kkint32  minBucketIDX = firstBucket;
   float minBucketVal = buckets[firstBucket];
 
-  for  (b = firstBucket;  b <= lastBucket;  b++)
+  for  (kkint32 b = firstBucket;  b <= lastBucket;  b++)
   {
     if  (buckets[b] <= minBucketVal)
     {
@@ -965,23 +895,14 @@ float   Histogram::AverageOfMaxBucketExcludingRange (kkint32  minBucket,
                                                      kkint32  maxBucket
                                                     )  const
 {
-  if  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
-       (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
-       (minBucket > maxBucket)
-      )
-  {
-    cerr << std::endl;
-    cerr << "Histogram::AverageOfMaxBucketExcludingRange    *** ERROR ***  Invalid Parameters" << std::endl;
-    cerr << "NumOfBuckets[" << numOfBuckets << "]  MinBucket[" << minBucket << "]    MaxBucket[" << maxBucket << "]" << std::endl;
-    exit (-1);
-  }
-  
-  kkint32 b;
+  KKCheck ((minBucket >= 0)  &&  (minBucket < numOfBuckets)  &&  (maxBucket >= 0)  &&  (maxBucket < numOfBuckets)  &&  (minBucket <= maxBucket),
+           "Histogram::AverageOfMaxBucketExcludingRange  Parameters out or range numOfBuckets: " << numOfBuckets
+           << "  minBucket: " << minBucket << " maxBucket: " << maxBucket)
 
   kkint32  maxBucketIDX = -1;
   float maxBucketVal = 0;
 
-  for  (b = 0;  b < numOfBuckets;  b++)
+  for  (kkint32 b = 0;  b < numOfBuckets;  b++)
   {
     if  ((b < minBucket)  ||  (b > maxBucket))
     {
@@ -1005,19 +926,11 @@ float   Histogram::AverageOfMaxBucketExcludingRange (kkint32  minBucket,
 
 
 kkint32  Histogram::AreaInRange (kkint32  minBucket,
-                               kkint32  maxBucket
-                              )  const
+                                 kkint32  maxBucket
+                                )  const
 {
-  if  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
-       (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
-       (minBucket > maxBucket)
-      )
-  {
-    cerr << std::endl;
-    cerr << "Histogram::AreaInRange    *** ERROR ***  Invalid Parameters" << std::endl;
-    cerr << "NumOfBuckets[" << numOfBuckets << "]  MinBucket[" << minBucket << "]    MaxBucket[" << maxBucket << "]" << std::endl;
-    exit (-1);
-  }
+  KKCheck ((minBucket >= 0)  &&  (minBucket < numOfBuckets)  &&  (maxBucket >= 0)  &&  (maxBucket < numOfBuckets)  &&  (minBucket <= maxBucket),
+           "Histogram::AreaInRange  Parameters out or range numOfBuckets: " << numOfBuckets << " minBucket: " << minBucket << " maxBucket: " << maxBucket)
 
   float  area = (float)0.0;
   for  (kkint32 b = minBucket;  b <= maxBucket;  b++)
@@ -1031,8 +944,8 @@ kkint32  Histogram::AreaInRange (kkint32  minBucket,
 
 
 float  Histogram::AreaInRangePercent (kkint32  minBucket,
-                                       kkint32  maxBucket
-                                      )  const
+                                      kkint32  maxBucket
+                                     )  const
 {
   if  (totalCount <= (float)0.0)
     return (float)0.0;
@@ -1065,10 +978,10 @@ void  Histogram::PrintTable (ostream&  o)
 
 
 
-void  Histogram::GetStats (float&   min,       // smallest amt in a bucket.
-                           float&   max,       // largest amt in a bucket.
-                           float&   mean,      // average number in each bucket.
-                           float&   variance   // variance.
+void  Histogram::GetStats (float&  min,       // smallest amt in a bucket.
+                           float&  max,       // largest amt in a bucket.
+                           float&  mean,      // average number in each bucket.
+                           float&  variance   // variance.
                           )
 {
   min      = FLT_MAX;

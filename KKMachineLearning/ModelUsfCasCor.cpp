@@ -354,7 +354,7 @@ void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    example,
     log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
       << "\"_mlClasses.size () != probabilities.size ()\"   This should not ever be able to happen." << endl
       << endl;
-    for  (int x = 0;  x < _mlClasses.QueueSize ();  ++x)
+    for  (kkuint32 x = 0;  x < _mlClasses.QueueSize ();  ++x)
     {
       _votes[x] = 0;
       _probabilities[x] = 0.0;
@@ -428,7 +428,7 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    _example,
     _log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
       << "\"_mlClasses.size () != probabilities.size ()\"   This should not ever be able to happen." << endl
       << endl;
-    for  (int x = 0;  x < _mlClasses.QueueSize ();  ++x)
+    for  (kkuint32 x = 0;  x < _mlClasses.QueueSize ();  ++x)
     {
       _probabilities[x] = 0.0;
     }
@@ -478,6 +478,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
                                RunLog&         log
                               )
 {
+  log.Level(30) << "ModelUsfCasCor::ReadXML  tag->Name: " << tag->Name() << std::endl;
   delete  usfCasCorClassifier;
   usfCasCorClassifier = NULL;
 

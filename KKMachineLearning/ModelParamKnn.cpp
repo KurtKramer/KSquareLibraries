@@ -7,11 +7,9 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 using namespace KKB;
-
 
 #include "ModelParamKnn.h"
 #include "FileDesc.h"
@@ -20,8 +18,6 @@ using namespace KKB;
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKMLL;
-
-
 
 
 
@@ -47,7 +43,6 @@ ModelParamKnn::~ModelParamKnn  ()
 
 
 
-
 ModelParamKnnPtr  ModelParamKnn::Duplicate ()  const
 {
   return new ModelParamKnn (*this);
@@ -55,13 +50,11 @@ ModelParamKnnPtr  ModelParamKnn::Duplicate ()  const
 
 
 
-
 KKStr  ModelParamKnn::ToCmdLineStr (RunLog&  log)  const
 {
+  log.Level(50) << "ModelParamKnn::ToCmdLineStr" << endl;
   return  ModelParam::ToCmdLineStr () + "  -K " + StrFormatInt (k, "###0");
 }
-
-
 
 
 
@@ -90,8 +83,6 @@ void  ModelParamKnn::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-
-
 void  ModelParamKnn::WriteXML (const KKStr&  varName,
                                ostream&      o
                               )  const
@@ -104,15 +95,10 @@ void  ModelParamKnn::WriteXML (const KKStr&  varName,
 
   WriteXMLFields (o);
 
-
-
-
   XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -145,5 +131,3 @@ void  ModelParamKnn::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 XmlFactoryMacro(ModelParamKnn)
-
-

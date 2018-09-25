@@ -1,18 +1,14 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-#include  <ctype.h>
+#include <ctype.h>
 #include <limits.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace  std;
 
 #include "KKBaseTypes.h"
@@ -58,6 +54,8 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
 
   _estSize = 0;
 
+  _errorMessage = "";
+
   kkint32  featureNumMin = int32_max;
   kkint32  featureNumMax = int32_min;
 
@@ -74,7 +72,7 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a comment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))
@@ -122,15 +120,24 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     OptionUInt32      _maxCount,    // Maximum # images to load.
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
                                                      RunLog&           _log
                                                    )
 {
-  _log.Level (20) << "FeatureFileIOSparse::LoadFile   FileName[" << _fileName << "]" << endl;
-
+  _log.Level (10) << endl 
+      << "FeatureFileIOSparse::LoadFile   ***ERROR***   Roberts  LoadFile Functionality not implemented." << endl 
+      << "    _fileName   : " << _fileName << endl
+      << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
+      << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
+      << "    _in.flags   : " << _in.flags () << endl
+      << "    _maxCount   : " << _maxCount << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+  
   bool  eof = false;
   bool  eol = true;
 
@@ -143,12 +150,12 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
   kkint32  minFeatureNum = _fileDesc->SparseMinFeatureNum ();
   kkint32  maxFeatureNum = minFeatureNum + numOfFeatures - 1;
 
-  if  (_maxCount < 1)
-    _maxCount = int32_max;
+  if  (!_maxCount)
+    _maxCount = UINT32_MAX;
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  ((!eof)   &&  (!_cancelFlag)  &&  ((kkint32)examples->size () < _maxCount))
+  while  ((!eof)   &&  (!_cancelFlag)  &&  (examples->QueueSize () < _maxCount))
   {
     KKStr  className;
     
@@ -162,7 +169,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
       continue;
     }
 
-    if  (className.SubStrPart (0, 1) == "//")
+    if  (className.StartsWith ("//"))
     {
       // We have a coment line.  We will skip to end of line
       while  ((!eol)  &&  (!eof))
@@ -209,6 +216,11 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
     lineCount++;
   }
 
+  _log.Level (10) << "FeatureFileIOSparse::LoadFile  Done" << endl
+      << "    _cancelFlag : " << _cancelFlag << endl
+      << "    _changesMade: " << _changesMade << endl
+      << endl;
+
   return  examples;
 }  /* LoadFile */
 
@@ -225,24 +237,30 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
                                       RunLog&               _log
                                      )
 {
-  _log.Level (20) << "FeatureFileIOSparse::SaveFile     FileName[" << _fileName << "]." << endl;
+  _log.Level (-1) << endl
+      << "FeatureFileIOSparse::SaveFile    ***ERROR***   not implemented." << endl
+      << "     _fileName    : " << _fileName << endl
+      << "     _selFeatures : " << _selFeatures.ToCommaDelStr () << endl
+      << "     _out.fail    : " << _out.fail () << endl
+      << "     _cancelFlag  : " << _cancelFlag << endl
+      << endl;
+
+  _errorMessage = "";
+
   FeatureVectorPtr  example  = NULL;
-  FileDescConstPtr       fileDesc = _data.FileDesc ();
+  FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   _numExamplesWritten = 0;
 
-  kkint32  idx;
-  kkint32  x;
-
   kkint32  minFeatureNum = fileDesc->SparseMinFeatureNum ();
 
-  for  (idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
+  for  (kkuint32 idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
   {
     example = _data.IdxToPtr (idx);
 
     _out << example->MLClassName ();
 
-    for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+    for  (kkint32 x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
       kkint32  featureNum = _selFeatures[x];
       float value = example->FeatureData (featureNum);

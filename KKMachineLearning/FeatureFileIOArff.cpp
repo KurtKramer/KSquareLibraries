@@ -10,14 +10,12 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "FeatureFileIOArff.h"
 #include "FileDesc.h"
@@ -30,64 +28,16 @@ FeatureFileIOArff  FeatureFileIOArff::driver;
 
 
 
-
 FeatureFileIOArff::FeatureFileIOArff ():
    FeatureFileIO ("ARFF", false, true)
 {
 }
 
 
+
 FeatureFileIOArff::~FeatureFileIOArff(void)
 {
 }
-
-
-
-FileDescConstPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
-                                                  istream&        _in,
-                                                  MLClassListPtr  _classes,
-                                                  kkint32&        _estSize,
-                                                  KKStr&          _errorMessage,
-                                                  RunLog&         _log
-                                                 )
-{
-  _log.Level (10) << endl
-                  << "FeatureFileIOArff::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl
-                  << "  _fileName: " << _fileName << endl
-                  << "  _classes : " << _classes->ToTabDelimitedStr () << endl
-                  << "  _estSize : " << _estSize << endl
-                  << endl;
-
-  _errorMessage = "ARFF read functionality not implemented.";
-  return NULL;
-}
-
-
-
-FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&      _fileName,
-                                                   FileDescConstPtr  _fileDesc,
-                                                   MLClassList&      _classes, 
-                                                   istream&          _in,
-                                                   kkint32           _maxCount,    // Maximum # images to load.
-                                                   VolConstBool&     _cancelFlag,
-                                                   bool&             _changesMade,
-                                                   KKStr&            _errorMessage,
-                                                   RunLog&           _log
-                                                  )
-{
-  _log.Level (10) << endl
-    << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-    << "  _fileName    : " << _fileName << endl
-    << "  _fileDesc    : " << _fileDesc->NumOfFields ()
-    << "  _classes     : " << _classes.ToTabDelimitedStr () << endl
-    << "  _maxCount    : " << _maxCount << endl
-    << "  _cancelFlag  : " << _cancelFlag << endl
-    << "  _changesMade : " << _changesMade << endl
-    << endl;
-                
-  _errorMessage = "ARFF read functionality not implemented.";
-  return NULL;
-}  /* LoadFile */
 
 
 
@@ -109,7 +59,6 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
   FileDescConstPtr  fileDesc = _data.FileDesc ();
   auto  attrTable = fileDesc->CreateAAttributeConstTable ();
 
-  kkint32  x;
   {
     _out << "% ARFF Format Definition: http://www.cs.waikato.ac.nz/~ml/weka/arff.html"  << endl
          << "%"                                                             << endl
@@ -123,7 +72,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     
     ClassStatisticListPtr  classStatistics = _data.GetClassStatistics ();
     KKStr  classListStr (classStatistics->QueueSize () * 15);
-    for  (x = 0;  x < classStatistics->QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < classStatistics->QueueSize ();  x++)
     {
       ClassStatisticPtr  classStatistic = classStatistics->IdxToPtr (x);
       _out << "%  " << classStatistic->Name () << "\t" << classStatistic->Count () << endl;
@@ -152,7 +101,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
           )
       {
         _out << "(";
-        for (x = 0;  x < attr->Cardinality ();  x++)
+        for (kkint32 x = 0;  x < attr->Cardinality ();  x++)
         {
           if  (x > 0)
             _out << ",";
@@ -188,12 +137,11 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
 
   FeatureVectorPtr   example = NULL;
 
-  kkint32 idx;
-  for  (idx = 0; idx < _data.QueueSize (); idx++)
+  for  (kkuint32 idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
 
-    for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
+    for  (kkuint32 x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
 
@@ -222,4 +170,3 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     << "  _cancelFlag: " << "  _errorMessage: " << _errorMessage << endl;
   return;
 }  /* SaveFile */
-

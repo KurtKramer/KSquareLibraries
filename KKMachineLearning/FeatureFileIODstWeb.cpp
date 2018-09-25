@@ -11,14 +11,13 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace KKB;
-
 
 #include "FeatureFileIODstWeb.h"
 #include "FileDesc.h"
@@ -101,6 +100,14 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
                                                     RunLog&         _log
                                                    )
 {
+  _log.Level (10)
+      << "FeatureFileIODstWeb::GetFileDesc" << endl
+      << "    _fileName: " << _fileName << endl
+      << "    _in.flags: " << _in.flags() << endl
+      << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
+      << "    _estSize : " << _estSize << endl
+      << endl;
+
   KKStr  line (1024);
   bool   eof = false;
   KKStr  classNameAttribute;
@@ -132,8 +139,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     line.TrimLeft ();
     line.TrimRight ();
 
-    kkint64  equalLoc = line.LocateCharacter ('=');
-    if  (equalLoc < 0)
+    auto  equalLoc = line.LocateCharacter ('=');
+    if  (!equalLoc)
     {
       _errorMessage = "First Line is not Class Identifier.";
       _log.Level (-1) << endl << endl
@@ -142,7 +149,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       return  NULL;
     }
 
-    KKStr  leftSide  = line.SubStrPart ((kkint64)0, equalLoc - 1);
+    KKStr  leftSide  = line.SubStrSeg (0, equalLoc);
     KKStr  rightSide = line.SubStrPart (equalLoc + 1);
 
     leftSide.Upper ();
@@ -178,6 +185,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     if  (a->code == classNameAttribute)
     {
       delete  a;
+      a = NULL;
     }
     else
     {
@@ -222,7 +230,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     kkint32           _maxCount,    /**< Maximum # images to load. */
+                                                     OptionUInt32      _maxCount,    /**< Maximum # images to load. */
                                                      VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
@@ -232,7 +240,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;
 
   _changesMade = false;
-  if (_maxCount < 0)
+  if (!_maxCount)
     _maxCount = INT_MAX;
 
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");
@@ -336,28 +344,3 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
   return  examples;
 }  /* LoadFile */
-
-
-
-void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&    _data,
-                                      const KKStr&          _fileName,
-                                      FeatureNumListConst&  _selFeatures,
-                                      ostream&              _out,
-                                      kkuint32&             _numExamplesWritten,
-                                      VolConstBool&         _cancelFlag,
-                                      bool&                 _successful,
-                                      KKStr&                _errorMessage,
-                                      RunLog&               _log
-                                     )
-{
-  _log.Level (-1) << endl << endl
-                  << "FeatureFileIODstWeb::SaveFile     FileName[" << _fileName << "]   ***ERROR***." << endl
-                  << endl
-                  << "                       SaveFile   not implemented." << endl
-                  << endl;
-
-  _errorMessage = "FeatureFileIODstWeb::SaveFile    Not Implemented.";
-  _successful = false;
-  _numExamplesWritten = 0;
-  return;
-}  /* SaveFile */

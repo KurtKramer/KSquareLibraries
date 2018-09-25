@@ -12,6 +12,7 @@ using namespace  std;
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "Option.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
@@ -212,7 +213,7 @@ void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass,
   {
       MLClassListPtr  list = idx->first;
       auto  classInList = list->PtrToIdx (mlClass);
-      if  (classInList >= 0)
+      if  (classInList)
       {
         bool  nameChangedInList = false;
         list->ChangeNameOfClass (mlClass, oldName, newName, nameChangedInList);
@@ -232,12 +233,12 @@ void  MLClass::ResetAllParentsToAllClasses ()
   CreateBlocker ();
   blocker->StartBlock ();
   
-  MLClassListPtr  globalClassList = GlobalClassList ();
+  MLClassListPtr  globalList = GlobalClassList ();
 
-  MLClassPtr       allClasses = globalClassList->LookUpByName ("AllClasses");
+  MLClassPtr  allClasses = globalList->LookUpByName ("AllClasses");
 
   MLClassList::iterator  idx;
-  for  (idx = globalClassList->begin ();  idx != globalClassList->end ();  ++idx)
+  for  (idx = globalList->begin ();  idx != globalList->end ();  ++idx)
   {
     MLClassPtr  ic = *idx;
     if  (ic == allClasses)
@@ -316,9 +317,9 @@ MLClass::MLClass (const KKStr&  _name):
 
   upperName = name.ToUpper ();
   KKStr  topLevel = upperName;
-  kkint64 x = upperName.LocateCharacter ('_');
-  if  (x >= 0)
-    topLevel = upperName.SubStrPart ((kkint64)0, x - 1);
+  auto x = upperName.LocateCharacter ('_');
+  if  (x)
+    topLevel = upperName.SubStrSeg (0, x);
 
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
@@ -368,15 +369,15 @@ KKStr  MLClass::ToString ()  const
 KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
-  kkint64 x = className.LocateLastOccurrence ('_');
-  if  (x > 0)
+  auto x = className.LocateLastOccurrence ('_');
+  if  (x  &&  (x > 0U))
   {
     // Now lets eliminate any sequence number in name
     // We are assuming that a underscore{"_") character separates the class name from the sequence number.
     // So if there is an underscore character,  and all the characters to the right of it are
     // numeric characters,  then we will remove the underscore and the following numbers.
 
-    kkStrUint  y = (kkStrUint)(x + 1);
+    kkStrUint  y = x.value () + 1;
 
     bool  allFollowingCharsAreNumeric = true;
     while  ((y < className.Len ()) &&  (allFollowingCharsAreNumeric))
@@ -388,7 +389,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
     if  (allFollowingCharsAreNumeric)
     {
-      className = className.SubStrPart (0, x - 1);
+      className = className.SubStrSeg (0, x);
     }
   }
 
@@ -908,7 +909,7 @@ KKStr  MLClassList::ToString ()  const
 {
   KKStr s (10 * QueueSize ());
 
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)
       s << "\t";
@@ -924,7 +925,7 @@ KKStr  MLClassList::ToString ()  const
 KKStr  MLClassList::ToTabDelimitedStr ()  const
 {
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << "\t";
     s << IdxToPtr (i)->Name ();
@@ -937,8 +938,11 @@ KKStr  MLClassList::ToTabDelimitedStr ()  const
 
 KKStr  MLClassList::ToCommaDelimitedStr ()  const
 {
+  if  (this == NULL)
+    return "NULL";
+
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << ",";
     s << IdxToPtr (i)->Name ();
@@ -952,7 +956,7 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
 KKStr  MLClassList::ToCommaDelimitedQuotedStr ()  const
 {
   KKStr s (10 * QueueSize ());
-  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     if  (i > 0)  s << ",";
     s << IdxToPtr (i)->Name ().QuotedStr ();
@@ -1011,8 +1015,7 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
   titleLine1 = "";
   titleLine2 = "";
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     if  (x > 0)
     {
@@ -1021,14 +1024,14 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
     }
 
     KKStr  className = IdxToPtr (x)->Name ();
-    kkint64  y = className.LocateCharacter ('_');
-    if  (y < 0)
+    auto  y = className.LocateCharacter ('_');
+    if  (!y)
     {
       titleLine2 << className;
     }
     else
     {
-      titleLine1 << className.SubStrPart (0, y - 1);
+      titleLine1 << className.SubStrSeg (0, y);
       titleLine2 << className.SubStrPart (y + 1);
     }
   }
@@ -1045,8 +1048,7 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
   titleLine2 = "";
   titleLine3 = "";
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     if  (x > 0)
     {
@@ -1110,8 +1112,7 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
   KKStr blankField;
   blankField.RightPad (fieldWidth);
 
-  kkint32 x;
-  for  (x = 0;  x < QueueSize ();  x++)
+  for  (kkuint32 x = 0;  x < QueueSize ();  x++)
   {
     KKStr  part1, part2, part3;
     part1 = part2 = part3 = "";
@@ -1199,7 +1200,7 @@ MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkin
     MLClassPtr c = *idx;
     MLClassPtr classForLevel = c->MLClassForGivenHierarchialLevel (level);
 
-    if  (newList->PtrToIdx (classForLevel) < 0)
+    if  (!newList->PtrToIdx (classForLevel))
       newList->AddMLClass (classForLevel);
   }
 
@@ -1219,7 +1220,7 @@ MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
   for  (idx = list2.begin ();  idx != list2.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (result->PtrToIdx (ic) < 0)
+    if  (!result->PtrToIdx (ic))
     {
       // This entry (*idx) from list2 was not in list 1
       result->AddMLClass (ic);
@@ -1277,7 +1278,7 @@ bool  MLClassList::operator== (const MLClassList&  right)  const
   if  (QueueSize () != right.QueueSize ())
     return  false;
 
-  for  (kkint32 i = 0;  i < QueueSize ();  i++)
+  for  (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
     MLClassPtr  mlClass = IdxToPtr (i);
 
@@ -1329,7 +1330,7 @@ MLClassList&  MLClassList::operator+= (const MLClassList&  right)  // add all cl
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (PtrToIdx (ic) < 0)
+    if  (!PtrToIdx (ic))
       PushOnBack (ic);
   }
 
@@ -1365,7 +1366,7 @@ MLClassList  MLClassList::operator- (const MLClassList&  right)  const
   for  (idx = begin ();  idx != end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    if  (right.PtrToIdx (ic) < 0)
+    if  (!right.PtrToIdx (ic))
        result.PushOnBack (ic);
   }
 

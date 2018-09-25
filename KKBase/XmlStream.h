@@ -8,6 +8,7 @@
 
 #include "DateTime.h"
 #include "KKStr.h"
+#include "KKStrParser.h"
 #include "RunLog.h"
 #include "XmlTokenizer.h"
 
@@ -70,23 +71,21 @@ namespace  KKB
 
   private:
     /** Returns index of latest instance of 'name' pushed onto the stack; if no entry with same name returns -1. */
-    kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
+    //kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
 
 
     void  PushXmlElementLevel (const KKStr&  sectionName);
 
     void  PopXmlElementLevel ();
 
-
-
+    
     /** 
      * Searches for factory starting at highest level of 'factoryManagers' working down 
      * stack; if not found there will look at 'XmlFactory::globalXmlFactoryManager'.
      */
     XmlFactoryPtr  TrackDownFactory (const KKStr&  sectionName);
 
-
-
+    
     /**
      * When starting a new element the name of the Section is pushed on back  of 'endOfElementTagNames'. This
      * is how we keep track of the End tag we are looking for to close-out the current element.  The member
@@ -96,8 +95,8 @@ namespace  KKB
      * be the 'TrainingProcess2' class requiring to add a XmlElement factory for 'Model' derived classes. These 
      * Factory derived classes would contain a cancelFlag reference that they pass in the constructor to all 
      */
-    VectorKKStr                         endOfElementTagNames;
-    std::vector<XmlFactoryManagerPtr>   factoryManagers;
+    VectorKKStr                        endOfElementTagNames;
+    std::vector<XmlFactoryManagerPtr>  factoryManagers;
 
 
     bool             endOfElemenReached;
@@ -172,6 +171,8 @@ namespace  KKB
   };  /* XmlAttributeList */
 
   typedef  XmlAttributeList*  XmlAttributeListPtr;
+
+
 
   class  XmlTag
   {
@@ -322,6 +323,7 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  nameTag->ToString ();}
     virtual  double   ToDouble () const {return  0.0;}
     virtual  float    ToFloat  () const {return  0.0f;}
+    virtual  kkuint16 ToUnit16 () const {return  0;}
     virtual  kkint32  ToInt32  () const {return  0;}
 
   private:
@@ -526,16 +528,13 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  value ? "True" : "False";}
     virtual  double   ToDouble () const {return  (double)value;}
     virtual  float    ToFloat  () const {return  (float)value;}
-    virtual  kkint32  ToInt32  () const {return  (kkint32)value;}
+    virtual  kkuint16 ToUint16 () const {return  (value ? 1 : 0);}
+    virtual  kkint32  ToInt32  () const {return  (value ? 1 : 0);}
 
   private:
     bool  value;
   };
   typedef  XmlElementBool*  XmlElementBoolPtr;
-
-
-
-
 
 
   /****************************************************************************/
@@ -562,7 +561,8 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const {return  value.YYYY_MM_DD_HH_MM_SS ();}
     virtual  double   ToDouble () const {return  (double)value.Seconds ();}
     virtual  float    ToFloat  () const {return  (float)value.Seconds ();}
-    virtual  kkint32  ToInt32  () const {return  (kkint32)value.ToDays ();}
+    virtual  kkuint16 ToUint16 () const;
+    virtual  kkint32  ToInt32  () const;
     
   private:
     DateTime  value;
@@ -599,6 +599,7 @@ namespace  KKB
 
     void  Add (const KKStr&  key,  const KKStr&          v);
     void  Add (const KKStr&  key,  kkint32               v);
+    void  Add (const KKStr&  key,  kkuint32              v);
     void  Add (const KKStr&  key,  float                 v);
     void  Add (const KKStr&  key,  double                v);
     void  Add (const KKStr&  key,  bool                  v);
@@ -671,11 +672,13 @@ namespace  KKB
       XmlElementTemplate<KKStr> (tag, s, cancelFlag, log)
     {}
 
-    virtual  bool     ToBool   () const {return  (Value () ? Value ()->ToBool () : false);}
-    virtual  KKStr    ToKKStr  () const {return  (Value () ? *Value () : KKStr::EmptyStr ());}
-    virtual  double   ToDouble () const {return  (Value () ? Value ()->ToDouble () : 0.0);}
-    virtual  float    ToFloat  () const {return  (Value () ? Value ()->ToFloat ()  : 0.0f);}
-    virtual  kkint32  ToInt32  () const {return  (Value () ? Value ()->ToInt32 ()  : 0);}
+    virtual  bool      ToBool   () const {return  (Value () ? Value ()->ToBool ()   : false);}
+    virtual  KKStr     ToKKStr  () const {return  (Value () ? *Value ()             : KKStr::EmptyStr ());}
+    virtual  double    ToDouble () const {return  (Value () ? Value ()->ToDouble () : 0.0);}
+    virtual  float     ToFloat  () const {return  (Value () ? Value ()->ToFloat  () : 0.0f);}
+    virtual  kkuint32  ToUint16 () const {return  (Value () ? Value ()->ToUint16 () : 0);}
+    virtual  kkint32   ToInt32  () const {return  (Value () ? Value ()->ToInt32  () : 0);}
+    virtual  kkuint32  ToUInt32 () const {return  (Value () ? Value ()->ToUint32 () : 0);}
   };
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
   XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
@@ -776,8 +779,7 @@ namespace  KKB
     XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
                   = XmlFactory##NameOfClass::FactoryInstance ();
 
-
-
+  
 
 
 #define  XmlElementBuiltInTypeHeader(T,TypeName)            \
@@ -805,6 +807,7 @@ namespace  KKB
     virtual  KKStr    ToKKStr  () const;                    \
     virtual  double   ToDouble () const;                    \
     virtual  float    ToFloat  () const;                    \
+    virtual  kkuint16 ToUint16 () const;                    \
     virtual  kkint32  ToInt32  () const;                    \
     virtual  kkint64  ToInt64  () const;                    \
   private:                                                  \
@@ -813,39 +816,177 @@ namespace  KKB
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
+class  XmlElementArrayBase: public XmlElement
+{
+public:
+    XmlElementArrayBase (XmlTagPtr   tag,
+                         XmlStream&  s,
+                         RunLog&     log
+                        ):
+      XmlElement (tag, s, log),
+      count (0)
+    {
+      count = tag->AttributeValueInt32 ("Count");
+    }
+
+    kkuint32  Count() const  {return count;}
+
+    virtual kkuint32*  ToUnit32Array () const  {return nullptr;}
+
+
+    kkuint32  count;
+};
+
+
+template<typename T, const char* ZZZZTypeName>
+class  XmlElementArray: public XmlElementArrayBase
+{
+public:
+  XmlElementArray (XmlTagPtr      tag,
+                   XmlStream&     s,
+                   VolConstBool&  cancelFlag,
+                   RunLog&        log
+                  ):
+      XmlElementArrayBase (tag, s, log),
+      value (NULL) 
+  {
+    if  (count <= 0)
+    {
+      value = NULL;
+      count = 0;
+    }
+    else
+    {
+      value = new T[count];
+    }
+
+    kkuint32  fieldsExtracted = 0;
+    XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);
+    while  (tok)
+    {
+      if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)
+      {
+        XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);
+
+        KKStrParser p (*(c->Content ()));
+
+        while  (p.MoreTokens ())
+        {
+          double  zed = p.GetNextTokenDouble ("\t,");
+          if  (fieldsExtracted < count)
+            value[fieldsExtracted] = (T)zed;
+          ++fieldsExtracted;
+        }
+      }
+      delete  tok;
+      tok = s.GetNextToken (cancelFlag, log);
+    }
+
+    KKCheck(fieldsExtracted == count,
+         "XmlElementArray" << ZZZZTypeName << " variable: " << VarName () << "  FieldsExtracted: " << fieldsExtracted << " differs from specified Count: " << count << "]")
+  }
+
+  ~XmlElementArray ()
+  {
+    delete value;
+    value = NULL;
+  }
+
+  T*  TakeOwnership ()
+  {
+    T* v = value;
+    value = NULL;
+    return v;
+  }
+
+  T*  Value ()  const  {return value;}
+
+  static void  WriteXML (kkuint32       count,
+                         const T*       d,
+                         const KKStr&   varName,
+                         std::ostream&  o
+                        );
+  /*
+  {
+    XmlTag startTag (ZZZZTypeName, XmlTag::TagTypes::tagStart);
+    if  (!varName.Empty ())
+      startTag.AddAtribute ("VarName", varName);
+    startTag.AddAtribute ("Count", (kkint32)count);
+    startTag.WriteXML (o);
+
+    for  (kkuint32 x = 0;  x < count;  ++x)
+    {
+      if  (x > 0)
+        o << "\t";
+      o << d[x];
+    }
+    XmlTag  endTag (ZZZZTypeName, XmlTag::TagTypes::tagEnd);
+    endTag.WriteXML (o);
+    o << endl;
+   } 
+   */
+
+
+   virtual  kkuint32*  ToUnit32Array () const
+   {
+     KKCheck(value, "XmlElementArray::ToUnit32  value == NULL !")
+
+     kkuint32* result = new kkuint32 [count];
+
+     for  (kkuint32 x = 0;  x < count;  ++x)
+         result[x] = (kkuint32)value[x];
+
+     return result;        
+   }
+
+private:
+  T*  value;
+};
+
+
+template<typename T, const char* ZZZZTypeName>
+void  KKB::XmlElementArray<T, ZZZZTypeName>::WriteXML (kkuint32       count,
+                                                       const T*       d,
+                                                       const KKStr&   varName,
+                                                       std::ostream&  o
+                                                      )
+{
+  XmlTag startTag (ZZZZTypeName, XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)count);
+  startTag.WriteXML (o);
+
+  for  (kkuint32 x = 0;  x < count;  ++x)
+  {
+    if  (x > 0)
+      o << "\t";
+    o << d[x];
+  }
+  XmlTag  endTag (ZZZZTypeName, XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+
+}
 
 
 
 
-#define  XmlElementArrayHeader(T,TypeName,ParserNextTokenMethod)   \
-  class  XmlElement##TypeName:  public  XmlElement                 \
-  {                                                                \
-  public:                                                          \
-    XmlElement##TypeName (XmlTagPtr       tag,                     \
-                          XmlStream&      s,                       \
-                           VolConstBool&  cancelFlag,              \
-                          RunLog&         log                      \
-                         );                                        \
-                                                                   \
-    virtual  ~XmlElement##TypeName ();                             \
-                                                                   \
-    kkuint32  Count ()  const  {return count;}                     \
-    T*        Value ()  const  {return value;}                     \
-                                                                   \
-    T*   TakeOwnership ();                                         \
-                                                                   \
-    static                                                         \
-    void  WriteXML (kkuint32       count,                          \
-                    const T*       d,                              \
-                    const KKStr&   varName,                        \
-                    std::ostream&  o                               \
-                   );                                              \
-                                                                   \
-  private:                                                         \
-    kkuint32  count;                                               \
-    T*        value;                                               \
-  };                                                               \
-  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
+#define  XmlElementArrayHeader2(T,TypeNameX,ParserNextTokenMethod)   \
+  extern const char XmlElement##TypeNameX##TP[];                     \
+  class  XmlElement##TypeNameX:  public  XmlElementArray<T,XmlElement##TypeNameX##TP>          \
+  {                                                                 \
+  public:                                                           \
+    XmlElement##TypeNameX (XmlTagPtr       tag,                      \
+                           XmlStream&      s,                        \
+                           VolConstBool&   cancelFlag,               \
+                           RunLog&         log                       \
+                          ):                                         \
+        XmlElementArray<T,XmlElement##TypeNameX##TP> (tag, s, cancelFlag, log)           \
+    {}                                                              \
+                                                                    \
+  };                                                                \
+  typedef  XmlElement##TypeNameX*   XmlElement##TypeNameX##Ptr;
 
 
 
@@ -920,20 +1061,23 @@ namespace  KKB
 
 
 
-XmlElementBuiltInTypeHeader(kkint32, Int32)
-XmlElementBuiltInTypeHeader(kkint64, Int64)
-XmlElementBuiltInTypeHeader(float,   Float)
-XmlElementBuiltInTypeHeader(double,  Double)
+XmlElementBuiltInTypeHeader(kkint32,  Int32)
+XmlElementBuiltInTypeHeader(kkuint32, UInt32)
+XmlElementBuiltInTypeHeader(kkint64,  Int64)
+XmlElementBuiltInTypeHeader(float,    Float)
+XmlElementBuiltInTypeHeader(double,   Double)
 
 
 
-XmlElementArrayHeader(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
+XmlElementArrayHeader2(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
 
-XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
+XmlElementArrayHeader2(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
 
-XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)   // XmlElementArrayDouble
+XmlElementArrayHeader2(kkuint32, ArrayUInt32,   GetNextTokenUint)     // XmlElementArrayUInt32
 
-XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)   // XmlElementArrayFloat
+XmlElementArrayHeader2(double,   ArrayDouble,   GetNextTokenDouble)   // XmlElementArrayDouble
+
+XmlElementArrayHeader2(float,    ArrayFloat,    GetNextTokenDouble)   // XmlElementArrayFloat
 
 XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
 
@@ -941,6 +1085,9 @@ XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlEleme
 
 XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)
 XmlElementVectorHeader(float,    VectorFloat,  GetNextTokenFloat)
+
+
+VectorUint32*  XmlArrayToVectorUInt32 (XmlElementPtr e);
 
 }  /* KKB */
 

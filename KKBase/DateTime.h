@@ -148,7 +148,6 @@ namespace  KKB
   };  /* DateType */
 
 
-
   
   ///<summary> Represents a Time, consisting of three fields, Hour, Minute, and Second. </summary>
   class  TimeType 

@@ -383,9 +383,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   validateDirectories        (tc.validateDirectories)
 {
   {
-    kkint32  x;
-
-    for  (x = 0;  x < tc.trainingClasses.QueueSize ();  x++)
+    for  (kkuint32 x = 0;  x < tc.trainingClasses.QueueSize ();  x++)
     {
       TrainingClassPtr  trainingClass = tc.trainingClasses.IdxToPtr (x);
       trainingClasses.PushOnBack (new TrainingClass (*trainingClass));
@@ -503,7 +501,7 @@ void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
   for  (auto idx: trainingClasses)
   {
     MLClassPtr  ic = idx->MLClass ();
-    if  (mlClasses->PtrToIdx (ic) < 0)
+    if  (!mlClasses->PtrToIdx (ic))
       mlClasses->AddMLClass (ic);
   }
 }  /* SyncronizeMLClassListWithTrainingClassList */
@@ -517,7 +515,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchia
   {
     MLClassPtr  ic = tc->MLClass ();
     MLClassPtr  claassForGivenLevel = ic->MLClassForGivenHierarchialLevel ((kkuint16)level);
-    if  (classes->PtrToIdx (claassForGivenLevel) < 0)
+    if  (!classes->PtrToIdx (claassForGivenLevel))
       classes->AddMLClass (claassForGivenLevel);
   }
   return  classes;
@@ -681,7 +679,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
   {
     TrainingClassPtr  tc = *idx;
 
-    if  (classes->PtrToIdx (tc->MLClass ()) < 0)
+    if  (!classes->PtrToIdx (tc->MLClass ()))
       classes->PushOnBack (tc->MLClass ());
   }
 
@@ -692,7 +690,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 
 
 
-MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
+MLClassListPtr  TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 {
   TrainingClassList::const_iterator  idx;
 
@@ -703,7 +701,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
     TrainingClassPtr  tc = *idx;
     if  (tc->SubClassifier () == NULL)
     {
-      if  (classes->PtrToIdx (tc->MLClass ()) < 0)
+      if  (!classes->PtrToIdx (tc->MLClass ()))
         classes->PushOnBack (tc->MLClass ());
     }
     else
@@ -713,7 +711,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
       for  (idx2 = subClassifierClasses->begin();  idx2 != subClassifierClasses->end ();  ++idx2)
       {
         MLClassPtr       subClass = *idx2;
-        if  (classes->PtrToIdx (subClass) < 0)
+        if  (!classes->PtrToIdx (subClass))
           classes->PushOnBack (subClass);
       }
       delete  subClassifierClasses;
@@ -1012,7 +1010,7 @@ SVMparamPtr  TrainingConfiguration2::SVMparamToUse ()  const
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
   {
-    SVMparamPtr s =  oldSVMparms->SvmParameters  ();
+    SVMparamPtr s = oldSVMparms->SvmParameters  ();
     return  s;
   }
   else
@@ -1023,7 +1021,7 @@ SVMparamPtr  TrainingConfiguration2::SVMparamToUse ()  const
 
 
 
-float   TrainingConfiguration2::A_Param () const
+float  TrainingConfiguration2::A_Param () const
 {
   if  (modelParameters)
     return  modelParameters->A_Param ();
@@ -1147,6 +1145,8 @@ void  TrainingConfiguration2::SetFeatureNums (const  FeatureNumList&  features)
   if  (modelParameters)
     modelParameters->SelectedFeatures (features);
 }  /* SetFeatureNums */
+
+
 
 void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
                                               MLClassPtr             class2,
@@ -1371,11 +1371,13 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
 
 
 
-TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionNum,
-                                                               RunLog&  log
+TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  sectionNum,
+                                                               RunLog&   log
                                                               )
 {
-  kkint32  numOfSettings = NumOfSettings ((kkint32)sectionNum);
+  auto  numOfSettings = NumOfSettings (sectionNum);
+  if  (!numOfSettings)
+    return NULL;
 
   kkint32  classNameLineNum     = 0;
   kkint32  countFactorLineNum   = 0;
@@ -1391,7 +1393,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
   float        weight = 1.0f;
   float        countFactor = 0.0f;
 
-  for  (kkint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
+  for  (kkuint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
   {
     KKStrConstPtr  settingNamePtr = SettingName (sectionNum, settingNum);
     if  (!settingNamePtr)
@@ -1467,14 +1469,14 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
     }
   }
 
-    if  (weight <= 0.0f)
-    {
+  if  (weight <= 0.0f)
+  {
     KKStr  errMsg = "Class[" + className + "]    Invalid Weight Parameter.";
-      log.Level (-1) << "ValidateClassConfig   " << errMsg << endl;
-      FormatErrorsAdd (weightLineNum, errMsg);
-      FormatGood (false);
-      return  NULL;
-    }
+    log.Level (-1) << "ValidateClassConfig   " << errMsg << endl;
+    FormatErrorsAdd (weightLineNum, errMsg);
+    FormatGood (false);
+    return  NULL;
+  }
 
   TrainingClassPtr tc = new TrainingClass (directories, className, weight,  countFactor, subClassifer, *mlClasses);
   tc->ClassNameLineNum     (classNameLineNum);
@@ -1523,7 +1525,7 @@ void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr  classToValidate,
 
 
 
-void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum,
+void  TrainingConfiguration2::ValidateTrainingClassConfig (kkuint32  sectionNum,
                                                            RunLog&  log
                                                           )
 {
@@ -1537,7 +1539,7 @@ void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum,
 
 
 
-FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sectionNum)
+FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkuint32  sectionNum)
 {
   kkint32  featuresIncludedLineNum = 0;
 
@@ -1569,8 +1571,8 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
 
 
 
-void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
-                                                      RunLog&  log
+void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
+                                                      RunLog&   log
                                                      )
 {
   kkint32  methodLineNum  = 0;
@@ -1757,8 +1759,8 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
 
 
 
-void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
-                                                           RunLog&  log
+void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
+                                                           RunLog&   log
                                                           )
 {
   if  (!modelParameters)
@@ -2351,6 +2353,7 @@ BinaryClassParmsConstPtr  TrainingConfiguration2::GetParamtersToUseFor2ClassComb
 }  /* BinaryClassParms */
 
 
+
 BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr       class1,
                                                                    MLClassPtr       class2
                                                                   )
@@ -2361,6 +2364,7 @@ BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr   
 
   return param->GetBinaryClassParms (class1, class2);
 }
+
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  configFileName)  const
@@ -2779,5 +2783,3 @@ void   TrainingConfiguration2::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(TrainingConfiguration2)
-
-  

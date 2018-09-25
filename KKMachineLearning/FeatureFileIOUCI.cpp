@@ -1,17 +1,13 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include "KKBaseTypes.h"
@@ -21,12 +17,10 @@ using namespace std;
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FeatureFileIOUCI.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace  KKMLL;
-
 
 
 FeatureFileIOUCI   FeatureFileIOUCI::driver;
@@ -72,7 +66,7 @@ FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
   {
     ln.TrimLeft ();
     ln.TrimRight ();
-    if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
+    if  ((!ln.StartsWith ("//"))  &&  (!ln.Empty ()))
     {
       numFieldsThisLine = 0;
 
@@ -110,14 +104,11 @@ FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
 
 
 
-
-
-
 FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
                                                   FileDescConstPtr  _fileDesc,
                                                   MLClassList&      _classes, 
                                                   istream&          _in,
-                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  OptionUInt32      _maxCount,    // Maximum # images to load.
                                                   VolConstBool&     _cancelFlag,
                                                   bool&             _changesMade,
                                                   KKStr&            _errorMessage,
@@ -134,15 +125,18 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
   KKStr  ln (256);
   bool  eof;
 
+  if  (!_maxCount)
+    _maxCount = UINT_MAX;
+
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   GetLine (_in, ln, eof);
-  while  (!eof)
+  while  (!eof  &&  (examples->QueueSize () < _maxCount))
   {
     ln.TrimLeft ();
     ln.TrimRight ();
 
-    if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
+    if  ((!ln.StartsWith ("//"))  &&  (!ln.Empty ()))
     {
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
   
@@ -173,9 +167,6 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
 
 
 
-
-
-
 void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
                                    const KKStr&          _fileName,
                                    FeatureNumListConst&  _selFeatures,
@@ -190,10 +181,10 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
 {
   _log.Level (50) << "FeatureFileIOUCI::SaveFile   _fileName: " << _fileName << endl;
   FeatureVectorPtr   example = NULL;
+  _errorMessage = "";
 
   _numExamplesWritten = 0;
 
-  kkint32  idx;
   kkint32  x;
 
   FileDescConstPtr  fileDesc = _data.FileDesc ();
@@ -206,7 +197,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   }
   _out << "," << "ClassLabel" << endl;
 
-  for  (idx = 0; idx < _data.QueueSize (); idx++)
+  for  (kkuint32 idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
 
@@ -227,6 +218,4 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   _log.Level (50) << "FeatureFileIOUCI::SaveFile  _successful: " << _successful << "  _cancelFlag: " << _cancelFlag << endl;
 
   return;
-}  /* WriteUCIFile */
-
-
+}  /* SaveFile */

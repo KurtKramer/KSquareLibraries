@@ -507,8 +507,8 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
   }
   else
   {
-    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
-    if  (existingInstanceIdx < 0)
+    auto  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    if  (!existingInstanceIdx)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
     }

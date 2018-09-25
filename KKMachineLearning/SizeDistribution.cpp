@@ -290,9 +290,7 @@ void   SizeDistribution::PrintFormatedDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  kkint32  idx;
-
-  for  (idx = 0;  idx < totals->QueueSize (); idx++)
+  for  (kkuint32 idx = 0;  idx < totals->QueueSize (); idx++)
   {
     classTotals = totals->IdxToPtr (idx);
     classTotals->PrintFormatedLine (o);
@@ -305,9 +303,6 @@ void   SizeDistribution::PrintFormatedDistributionMatrix (ostream&  o)  const
 
 
 
-
-
-
 void   SizeDistribution::PrintCSVDistributionMatrix (ostream&  o)  const
 {
   PrintCSVHeader (o);
@@ -316,9 +311,7 @@ void   SizeDistribution::PrintCSVDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  kkint32  idx;
-
-  for  (idx = 0;  idx < totals->QueueSize (); idx++)
+  for  (kkuint32 idx = 0;  idx < totals->QueueSize (); idx++)
   {
     classTotals = totals->IdxToPtr (idx);
     classTotals->PrintCSVLine (o);
@@ -331,7 +324,6 @@ void   SizeDistribution::PrintCSVDistributionMatrix (ostream&  o)  const
 
 
 
-
 void   SizeDistribution::PrintTabDelDistributionMatrix (ostream&  o)  const
 {
   PrintTabDelHeader (o);
@@ -340,9 +332,7 @@ void   SizeDistribution::PrintTabDelDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  kkint32  idx;
-
-  for  (idx = 0;  idx < totals->QueueSize (); idx++)
+  for  (kkuint32 idx = 0;  idx < totals->QueueSize (); idx++)
   {
     classTotals = totals->IdxToPtr (idx);
     classTotals->PrintTabDelLine (o);
@@ -352,10 +342,6 @@ void   SizeDistribution::PrintTabDelDistributionMatrix (ostream&  o)  const
   o << endl;
   grandTotals.PrintTabDelLine (o);
 }  /* PrintTabDelDistributionMatrix */
-
-
-
-
 
 
 
@@ -392,7 +378,6 @@ void  SizeDistribution::PrintFormatedHeader (ostream&  o)  const
 
 
 
-
 void  SizeDistribution::PrintCSVHeader (ostream&  o)  const
 {
    o << "\"Class Name\",Sum,";
@@ -410,7 +395,6 @@ void  SizeDistribution::PrintCSVHeader (ostream&  o)  const
 
    o << endl;
 }  /* PrintCSVHeader */
-
 
 
 
@@ -434,7 +418,6 @@ void  SizeDistribution::PrintTabDelHeader (ostream&  o)  const
 
 
 
-
 void  SizeDistribution::PrintByClassCollumns (ostream&      o,
                                               VectorUlong*  scanLinesPerMeterDepth
                                              )  const
@@ -446,7 +429,6 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
   MLClassListPtr  classes = BuildMLClassList ();
   MLClassList::const_iterator  cIDX;
  
-
   // Find the first and last buckets with activity
   
   kkint32  firstBucket = -1;
@@ -477,8 +459,7 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
       << endl;
     return;
   }
-
-
+  
   VectorInt  finalTotals (classes->size (), 0);
   kkint32    grandTotal = 0;
 

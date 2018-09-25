@@ -86,7 +86,7 @@ namespace KKMLL
     virtual  
       FeatureVectorListPtr  LoadFeatureFile (const KKStr&   _fileName,
                                              MLClassList&   _mlClasses,
-                                             kkint32        _maxCount,
+                                             OptionUInt32   _maxCount,
                                              VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
                                              bool&          _successful,
                                              bool&          _changesMade,
@@ -227,9 +227,8 @@ namespace KKMLL
                                             kkint32&        _estSize,
                                             KKStr&          _errorMessage,
                                             RunLog&         _log
-                                           ) = 0;
-
-
+                                           );
+    
 
     /**
      *@brief To be implemented by derived classes; loads the contents of a feature data file and returns a ImageFeaturesList container object.
@@ -249,12 +248,12 @@ namespace KKMLL
                                              FileDescConstPtr  _fileDesc,
                                              MLClassList&      _classes, 
                                              std::istream&     _in,
-                                             kkint32           _maxCount,    /**< Maximum # images to load. */
+                                             OptionUInt32      _maxCount,    /**< Maximum # images to load. */
                                              VolConstBool&     _cancelFlag,
                                              bool&             _changesMade,
                                              KKStr&            _errorMessage,
                                              RunLog&           _log
-                                            ) = 0;
+                                            );
 
 
     /**
@@ -278,12 +277,10 @@ namespace KKMLL
                               bool&                 _successful,
                               KKStr&                _errorMessage,
                               RunLog&               _log
-                             ) = 0;
+                             );
 
 
     const  KKStr&   DriverName ()  {return  driverName;}
-
-
 
     static  FeatureFileIOPtr   FileFormatFromStr   (const KKStr&  _fileFormatStr);
 

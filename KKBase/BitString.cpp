@@ -169,7 +169,6 @@ bool  BitString::Test (kkuint32  bitNum) const
 
 
 
-
 void  BitString::Set ()
 {
   memset (str, 255, (size_t)byteLen);
@@ -177,17 +176,9 @@ void  BitString::Set ()
 
 
 
-
 void BitString::Set (kkuint32  bitNum)
 {
-  if  (bitNum >= bitLen)
-  {
-    // Index violation.
-    cerr << std::endl
-         << "BitString::Set    Invalid Index[" << bitNum << "]  BitString::bitLen[" << bitLen << "]." << std::endl
-         << std::endl;
-    exit (-1);
-  }
+  KKCheck (bitNum < bitLen, "BitString::Set    bitNum: " << bitNum << "  bitLen: " <<  bitLen)
 
   kkint32 byteOffset;
   uchar   bitOffset;
@@ -201,8 +192,6 @@ void BitString::Set (kkuint32  bitNum)
 
 
 
-
-
 void  BitString::ReSet ()
 {
   memset (str, 0, (size_t)byteLen);
@@ -210,18 +199,10 @@ void  BitString::ReSet ()
 
 
 
-
 void  BitString::ReSet (kkuint32 bitNum)
 {
-  if  (bitNum >= bitLen)
-  {
-    // Index violation.
-    cerr << std::endl
-         << "BitString::Set    Invalid Index[" << bitNum << "]  BitString::bitLen[" << bitLen << "]." << std::endl
-         << std::endl;
-    exit (-1);
-  }
-
+  KKCheck (bitNum < bitLen, "BitString::ReSet    bitNum: " << bitNum << " bitLen: " << bitLen)
+ 
   kkint32 byteOffset;
   uchar   bitOffset;
 
@@ -264,14 +245,8 @@ void  BitString::PopulateVectorBool (VectorBool&  boolVector)  const
 
 void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const
 {
-  if  (bitLen > 65535)
-  {
-    KKStr  msg (50);
-    msg << "BitString::ListOfSetBits  BitLen[" << bitLen << "] of this instance of BitString exceeds capacity of 'VectorUint16'.";
-    cerr << std::endl << "BitString::ListOfSetBits   ***ERROR***   " << msg << std::endl << std::endl;
-    throw KKException (msg);
-  }
-
+  KKCheck (bitLen < UINT16_MAX, "BitString::ListOfSetBits  BitLen: " << bitLen << " exceeds capacity of 'VectorUint16'.")
+ 
   setBits.clear ();
 
   kkuint32  byteOffset = 0;
@@ -311,6 +286,7 @@ void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const
     }
   }
 }  /* ListOfSetBits16 */
+
 
 
 void  BitString::ListOfSetBits32 (VectorUint32&  setBits)  const
@@ -436,7 +412,6 @@ BitString  BitString::FromHexStr (const KKStr&  hexStr,
 
 
 
-
 BitString&  BitString::operator=  (const BitString&  right)
 {
   delete  str;
@@ -451,7 +426,6 @@ BitString&  BitString::operator=  (const BitString&  right)
 
   return  *this;
 }  /* operator= */
-
 
 
 
@@ -476,7 +450,6 @@ BitString&  BitString::operator+=  (const BitString&  right)
   operator|= (right);
   return  *this;
 } /* operator+= */
-
 
 
 
@@ -645,7 +618,6 @@ void  BitString::ReadXML (XmlStream&      s,
 
 
 
-
 void  BitString::WriteXML (const KKStr&  varName,
                            ostream&      o
                           )  const
@@ -662,4 +634,3 @@ void  BitString::WriteXML (const KKStr&  varName,
 
 
 XmlFactoryMacro(BitString)
-
