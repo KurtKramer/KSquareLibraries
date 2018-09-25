@@ -5,6 +5,7 @@
 #ifndef  _XMLSTREAM_
 #define  _XMLSTREAM_
 #include <map>
+#include <sstream>
 
 #include "DateTime.h"
 #include "KKStr.h"
