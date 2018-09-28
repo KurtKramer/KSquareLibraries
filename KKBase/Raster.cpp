@@ -285,78 +285,17 @@ Raster::Raster ():
 
 
 
-Raster::Raster (kkint32  _height,
-                kkint32  _width
-               ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
-{
-  AddRasterInstance (this);
-  AllocateImageArea ();
-}
-
-
-
 Raster::Raster (kkint32 _height,
                 kkint32 _width,
-                bool  _color
+                bool    _color
                ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (_color),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
+ Raster()
 
 {
-  AddRasterInstance (this);
+  height = _height;
+  width = _width;
+  totPixels = height * width;
+  color = _color;
   if  (color)
   {
     backgroundPixelValue = 255;
@@ -373,38 +312,15 @@ Raster::Raster (kkint32 _height,
  *@brief  Constructs a Raster from a BMP image loaded from disk.
  *@details If BMP Image is a gray-scale value pixel values will be reversed.  See description of gray-scale constructor.
  */
-Raster::Raster (const BmpImage&  _bmpImage):
-
-  backgroundPixelValue  (0),
-  backgroundPixelTH     (31),
-  blobIds               (NULL),
-  centroidCol           (0.0f),
-  centroidRow           (0.0f),
-  color                 (false),
-  divisor               (1),
-  fileName              (_bmpImage.FileName ()),
-  foregroundPixelCount  (0),
-  foregroundPixelValue  (255),
-  fourierMag            (NULL),
-  fourierMagArea        (NULL),
-  height                (_bmpImage.Height ()),
-  maxPixVal             (0),
-  title                 (),
-  totPixels             (_bmpImage.Height () * _bmpImage.Width ()),
-  weOwnRasterData       (true),
-  width                 (_bmpImage.Width ()),
-
-  redArea               (NULL),
-  greenArea             (NULL),
-  blueArea              (NULL),
-
-  red                   (NULL),
-  green                 (NULL),
-  blue                  (NULL)
-
+Raster::Raster (const BmpImage&  _bmpImage): Raster ()
 {
-  AddRasterInstance (this);
-  color = _bmpImage.Color ();
+  fileName  = _bmpImage.FileName ();
+  height    = _bmpImage.Height ();
+  width     = _bmpImage.Width ();
+  totPixels = height * width;
+  color     = _bmpImage.Color ();
+  weOwnRasterData = true;
+ 
   AllocateImageArea ();
 
   for  (kkint32 row = 0; row < height; row++)
@@ -424,46 +340,30 @@ Raster::Raster (const BmpImage&  _bmpImage):
 
 
 
-Raster::Raster (const Raster&  _raster):
-
-  backgroundPixelValue  (_raster.backgroundPixelValue),
-  backgroundPixelTH     (_raster.backgroundPixelTH),
-  blobIds               (NULL),
-  centroidCol           (_raster.centroidCol),
-  centroidRow           (_raster.centroidRow),
-  color                 (_raster.color),
-  divisor               (1),
-  fileName              (_raster.fileName),
-  foregroundPixelCount  (_raster.foregroundPixelCount),
-  foregroundPixelValue  (_raster.foregroundPixelValue),
-  fourierMag            (NULL),
-  fourierMagArea        (NULL),
-  height                (_raster.height),
-  maxPixVal             (_raster.maxPixVal),
-  title                 (),
-  totPixels             (_raster.totPixels),
-  weOwnRasterData       (true),
-  width                 (_raster.width),
-
-  redArea          (NULL),
-  greenArea        (NULL),
-  blueArea         (NULL),
-
-  red              (NULL),
-  green            (NULL),
-  blue             (NULL)
-
+Raster::Raster (const Raster&  _raster): Raster ()
 {
-  AddRasterInstance (this);
+  backgroundPixelValue  = _raster.backgroundPixelValue;
+  backgroundPixelTH     = _raster.backgroundPixelTH;
+  centroidCol           = _raster.centroidCol;
+  centroidRow           = _raster.centroidRow;
+  color                 = _raster.color;
+  fileName              = _raster.fileName;
+  foregroundPixelCount  = _raster.foregroundPixelCount;
+  foregroundPixelValue  = _raster.foregroundPixelValue;
+  height                = _raster.height;
+  maxPixVal             = _raster.maxPixVal;
+  totPixels             = _raster.totPixels;
+  weOwnRasterData       = true;
+  width                 =_raster.width;
 
   AllocateImageArea ();
-  if  (!greenArea)  throw KKException ("Raster::Raster  Failed to allocate 'greenArea'.");
+  KKCheck (greenArea, "Raster::Raster  Failed to allocate 'greenArea'.");
   memcpy (greenArea, _raster.greenArea, totPixels);
 
   if  (color)
   {
-    if  (!redArea)   throw KKException("Raster::Raster  Allocation of 'redArea'  failed.");
-    if  (!blueArea)  throw KKException("Raster::Raster  Allocation of 'blueArea' failed.");
+    KKCheck (redArea,"Raster::Raster  Allocation of 'redArea'  failed.");
+    KKCheck (blueArea, "Raster::Raster  Allocation of 'blueArea' failed.");
     memcpy (redArea,  _raster.redArea,  totPixels);
     memcpy (blueArea, _raster.blueArea, totPixels);
   }
@@ -479,51 +379,36 @@ Raster::Raster (const Raster&  _raster):
 
 
 Raster::Raster (const Raster&  _raster,
-                kkint32        _row,
-                kkint32        _col,
+                kkint32        _topRow,
+                kkint32        _leftCol,
                 kkint32        _height,
                 kkint32        _width
-               ):
-
-  backgroundPixelValue (_raster.backgroundPixelValue),
-  backgroundPixelTH    (_raster.backgroundPixelTH),
-  blobIds              (NULL),
-  centroidCol          (-1.0f),
-  centroidRow          (-1.0f),
-  color                (_raster.color),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (_raster.foregroundPixelValue),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+               ):  Raster ()
 {
+  backgroundPixelValue  = _raster.backgroundPixelValue;
+  backgroundPixelTH     = _raster.backgroundPixelTH;
+  centroidCol           = -1.0f;
+  centroidRow           = -1.0f;
+  color                 = _raster.color;
+  foregroundPixelCount  = 0;
+  foregroundPixelValue  = _raster.foregroundPixelValue;
+  height                = _height;
+  maxPixVal             = _raster.maxPixVal;
+  totPixels             = _height * _width;
+  weOwnRasterData       = true;
+  width                 =_raster.width;
+  
   AddRasterInstance (this);
 
-  green = _raster.GetSubSet (_raster.green, _row, _col, _height, _width);
+  green = _raster.GetSubSet (_raster.green, _topRow, _leftCol, _height, _width);
   greenArea = green[0];
 
   if  (color)
   {
-    red = _raster.GetSubSet (_raster.red, _row, _col, _height, _width);
+    red = _raster.GetSubSet (_raster.red, _topRow, _leftCol, _height, _width);
     redArea = red[0];
 
-    blue = _raster.GetSubSet (_raster.blue, _row, _col, _height, _width);
+    blue = _raster.GetSubSet (_raster.blue, _topRow, _leftCol, _height, _width);
     blueArea = blue[0];
   }
 }
@@ -533,7 +418,6 @@ Raster::Raster (const Raster&  _raster,
 Raster::Raster (const Raster& _raster, const Point& topLeft, const Point& botRight) :
   Raster(_raster, topLeft.Row(), topLeft.Col(), 1 + botRight.Row () - topLeft.Row (),  1 + botRight.Col () - topLeft.Col ())
 {
-
 }
 
 
@@ -542,42 +426,18 @@ Raster::Raster (const Raster& _raster,
                 MaskTypes     _mask,
                 kkint32       _row,
                 kkint32       _col
-               ):
-
-  backgroundPixelValue (_raster.backgroundPixelValue),
-  backgroundPixelTH    (_raster.backgroundPixelTH),
-  blobIds              (NULL),
-  centroidCol          (-1),
-  centroidRow          (-1),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (_raster.foregroundPixelValue),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (MorphOp::Biases (_mask) * 2 + 1),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (0),
-  weOwnRasterData      (true),
-  width                (MorphOp::Biases (_mask) * 2 + 1),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+               ): Raster ()
 {
-  AddRasterInstance (this);
-
+  kkint32 biases = MorphOp::Biases (_mask);
+  backgroundPixelValue = _raster.backgroundPixelValue;
+  backgroundPixelTH    = _raster.backgroundPixelTH;
+  foregroundPixelValue =_raster.foregroundPixelValue;
+  height = width = (biases * 2 + 1);
   totPixels = height * width;
+  weOwnRasterData  = true;
 
-  kkint32  r = _row - MorphOp::Biases (_mask);
-  kkint32  c = _col - MorphOp::Biases (_mask);
+  kkint32  r = _row - biases;
+  kkint32  c = _col - biases;
 
   green = _raster.GetSubSet (_raster.green, r, c, height, width);  
   greenArea = green[0];
@@ -594,38 +454,11 @@ Raster::Raster (const Raster& _raster,
 
 
 Raster::Raster (const KKStr&  _fileName,
-                bool&          validFile
-               ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (-1),
-  centroidRow          (-1),
-  color                (false),
-  divisor              (1),
-  fileName             (_fileName),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (0),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (0),
-  weOwnRasterData      (true),
-  width                (0),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+                bool&         validFile
+               ):  Raster ()
 {
-  AddRasterInstance (this);
+  fileName = _fileName;
+  backgroundPixelTH = 31;
 
   validFile = true;
   
