@@ -58,7 +58,6 @@ namespace KKMLL
     static  void  AddImageClassList    (MLClassListPtr  list);
     static  void  DeleteImageClassList (MLClassListPtr  list);
 
-
   public:
     static  MLClassListPtr  GlobalClassList ();
 
@@ -220,12 +219,10 @@ namespace KKMLL
 
 
   typedef  MLClass*  MLClassPtr;
-
-  typedef  MLClass const *  MLClassConstPtr;
-
+    typedef  MLClass const *  MLClassConstPtr;
 
 
-
+    
   /**
    *@class MLClassList
    *@brief  Maintains a list of MLClass instances.
@@ -274,8 +271,7 @@ namespace KKMLL
     void  ExtractTwoTitleLines (KKStr&  titleLine1,
                                 KKStr&  titleLine2 
                                ) const;
-
-
+    
     /** 
      *@brief Using the class names create three title lines where we split names 
      *       by "_" characters between the three lines.
@@ -314,7 +310,6 @@ namespace KKMLL
      * and added to the list.
      */
     MLClassPtr   GetUnKnownClass ();
-
 
     /**
      *@brief  Returns a pointer of MLClass object with name (_name);  if none 
@@ -379,8 +374,7 @@ namespace KKMLL
     bool        operator== (const MLClassList&  right)  const;
 
     bool        operator!= (const MLClassList&  right)  const;
-
-                                                                       
+                                                                 
     MLClassList& operator=  (const MLClassList&  right);
 
     MLClassList& operator-= (const MLClassList&  right);         /**< remove all classes that in the 'right' parameter */
@@ -388,7 +382,6 @@ namespace KKMLL
     MLClassList  operator-  (const MLClassList&  right)  const;  /**< remove all classes that in the 'right' parameter */
 
     MLClassList& operator+= (const MLClassList&  right);         /**< add all classes that are in the 'right' parameter */
-
 
   private:
     friend class MLClass;
@@ -470,14 +463,13 @@ namespace KKMLL
                     bool&       _dupEntry
                    );
 
-
     void  AddClassIndexAssignment (MLClassPtr _ic,
                                    kkint16    _classIndex,
                                    bool&      _dupEntry
                                   );
 
     /**
-     @brief  Returns the corresponding index to the class 'c';  if not in list will return -1.
+     @brief  Returns corresponding index to class 'c';  if not in list returns -1.
      */
     kkint16  GetClassIndex (MLClassPtr  c);
 
@@ -537,7 +529,6 @@ namespace KKMLL
 
 
   extern  MLClassList  globalClassList;
-
 
 
 

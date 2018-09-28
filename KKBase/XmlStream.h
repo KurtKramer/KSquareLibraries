@@ -71,10 +71,6 @@ namespace  KKB
 
 
   private:
-    /** Returns index of latest instance of 'name' pushed onto the stack; if no entry with same name returns -1. */
-    //kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
-
-
     void  PushXmlElementLevel (const KKStr&  sectionName);
 
     void  PopXmlElementLevel ();
@@ -361,9 +357,6 @@ namespace  KKB
   typedef  XmlContent*  XmlContentPtr;
 
 
-  
-
-
 
   class  XmlFactoryManager
   {
@@ -371,7 +364,6 @@ namespace  KKB
     XmlFactoryManager (const KKStr&  _name);
 
     ~XmlFactoryManager ();
- 
 
     ///<summary>Give the FactoryManager instance ownership of this factory;  the name of the factory must be unique.</summary>
     void   RegisterFactory  (XmlFactory*  factory);
@@ -384,9 +376,6 @@ namespace  KKB
   };  /* XmlFactoryManager */
 
   typedef  XmlFactoryManager*  XmlFactoryManagerPtr;
-
-
-
 
 
 
@@ -425,8 +414,6 @@ namespace  KKB
 
 
 
-
-  
   ///<summary>To be used for classes that implement default constructor, ReadXML, and WriteXML.</summary>
   template<class  T>
   class  XmlElementTemplate:  public  XmlElement
@@ -443,6 +430,7 @@ namespace  KKB
       value = new T();
       value->ReadXML (s, tag, cancelFlag, log);
     }
+
 
                 
     virtual ~XmlElementTemplate ()
@@ -572,9 +560,6 @@ namespace  KKB
 
 
 
-
-
-
   /****************************************************************************/
   class  XmlElementKeyValuePairs:  public  XmlElement
   {
@@ -618,8 +603,6 @@ namespace  KKB
 
 
 
-
-
   class  XmlElementArrayFloat2DVarying: public XmlElement
   {
   public:
@@ -649,7 +632,6 @@ namespace  KKB
                     std::ostream&   o
                    );
 
-
     private:
       kkuint32   height;
       float**    value;
@@ -657,8 +639,6 @@ namespace  KKB
   };
 
   typedef  XmlElementArrayFloat2DVarying*   XmlElementArrayFloat2DVaryingPtr;
-
-
 
 
 
@@ -684,19 +664,15 @@ namespace  KKB
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
   XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
 
-
   typedef  XmlElementTemplate<VectorKKStr>  XmlElementVectorKKStr;
   typedef  XmlElementVectorKKStr*  XmlElementVectorKKStrPtr;
-
 
   typedef  XmlElementTemplate<KKStrList>  XmlElementKKStrList;
   typedef  XmlElementKKStrList*  XmlElementKKStrListPtr;
   
-
   typedef  XmlElementTemplate<KKStrListIndexed>  XmlElementKKStrListIndexed;
   typedef  XmlElementKKStrListIndexed*  XmlElementKKStrListIndexedPtr;
   
-
 
 
 #define  XmlFactoryMacro(NameOfClass)                                                     \
@@ -833,10 +809,10 @@ public:
     kkuint32  Count() const  {return count;}
 
     virtual kkuint32*  ToUnit32Array () const  {return nullptr;}
-
-
+    
     kkuint32  count;
 };
+
 
 
 template<typename T, const char* ZZZZTypeName>
@@ -931,12 +907,9 @@ public:
    virtual  kkuint32*  ToUnit32Array () const
    {
      KKCheck(value, "XmlElementArray::ToUnit32  value == NULL !")
-
      kkuint32* result = new kkuint32 [count];
-
      for  (kkuint32 x = 0;  x < count;  ++x)
          result[x] = (kkuint32)value[x];
-
      return result;        
    }
 
