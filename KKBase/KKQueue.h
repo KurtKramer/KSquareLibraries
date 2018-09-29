@@ -8,16 +8,16 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
-
+#include <algorithm>
 #include <assert.h>
 #include <ctype.h>
-#include <stdlib.h>
-#include <memory>
-#include <vector>
-#include <algorithm>
 #include <functional>
 #include <iostream>
-
+#include <memory>
+#include <numeric>
+#include <stdlib.h>
+#include <sstream>
+#include <vector>
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -145,9 +145,9 @@ namespace  KKB
       void      SwapIndexes    (size_t idx1,  size_t idx2);
 
       template<typename Functor>
-      kkuint32  FindTheKthElement (kkuint32  k,
-                                   Functor   pred
-                                  );
+      KKB::OptionUInt32  FindTheKthElement (kkuint32  k,
+                                            Functor   pred
+                                           );
 
       /**
        *@param[in] f Function taking pointer to [[Entry]] and returns 'true' if to be included in returned list.
@@ -185,13 +185,15 @@ namespace  KKB
       kkuint32  FindTheKthElement (kkuint32  k,
                                    kkuint32  left,
                                    kkuint32  right,
-                                   Functor   pred
+                                   Functor   pred,
+                                   kkuint32* redirectionArray
                                   );
 
       template<typename Functor>
       kkint32   Partition (kkuint32  left,
                            kkuint32  right,
-                           Functor   pred
+                           Functor   pred,
+                           kkuint32* redirectionArray
                           );
 
   };  /* KKQueue */
@@ -535,37 +537,60 @@ namespace  KKB
   }
 
 
+
   template <class Entry>
   template <typename  Functor>
-  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
-                                                Functor   pred
-                                               )
+  KKB::OptionUInt32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
+                                                         Functor   pred
+                                                        )
   {
-    if  (k >= (kkuint32)KKQueue<Entry>::size ())
-      return -1;
-    return  FindTheKthElement (k, 0, KKQueue<Entry>::size () - 1, pred);
+    kkuint32 qSize = QueueSize ();
+    if  (k >= qSize)
+      return {};
+
+    kkuint32* redirectionArray = new kkuint32[qSize];
+    for (kkuint32 x = 0;  x < qSize;  ++x)
+      redirectionArray[x] = x;
+
+    KKQueue<Entry>*  kkqueueObj = this;
+
+    auto Comp = [kkqueueObj, redirectionArray, pred](kkuint32 x, kkuint32 y) -> bool 
+    {
+      auto pX = kkqueueObj->IdxToPtr(redirectionArray[x]);
+      auto pY = kkqueueObj->IdxToPtr(redirectionArray[y]);
+      return pred(pX, pY);
+    };
+
+    std::nth_element (redirectionArray, redirectionArray + k, redirectionArray + QueueSize (), Comp);
+   
+    auto  kthElementIdx = redirectionArray[k];
+
+    //kkuint32 kthElementIdx = FindTheKthElement (k, 0, KKQueue<Entry>::size () - 1, pred, redirectionArray);
+
+    delete redirectionArray;
+    return  kthElementIdx;
   }  /* FindTheKthElement */
 
-
-
+  
 
   template <class Entry>
   template <typename  Functor>
   kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
                                                 kkuint32  left,
                                                 kkuint32  right,
-                                                Functor   pred
+                                                Functor   pred,
+                                                kkuint32* redirectionArray
                                                )
   {
     if  (left == right)
       return  left;
 
-    kkint32 m = Partition (left, right, pred);
+    kkint32 m = Partition (left, right, pred, redirectionArray);
     if  (k <= m)
-      return  Partition (left, m, pred);
+      return  Partition (left, m, pred, redirectionArray);
 
     else if  (m < right)
-      return  Partition (m + 1, right, pred);
+      return  Partition (m + 1, right, pred, redirectionArray);
 
     else
     {
@@ -582,23 +607,28 @@ namespace  KKB
   template <typename  Functor>
   kkint32   KKQueue<Entry>::Partition (kkuint32  left,
                                        kkuint32  right,
-                                       Functor   pred
+                                       Functor   pred,
+                                       kkuint32* redirectionArray
                                       )
   {
     kkuint32  width = 1 + right - left;
     kkuint32  pivitIdx = left + (LRand48() % width);
-    EntryPtr  pivitPtr = IdxToPtr (pivitIdx);
+    EntryPtr  pivitPtr = IdxToPtr (redirectionArray[pivitIdx]);
 
     while  (left < right)
     {
-      while  ((left < right)  &&  (pred (*IdxToPtr(left), *pivitPtr)))
+      while  ((left < right)  &&  (pred (*IdxToPtr(redirectionArray[left]), *pivitPtr)))
         ++left;
 
-      while  ((left < right)  &&  (pred (*pivitPtr, *IdxToPtr(right))))
+      while  ((left < right)  &&  (pred (*pivitPtr, *IdxToPtr(redirectionArray[right]))))
         --right;
 
       if  (left < right)
-        SwapIndexes (left, right);
+      {
+        kkuint32 t = redirectionArray[left];
+        redirectionArray[left] = redirectionArray[right];
+        redirectionArray[right] = t;
+      }
     }
     return left;
   }
@@ -714,7 +744,16 @@ namespace  KKB
   {
     if  (_idx >=  KKQueue<Entry>::size ())
     {
-      stringstream errMsg;
+      std::stringstream errMsg;
+
+      errMsg << "Test";
+
+      errMsg << _idx;
+
+      auto zed = KKQueue<Entry>::size ();
+
+      errMsg << zed;
+
       errMsg << "KKQueue<Entry>::SetIdxToPtr  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
       throw std::exception (errMsg.str ().c_str ());

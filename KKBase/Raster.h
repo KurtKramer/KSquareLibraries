@@ -64,17 +64,19 @@ namespace KKB
   typedef  MorphOp::StructureType  StructureType;
 
 
-  enum class  ColorChannels
+  enum class ColorChannels: int
   {
-    Red,
-    Green,
-    Blue
+    Red = 0,
+    Green = 1,
+    Blue = 2
   };
 
-  KKStr          ColorChannelToKKStr   (ColorChannels  c);
+  std::ostream&  operator<< (std::ostream& lhs, ColorChannels rhs);
+  KKB::KKStr&    operator<< (KKB::KKStr& lhs,   ColorChannels rhs);
+
+  KKB::KKStr     ColorChannelToKKStr   (ColorChannels  c);
   ColorChannels  ColorChannelFromKKStr (const KKStr&   s);
-
-
+  
   class  RasterList;
   typedef  RasterList*  RasterListPtr;
 
@@ -1390,8 +1392,7 @@ namespace KKB
   }  MovDir;
 
 
-
-
+  
   class  RasterList:  public  KKQueue<Raster>
   {
   public:

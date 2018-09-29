@@ -24,6 +24,7 @@ using namespace std;
 
 #include "Raster.h"
 
+#include "Algorithms.h"
 #include "KKBaseTypes.h"
 #include "Blob.h"
 #include "BMPImage.h"
@@ -74,6 +75,22 @@ ColorChannels  KKB::ColorChannelFromKKStr(const KKStr& s)
   if  (c == 'g')  return ColorChannels::Green;
   if  (c == 'b')  return ColorChannels::Blue;
   return ColorChannels::Green;
+}
+
+
+
+ostream&  KKB::operator<< (ostream& lhs, ColorChannels rhs)
+{
+  lhs << ColorChannelToKKStr(rhs);
+  return lhs;
+}
+
+
+
+KKStr&  KKB::operator<< (KKStr& lhs, ColorChannels rhs)
+{
+  lhs.Append(ColorChannelToKKStr (rhs));
+  return lhs;
 }
 
 
@@ -1075,7 +1092,6 @@ void   Raster::SetPixelValue (kkint32  row,
 
 
 
-
 void  Raster::SetPixelValue (ColorChannels  channel,
                              kkint32        row,
                              kkint32        col,
@@ -1616,6 +1632,7 @@ RasterPtr  Raster::CreateFillHole () const  {
 }
 
 
+
 void  Raster::FillHole ()
 {
   Raster  mask (*this);
@@ -1754,8 +1771,7 @@ void  Raster::FillHole (RasterPtr  mask)
       rowCur  += width;
       rowNext += width;
     }
-
-
+    
     // Scan from Bot-Right  to  Top-Left
     rowPrev  = maskRows[height - 1];
     rowCur   = rowPrev - width;
@@ -1784,7 +1800,6 @@ void  Raster::FillHole (RasterPtr  mask)
       rowNext -= width;
     }
   }  while  (fillInFound);
-
 
   // At this point the only pixels in the mask image that contain a '0' are the ones that are in holes.
   // We will now fill the corresponding pixel locations in the original image with the ForegroundPixelValue.
@@ -1935,8 +1950,6 @@ void  Raster::Erosion (MaskTypes  mask)
   }   /* End of for(r) */
 
 }  /* Erosion */
-
-
 
 
 
@@ -3563,8 +3576,8 @@ void  Raster::CentralMoments (float  features[9])  const
   float  cm21 = 0.0;
 
   {
-    float   deltaCol = 0.0f;
-    float   deltaRow = 0.0f;
+    float  deltaCol = 0.0f;
+    float  deltaRow = 0.0f;
 
     for  (kkint32 row = 0;  row < height;  ++row)
     {
@@ -5444,14 +5457,8 @@ HistogramPtr  Raster::Histogram (ColorChannels  channel)  const
     case  ColorChannels::Blue:  data = blueArea;   break;
     }
   }
-
-  if  (!data)
-  {
-    KKStr  errMsg (128);
-    errMsg << "Raster::Histogram   ***ERROR***    channel: " << ColorChannelToKKStr (channel) << "  Is not defined.";
-    cerr << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
+  
+  KKCheck (data, "Raster::Histogram   ***ERROR***    channel: " << channel << "  Is not defined.")
 
   HistogramPtr histogram = new KKB::Histogram (0, 256, 1.0, false);
   for  (kkint32 x = 0;  x < totPixels;  ++x)
@@ -6370,7 +6377,7 @@ void  Raster::DrawCircle (const Point&       point,
   DrawCircle ((float)point.Row (),
               (float)point.Col (),
               (float)radius,
-			  paintColor
+              paintColor
              );
 }  /* DrawCircle */
 
@@ -6442,58 +6449,6 @@ RasterPtr  Raster::CreateSmoothImage (kkint32 maskSize)  const
 
 
 
-template<typename T>
-T  FindKthValue (T*      values, 
-                 kkint32 arraySize, 
-                 kkint32 Kth
-                )
-{
-  T    pv;
-  kkint32  left  = 0;
-  kkint32  right = arraySize - 1;
-
-  kkint32  pivotIndex = right;
-
-  kkint32  partitionIndex = -1;
-
-  T temp;
-
-  while  (partitionIndex != Kth)
-  {
-    pv = values[pivotIndex];
-    
-    partitionIndex = left;
-    for  (kkint32 i = left;  i < right;  i++)
-    {
-      if  (values[i] <= pv)
-      {
-        if  (i != partitionIndex)
-        {
-          temp = values[i];
-          values[i] = values[partitionIndex];
-          values[partitionIndex] = temp;
-        }
-        partitionIndex = partitionIndex + 1;
-      }
-    }
-
-    temp = values[partitionIndex];
-    values[partitionIndex] = values[right];
-    values[right] = temp;
-
-    if  (Kth < partitionIndex)
-      right = partitionIndex - 1;
-    else
-      left  = partitionIndex + 1;
-
-    pivotIndex = right;
-  }
-
-  return  values[Kth];
-}  /* FindKthValue */
-
-
-
 RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
@@ -6522,9 +6477,7 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 
   kkint32  maskOffset = maskSize / 2;
 
-  //kkuint8*  srcRow = NULL;
-  
-  for  (kkint32 row = 0;  row < height;  row++)
+  for  (kkint32 row = 0;  row < height;  ++row)
   {
     firstMaskRow = row - maskOffset;
     lastMaskRow  = firstMaskRow + maskSize - 1;
@@ -6532,46 +6485,41 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
     firstMaskRow = Max ((kkint32)0, firstMaskRow);
     lastMaskRow  = Min (lastMaskRow, (kkint32)(height - 1));
     
-    for  (kkint32 col = 0;  col < width;  col++)
+    for  (kkint32 col = 0;  col < width;  ++col)
     {
       firstMaskCol = col - maskOffset;
       lastMaskCol = firstMaskCol + maskSize - 1;
       firstMaskCol = Max (firstMaskCol, (kkint32)0);
       lastMaskCol  = Min (lastMaskCol,  (kkint32)(width - 1));
 
-      //if  (ForegroundPixel (row, col))
-      //{
-        numCandidates = 0;
+      numCandidates = 0;
 
-        for  (kkint32 maskRow = firstMaskRow;  maskRow <= lastMaskRow;  ++maskRow)
+      for  (kkint32 maskRow = firstMaskRow;  maskRow <= lastMaskRow;  ++maskRow)
+      {
+        for  (kkint32 maskCol = firstMaskCol;  maskCol <= lastMaskCol;  ++maskCol)
         {
-          for  (kkint32 maskCol = firstMaskCol;  maskCol <= lastMaskCol;  ++maskCol)
-          {
-            //if  (ForegroundPixel (maskRow, maskCol))
-            //{
-              candidatesGreen[numCandidates] = green[maskRow][maskCol];
-              if  (color)
-              {
-                candidatesRed[numCandidates]  = green[maskRow][maskCol];
-                candidatesBlue[numCandidates] = green[maskRow][maskCol];
-              }
-              numCandidates++;
-            //}
-          }
-        }
 
-        middleCandidate = numCandidates / 2;
-        kkuint8  medium = FindKthValue (candidatesGreen, numCandidates, middleCandidate);
-        destG[row][col] = medium;
-
-        if  (color)
-        {
-          medium = FindKthValue (candidatesRed, numCandidates, middleCandidate);
-          destR[row][col] = medium;
-          medium = FindKthValue (candidatesBlue, numCandidates, middleCandidate);
-          destB[row][col] = medium;
+            candidatesGreen[numCandidates] = green[maskRow][maskCol];
+            if  (color)
+            {
+              candidatesRed[numCandidates]  = green[maskRow][maskCol];
+              candidatesBlue[numCandidates] = green[maskRow][maskCol];
+            }
+            ++numCandidates;
         }
-        //}
+      }
+
+      middleCandidate = numCandidates / 2;
+      kkuint8  medium = FindKthValue (candidatesGreen, numCandidates, middleCandidate);
+      destG[row][col] = medium;
+
+      if  (color)
+      {
+        medium = FindKthValue (candidatesRed, numCandidates, middleCandidate);
+        destR[row][col] = medium;
+        medium = FindKthValue (candidatesBlue, numCandidates, middleCandidate);
+        destB[row][col] = medium;
+      }
     }
   }
 
