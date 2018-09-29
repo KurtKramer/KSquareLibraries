@@ -194,65 +194,6 @@ kkint32  freqHist16BucketIdx[256] =
 
 
 
-inline  
-kkint32  Min (kkint32  x1,  kkint32  x2)
-{
-  if  (x1 < x2)
-    return  x1;
-  else
-    return  x2;
-}
-
-
-
-inline  
-kkint32  Max6 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-               kkint32 x4,  kkint32 x5,  kkint32 x6
-              )
-{
-  kkint32  r;
-  
-  if  (x1 > x2)
-    r = x1;
-  else 
-    r = x2;
-
-  if  (x3 > r)  r = x3;
-  if  (x4 > r)  r = x4;
-  if  (x5 > r)  r = x5;
-  if  (x6 > r)  r = x6;
-
-  return  r;
-}  /* Max6 */
-
-
-
-inline  
-kkint32  Max9 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-               kkint32 x4,  kkint32 x5,  kkint32 x6,  
-               kkint32 x7,  kkint32 x8,  kkint32 x9
-              )
-{
-  kkint32  r;
-  
-  if  (x1 > x2)
-    r = x1;
-  else 
-    r = x2;
-
-  if  (x3 > r)  r = x3;
-  if  (x4 > r)  r = x4;
-  if  (x5 > r)  r = x5;
-  if  (x6 > r)  r = x6;
-  if  (x7 > r)  r = x7;
-  if  (x8 > r)  r = x8;
-  if  (x9 > r)  r = x9;
-
-  return  r;
-}  /* Max9 */
-
-
-
 Raster::Raster ():
   backgroundPixelValue (0),
   backgroundPixelTH    (31),
@@ -497,35 +438,14 @@ Raster::Raster (kkint32    _height,
                 kkuint8*   _grayScaleData,
                 kkuint8**  _grayScaleRows
                ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (false),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (_grayScaleData),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (_grayScaleRows),
-  blue                 (NULL)
-
+  Raster()
 {
-  AddRasterInstance (this);
+  height           = _height;
+  width            = _width;
+  totPixels        = height * width;
+  weOwnRasterData  = false,
+  greenArea        = _grayScaleData;
+  green            = _grayScaleRows;
 }
 
 
@@ -533,37 +453,8 @@ Raster::Raster (kkint32    _height,
 Raster::Raster (kkint32         _height,
                 kkint32         _width,
                 const kkuint8*  _grayScaleData
-               ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
+               ): Raster (_height, _width, false)
 {
-  AddRasterInstance (this);
-  AllocateImageArea ();
   KKCheck(greenArea, "Raster::Raster   Failed to allocate 'greenArea'.");
   memcpy (greenArea, _grayScaleData, totPixels);
 }
@@ -575,37 +466,8 @@ Raster::Raster (kkint32         _height,
                 const kkuint8*  _redChannel,
                 const kkuint8*  _greenChannel,
                 const kkuint8*  _blueChannel
-               ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (true),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
+               ):  Raster (_height, _width, false)
 {
-  AddRasterInstance (this);
-  AllocateImageArea ();
   KKCheck (_redChannel,   "Raster::Raster   '_redChannel' is 'NULL'.")
   KKCheck (_greenChannel, "Raster::Raster   '_greenChannel' is 'NULL'.")
   KKCheck (_blueChannel,  "Raster::Raster   '_blueChannel' is 'NULL'.")
@@ -670,13 +532,13 @@ kkMemSize  Raster::MemoryConsumedEstimated ()  const
     pixelMem = pixelMem * 3;
 
   kkMemSize  memoryConsumedEstimated = (kkMemSize)(
-    sizeof (kkuint8)     * 4   +
+    sizeof (kkuint8)   * 4   +
     sizeof (float)     * 2   +
     sizeof (bool)      * 2   +
     sizeof (kkint32)   * 4   +
     sizeof (kkint32**) * 1   +
-    sizeof (kkuint8*)    * 3   + 
-    sizeof (kkuint8**)   * 3   +
+    sizeof (kkuint8*)  * 3   + 
+    sizeof (kkuint8**) * 3   +
     sizeof (float*)    * 1   +
     sizeof (float**)   * 1   +
     fileName.MemoryConsumedEstimated () +
@@ -928,12 +790,12 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
 
   kkint32  paddedForgroudPixelCount = 0;
 
-  for  (kkint32  row = 0;  row < oldHeight;  row++)
+  for  (kkint32  row = 0;  row < oldHeight;  ++row)
   {
     const kkuint8* oldRow = image.ImageRow (row);
     
     kkint32  newCol = padding;
-    for  (kkint32 col = 0; col < oldWidth;  col++)
+    for  (kkint32 col = 0; col < oldWidth;  ++col)
     {
       if  (oldRow[col] > 0)
          paddedForgroudPixelCount++;
@@ -952,7 +814,7 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
 
 
 
-RasterPtr   Raster::ReversedImage ()
+RasterPtr  Raster::ReversedImage ()
 {
   RasterPtr  result = AllocateARasterInstance (*this);
   result->ReverseImage ();
