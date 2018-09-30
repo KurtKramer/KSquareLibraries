@@ -7,16 +7,21 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "KKStr.h"
+using namespace KKB;
 
 #include "KKStrTest.h"
 
-
-
-KKStrTest::KKStrTest ()
+namespace KKTest
 {
-}
+
+  KKStrTest::KKStrTest ()
+  {
+  }
 
 
-KKStrTest::~KKStrTest ()
-{
+  KKStrTest::~KKStrTest ()
+  {
+  }
+
 }

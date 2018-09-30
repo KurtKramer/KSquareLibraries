@@ -145,9 +145,9 @@ namespace  KKB
       void      SwapIndexes    (size_t idx1,  size_t idx2);
 
       template<typename Functor>
-      KKB::OptionUInt32  FindTheKthElement (kkuint32  k,
-                                            Functor   pred
-                                           );
+      KKB::OptionUInt32  FindTheKthElementIdx (kkuint32  k,
+                                               Functor   pred
+                                              ) const;
 
       /**
        *@param[in] f Function taking pointer to [[Entry]] and returns 'true' if to be included in returned list.
@@ -182,19 +182,19 @@ namespace  KKB
 
   private:
       template<typename Functor>
-      kkuint32  FindTheKthElement (kkuint32  k,
-                                   kkuint32  left,
-                                   kkuint32  right,
-                                   Functor   pred,
-                                   kkuint32* redirectionArray
-                                  );
+      kkuint32  FindTheKthElementIdx (kkuint32  k,
+                                      kkuint32  left,
+                                      kkuint32  right,
+                                      Functor   pred,
+                                      kkuint32* redirectionArray
+                                     )  const;
 
       template<typename Functor>
-      kkint32   Partition (kkuint32  left,
-                           kkuint32  right,
-                           Functor   pred,
-                           kkuint32* redirectionArray
-                          );
+      kkuint32  PartitionIdx (kkuint32  left,
+                              kkuint32  right,
+                              Functor   pred,
+                              kkuint32* redirectionArray
+                             )  const;
 
   };  /* KKQueue */
 
@@ -540,76 +540,64 @@ namespace  KKB
 
   template <class Entry>
   template <typename  Functor>
-  KKB::OptionUInt32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
-                                                         Functor   pred
-                                                        )
+  KKB::OptionUInt32  KKQueue<Entry>::FindTheKthElementIdx (kkuint32  k,
+                                                           Functor   pred
+                                                          )  const
   {
     kkuint32 qSize = QueueSize ();
     if  (k >= qSize)
       return {};
 
-    kkuint32* redirectionArray = new kkuint32[qSize];
+    auto redirectionArray = new kkuint32[qSize];
     for (kkuint32 x = 0;  x < qSize;  ++x)
       redirectionArray[x] = x;
 
-    KKQueue<Entry>*  kkqueueObj = this;
-
-    auto Comp = [kkqueueObj, redirectionArray, pred](kkuint32 x, kkuint32 y) -> bool 
-    {
-      auto pX = kkqueueObj->IdxToPtr(redirectionArray[x]);
-      auto pY = kkqueueObj->IdxToPtr(redirectionArray[y]);
-      return pred(pX, pY);
-    };
-
-    std::nth_element (redirectionArray, redirectionArray + k, redirectionArray + QueueSize (), Comp);
-   
-    auto  kthElementIdx = redirectionArray[k];
-
-    //kkuint32 kthElementIdx = FindTheKthElement (k, 0, KKQueue<Entry>::size () - 1, pred, redirectionArray);
+    kkuint32 kthElementIdx = FindTheKthElementIdx (k, 0, qSize - 1, pred, redirectionArray);
+    kthElementIdx = redirectionArray[kthElementIdx];
 
     delete redirectionArray;
     return  kthElementIdx;
-  }  /* FindTheKthElement */
+  }  /* FindTheKthElementIdx */
 
   
 
   template <class Entry>
   template <typename  Functor>
-  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
-                                                kkuint32  left,
-                                                kkuint32  right,
-                                                Functor   pred,
-                                                kkuint32* redirectionArray
-                                               )
+  kkuint32   KKQueue<Entry>::FindTheKthElementIdx (kkuint32  k,
+                                                   kkuint32  left,
+                                                   kkuint32  right,
+                                                   Functor   pred,
+                                                   kkuint32* redirectionArray
+                                                  )  const
   {
     if  (left == right)
       return  left;
 
-    kkint32 m = Partition (left, right, pred, redirectionArray);
+    kkuint32 m = PartitionIdx (left, right, pred, redirectionArray);
     if  (k <= m)
-      return  Partition (left, m, pred, redirectionArray);
+      return  FindTheKthElementIdx (k, left, m, pred, redirectionArray);
 
     else if  (m < right)
-      return  Partition (m + 1, right, pred, redirectionArray);
+      return  FindTheKthElementIdx (k, m + 1, right, pred, redirectionArray);
 
     else
     {
       // This should not be able to happen; but if it does then we have a flaw in the code or the logic somewhere,
-      cerr << "KKQueue<Entry>::FindTheKthElement  ***ERROR***  An invalid situation just occurred." << endl
+      cerr << "KKQueue<Entry>::FindTheKthElementIdx  ***ERROR***  An invalid situation just occurred." << endl
            <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m          << endl;
       return  m - 1;
     }
-  }  /* FindTheKthElement */
+  }  /* FindTheKthElementIdx */
 
 
 
   template <class Entry>
   template <typename  Functor>
-  kkint32   KKQueue<Entry>::Partition (kkuint32  left,
-                                       kkuint32  right,
-                                       Functor   pred,
-                                       kkuint32* redirectionArray
-                                      )
+  kkuint32   KKQueue<Entry>::PartitionIdx (kkuint32  left,
+                                           kkuint32  right,
+                                           Functor   pred,
+                                           kkuint32* redirectionArray
+                                          )  const
   {
     kkuint32  width = 1 + right - left;
     kkuint32  pivitIdx = left + (LRand48() % width);
@@ -617,10 +605,10 @@ namespace  KKB
 
     while  (left < right)
     {
-      while  ((left < right)  &&  (pred (*IdxToPtr(redirectionArray[left]), *pivitPtr)))
+      while  ((left < right)  &&  (pred (IdxToPtr(redirectionArray[left]), pivitPtr)))
         ++left;
 
-      while  ((left < right)  &&  (pred (*pivitPtr, *IdxToPtr(redirectionArray[right]))))
+      while  ((left < right)  &&  (pred (pivitPtr, IdxToPtr(redirectionArray[right]))))
         --right;
 
       if  (left < right)

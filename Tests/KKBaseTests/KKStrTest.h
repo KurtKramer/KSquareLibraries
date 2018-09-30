@@ -1,10 +1,13 @@
 #pragma once
 #include "KKTest.h"
-class KKStrTest :
-  public KKTest
+
+namespace KKTest
 {
-public:
-  KKStrTest ();
-  virtual ~KKStrTest ();
-};
+  class KKStrTest: public KKTest
+  {
+  public:
+    KKStrTest ();
+    virtual ~KKStrTest ();
+  };
+}
 
