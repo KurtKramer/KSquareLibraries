@@ -8,6 +8,10 @@
 
 namespace KKB 
 {
+  void  ValidateValidUint32 (kkint64 newValue);
+
+
+
   template<typename T>
   OptionUInt32  operator+ (const OptionUInt32& lhs, T rhs)
   {
@@ -57,7 +61,7 @@ namespace KKB
     KKCheck(lhs, "OptionUInt32::operator+=  Con not add to NONE!")
     kkint64 newValue = (kkint64)lhs.value () + (kkint64)rhs;
     ValidateValidUint32 (newValue);
-    lhs = (kkuint32)newValue
+    lhs = (kkuint32)newValue;
     return lhs;
   }
 
@@ -69,12 +73,12 @@ namespace KKB
     KKCheck(lhs, "OptionUInt32::operator+=  Con not add to NONE!")
     kkint64 newValue = (kkint64)lhs.value () - (kkint64)rhs;
     ValidateValidUint32 (newValue);
-    lhs = (kkuint32)newValue
+    lhs = (kkuint32)newValue;
     return lhs;
   }
   
 
-  void  ValidateValidUint32 (kkint64 newValue);
+
 }
 
 #endif

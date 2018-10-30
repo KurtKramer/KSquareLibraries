@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <functional>
 #include <iostream>
-
+#include <sstream>
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -808,7 +808,7 @@ namespace  KKB
 
     if  (idx >= KKQueue<Entry>::size ())
     {
-      std::stringstream errMsg;
+      std::ostringstream errMsg;
       errMsg << "KKQueue<Entry>::operator[]  idx: " << idx << " exceeds QueueSize: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
       throw std::exception (errMsg.str ().c_str ());
