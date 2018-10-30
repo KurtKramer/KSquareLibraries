@@ -16,8 +16,6 @@
 #endif
 
 #include "KKBaseTypes.h"
-#include "KKQueue.h"
-
 
 
 #define  EnterChar   13

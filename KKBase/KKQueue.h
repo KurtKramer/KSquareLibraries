@@ -12,11 +12,12 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <memory>
-#include <vector>
 #include <algorithm>
+#include <exception>
 #include <functional>
 #include <iostream>
+#include <memory>
+#include <vector>
 #include <sstream>
 
 #include "KKBaseTypes.h"
@@ -811,7 +812,7 @@ namespace  KKB
       std::ostringstream errMsg;
       errMsg << "KKQueue<Entry>::operator[]  idx: " << idx << " exceeds QueueSize: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw KKB::KKException(errMsg.str ().c_str ());
     }
 
     return  (Entry&)*(std::vector<Entry*>::operator[] (idx));

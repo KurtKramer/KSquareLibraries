@@ -43,7 +43,7 @@ char*  KKB::STRCOPY (char*        dest,
       stringstream errMsg;
       errMsg << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize << "]"; 
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ());
+      throw KKB::KKException (errMsg.str ());
     }
 
     strcpy (dest, src);
@@ -66,7 +66,7 @@ char*  KKB::STRCOPY (char*        dest,
       stringstream errMsg;
       errMsg << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]";
       cerr << errMsg.str () << endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw KKB::KKException (errMsg.str ());
     }
 
     strcpy (dest, src);

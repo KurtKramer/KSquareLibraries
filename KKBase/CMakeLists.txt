@@ -13,5 +13,17 @@ add_library(KKBase
     ContourFollower.cpp
     ConvexHull.cpp
     DateTime.cpp
+    EigenVector.cpp
+    GlobalGoalKeeper.cpp
+    GoalKeeper.cpp
+    Histogram.cpp
+    ImageDirTree.cpp
+    ImageIO.cpp
+    KKBaseTypes.cpp
+    KKException.cpp
+    KKObservable.cpp
+    KKStr.cpp 
+    KKStrMatrix.cpp 
+    KKStrParser.cpp
 
 )
