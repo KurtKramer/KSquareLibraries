@@ -17,6 +17,7 @@ add_library(KKBase
     GlobalGoalKeeper.cpp
     GoalKeeper.cpp
     Histogram.cpp
+    HTMLReport.cpp
     ImageDirTree.cpp
     ImageIO.cpp
     KKBaseTypes.cpp
@@ -25,5 +26,10 @@ add_library(KKBase
     KKStr.cpp 
     KKStrMatrix.cpp 
     KKStrParser.cpp
-
+    KKThread.cpp
+    KKThreadManager.cpp
+    kku_fftw.cpp
+    Matrix.cpp 
+    MorphOp.cpp 
+    MorphOpBinarize.cpp
 )

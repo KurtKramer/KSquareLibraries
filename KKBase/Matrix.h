@@ -33,7 +33,8 @@
 
 namespace  KKB
 {
-  template<typename T>  class  Row; 
+  template<typename T>
+  class  Row;
 
   /**
    *@class  Matrix
@@ -207,6 +208,16 @@ namespace  KKB
   void  MultiplyMatrix (const Matrix<double>& a, const Matrix<double>& b, Matrix<double>& c);
 
 
+  template<typename T>
+  Matrix<T>  operator- (T left, const Matrix<T>& right);
+
+
+  template<typename T>
+  std::ostream&  operator<< (std::ostream&     os,
+                             const Matrix<T>&  matrix
+                            );
+
+
 
   template<typename T>
   class  Row
@@ -238,15 +249,6 @@ namespace  KKB
 
   typedef Row<double> RowD;
   typedef Row<float> RowF;
-
-  template<typename T>
-  Matrix<T>  operator- (T left, const Matrix<T>& right);
-
-  template<typename T>
-  std::ostream&  operator<< (std::ostream&  os,
-                             const Matrix<T>&     matrix
-                            );
-
 
 
   template<typename T>
@@ -646,9 +648,9 @@ namespace  KKB
 
 
   template<typename T>
-  Matrix<T>  KKB::operator- (T                left,
-                             const Matrix<T>& right
-                            )
+  Matrix<T>  operator- (T                left,
+                        const Matrix<T>& right
+                       )
   {
     kkuint32  numOfRows   = right.NumOfRows ();
     kkuint32  numOfCols   = right.NumOfCols ();
@@ -1004,9 +1006,9 @@ namespace  KKB
 
 
   template<typename T>
-  std::ostream&  KKB::operator<< (std::ostream&     os,
-                                  const Matrix<T>&  matrix
-                                 )
+  std::ostream&  operator<< (std::ostream&     os,
+                             const Matrix<T>&  matrix
+                            )
   {
     os << "[" << matrix.NumOfRows () << "," << matrix.NumOfCols () << "]" << std::endl;
 
