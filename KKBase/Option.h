@@ -11,7 +11,6 @@ namespace KKB
   void  ValidateValidUint32 (kkint64 newValue);
 
 
-
   template<typename T>
   OptionUInt32  operator+ (const OptionUInt32& lhs, T rhs)
   {
@@ -22,6 +21,7 @@ namespace KKB
   }
 
 
+  
   template<typename T>
   OptionUInt32 operator+ (T lhs, const OptionUInt32& rhs)
   {
@@ -79,6 +79,19 @@ namespace KKB
   
 
 
+  template<typename T>
+  std::ostream&  operator<< (std::ostream& s, const std::optional<T>&  o)
+  {
+    if (o.has_value())
+      s << o.value ();
+    else
+      s << "NONE";
+
+    return s;
+  }
+
+
+  void  ValidateValidUint32 (kkint64 newValue);
 }
 
 #endif

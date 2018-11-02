@@ -953,9 +953,8 @@ namespace  KKB
       kkint32  successful = Tqli (d, e, numOfRows, eigenVectors->data);
       if (successful != 1)
       {
-        T  eigenVectors;  eigenVectors = NULL;
-        delete[] d;            d = NULL;
-        delete[] e;            e = NULL;
+        delete[] d;  d = NULL;
+        delete[] e;  e = NULL;
         return;
       }
 
