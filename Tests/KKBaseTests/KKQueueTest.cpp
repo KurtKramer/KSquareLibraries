@@ -15,7 +15,7 @@ using namespace KKB;
 #include "KKQueueTest.h"
 
 
-namespace  KKTest
+namespace  KKBaseTest
 {
   KKQueueTest::KKQueueTest ()
   {
@@ -29,9 +29,9 @@ namespace  KKTest
 
 
 
-  bool  KKQueueTest::FindTheKthElement()
+  bool  KKQueueTest::FindTheKthElement ()
   {
-    auto comp = [](TestClass* x, TestClass* y) -> bool { return x->x < y->x; };
+    auto comp = [](TestCase* x, TestCase* y) -> bool { return x->x < y->x; };
     auto testData = BuildTestList(20);
 
     for (kkint32 zed = 0; zed < 20;  ++zed)
@@ -57,11 +57,11 @@ namespace  KKTest
 
 
 
-  KKQueueTest::TestClassList*  KKQueueTest::BuildTestList(kkuint32 size) const
+  KKQueueTest::TestCaseList*  KKQueueTest::BuildTestList (kkuint32 size) const
   {
-    auto list = new TestClassList (true);
+    auto list = new TestCaseList (true);
     for  (kkuint32 x = 0;  x < size;  ++x)
-      list->PushOnBack (new TestClass (size - x - 1));
+      list->PushOnBack (new TestCase (size - x - 1));
     list->RandomizeOrder ();
     return list;
   }

@@ -4,27 +4,30 @@ using namespace KKB;
 
 #include "KKTest.h"
 
-namespace  KKTest
+namespace  KKBaseTest
 {
   class KKQueueTest : public KKTest
   {
-    class TestClass
+    class TestCase
     {
     public:
-      TestClass(int _x): x(_x) {}
+      TestCase(int _x): x(_x) {}
       int x;
     };
 
-    typedef  KKQueue<TestClass>  TestClassList;
+    typedef  KKQueue<TestCase>  TestCaseList;
 
   public:
     KKQueueTest ();
+
     virtual ~KKQueueTest ();
+
+    virtual const char*  TestName () const {return "KKQueue";}
 
     bool  RunTests () override;
 
   private:
-    TestClassList*  BuildTestList(kkuint32 size) const;
-    bool  FindTheKthElement();
+    TestCaseList*  BuildTestList (kkuint32 size) const;
+    bool  FindTheKthElement ();
   };
 }

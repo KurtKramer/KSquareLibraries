@@ -3,11 +3,12 @@
 #include "KKStr.h"
 
 
-namespace  KKTest
+namespace  KKBaseTest
 {
   class KKTest
   {
   public:
+    typedef  KKTest*  KKTestPtr;
 
     class  TestResult
     {
@@ -24,12 +25,14 @@ namespace  KKTest
 
     virtual ~KKTest ();
 
+    virtual const char*  TestName () const = 0;
+
     kkuint32  FailedCount () { return failedCount; }
     kkuint32  PassedCount () { return passedCount; }
 
-    virtual bool RunTests() = 0;
+    virtual bool RunTests () = 0;
 
-    virtual void Assert(bool passed, const KKB::KKStr& testName);
+    virtual void Assert (bool passed,  const KKB::KKStr& testName,  const KKStr& msg = KKStr::EmptyStr ());
 
 
   private:
@@ -37,5 +40,7 @@ namespace  KKTest
     kkuint32        passedCount;
     TestResultList  results;
   };
+
+  typedef  KKTest::KKTestPtr  KKTestPtr;
 }
 

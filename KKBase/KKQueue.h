@@ -381,7 +381,7 @@ namespace  KKB
 
 
   template <class Entry>
-  KKQueue<Entry>&   KKQueue<Entry>::operator= (const KKQueue& q)
+  KKQueue<Entry>&  KKQueue<Entry>::operator= (const KKQueue& q)
   {
     DeleteContents ();
 
@@ -403,7 +403,7 @@ namespace  KKB
 
 
   template <class Entry>
-  bool   KKQueue<Entry>::operator== (const KKQueue<Entry>& rightSide)  const
+  bool  KKQueue<Entry>::operator== (const KKQueue<Entry>& rightSide)  const
   {
     if  (QueueSize () != rightSide.QueueSize ())
       return false;
@@ -422,7 +422,7 @@ namespace  KKB
 
 
   template <class Entry>
-  bool   KKQueue<Entry>::operator!= (const KKQueue<Entry>& rightSide)  const
+  bool  KKQueue<Entry>::operator!= (const KKQueue<Entry>& rightSide)  const
   {
     return  !((*this) == rightSide);
   } /* operator!= */
@@ -489,7 +489,7 @@ namespace  KKB
 
   
   template <class Entry>
-  KKQueue<Entry>*    KKQueue<Entry>::DuplicateListAndContents ()  const
+  KKQueue<Entry>*   KKQueue<Entry>::DuplicateListAndContents ()  const
   {
     KKQueue<Entry>*  duplicatedQueue = new KKQueue<Entry> (true);
 

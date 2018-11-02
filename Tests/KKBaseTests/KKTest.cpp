@@ -13,7 +13,7 @@ using namespace KKB;
 
 #include "KKTest.h"
 
-namespace  KKTest
+namespace  KKBaseTest
 {
 
   KKTest::KKTest ()
@@ -28,10 +28,10 @@ namespace  KKTest
 
 
 
-  void KKTest::Assert (bool passed, const KKStr& testName)
+  void KKTest::Assert (bool passed, const KKStr& testName,  const KKStr& msg)
   {
-    cout << "Test: " << testName << "\t" << (passed ? "Passed" : "***FAILED***") << endl;
-    results.PushOnBack (new TestResult(passed, testName));
+    cout << "Test: " << testName << "\t" << (passed ? "Passed" : "***FAILED***") << "\t" << msg << endl;
+    results.PushOnBack (new TestResult (passed, testName));
     if  (passed)
       ++passedCount;
     else

@@ -2954,9 +2954,12 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
    
   bool  lookForTerminatingQuote = false;
 
-  if  (val[idx] == '"')
+  char termQuoteChar = '"';
+
+  if  ((val[idx] == '"')  ||  (val[idx] == '\''))
   {
     lookForTerminatingQuote = true;
+    termQuoteChar = val[idx];
     idx++;
   }
   
@@ -2973,7 +2976,7 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
   {
     if  (lookForTerminatingQuote)
     {
-      if  (val[idx] == '"')
+      if  (val[idx] == termQuoteChar)
       {
         idx++;
         if  (idx < len)
