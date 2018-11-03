@@ -48,7 +48,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/code/KSquareLibraries
+CMAKE_SOURCE_DIR = /mnt/c/Code/KSquareLibraries
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /mnt/c/code/KSquareLibraries
