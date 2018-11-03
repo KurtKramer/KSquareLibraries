@@ -115,7 +115,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -155,7 +155,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <EnablePREfast>false</EnablePREfast>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -251,6 +251,7 @@
     <ClInclude Include="GoalKeeper.h" />
     <ClInclude Include="GoalKeeperSimple.h" />
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="Algorithms.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="HTMLReport.h" />
     <ClInclude Include="ImageDirTree.h" />

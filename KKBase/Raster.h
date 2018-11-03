@@ -64,17 +64,19 @@ namespace KKB
   typedef  MorphOp::StructureType  StructureType;
 
 
-  enum class  ColorChannels
+  enum class ColorChannels: int
   {
-    Red,
-    Green,
-    Blue
+    Red = 0,
+    Green = 1,
+    Blue = 2
   };
 
-  KKStr          ColorChannelToKKStr   (ColorChannels  c);
+  std::ostream&  operator<< (std::ostream& lhs, ColorChannels rhs);
+  KKB::KKStr&    operator<< (KKB::KKStr& lhs,   ColorChannels rhs);
+
+  KKB::KKStr     ColorChannelToKKStr   (ColorChannels  c);
   ColorChannels  ColorChannelFromKKStr (const KKStr&   s);
-
-
+  
   class  RasterList;
   typedef  RasterList*  RasterListPtr;
 
@@ -120,27 +122,18 @@ namespace KKB
     Raster (const Raster&  _raster);  /**< @brief Copy Constructor */
 
     /**
-     *@brief Constructs a blank image with given dimensions; all pixels will be initialized to 0.
-     *@details  When working with images pixel value of '0' = Background and '255'= foreground.
-     *          The green channel will be used to represent the  value.  When these raster images
-     *          are saved to a image file such as a BMP file the pixel value of 0 will point to the color
-     *          value of (255, 255, 255) and  pixel value 255 will point to the color value of (0, 0, 0).
-     *          This way when displaying the image background will appear as white.
-     */
-    Raster (kkint32  _height,
-            kkint32  _width
-           );
-
-
-    /**
      *@brief  Constructs a blank image with given dimensions.  
      *@details  The third parameter determines whether it will be a color or  image,  If a Color
      *          image then all three color channel will be set to = 255 which stands for white.  If
-     *           the green channel will be set to 0.
+     *          color set to false (grayscale); only green channel will be used and value of '0' = Background 
+     *          and '255'= foreground. When saving grayscale to a image file such as a BMP format 
+     *          file the pixel value of 0 will point to the color of value of (255, 255, 255) and  
+     *          pixel value 255 will point to the color value of (0, 0, 0). This way when displaying 
+     *          the image background will appear as white.  See [BMPImage.h].
      */
     Raster (kkint32 _height,
             kkint32 _width,
-            bool    _color
+            bool    _color = false
            );
 
     /**
@@ -1399,8 +1392,7 @@ namespace KKB
   }  MovDir;
 
 
-
-
+  
   class  RasterList:  public  KKQueue<Raster>
   {
   public:

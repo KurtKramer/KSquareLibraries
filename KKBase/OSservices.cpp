@@ -1892,7 +1892,12 @@ double  KKB::osGetKernalTimeUsed ()
 #ifdef  WIN32
 kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 {
-  return timeGetTime ();
+  FILETIME lpIdleTime;
+  FILETIME lpKernelTime;
+  FILETIME lpUserTime;
+
+  //GetSystemTimes(&lpIdleTime, &lpKernelTime, &lpUserTime);
+  return 0;
 } 
 
 #else

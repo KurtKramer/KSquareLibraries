@@ -24,6 +24,7 @@ using namespace std;
 
 #include "Raster.h"
 
+#include "Algorithms.h"
 #include "KKBaseTypes.h"
 #include "Blob.h"
 #include "BMPImage.h"
@@ -74,6 +75,22 @@ ColorChannels  KKB::ColorChannelFromKKStr(const KKStr& s)
   if  (c == 'g')  return ColorChannels::Green;
   if  (c == 'b')  return ColorChannels::Blue;
   return ColorChannels::Green;
+}
+
+
+
+ostream&  KKB::operator<< (ostream& lhs, ColorChannels rhs)
+{
+  lhs << ColorChannelToKKStr(rhs);
+  return lhs;
+}
+
+
+
+KKStr&  KKB::operator<< (KKStr& lhs, ColorChannels rhs)
+{
+  lhs.Append(ColorChannelToKKStr (rhs));
+  return lhs;
 }
 
 
@@ -194,65 +211,6 @@ kkint32  freqHist16BucketIdx[256] =
 
 
 
-inline  
-kkint32  Min (kkint32  x1,  kkint32  x2)
-{
-  if  (x1 < x2)
-    return  x1;
-  else
-    return  x2;
-}
-
-
-
-inline  
-kkint32  Max6 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-               kkint32 x4,  kkint32 x5,  kkint32 x6
-              )
-{
-  kkint32  r;
-  
-  if  (x1 > x2)
-    r = x1;
-  else 
-    r = x2;
-
-  if  (x3 > r)  r = x3;
-  if  (x4 > r)  r = x4;
-  if  (x5 > r)  r = x5;
-  if  (x6 > r)  r = x6;
-
-  return  r;
-}  /* Max6 */
-
-
-
-inline  
-kkint32  Max9 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-               kkint32 x4,  kkint32 x5,  kkint32 x6,  
-               kkint32 x7,  kkint32 x8,  kkint32 x9
-              )
-{
-  kkint32  r;
-  
-  if  (x1 > x2)
-    r = x1;
-  else 
-    r = x2;
-
-  if  (x3 > r)  r = x3;
-  if  (x4 > r)  r = x4;
-  if  (x5 > r)  r = x5;
-  if  (x6 > r)  r = x6;
-  if  (x7 > r)  r = x7;
-  if  (x8 > r)  r = x8;
-  if  (x9 > r)  r = x9;
-
-  return  r;
-}  /* Max9 */
-
-
-
 Raster::Raster ():
   backgroundPixelValue (0),
   backgroundPixelTH    (31),
@@ -285,78 +243,17 @@ Raster::Raster ():
 
 
 
-Raster::Raster (kkint32  _height,
-                kkint32  _width
-               ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
-{
-  AddRasterInstance (this);
-  AllocateImageArea ();
-}
-
-
-
 Raster::Raster (kkint32 _height,
                 kkint32 _width,
-                bool  _color
+                bool    _color
                ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (_color),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
+ Raster()
 
 {
-  AddRasterInstance (this);
+  height = _height;
+  width = _width;
+  totPixels = height * width;
+  color = _color;
   if  (color)
   {
     backgroundPixelValue = 255;
@@ -373,38 +270,15 @@ Raster::Raster (kkint32 _height,
  *@brief  Constructs a Raster from a BMP image loaded from disk.
  *@details If BMP Image is a gray-scale value pixel values will be reversed.  See description of gray-scale constructor.
  */
-Raster::Raster (const BmpImage&  _bmpImage):
-
-  backgroundPixelValue  (0),
-  backgroundPixelTH     (31),
-  blobIds               (NULL),
-  centroidCol           (0.0f),
-  centroidRow           (0.0f),
-  color                 (false),
-  divisor               (1),
-  fileName              (_bmpImage.FileName ()),
-  foregroundPixelCount  (0),
-  foregroundPixelValue  (255),
-  fourierMag            (NULL),
-  fourierMagArea        (NULL),
-  height                (_bmpImage.Height ()),
-  maxPixVal             (0),
-  title                 (),
-  totPixels             (_bmpImage.Height () * _bmpImage.Width ()),
-  weOwnRasterData       (true),
-  width                 (_bmpImage.Width ()),
-
-  redArea               (NULL),
-  greenArea             (NULL),
-  blueArea              (NULL),
-
-  red                   (NULL),
-  green                 (NULL),
-  blue                  (NULL)
-
+Raster::Raster (const BmpImage&  _bmpImage): Raster ()
 {
-  AddRasterInstance (this);
-  color = _bmpImage.Color ();
+  fileName  = _bmpImage.FileName ();
+  height    = _bmpImage.Height ();
+  width     = _bmpImage.Width ();
+  totPixels = height * width;
+  color     = _bmpImage.Color ();
+  weOwnRasterData = true;
+ 
   AllocateImageArea ();
 
   for  (kkint32 row = 0; row < height; row++)
@@ -424,46 +298,30 @@ Raster::Raster (const BmpImage&  _bmpImage):
 
 
 
-Raster::Raster (const Raster&  _raster):
-
-  backgroundPixelValue  (_raster.backgroundPixelValue),
-  backgroundPixelTH     (_raster.backgroundPixelTH),
-  blobIds               (NULL),
-  centroidCol           (_raster.centroidCol),
-  centroidRow           (_raster.centroidRow),
-  color                 (_raster.color),
-  divisor               (1),
-  fileName              (_raster.fileName),
-  foregroundPixelCount  (_raster.foregroundPixelCount),
-  foregroundPixelValue  (_raster.foregroundPixelValue),
-  fourierMag            (NULL),
-  fourierMagArea        (NULL),
-  height                (_raster.height),
-  maxPixVal             (_raster.maxPixVal),
-  title                 (),
-  totPixels             (_raster.totPixels),
-  weOwnRasterData       (true),
-  width                 (_raster.width),
-
-  redArea          (NULL),
-  greenArea        (NULL),
-  blueArea         (NULL),
-
-  red              (NULL),
-  green            (NULL),
-  blue             (NULL)
-
+Raster::Raster (const Raster&  _raster): Raster ()
 {
-  AddRasterInstance (this);
+  backgroundPixelValue  = _raster.backgroundPixelValue;
+  backgroundPixelTH     = _raster.backgroundPixelTH;
+  centroidCol           = _raster.centroidCol;
+  centroidRow           = _raster.centroidRow;
+  color                 = _raster.color;
+  fileName              = _raster.fileName;
+  foregroundPixelCount  = _raster.foregroundPixelCount;
+  foregroundPixelValue  = _raster.foregroundPixelValue;
+  height                = _raster.height;
+  maxPixVal             = _raster.maxPixVal;
+  totPixels             = _raster.totPixels;
+  weOwnRasterData       = true;
+  width                 =_raster.width;
 
   AllocateImageArea ();
-  if  (!greenArea)  throw KKException ("Raster::Raster  Failed to allocate 'greenArea'.");
+  KKCheck (greenArea, "Raster::Raster  Failed to allocate 'greenArea'.");
   memcpy (greenArea, _raster.greenArea, totPixels);
 
   if  (color)
   {
-    if  (!redArea)   throw KKException("Raster::Raster  Allocation of 'redArea'  failed.");
-    if  (!blueArea)  throw KKException("Raster::Raster  Allocation of 'blueArea' failed.");
+    KKCheck (redArea,"Raster::Raster  Allocation of 'redArea'  failed.");
+    KKCheck (blueArea, "Raster::Raster  Allocation of 'blueArea' failed.");
     memcpy (redArea,  _raster.redArea,  totPixels);
     memcpy (blueArea, _raster.blueArea, totPixels);
   }
@@ -479,51 +337,36 @@ Raster::Raster (const Raster&  _raster):
 
 
 Raster::Raster (const Raster&  _raster,
-                kkint32        _row,
-                kkint32        _col,
+                kkint32        _topRow,
+                kkint32        _leftCol,
                 kkint32        _height,
                 kkint32        _width
-               ):
-
-  backgroundPixelValue (_raster.backgroundPixelValue),
-  backgroundPixelTH    (_raster.backgroundPixelTH),
-  blobIds              (NULL),
-  centroidCol          (-1.0f),
-  centroidRow          (-1.0f),
-  color                (_raster.color),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (_raster.foregroundPixelValue),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+               ):  Raster ()
 {
+  backgroundPixelValue  = _raster.backgroundPixelValue;
+  backgroundPixelTH     = _raster.backgroundPixelTH;
+  centroidCol           = -1.0f;
+  centroidRow           = -1.0f;
+  color                 = _raster.color;
+  foregroundPixelCount  = 0;
+  foregroundPixelValue  = _raster.foregroundPixelValue;
+  height                = _height;
+  maxPixVal             = _raster.maxPixVal;
+  totPixels             = _height * _width;
+  weOwnRasterData       = true;
+  width                 =_raster.width;
+  
   AddRasterInstance (this);
 
-  green = _raster.GetSubSet (_raster.green, _row, _col, _height, _width);
+  green = _raster.GetSubSet (_raster.green, _topRow, _leftCol, _height, _width);
   greenArea = green[0];
 
   if  (color)
   {
-    red = _raster.GetSubSet (_raster.red, _row, _col, _height, _width);
+    red = _raster.GetSubSet (_raster.red, _topRow, _leftCol, _height, _width);
     redArea = red[0];
 
-    blue = _raster.GetSubSet (_raster.blue, _row, _col, _height, _width);
+    blue = _raster.GetSubSet (_raster.blue, _topRow, _leftCol, _height, _width);
     blueArea = blue[0];
   }
 }
@@ -533,7 +376,6 @@ Raster::Raster (const Raster&  _raster,
 Raster::Raster (const Raster& _raster, const Point& topLeft, const Point& botRight) :
   Raster(_raster, topLeft.Row(), topLeft.Col(), 1 + botRight.Row () - topLeft.Row (),  1 + botRight.Col () - topLeft.Col ())
 {
-
 }
 
 
@@ -542,42 +384,18 @@ Raster::Raster (const Raster& _raster,
                 MaskTypes     _mask,
                 kkint32       _row,
                 kkint32       _col
-               ):
-
-  backgroundPixelValue (_raster.backgroundPixelValue),
-  backgroundPixelTH    (_raster.backgroundPixelTH),
-  blobIds              (NULL),
-  centroidCol          (-1),
-  centroidRow          (-1),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (_raster.foregroundPixelValue),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (MorphOp::Biases (_mask) * 2 + 1),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (0),
-  weOwnRasterData      (true),
-  width                (MorphOp::Biases (_mask) * 2 + 1),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+               ): Raster ()
 {
-  AddRasterInstance (this);
-
+  kkint32 biases = MorphOp::Biases (_mask);
+  backgroundPixelValue = _raster.backgroundPixelValue;
+  backgroundPixelTH    = _raster.backgroundPixelTH;
+  foregroundPixelValue =_raster.foregroundPixelValue;
+  height = width = (biases * 2 + 1);
   totPixels = height * width;
+  weOwnRasterData  = true;
 
-  kkint32  r = _row - MorphOp::Biases (_mask);
-  kkint32  c = _col - MorphOp::Biases (_mask);
+  kkint32  r = _row - biases;
+  kkint32  c = _col - biases;
 
   green = _raster.GetSubSet (_raster.green, r, c, height, width);  
   greenArea = green[0];
@@ -594,38 +412,11 @@ Raster::Raster (const Raster& _raster,
 
 
 Raster::Raster (const KKStr&  _fileName,
-                bool&          validFile
-               ):
-
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (-1),
-  centroidRow          (-1),
-  color                (false),
-  divisor              (1),
-  fileName             (_fileName),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (0),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (0),
-  weOwnRasterData      (true),
-  width                (0),
-
-  redArea   (NULL),
-  greenArea (NULL),
-  blueArea  (NULL),
-
-  red       (NULL),
-  green     (NULL),
-  blue      (NULL)
-
+                bool&         validFile
+               ):  Raster ()
 {
-  AddRasterInstance (this);
+  fileName = _fileName;
+  backgroundPixelTH = 31;
 
   validFile = true;
   
@@ -664,35 +455,14 @@ Raster::Raster (kkint32    _height,
                 kkuint8*   _grayScaleData,
                 kkuint8**  _grayScaleRows
                ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (false),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (_grayScaleData),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (_grayScaleRows),
-  blue                 (NULL)
-
+  Raster()
 {
-  AddRasterInstance (this);
+  height           = _height;
+  width            = _width;
+  totPixels        = height * width;
+  weOwnRasterData  = false,
+  greenArea        = _grayScaleData;
+  green            = _grayScaleRows;
 }
 
 
@@ -700,37 +470,8 @@ Raster::Raster (kkint32    _height,
 Raster::Raster (kkint32         _height,
                 kkint32         _width,
                 const kkuint8*  _grayScaleData
-               ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (false),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
+               ): Raster (_height, _width, false)
 {
-  AddRasterInstance (this);
-  AllocateImageArea ();
   KKCheck(greenArea, "Raster::Raster   Failed to allocate 'greenArea'.");
   memcpy (greenArea, _grayScaleData, totPixels);
 }
@@ -742,37 +483,8 @@ Raster::Raster (kkint32         _height,
                 const kkuint8*  _redChannel,
                 const kkuint8*  _greenChannel,
                 const kkuint8*  _blueChannel
-               ):
-  backgroundPixelValue (0),
-  backgroundPixelTH    (31),
-  blobIds              (NULL),
-  centroidCol          (0.0f),
-  centroidRow          (0.0f),
-  color                (true),
-  divisor              (1),
-  fileName             (),
-  foregroundPixelCount (0),
-  foregroundPixelValue (255),
-  fourierMag           (NULL),
-  fourierMagArea       (NULL),
-  height               (_height),
-  maxPixVal            (0),
-  title                (),
-  totPixels            (_height * _width),
-  weOwnRasterData      (true),
-  width                (_width),
-
-  redArea              (NULL),
-  greenArea            (NULL),
-  blueArea             (NULL),
-
-  red                  (NULL),
-  green                (NULL),
-  blue                 (NULL)
-
+               ):  Raster (_height, _width, false)
 {
-  AddRasterInstance (this);
-  AllocateImageArea ();
   KKCheck (_redChannel,   "Raster::Raster   '_redChannel' is 'NULL'.")
   KKCheck (_greenChannel, "Raster::Raster   '_greenChannel' is 'NULL'.")
   KKCheck (_blueChannel,  "Raster::Raster   '_blueChannel' is 'NULL'.")
@@ -837,13 +549,13 @@ kkMemSize  Raster::MemoryConsumedEstimated ()  const
     pixelMem = pixelMem * 3;
 
   kkMemSize  memoryConsumedEstimated = (kkMemSize)(
-    sizeof (kkuint8)     * 4   +
+    sizeof (kkuint8)   * 4   +
     sizeof (float)     * 2   +
     sizeof (bool)      * 2   +
     sizeof (kkint32)   * 4   +
     sizeof (kkint32**) * 1   +
-    sizeof (kkuint8*)    * 3   + 
-    sizeof (kkuint8**)   * 3   +
+    sizeof (kkuint8*)  * 3   + 
+    sizeof (kkuint8**) * 3   +
     sizeof (float*)    * 1   +
     sizeof (float**)   * 1   +
     fileName.MemoryConsumedEstimated () +
@@ -1095,12 +807,12 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
 
   kkint32  paddedForgroudPixelCount = 0;
 
-  for  (kkint32  row = 0;  row < oldHeight;  row++)
+  for  (kkint32  row = 0;  row < oldHeight;  ++row)
   {
     const kkuint8* oldRow = image.ImageRow (row);
     
     kkint32  newCol = padding;
-    for  (kkint32 col = 0; col < oldWidth;  col++)
+    for  (kkint32 col = 0; col < oldWidth;  ++col)
     {
       if  (oldRow[col] > 0)
          paddedForgroudPixelCount++;
@@ -1119,7 +831,7 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
 
 
 
-RasterPtr   Raster::ReversedImage ()
+RasterPtr  Raster::ReversedImage ()
 {
   RasterPtr  result = AllocateARasterInstance (*this);
   result->ReverseImage ();
@@ -1377,7 +1089,6 @@ void   Raster::SetPixelValue (kkint32  row,
     blue [row][col] = b;
   }
 }  /* SetPixelValue  */
-
 
 
 
@@ -1921,6 +1632,7 @@ RasterPtr  Raster::CreateFillHole () const  {
 }
 
 
+
 void  Raster::FillHole ()
 {
   Raster  mask (*this);
@@ -2059,8 +1771,7 @@ void  Raster::FillHole (RasterPtr  mask)
       rowCur  += width;
       rowNext += width;
     }
-
-
+    
     // Scan from Bot-Right  to  Top-Left
     rowPrev  = maskRows[height - 1];
     rowCur   = rowPrev - width;
@@ -2089,7 +1800,6 @@ void  Raster::FillHole (RasterPtr  mask)
       rowNext -= width;
     }
   }  while  (fillInFound);
-
 
   // At this point the only pixels in the mask image that contain a '0' are the ones that are in holes.
   // We will now fill the corresponding pixel locations in the original image with the ForegroundPixelValue.
@@ -2240,8 +1950,6 @@ void  Raster::Erosion (MaskTypes  mask)
   }   /* End of for(r) */
 
 }  /* Erosion */
-
-
 
 
 
@@ -3868,8 +3576,8 @@ void  Raster::CentralMoments (float  features[9])  const
   float  cm21 = 0.0;
 
   {
-    float   deltaCol = 0.0f;
-    float   deltaRow = 0.0f;
+    float  deltaCol = 0.0f;
+    float  deltaRow = 0.0f;
 
     for  (kkint32 row = 0;  row < height;  ++row)
     {
@@ -5749,14 +5457,8 @@ HistogramPtr  Raster::Histogram (ColorChannels  channel)  const
     case  ColorChannels::Blue:  data = blueArea;   break;
     }
   }
-
-  if  (!data)
-  {
-    KKStr  errMsg (128);
-    errMsg << "Raster::Histogram   ***ERROR***    channel: " << ColorChannelToKKStr (channel) << "  Is not defined.";
-    cerr << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
+  
+  KKCheck (data, "Raster::Histogram   ***ERROR***    channel: " << channel << "  Is not defined.")
 
   HistogramPtr histogram = new KKB::Histogram (0, 256, 1.0, false);
   for  (kkint32 x = 0;  x < totPixels;  ++x)
@@ -6675,7 +6377,7 @@ void  Raster::DrawCircle (const Point&       point,
   DrawCircle ((float)point.Row (),
               (float)point.Col (),
               (float)radius,
-			  paintColor
+              paintColor
              );
 }  /* DrawCircle */
 
@@ -6747,58 +6449,6 @@ RasterPtr  Raster::CreateSmoothImage (kkint32 maskSize)  const
 
 
 
-template<typename T>
-T  FindKthValue (T*      values, 
-                 kkint32 arraySize, 
-                 kkint32 Kth
-                )
-{
-  T    pv;
-  kkint32  left  = 0;
-  kkint32  right = arraySize - 1;
-
-  kkint32  pivotIndex = right;
-
-  kkint32  partitionIndex = -1;
-
-  T temp;
-
-  while  (partitionIndex != Kth)
-  {
-    pv = values[pivotIndex];
-    
-    partitionIndex = left;
-    for  (kkint32 i = left;  i < right;  i++)
-    {
-      if  (values[i] <= pv)
-      {
-        if  (i != partitionIndex)
-        {
-          temp = values[i];
-          values[i] = values[partitionIndex];
-          values[partitionIndex] = temp;
-        }
-        partitionIndex = partitionIndex + 1;
-      }
-    }
-
-    temp = values[partitionIndex];
-    values[partitionIndex] = values[right];
-    values[right] = temp;
-
-    if  (Kth < partitionIndex)
-      right = partitionIndex - 1;
-    else
-      left  = partitionIndex + 1;
-
-    pivotIndex = right;
-  }
-
-  return  values[Kth];
-}  /* FindKthValue */
-
-
-
 RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
@@ -6827,9 +6477,7 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 
   kkint32  maskOffset = maskSize / 2;
 
-  //kkuint8*  srcRow = NULL;
-  
-  for  (kkint32 row = 0;  row < height;  row++)
+  for  (kkint32 row = 0;  row < height;  ++row)
   {
     firstMaskRow = row - maskOffset;
     lastMaskRow  = firstMaskRow + maskSize - 1;
@@ -6837,46 +6485,41 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
     firstMaskRow = Max ((kkint32)0, firstMaskRow);
     lastMaskRow  = Min (lastMaskRow, (kkint32)(height - 1));
     
-    for  (kkint32 col = 0;  col < width;  col++)
+    for  (kkint32 col = 0;  col < width;  ++col)
     {
       firstMaskCol = col - maskOffset;
       lastMaskCol = firstMaskCol + maskSize - 1;
       firstMaskCol = Max (firstMaskCol, (kkint32)0);
       lastMaskCol  = Min (lastMaskCol,  (kkint32)(width - 1));
 
-      //if  (ForegroundPixel (row, col))
-      //{
-        numCandidates = 0;
+      numCandidates = 0;
 
-        for  (kkint32 maskRow = firstMaskRow;  maskRow <= lastMaskRow;  ++maskRow)
+      for  (kkint32 maskRow = firstMaskRow;  maskRow <= lastMaskRow;  ++maskRow)
+      {
+        for  (kkint32 maskCol = firstMaskCol;  maskCol <= lastMaskCol;  ++maskCol)
         {
-          for  (kkint32 maskCol = firstMaskCol;  maskCol <= lastMaskCol;  ++maskCol)
-          {
-            //if  (ForegroundPixel (maskRow, maskCol))
-            //{
-              candidatesGreen[numCandidates] = green[maskRow][maskCol];
-              if  (color)
-              {
-                candidatesRed[numCandidates]  = green[maskRow][maskCol];
-                candidatesBlue[numCandidates] = green[maskRow][maskCol];
-              }
-              numCandidates++;
-            //}
-          }
-        }
 
-        middleCandidate = numCandidates / 2;
-        kkuint8  medium = FindKthValue (candidatesGreen, numCandidates, middleCandidate);
-        destG[row][col] = medium;
-
-        if  (color)
-        {
-          medium = FindKthValue (candidatesRed, numCandidates, middleCandidate);
-          destR[row][col] = medium;
-          medium = FindKthValue (candidatesBlue, numCandidates, middleCandidate);
-          destB[row][col] = medium;
+            candidatesGreen[numCandidates] = green[maskRow][maskCol];
+            if  (color)
+            {
+              candidatesRed[numCandidates]  = green[maskRow][maskCol];
+              candidatesBlue[numCandidates] = green[maskRow][maskCol];
+            }
+            ++numCandidates;
         }
-        //}
+      }
+
+      middleCandidate = numCandidates / 2;
+      kkuint8  medium = FindKthValue (candidatesGreen, numCandidates, middleCandidate);
+      destG[row][col] = medium;
+
+      if  (color)
+      {
+        medium = FindKthValue (candidatesRed, numCandidates, middleCandidate);
+        destR[row][col] = medium;
+        medium = FindKthValue (candidatesBlue, numCandidates, middleCandidate);
+        destB[row][col] = medium;
+      }
     }
   }
 
