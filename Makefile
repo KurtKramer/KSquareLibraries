@@ -134,6 +134,32 @@ KKBase/fast:
 	$(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/build
 .PHONY : KKBase/fast
 
+#=============================================================================
+# Target rules for targets named KKLineScanner
+
+# Build rule for target.
+KKLineScanner: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 KKLineScanner
+.PHONY : KKLineScanner
+
+# fast build rule for target.
+KKLineScanner/fast:
+	$(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/build
+.PHONY : KKLineScanner/fast
+
+#=============================================================================
+# Target rules for targets named KKMachineLearning
+
+# Build rule for target.
+KKMachineLearning: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning
+.PHONY : KKMachineLearning
+
+# fast build rule for target.
+KKMachineLearning/fast:
+	$(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build
+.PHONY : KKMachineLearning/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -144,6 +170,8 @@ help:
 	@echo "... test"
 	@echo "... edit_cache"
 	@echo "... KKBase"
+	@echo "... KKLineScanner"
+	@echo "... KKMachineLearning"
 .PHONY : help
 
 

@@ -25,6 +25,7 @@
 //****************************************************************************************
 
 #include <fstream>
+#include <string.h>
 
 #include "KKBaseTypes.h"
 #include "KKException.h"

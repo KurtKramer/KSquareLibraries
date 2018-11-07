@@ -541,6 +541,33 @@ GoalKeeper.cpp.s:
 	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/GoalKeeper.cpp.s
 .PHONY : GoalKeeper.cpp.s
 
+GoalKeeperSimple.o: GoalKeeperSimple.cpp.o
+
+.PHONY : GoalKeeperSimple.o
+
+# target to build an object file
+GoalKeeperSimple.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/GoalKeeperSimple.cpp.o
+.PHONY : GoalKeeperSimple.cpp.o
+
+GoalKeeperSimple.i: GoalKeeperSimple.cpp.i
+
+.PHONY : GoalKeeperSimple.i
+
+# target to preprocess a source file
+GoalKeeperSimple.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/GoalKeeperSimple.cpp.i
+.PHONY : GoalKeeperSimple.cpp.i
+
+GoalKeeperSimple.s: GoalKeeperSimple.cpp.s
+
+.PHONY : GoalKeeperSimple.s
+
+# target to generate assembly for a file
+GoalKeeperSimple.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/GoalKeeperSimple.cpp.s
+.PHONY : GoalKeeperSimple.cpp.s
+
 HTMLReport.o: HTMLReport.cpp.o
 
 .PHONY : HTMLReport.o
@@ -729,6 +756,33 @@ KKObservable.s: KKObservable.cpp.s
 KKObservable.cpp.s:
 	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/KKObservable.cpp.s
 .PHONY : KKObservable.cpp.s
+
+KKObserver.o: KKObserver.cpp.o
+
+.PHONY : KKObserver.o
+
+# target to build an object file
+KKObserver.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/KKObserver.cpp.o
+.PHONY : KKObserver.cpp.o
+
+KKObserver.i: KKObserver.cpp.i
+
+.PHONY : KKObserver.i
+
+# target to preprocess a source file
+KKObserver.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/KKObserver.cpp.i
+.PHONY : KKObserver.cpp.i
+
+KKObserver.s: KKObserver.cpp.s
+
+.PHONY : KKObserver.s
+
+# target to generate assembly for a file
+KKObserver.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/KKObserver.cpp.s
+.PHONY : KKObserver.cpp.s
 
 KKStr.o: KKStr.cpp.o
 
@@ -946,6 +1000,708 @@ MorphOpBinarize.cpp.s:
 	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpBinarize.cpp.s
 .PHONY : MorphOpBinarize.cpp.s
 
+MorphOpBmiFiltering.o: MorphOpBmiFiltering.cpp.o
+
+.PHONY : MorphOpBmiFiltering.o
+
+# target to build an object file
+MorphOpBmiFiltering.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpBmiFiltering.cpp.o
+.PHONY : MorphOpBmiFiltering.cpp.o
+
+MorphOpBmiFiltering.i: MorphOpBmiFiltering.cpp.i
+
+.PHONY : MorphOpBmiFiltering.i
+
+# target to preprocess a source file
+MorphOpBmiFiltering.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpBmiFiltering.cpp.i
+.PHONY : MorphOpBmiFiltering.cpp.i
+
+MorphOpBmiFiltering.s: MorphOpBmiFiltering.cpp.s
+
+.PHONY : MorphOpBmiFiltering.s
+
+# target to generate assembly for a file
+MorphOpBmiFiltering.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpBmiFiltering.cpp.s
+.PHONY : MorphOpBmiFiltering.cpp.s
+
+MorphOpDilation.o: MorphOpDilation.cpp.o
+
+.PHONY : MorphOpDilation.o
+
+# target to build an object file
+MorphOpDilation.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpDilation.cpp.o
+.PHONY : MorphOpDilation.cpp.o
+
+MorphOpDilation.i: MorphOpDilation.cpp.i
+
+.PHONY : MorphOpDilation.i
+
+# target to preprocess a source file
+MorphOpDilation.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpDilation.cpp.i
+.PHONY : MorphOpDilation.cpp.i
+
+MorphOpDilation.s: MorphOpDilation.cpp.s
+
+.PHONY : MorphOpDilation.s
+
+# target to generate assembly for a file
+MorphOpDilation.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpDilation.cpp.s
+.PHONY : MorphOpDilation.cpp.s
+
+MorphOpErosion.o: MorphOpErosion.cpp.o
+
+.PHONY : MorphOpErosion.o
+
+# target to build an object file
+MorphOpErosion.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpErosion.cpp.o
+.PHONY : MorphOpErosion.cpp.o
+
+MorphOpErosion.i: MorphOpErosion.cpp.i
+
+.PHONY : MorphOpErosion.i
+
+# target to preprocess a source file
+MorphOpErosion.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpErosion.cpp.i
+.PHONY : MorphOpErosion.cpp.i
+
+MorphOpErosion.s: MorphOpErosion.cpp.s
+
+.PHONY : MorphOpErosion.s
+
+# target to generate assembly for a file
+MorphOpErosion.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpErosion.cpp.s
+.PHONY : MorphOpErosion.cpp.s
+
+MorphOpMaskExclude.o: MorphOpMaskExclude.cpp.o
+
+.PHONY : MorphOpMaskExclude.o
+
+# target to build an object file
+MorphOpMaskExclude.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpMaskExclude.cpp.o
+.PHONY : MorphOpMaskExclude.cpp.o
+
+MorphOpMaskExclude.i: MorphOpMaskExclude.cpp.i
+
+.PHONY : MorphOpMaskExclude.i
+
+# target to preprocess a source file
+MorphOpMaskExclude.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpMaskExclude.cpp.i
+.PHONY : MorphOpMaskExclude.cpp.i
+
+MorphOpMaskExclude.s: MorphOpMaskExclude.cpp.s
+
+.PHONY : MorphOpMaskExclude.s
+
+# target to generate assembly for a file
+MorphOpMaskExclude.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpMaskExclude.cpp.s
+.PHONY : MorphOpMaskExclude.cpp.s
+
+MorphOpReduceByEvenMultiple.o: MorphOpReduceByEvenMultiple.cpp.o
+
+.PHONY : MorphOpReduceByEvenMultiple.o
+
+# target to build an object file
+MorphOpReduceByEvenMultiple.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByEvenMultiple.cpp.o
+.PHONY : MorphOpReduceByEvenMultiple.cpp.o
+
+MorphOpReduceByEvenMultiple.i: MorphOpReduceByEvenMultiple.cpp.i
+
+.PHONY : MorphOpReduceByEvenMultiple.i
+
+# target to preprocess a source file
+MorphOpReduceByEvenMultiple.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByEvenMultiple.cpp.i
+.PHONY : MorphOpReduceByEvenMultiple.cpp.i
+
+MorphOpReduceByEvenMultiple.s: MorphOpReduceByEvenMultiple.cpp.s
+
+.PHONY : MorphOpReduceByEvenMultiple.s
+
+# target to generate assembly for a file
+MorphOpReduceByEvenMultiple.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByEvenMultiple.cpp.s
+.PHONY : MorphOpReduceByEvenMultiple.cpp.s
+
+MorphOpReduceByFactor.o: MorphOpReduceByFactor.cpp.o
+
+.PHONY : MorphOpReduceByFactor.o
+
+# target to build an object file
+MorphOpReduceByFactor.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByFactor.cpp.o
+.PHONY : MorphOpReduceByFactor.cpp.o
+
+MorphOpReduceByFactor.i: MorphOpReduceByFactor.cpp.i
+
+.PHONY : MorphOpReduceByFactor.i
+
+# target to preprocess a source file
+MorphOpReduceByFactor.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByFactor.cpp.i
+.PHONY : MorphOpReduceByFactor.cpp.i
+
+MorphOpReduceByFactor.s: MorphOpReduceByFactor.cpp.s
+
+.PHONY : MorphOpReduceByFactor.s
+
+# target to generate assembly for a file
+MorphOpReduceByFactor.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpReduceByFactor.cpp.s
+.PHONY : MorphOpReduceByFactor.cpp.s
+
+MorphOpSobel.o: MorphOpSobel.cpp.o
+
+.PHONY : MorphOpSobel.o
+
+# target to build an object file
+MorphOpSobel.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpSobel.cpp.o
+.PHONY : MorphOpSobel.cpp.o
+
+MorphOpSobel.i: MorphOpSobel.cpp.i
+
+.PHONY : MorphOpSobel.i
+
+# target to preprocess a source file
+MorphOpSobel.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpSobel.cpp.i
+.PHONY : MorphOpSobel.cpp.i
+
+MorphOpSobel.s: MorphOpSobel.cpp.s
+
+.PHONY : MorphOpSobel.s
+
+# target to generate assembly for a file
+MorphOpSobel.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpSobel.cpp.s
+.PHONY : MorphOpSobel.cpp.s
+
+MorphOpStretcher.o: MorphOpStretcher.cpp.o
+
+.PHONY : MorphOpStretcher.o
+
+# target to build an object file
+MorphOpStretcher.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStretcher.cpp.o
+.PHONY : MorphOpStretcher.cpp.o
+
+MorphOpStretcher.i: MorphOpStretcher.cpp.i
+
+.PHONY : MorphOpStretcher.i
+
+# target to preprocess a source file
+MorphOpStretcher.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStretcher.cpp.i
+.PHONY : MorphOpStretcher.cpp.i
+
+MorphOpStretcher.s: MorphOpStretcher.cpp.s
+
+.PHONY : MorphOpStretcher.s
+
+# target to generate assembly for a file
+MorphOpStretcher.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStretcher.cpp.s
+.PHONY : MorphOpStretcher.cpp.s
+
+MorphOpStruct.o: MorphOpStruct.cpp.o
+
+.PHONY : MorphOpStruct.o
+
+# target to build an object file
+MorphOpStruct.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStruct.cpp.o
+.PHONY : MorphOpStruct.cpp.o
+
+MorphOpStruct.i: MorphOpStruct.cpp.i
+
+.PHONY : MorphOpStruct.i
+
+# target to preprocess a source file
+MorphOpStruct.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStruct.cpp.i
+.PHONY : MorphOpStruct.cpp.i
+
+MorphOpStruct.s: MorphOpStruct.cpp.s
+
+.PHONY : MorphOpStruct.s
+
+# target to generate assembly for a file
+MorphOpStruct.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpStruct.cpp.s
+.PHONY : MorphOpStruct.cpp.s
+
+MorphOpThinContour.o: MorphOpThinContour.cpp.o
+
+.PHONY : MorphOpThinContour.o
+
+# target to build an object file
+MorphOpThinContour.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpThinContour.cpp.o
+.PHONY : MorphOpThinContour.cpp.o
+
+MorphOpThinContour.i: MorphOpThinContour.cpp.i
+
+.PHONY : MorphOpThinContour.i
+
+# target to preprocess a source file
+MorphOpThinContour.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpThinContour.cpp.i
+.PHONY : MorphOpThinContour.cpp.i
+
+MorphOpThinContour.s: MorphOpThinContour.cpp.s
+
+.PHONY : MorphOpThinContour.s
+
+# target to generate assembly for a file
+MorphOpThinContour.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MorphOpThinContour.cpp.s
+.PHONY : MorphOpThinContour.cpp.s
+
+MsgQueue.o: MsgQueue.cpp.o
+
+.PHONY : MsgQueue.o
+
+# target to build an object file
+MsgQueue.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MsgQueue.cpp.o
+.PHONY : MsgQueue.cpp.o
+
+MsgQueue.i: MsgQueue.cpp.i
+
+.PHONY : MsgQueue.i
+
+# target to preprocess a source file
+MsgQueue.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MsgQueue.cpp.i
+.PHONY : MsgQueue.cpp.i
+
+MsgQueue.s: MsgQueue.cpp.s
+
+.PHONY : MsgQueue.s
+
+# target to generate assembly for a file
+MsgQueue.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/MsgQueue.cpp.s
+.PHONY : MsgQueue.cpp.s
+
+OSservices.o: OSservices.cpp.o
+
+.PHONY : OSservices.o
+
+# target to build an object file
+OSservices.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/OSservices.cpp.o
+.PHONY : OSservices.cpp.o
+
+OSservices.i: OSservices.cpp.i
+
+.PHONY : OSservices.i
+
+# target to preprocess a source file
+OSservices.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/OSservices.cpp.i
+.PHONY : OSservices.cpp.i
+
+OSservices.s: OSservices.cpp.s
+
+.PHONY : OSservices.s
+
+# target to generate assembly for a file
+OSservices.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/OSservices.cpp.s
+.PHONY : OSservices.cpp.s
+
+Option.o: Option.cpp.o
+
+.PHONY : Option.o
+
+# target to build an object file
+Option.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Option.cpp.o
+.PHONY : Option.cpp.o
+
+Option.i: Option.cpp.i
+
+.PHONY : Option.i
+
+# target to preprocess a source file
+Option.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Option.cpp.i
+.PHONY : Option.cpp.i
+
+Option.s: Option.cpp.s
+
+.PHONY : Option.s
+
+# target to generate assembly for a file
+Option.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Option.cpp.s
+.PHONY : Option.cpp.s
+
+PixelValue.o: PixelValue.cpp.o
+
+.PHONY : PixelValue.o
+
+# target to build an object file
+PixelValue.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/PixelValue.cpp.o
+.PHONY : PixelValue.cpp.o
+
+PixelValue.i: PixelValue.cpp.i
+
+.PHONY : PixelValue.i
+
+# target to preprocess a source file
+PixelValue.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/PixelValue.cpp.i
+.PHONY : PixelValue.cpp.i
+
+PixelValue.s: PixelValue.cpp.s
+
+.PHONY : PixelValue.s
+
+# target to generate assembly for a file
+PixelValue.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/PixelValue.cpp.s
+.PHONY : PixelValue.cpp.s
+
+Point.o: Point.cpp.o
+
+.PHONY : Point.o
+
+# target to build an object file
+Point.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Point.cpp.o
+.PHONY : Point.cpp.o
+
+Point.i: Point.cpp.i
+
+.PHONY : Point.i
+
+# target to preprocess a source file
+Point.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Point.cpp.i
+.PHONY : Point.cpp.i
+
+Point.s: Point.cpp.s
+
+.PHONY : Point.s
+
+# target to generate assembly for a file
+Point.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Point.cpp.s
+.PHONY : Point.cpp.s
+
+RandomNumGenerator.o: RandomNumGenerator.cpp.o
+
+.PHONY : RandomNumGenerator.o
+
+# target to build an object file
+RandomNumGenerator.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RandomNumGenerator.cpp.o
+.PHONY : RandomNumGenerator.cpp.o
+
+RandomNumGenerator.i: RandomNumGenerator.cpp.i
+
+.PHONY : RandomNumGenerator.i
+
+# target to preprocess a source file
+RandomNumGenerator.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RandomNumGenerator.cpp.i
+.PHONY : RandomNumGenerator.cpp.i
+
+RandomNumGenerator.s: RandomNumGenerator.cpp.s
+
+.PHONY : RandomNumGenerator.s
+
+# target to generate assembly for a file
+RandomNumGenerator.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RandomNumGenerator.cpp.s
+.PHONY : RandomNumGenerator.cpp.s
+
+Raster.o: Raster.cpp.o
+
+.PHONY : Raster.o
+
+# target to build an object file
+Raster.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Raster.cpp.o
+.PHONY : Raster.cpp.o
+
+Raster.i: Raster.cpp.i
+
+.PHONY : Raster.i
+
+# target to preprocess a source file
+Raster.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Raster.cpp.i
+.PHONY : Raster.cpp.i
+
+Raster.s: Raster.cpp.s
+
+.PHONY : Raster.s
+
+# target to generate assembly for a file
+Raster.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Raster.cpp.s
+.PHONY : Raster.cpp.s
+
+RasterBuffer.o: RasterBuffer.cpp.o
+
+.PHONY : RasterBuffer.o
+
+# target to build an object file
+RasterBuffer.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RasterBuffer.cpp.o
+.PHONY : RasterBuffer.cpp.o
+
+RasterBuffer.i: RasterBuffer.cpp.i
+
+.PHONY : RasterBuffer.i
+
+# target to preprocess a source file
+RasterBuffer.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RasterBuffer.cpp.i
+.PHONY : RasterBuffer.cpp.i
+
+RasterBuffer.s: RasterBuffer.cpp.s
+
+.PHONY : RasterBuffer.s
+
+# target to generate assembly for a file
+RasterBuffer.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RasterBuffer.cpp.s
+.PHONY : RasterBuffer.cpp.s
+
+RunLog.o: RunLog.cpp.o
+
+.PHONY : RunLog.o
+
+# target to build an object file
+RunLog.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RunLog.cpp.o
+.PHONY : RunLog.cpp.o
+
+RunLog.i: RunLog.cpp.i
+
+.PHONY : RunLog.i
+
+# target to preprocess a source file
+RunLog.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RunLog.cpp.i
+.PHONY : RunLog.cpp.i
+
+RunLog.s: RunLog.cpp.s
+
+.PHONY : RunLog.s
+
+# target to generate assembly for a file
+RunLog.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/RunLog.cpp.s
+.PHONY : RunLog.cpp.s
+
+SegmentorOTSU.o: SegmentorOTSU.cpp.o
+
+.PHONY : SegmentorOTSU.o
+
+# target to build an object file
+SegmentorOTSU.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SegmentorOTSU.cpp.o
+.PHONY : SegmentorOTSU.cpp.o
+
+SegmentorOTSU.i: SegmentorOTSU.cpp.i
+
+.PHONY : SegmentorOTSU.i
+
+# target to preprocess a source file
+SegmentorOTSU.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SegmentorOTSU.cpp.i
+.PHONY : SegmentorOTSU.cpp.i
+
+SegmentorOTSU.s: SegmentorOTSU.cpp.s
+
+.PHONY : SegmentorOTSU.s
+
+# target to generate assembly for a file
+SegmentorOTSU.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SegmentorOTSU.cpp.s
+.PHONY : SegmentorOTSU.cpp.s
+
+SimpleCompressor.o: SimpleCompressor.cpp.o
+
+.PHONY : SimpleCompressor.o
+
+# target to build an object file
+SimpleCompressor.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SimpleCompressor.cpp.o
+.PHONY : SimpleCompressor.cpp.o
+
+SimpleCompressor.i: SimpleCompressor.cpp.i
+
+.PHONY : SimpleCompressor.i
+
+# target to preprocess a source file
+SimpleCompressor.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SimpleCompressor.cpp.i
+.PHONY : SimpleCompressor.cpp.i
+
+SimpleCompressor.s: SimpleCompressor.cpp.s
+
+.PHONY : SimpleCompressor.s
+
+# target to generate assembly for a file
+SimpleCompressor.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/SimpleCompressor.cpp.s
+.PHONY : SimpleCompressor.cpp.s
+
+StatisticalFunctions.o: StatisticalFunctions.cpp.o
+
+.PHONY : StatisticalFunctions.o
+
+# target to build an object file
+StatisticalFunctions.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/StatisticalFunctions.cpp.o
+.PHONY : StatisticalFunctions.cpp.o
+
+StatisticalFunctions.i: StatisticalFunctions.cpp.i
+
+.PHONY : StatisticalFunctions.i
+
+# target to preprocess a source file
+StatisticalFunctions.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/StatisticalFunctions.cpp.i
+.PHONY : StatisticalFunctions.cpp.i
+
+StatisticalFunctions.s: StatisticalFunctions.cpp.s
+
+.PHONY : StatisticalFunctions.s
+
+# target to generate assembly for a file
+StatisticalFunctions.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/StatisticalFunctions.cpp.s
+.PHONY : StatisticalFunctions.cpp.s
+
+TokenBuffer.o: TokenBuffer.cpp.o
+
+.PHONY : TokenBuffer.o
+
+# target to build an object file
+TokenBuffer.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/TokenBuffer.cpp.o
+.PHONY : TokenBuffer.cpp.o
+
+TokenBuffer.i: TokenBuffer.cpp.i
+
+.PHONY : TokenBuffer.i
+
+# target to preprocess a source file
+TokenBuffer.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/TokenBuffer.cpp.i
+.PHONY : TokenBuffer.cpp.i
+
+TokenBuffer.s: TokenBuffer.cpp.s
+
+.PHONY : TokenBuffer.s
+
+# target to generate assembly for a file
+TokenBuffer.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/TokenBuffer.cpp.s
+.PHONY : TokenBuffer.cpp.s
+
+Tokenizer.o: Tokenizer.cpp.o
+
+.PHONY : Tokenizer.o
+
+# target to build an object file
+Tokenizer.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Tokenizer.cpp.o
+.PHONY : Tokenizer.cpp.o
+
+Tokenizer.i: Tokenizer.cpp.i
+
+.PHONY : Tokenizer.i
+
+# target to preprocess a source file
+Tokenizer.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Tokenizer.cpp.i
+.PHONY : Tokenizer.cpp.i
+
+Tokenizer.s: Tokenizer.cpp.s
+
+.PHONY : Tokenizer.s
+
+# target to generate assembly for a file
+Tokenizer.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/Tokenizer.cpp.s
+.PHONY : Tokenizer.cpp.s
+
+XmlStream.o: XmlStream.cpp.o
+
+.PHONY : XmlStream.o
+
+# target to build an object file
+XmlStream.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlStream.cpp.o
+.PHONY : XmlStream.cpp.o
+
+XmlStream.i: XmlStream.cpp.i
+
+.PHONY : XmlStream.i
+
+# target to preprocess a source file
+XmlStream.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlStream.cpp.i
+.PHONY : XmlStream.cpp.i
+
+XmlStream.s: XmlStream.cpp.s
+
+.PHONY : XmlStream.s
+
+# target to generate assembly for a file
+XmlStream.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlStream.cpp.s
+.PHONY : XmlStream.cpp.s
+
+XmlTokenizer.o: XmlTokenizer.cpp.o
+
+.PHONY : XmlTokenizer.o
+
+# target to build an object file
+XmlTokenizer.cpp.o:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlTokenizer.cpp.o
+.PHONY : XmlTokenizer.cpp.o
+
+XmlTokenizer.i: XmlTokenizer.cpp.i
+
+.PHONY : XmlTokenizer.i
+
+# target to preprocess a source file
+XmlTokenizer.cpp.i:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlTokenizer.cpp.i
+.PHONY : XmlTokenizer.cpp.i
+
+XmlTokenizer.s: XmlTokenizer.cpp.s
+
+.PHONY : XmlTokenizer.s
+
+# target to generate assembly for a file
+XmlTokenizer.cpp.s:
+	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKBase/CMakeFiles/KKBase.dir/build.make KKBase/CMakeFiles/KKBase.dir/XmlTokenizer.cpp.s
+.PHONY : XmlTokenizer.cpp.s
+
 kku_fftw.o: kku_fftw.cpp.o
 
 .PHONY : kku_fftw.o
@@ -1028,6 +1784,9 @@ help:
 	@echo "... GoalKeeper.o"
 	@echo "... GoalKeeper.i"
 	@echo "... GoalKeeper.s"
+	@echo "... GoalKeeperSimple.o"
+	@echo "... GoalKeeperSimple.i"
+	@echo "... GoalKeeperSimple.s"
 	@echo "... HTMLReport.o"
 	@echo "... HTMLReport.i"
 	@echo "... HTMLReport.s"
@@ -1049,6 +1808,9 @@ help:
 	@echo "... KKObservable.o"
 	@echo "... KKObservable.i"
 	@echo "... KKObservable.s"
+	@echo "... KKObserver.o"
+	@echo "... KKObserver.i"
+	@echo "... KKObserver.s"
 	@echo "... KKStr.o"
 	@echo "... KKStr.i"
 	@echo "... KKStr.s"
@@ -1073,6 +1835,84 @@ help:
 	@echo "... MorphOpBinarize.o"
 	@echo "... MorphOpBinarize.i"
 	@echo "... MorphOpBinarize.s"
+	@echo "... MorphOpBmiFiltering.o"
+	@echo "... MorphOpBmiFiltering.i"
+	@echo "... MorphOpBmiFiltering.s"
+	@echo "... MorphOpDilation.o"
+	@echo "... MorphOpDilation.i"
+	@echo "... MorphOpDilation.s"
+	@echo "... MorphOpErosion.o"
+	@echo "... MorphOpErosion.i"
+	@echo "... MorphOpErosion.s"
+	@echo "... MorphOpMaskExclude.o"
+	@echo "... MorphOpMaskExclude.i"
+	@echo "... MorphOpMaskExclude.s"
+	@echo "... MorphOpReduceByEvenMultiple.o"
+	@echo "... MorphOpReduceByEvenMultiple.i"
+	@echo "... MorphOpReduceByEvenMultiple.s"
+	@echo "... MorphOpReduceByFactor.o"
+	@echo "... MorphOpReduceByFactor.i"
+	@echo "... MorphOpReduceByFactor.s"
+	@echo "... MorphOpSobel.o"
+	@echo "... MorphOpSobel.i"
+	@echo "... MorphOpSobel.s"
+	@echo "... MorphOpStretcher.o"
+	@echo "... MorphOpStretcher.i"
+	@echo "... MorphOpStretcher.s"
+	@echo "... MorphOpStruct.o"
+	@echo "... MorphOpStruct.i"
+	@echo "... MorphOpStruct.s"
+	@echo "... MorphOpThinContour.o"
+	@echo "... MorphOpThinContour.i"
+	@echo "... MorphOpThinContour.s"
+	@echo "... MsgQueue.o"
+	@echo "... MsgQueue.i"
+	@echo "... MsgQueue.s"
+	@echo "... OSservices.o"
+	@echo "... OSservices.i"
+	@echo "... OSservices.s"
+	@echo "... Option.o"
+	@echo "... Option.i"
+	@echo "... Option.s"
+	@echo "... PixelValue.o"
+	@echo "... PixelValue.i"
+	@echo "... PixelValue.s"
+	@echo "... Point.o"
+	@echo "... Point.i"
+	@echo "... Point.s"
+	@echo "... RandomNumGenerator.o"
+	@echo "... RandomNumGenerator.i"
+	@echo "... RandomNumGenerator.s"
+	@echo "... Raster.o"
+	@echo "... Raster.i"
+	@echo "... Raster.s"
+	@echo "... RasterBuffer.o"
+	@echo "... RasterBuffer.i"
+	@echo "... RasterBuffer.s"
+	@echo "... RunLog.o"
+	@echo "... RunLog.i"
+	@echo "... RunLog.s"
+	@echo "... SegmentorOTSU.o"
+	@echo "... SegmentorOTSU.i"
+	@echo "... SegmentorOTSU.s"
+	@echo "... SimpleCompressor.o"
+	@echo "... SimpleCompressor.i"
+	@echo "... SimpleCompressor.s"
+	@echo "... StatisticalFunctions.o"
+	@echo "... StatisticalFunctions.i"
+	@echo "... StatisticalFunctions.s"
+	@echo "... TokenBuffer.o"
+	@echo "... TokenBuffer.i"
+	@echo "... TokenBuffer.s"
+	@echo "... Tokenizer.o"
+	@echo "... Tokenizer.i"
+	@echo "... Tokenizer.s"
+	@echo "... XmlStream.o"
+	@echo "... XmlStream.i"
+	@echo "... XmlStream.s"
+	@echo "... XmlTokenizer.o"
+	@echo "... XmlTokenizer.i"
+	@echo "... XmlTokenizer.s"
 	@echo "... kku_fftw.o"
 	@echo "... kku_fftw.i"
 	@echo "... kku_fftw.s"

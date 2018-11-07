@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <sstream>
 #include "MemoryDebug.h"
 using namespace std;
 

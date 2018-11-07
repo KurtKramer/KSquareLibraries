@@ -366,8 +366,8 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
   }
   else
   {
-    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
-    if  (existingInstanceIdx >= 0)
+    auto  existingInstanceIdx = existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    if  (existingInstanceIdx)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
     }
@@ -384,6 +384,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
 #endif
 
 }  /* Destroy */
+
 
 
 
@@ -404,5 +405,4 @@ kkint32  GoalKeeperSimple::BlockerThreadId ()
   x =  blockerThreadId;
   return  x;
 }
-
 

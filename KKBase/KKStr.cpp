@@ -2465,6 +2465,18 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx,
 
 
 
+
+KKStr  KKStr::SubStrPart (kkStrUint     firstCharIdx,
+                          OptionUInt32  lastCharIdx
+                         )  const
+{
+  if  (!lastCharIdx)
+    throw bad_optional_access ();
+  return SubStrPart (firstCharIdx, lastCharIdx.value ());
+}
+
+
+
 KKStr  KKStr::SubStrSeg (kkStrUint     firstCharIdx,
                          OptionUInt32  segmentLen
                         )  const

@@ -747,7 +747,7 @@ namespace  KKB
 
       errMsg << "KKQueue<Entry>::SetIdxToPtr  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw std::range_error (errMsg.str ());
     }
     
     std::vector<Entry*>::operator[] (_idx) = _ptr;

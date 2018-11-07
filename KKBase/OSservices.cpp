@@ -1554,9 +1554,9 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
   KKStr  beforeStar;
   KKStr  dirPath;
 
-  kkint64 lastSlash = osLocateLastSlashChar (fileSpec);
+  auto lastSlash = osLocateLastSlashChar (fileSpec);
     
-  if  (lastSlash < 0)
+  if  (!lastSlash)
   {
     dirPath = osGetCurrentDirectory ();
     afterLastSlash = fileSpec;
