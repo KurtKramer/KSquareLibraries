@@ -1361,7 +1361,7 @@ KKB::RBnode<Entry>*   KKB::RBTree<Entry,CompareNodes,KeyType>::SearchForEntry (N
   // Similar to WalkTree,  except will terminate when it finds the node
   // that is pointing to "e".
   if  (n == nil)
-    return;
+    return n;
   
   if  (n->Data () == e)
     return n;
@@ -1665,9 +1665,9 @@ void  KKB::Iterator<Entry,CompareNodes,KeyType>::IsTreeStillThere ()
 {
   if  (tree == NULL)
   {
-    string errMsg = "*** ERROR ***  RBTree<Entry,CompareNodes,KeyType>::Iterator::IsTreeStillThere tree == NULL"
+    string errMsg = "*** ERROR ***  RBTree<Entry,CompareNodes,KeyType>::Iterator::IsTreeStillThere tree == NULL";
     std::cerr << errMsg << std::endl;
-    throw std:exception  (errMsg);
+    throw std::range_error (errMsg);
   }
 }  /* IsTreeStillThere */
 

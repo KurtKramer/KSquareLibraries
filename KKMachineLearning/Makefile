@@ -51,32 +51,34 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /mnt/c/Code/KSquareLibraries
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/code/KSquareLibraries
+CMAKE_BINARY_DIR = /mnt/c/Code/KSquareLibraries
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target test
 test:
@@ -89,16 +91,60 @@ test/fast: test
 
 .PHONY : test/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/code/KSquareLibraries/CMakeFiles /mnt/c/code/KSquareLibraries/KKMachineLearning/CMakeFiles/progress.marks
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/code/KSquareLibraries/CMakeFiles 0
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Code/KSquareLibraries/CMakeFiles /mnt/c/Code/KSquareLibraries/KKMachineLearning/CMakeFiles/progress.marks
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Code/KSquareLibraries/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/clean
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/clean
 .PHONY : clean
 
 # The main clean target
@@ -108,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/preinstall
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/preinstall
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 KKMachineLearning/CMakeFiles/KKMachineLearning.dir/rule:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/CMakeFiles/KKMachineLearning.dir/rule
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKMachineLearning/CMakeFiles/KKMachineLearning.dir/rule
 .PHONY : KKMachineLearning/CMakeFiles/KKMachineLearning.dir/rule
 
 # Convenience name for target.
@@ -133,7 +179,7 @@ KKMachineLearning: KKMachineLearning/CMakeFiles/KKMachineLearning.dir/rule
 
 # fast build rule for target.
 KKMachineLearning/fast:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build
 .PHONY : KKMachineLearning/fast
 
 Attribute.o: Attribute.cpp.o
@@ -142,7 +188,7 @@ Attribute.o: Attribute.cpp.o
 
 # target to build an object file
 Attribute.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.o
 .PHONY : Attribute.cpp.o
 
 Attribute.i: Attribute.cpp.i
@@ -151,7 +197,7 @@ Attribute.i: Attribute.cpp.i
 
 # target to preprocess a source file
 Attribute.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.i
 .PHONY : Attribute.cpp.i
 
 Attribute.s: Attribute.cpp.s
@@ -160,7 +206,7 @@ Attribute.s: Attribute.cpp.s
 
 # target to generate assembly for a file
 Attribute.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Attribute.cpp.s
 .PHONY : Attribute.cpp.s
 
 BinaryClassParms.o: BinaryClassParms.cpp.o
@@ -169,7 +215,7 @@ BinaryClassParms.o: BinaryClassParms.cpp.o
 
 # target to build an object file
 BinaryClassParms.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.o
 .PHONY : BinaryClassParms.cpp.o
 
 BinaryClassParms.i: BinaryClassParms.cpp.i
@@ -178,7 +224,7 @@ BinaryClassParms.i: BinaryClassParms.cpp.i
 
 # target to preprocess a source file
 BinaryClassParms.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.i
 .PHONY : BinaryClassParms.cpp.i
 
 BinaryClassParms.s: BinaryClassParms.cpp.s
@@ -187,7 +233,7 @@ BinaryClassParms.s: BinaryClassParms.cpp.s
 
 # target to generate assembly for a file
 BinaryClassParms.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/BinaryClassParms.cpp.s
 .PHONY : BinaryClassParms.cpp.s
 
 ClassAssignments.o: ClassAssignments.cpp.o
@@ -196,7 +242,7 @@ ClassAssignments.o: ClassAssignments.cpp.o
 
 # target to build an object file
 ClassAssignments.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.o
 .PHONY : ClassAssignments.cpp.o
 
 ClassAssignments.i: ClassAssignments.cpp.i
@@ -205,7 +251,7 @@ ClassAssignments.i: ClassAssignments.cpp.i
 
 # target to preprocess a source file
 ClassAssignments.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.i
 .PHONY : ClassAssignments.cpp.i
 
 ClassAssignments.s: ClassAssignments.cpp.s
@@ -214,7 +260,7 @@ ClassAssignments.s: ClassAssignments.cpp.s
 
 # target to generate assembly for a file
 ClassAssignments.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassAssignments.cpp.s
 .PHONY : ClassAssignments.cpp.s
 
 ClassProb.o: ClassProb.cpp.o
@@ -223,7 +269,7 @@ ClassProb.o: ClassProb.cpp.o
 
 # target to build an object file
 ClassProb.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.o
 .PHONY : ClassProb.cpp.o
 
 ClassProb.i: ClassProb.cpp.i
@@ -232,7 +278,7 @@ ClassProb.i: ClassProb.cpp.i
 
 # target to preprocess a source file
 ClassProb.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.i
 .PHONY : ClassProb.cpp.i
 
 ClassProb.s: ClassProb.cpp.s
@@ -241,7 +287,7 @@ ClassProb.s: ClassProb.cpp.s
 
 # target to generate assembly for a file
 ClassProb.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassProb.cpp.s
 .PHONY : ClassProb.cpp.s
 
 ClassStatistic.o: ClassStatistic.cpp.o
@@ -250,7 +296,7 @@ ClassStatistic.o: ClassStatistic.cpp.o
 
 # target to build an object file
 ClassStatistic.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.o
 .PHONY : ClassStatistic.cpp.o
 
 ClassStatistic.i: ClassStatistic.cpp.i
@@ -259,7 +305,7 @@ ClassStatistic.i: ClassStatistic.cpp.i
 
 # target to preprocess a source file
 ClassStatistic.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.i
 .PHONY : ClassStatistic.cpp.i
 
 ClassStatistic.s: ClassStatistic.cpp.s
@@ -268,7 +314,7 @@ ClassStatistic.s: ClassStatistic.cpp.s
 
 # target to generate assembly for a file
 ClassStatistic.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassStatistic.cpp.s
 .PHONY : ClassStatistic.cpp.s
 
 ClassificationBiasMatrix.o: ClassificationBiasMatrix.cpp.o
@@ -277,7 +323,7 @@ ClassificationBiasMatrix.o: ClassificationBiasMatrix.cpp.o
 
 # target to build an object file
 ClassificationBiasMatrix.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.o
 .PHONY : ClassificationBiasMatrix.cpp.o
 
 ClassificationBiasMatrix.i: ClassificationBiasMatrix.cpp.i
@@ -286,7 +332,7 @@ ClassificationBiasMatrix.i: ClassificationBiasMatrix.cpp.i
 
 # target to preprocess a source file
 ClassificationBiasMatrix.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.i
 .PHONY : ClassificationBiasMatrix.cpp.i
 
 ClassificationBiasMatrix.s: ClassificationBiasMatrix.cpp.s
@@ -295,7 +341,7 @@ ClassificationBiasMatrix.s: ClassificationBiasMatrix.cpp.s
 
 # target to generate assembly for a file
 ClassificationBiasMatrix.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ClassificationBiasMatrix.cpp.s
 .PHONY : ClassificationBiasMatrix.cpp.s
 
 Classifier2.o: Classifier2.cpp.o
@@ -304,7 +350,7 @@ Classifier2.o: Classifier2.cpp.o
 
 # target to build an object file
 Classifier2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.o
 .PHONY : Classifier2.cpp.o
 
 Classifier2.i: Classifier2.cpp.i
@@ -313,7 +359,7 @@ Classifier2.i: Classifier2.cpp.i
 
 # target to preprocess a source file
 Classifier2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.i
 .PHONY : Classifier2.cpp.i
 
 Classifier2.s: Classifier2.cpp.s
@@ -322,7 +368,7 @@ Classifier2.s: Classifier2.cpp.s
 
 # target to generate assembly for a file
 Classifier2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Classifier2.cpp.s
 .PHONY : Classifier2.cpp.s
 
 ConfusionMatrix2.o: ConfusionMatrix2.cpp.o
@@ -331,7 +377,7 @@ ConfusionMatrix2.o: ConfusionMatrix2.cpp.o
 
 # target to build an object file
 ConfusionMatrix2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.o
 .PHONY : ConfusionMatrix2.cpp.o
 
 ConfusionMatrix2.i: ConfusionMatrix2.cpp.i
@@ -340,7 +386,7 @@ ConfusionMatrix2.i: ConfusionMatrix2.cpp.i
 
 # target to preprocess a source file
 ConfusionMatrix2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.i
 .PHONY : ConfusionMatrix2.cpp.i
 
 ConfusionMatrix2.s: ConfusionMatrix2.cpp.s
@@ -349,7 +395,7 @@ ConfusionMatrix2.s: ConfusionMatrix2.cpp.s
 
 # target to generate assembly for a file
 ConfusionMatrix2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ConfusionMatrix2.cpp.s
 .PHONY : ConfusionMatrix2.cpp.s
 
 CrossValidation.o: CrossValidation.cpp.o
@@ -358,7 +404,7 @@ CrossValidation.o: CrossValidation.cpp.o
 
 # target to build an object file
 CrossValidation.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.o
 .PHONY : CrossValidation.cpp.o
 
 CrossValidation.i: CrossValidation.cpp.i
@@ -367,7 +413,7 @@ CrossValidation.i: CrossValidation.cpp.i
 
 # target to preprocess a source file
 CrossValidation.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.i
 .PHONY : CrossValidation.cpp.i
 
 CrossValidation.s: CrossValidation.cpp.s
@@ -376,7 +422,7 @@ CrossValidation.s: CrossValidation.cpp.s
 
 # target to generate assembly for a file
 CrossValidation.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidation.cpp.s
 .PHONY : CrossValidation.cpp.s
 
 CrossValidationMxN.o: CrossValidationMxN.cpp.o
@@ -385,7 +431,7 @@ CrossValidationMxN.o: CrossValidationMxN.cpp.o
 
 # target to build an object file
 CrossValidationMxN.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.o
 .PHONY : CrossValidationMxN.cpp.o
 
 CrossValidationMxN.i: CrossValidationMxN.cpp.i
@@ -394,7 +440,7 @@ CrossValidationMxN.i: CrossValidationMxN.cpp.i
 
 # target to preprocess a source file
 CrossValidationMxN.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.i
 .PHONY : CrossValidationMxN.cpp.i
 
 CrossValidationMxN.s: CrossValidationMxN.cpp.s
@@ -403,7 +449,7 @@ CrossValidationMxN.s: CrossValidationMxN.cpp.s
 
 # target to generate assembly for a file
 CrossValidationMxN.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationMxN.cpp.s
 .PHONY : CrossValidationMxN.cpp.s
 
 CrossValidationVoting.o: CrossValidationVoting.cpp.o
@@ -412,7 +458,7 @@ CrossValidationVoting.o: CrossValidationVoting.cpp.o
 
 # target to build an object file
 CrossValidationVoting.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.o
 .PHONY : CrossValidationVoting.cpp.o
 
 CrossValidationVoting.i: CrossValidationVoting.cpp.i
@@ -421,7 +467,7 @@ CrossValidationVoting.i: CrossValidationVoting.cpp.i
 
 # target to preprocess a source file
 CrossValidationVoting.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.i
 .PHONY : CrossValidationVoting.cpp.i
 
 CrossValidationVoting.s: CrossValidationVoting.cpp.s
@@ -430,7 +476,7 @@ CrossValidationVoting.s: CrossValidationVoting.cpp.s
 
 # target to generate assembly for a file
 CrossValidationVoting.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/CrossValidationVoting.cpp.s
 .PHONY : CrossValidationVoting.cpp.s
 
 DuplicateImages.o: DuplicateImages.cpp.o
@@ -439,7 +485,7 @@ DuplicateImages.o: DuplicateImages.cpp.o
 
 # target to build an object file
 DuplicateImages.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.o
 .PHONY : DuplicateImages.cpp.o
 
 DuplicateImages.i: DuplicateImages.cpp.i
@@ -448,7 +494,7 @@ DuplicateImages.i: DuplicateImages.cpp.i
 
 # target to preprocess a source file
 DuplicateImages.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.i
 .PHONY : DuplicateImages.cpp.i
 
 DuplicateImages.s: DuplicateImages.cpp.s
@@ -457,7 +503,7 @@ DuplicateImages.s: DuplicateImages.cpp.s
 
 # target to generate assembly for a file
 DuplicateImages.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/DuplicateImages.cpp.s
 .PHONY : DuplicateImages.cpp.s
 
 FactoryFVProducer.o: FactoryFVProducer.cpp.o
@@ -466,7 +512,7 @@ FactoryFVProducer.o: FactoryFVProducer.cpp.o
 
 # target to build an object file
 FactoryFVProducer.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.o
 .PHONY : FactoryFVProducer.cpp.o
 
 FactoryFVProducer.i: FactoryFVProducer.cpp.i
@@ -475,7 +521,7 @@ FactoryFVProducer.i: FactoryFVProducer.cpp.i
 
 # target to preprocess a source file
 FactoryFVProducer.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.i
 .PHONY : FactoryFVProducer.cpp.i
 
 FactoryFVProducer.s: FactoryFVProducer.cpp.s
@@ -484,7 +530,7 @@ FactoryFVProducer.s: FactoryFVProducer.cpp.s
 
 # target to generate assembly for a file
 FactoryFVProducer.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FactoryFVProducer.cpp.s
 .PHONY : FactoryFVProducer.cpp.s
 
 FeatureEncoder.o: FeatureEncoder.cpp.o
@@ -493,7 +539,7 @@ FeatureEncoder.o: FeatureEncoder.cpp.o
 
 # target to build an object file
 FeatureEncoder.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.o
 .PHONY : FeatureEncoder.cpp.o
 
 FeatureEncoder.i: FeatureEncoder.cpp.i
@@ -502,7 +548,7 @@ FeatureEncoder.i: FeatureEncoder.cpp.i
 
 # target to preprocess a source file
 FeatureEncoder.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.i
 .PHONY : FeatureEncoder.cpp.i
 
 FeatureEncoder.s: FeatureEncoder.cpp.s
@@ -511,7 +557,7 @@ FeatureEncoder.s: FeatureEncoder.cpp.s
 
 # target to generate assembly for a file
 FeatureEncoder.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder.cpp.s
 .PHONY : FeatureEncoder.cpp.s
 
 FeatureEncoder2.o: FeatureEncoder2.cpp.o
@@ -520,7 +566,7 @@ FeatureEncoder2.o: FeatureEncoder2.cpp.o
 
 # target to build an object file
 FeatureEncoder2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.o
 .PHONY : FeatureEncoder2.cpp.o
 
 FeatureEncoder2.i: FeatureEncoder2.cpp.i
@@ -529,7 +575,7 @@ FeatureEncoder2.i: FeatureEncoder2.cpp.i
 
 # target to preprocess a source file
 FeatureEncoder2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.i
 .PHONY : FeatureEncoder2.cpp.i
 
 FeatureEncoder2.s: FeatureEncoder2.cpp.s
@@ -538,7 +584,7 @@ FeatureEncoder2.s: FeatureEncoder2.cpp.s
 
 # target to generate assembly for a file
 FeatureEncoder2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureEncoder2.cpp.s
 .PHONY : FeatureEncoder2.cpp.s
 
 FeatureFileIO.o: FeatureFileIO.cpp.o
@@ -547,7 +593,7 @@ FeatureFileIO.o: FeatureFileIO.cpp.o
 
 # target to build an object file
 FeatureFileIO.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.o
 .PHONY : FeatureFileIO.cpp.o
 
 FeatureFileIO.i: FeatureFileIO.cpp.i
@@ -556,7 +602,7 @@ FeatureFileIO.i: FeatureFileIO.cpp.i
 
 # target to preprocess a source file
 FeatureFileIO.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.i
 .PHONY : FeatureFileIO.cpp.i
 
 FeatureFileIO.s: FeatureFileIO.cpp.s
@@ -565,7 +611,7 @@ FeatureFileIO.s: FeatureFileIO.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIO.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIO.cpp.s
 .PHONY : FeatureFileIO.cpp.s
 
 FeatureFileIOArff.o: FeatureFileIOArff.cpp.o
@@ -574,7 +620,7 @@ FeatureFileIOArff.o: FeatureFileIOArff.cpp.o
 
 # target to build an object file
 FeatureFileIOArff.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.o
 .PHONY : FeatureFileIOArff.cpp.o
 
 FeatureFileIOArff.i: FeatureFileIOArff.cpp.i
@@ -583,7 +629,7 @@ FeatureFileIOArff.i: FeatureFileIOArff.cpp.i
 
 # target to preprocess a source file
 FeatureFileIOArff.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.i
 .PHONY : FeatureFileIOArff.cpp.i
 
 FeatureFileIOArff.s: FeatureFileIOArff.cpp.s
@@ -592,7 +638,7 @@ FeatureFileIOArff.s: FeatureFileIOArff.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIOArff.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOArff.cpp.s
 .PHONY : FeatureFileIOArff.cpp.s
 
 FeatureFileIOC45.o: FeatureFileIOC45.cpp.o
@@ -601,7 +647,7 @@ FeatureFileIOC45.o: FeatureFileIOC45.cpp.o
 
 # target to build an object file
 FeatureFileIOC45.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.o
 .PHONY : FeatureFileIOC45.cpp.o
 
 FeatureFileIOC45.i: FeatureFileIOC45.cpp.i
@@ -610,7 +656,7 @@ FeatureFileIOC45.i: FeatureFileIOC45.cpp.i
 
 # target to preprocess a source file
 FeatureFileIOC45.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.i
 .PHONY : FeatureFileIOC45.cpp.i
 
 FeatureFileIOC45.s: FeatureFileIOC45.cpp.s
@@ -619,7 +665,7 @@ FeatureFileIOC45.s: FeatureFileIOC45.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIOC45.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOC45.cpp.s
 .PHONY : FeatureFileIOC45.cpp.s
 
 FeatureFileIOColumn.o: FeatureFileIOColumn.cpp.o
@@ -628,7 +674,7 @@ FeatureFileIOColumn.o: FeatureFileIOColumn.cpp.o
 
 # target to build an object file
 FeatureFileIOColumn.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.o
 .PHONY : FeatureFileIOColumn.cpp.o
 
 FeatureFileIOColumn.i: FeatureFileIOColumn.cpp.i
@@ -637,7 +683,7 @@ FeatureFileIOColumn.i: FeatureFileIOColumn.cpp.i
 
 # target to preprocess a source file
 FeatureFileIOColumn.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.i
 .PHONY : FeatureFileIOColumn.cpp.i
 
 FeatureFileIOColumn.s: FeatureFileIOColumn.cpp.s
@@ -646,7 +692,7 @@ FeatureFileIOColumn.s: FeatureFileIOColumn.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIOColumn.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOColumn.cpp.s
 .PHONY : FeatureFileIOColumn.cpp.s
 
 FeatureFileIODstWeb.o: FeatureFileIODstWeb.cpp.o
@@ -655,7 +701,7 @@ FeatureFileIODstWeb.o: FeatureFileIODstWeb.cpp.o
 
 # target to build an object file
 FeatureFileIODstWeb.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.o
 .PHONY : FeatureFileIODstWeb.cpp.o
 
 FeatureFileIODstWeb.i: FeatureFileIODstWeb.cpp.i
@@ -664,7 +710,7 @@ FeatureFileIODstWeb.i: FeatureFileIODstWeb.cpp.i
 
 # target to preprocess a source file
 FeatureFileIODstWeb.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.i
 .PHONY : FeatureFileIODstWeb.cpp.i
 
 FeatureFileIODstWeb.s: FeatureFileIODstWeb.cpp.s
@@ -673,7 +719,7 @@ FeatureFileIODstWeb.s: FeatureFileIODstWeb.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIODstWeb.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIODstWeb.cpp.s
 .PHONY : FeatureFileIODstWeb.cpp.s
 
 FeatureFileIORoberts.o: FeatureFileIORoberts.cpp.o
@@ -682,7 +728,7 @@ FeatureFileIORoberts.o: FeatureFileIORoberts.cpp.o
 
 # target to build an object file
 FeatureFileIORoberts.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.o
 .PHONY : FeatureFileIORoberts.cpp.o
 
 FeatureFileIORoberts.i: FeatureFileIORoberts.cpp.i
@@ -691,7 +737,7 @@ FeatureFileIORoberts.i: FeatureFileIORoberts.cpp.i
 
 # target to preprocess a source file
 FeatureFileIORoberts.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.i
 .PHONY : FeatureFileIORoberts.cpp.i
 
 FeatureFileIORoberts.s: FeatureFileIORoberts.cpp.s
@@ -700,7 +746,7 @@ FeatureFileIORoberts.s: FeatureFileIORoberts.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIORoberts.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIORoberts.cpp.s
 .PHONY : FeatureFileIORoberts.cpp.s
 
 FeatureFileIOSparse.o: FeatureFileIOSparse.cpp.o
@@ -709,7 +755,7 @@ FeatureFileIOSparse.o: FeatureFileIOSparse.cpp.o
 
 # target to build an object file
 FeatureFileIOSparse.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.o
 .PHONY : FeatureFileIOSparse.cpp.o
 
 FeatureFileIOSparse.i: FeatureFileIOSparse.cpp.i
@@ -718,7 +764,7 @@ FeatureFileIOSparse.i: FeatureFileIOSparse.cpp.i
 
 # target to preprocess a source file
 FeatureFileIOSparse.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.i
 .PHONY : FeatureFileIOSparse.cpp.i
 
 FeatureFileIOSparse.s: FeatureFileIOSparse.cpp.s
@@ -727,7 +773,7 @@ FeatureFileIOSparse.s: FeatureFileIOSparse.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIOSparse.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOSparse.cpp.s
 .PHONY : FeatureFileIOSparse.cpp.s
 
 FeatureFileIOUCI.o: FeatureFileIOUCI.cpp.o
@@ -736,7 +782,7 @@ FeatureFileIOUCI.o: FeatureFileIOUCI.cpp.o
 
 # target to build an object file
 FeatureFileIOUCI.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.o
 .PHONY : FeatureFileIOUCI.cpp.o
 
 FeatureFileIOUCI.i: FeatureFileIOUCI.cpp.i
@@ -745,7 +791,7 @@ FeatureFileIOUCI.i: FeatureFileIOUCI.cpp.i
 
 # target to preprocess a source file
 FeatureFileIOUCI.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.i
 .PHONY : FeatureFileIOUCI.cpp.i
 
 FeatureFileIOUCI.s: FeatureFileIOUCI.cpp.s
@@ -754,7 +800,7 @@ FeatureFileIOUCI.s: FeatureFileIOUCI.cpp.s
 
 # target to generate assembly for a file
 FeatureFileIOUCI.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureFileIOUCI.cpp.s
 .PHONY : FeatureFileIOUCI.cpp.s
 
 FeatureNumList.o: FeatureNumList.cpp.o
@@ -763,7 +809,7 @@ FeatureNumList.o: FeatureNumList.cpp.o
 
 # target to build an object file
 FeatureNumList.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.o
 .PHONY : FeatureNumList.cpp.o
 
 FeatureNumList.i: FeatureNumList.cpp.i
@@ -772,7 +818,7 @@ FeatureNumList.i: FeatureNumList.cpp.i
 
 # target to preprocess a source file
 FeatureNumList.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.i
 .PHONY : FeatureNumList.cpp.i
 
 FeatureNumList.s: FeatureNumList.cpp.s
@@ -781,7 +827,7 @@ FeatureNumList.s: FeatureNumList.cpp.s
 
 # target to generate assembly for a file
 FeatureNumList.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureNumList.cpp.s
 .PHONY : FeatureNumList.cpp.s
 
 FeatureVector.o: FeatureVector.cpp.o
@@ -790,7 +836,7 @@ FeatureVector.o: FeatureVector.cpp.o
 
 # target to build an object file
 FeatureVector.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.o
 .PHONY : FeatureVector.cpp.o
 
 FeatureVector.i: FeatureVector.cpp.i
@@ -799,7 +845,7 @@ FeatureVector.i: FeatureVector.cpp.i
 
 # target to preprocess a source file
 FeatureVector.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.i
 .PHONY : FeatureVector.cpp.i
 
 FeatureVector.s: FeatureVector.cpp.s
@@ -808,7 +854,7 @@ FeatureVector.s: FeatureVector.cpp.s
 
 # target to generate assembly for a file
 FeatureVector.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVector.cpp.s
 .PHONY : FeatureVector.cpp.s
 
 FeatureVectorProducer.o: FeatureVectorProducer.cpp.o
@@ -817,7 +863,7 @@ FeatureVectorProducer.o: FeatureVectorProducer.cpp.o
 
 # target to build an object file
 FeatureVectorProducer.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.o
 .PHONY : FeatureVectorProducer.cpp.o
 
 FeatureVectorProducer.i: FeatureVectorProducer.cpp.i
@@ -826,7 +872,7 @@ FeatureVectorProducer.i: FeatureVectorProducer.cpp.i
 
 # target to preprocess a source file
 FeatureVectorProducer.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.i
 .PHONY : FeatureVectorProducer.cpp.i
 
 FeatureVectorProducer.s: FeatureVectorProducer.cpp.s
@@ -835,7 +881,7 @@ FeatureVectorProducer.s: FeatureVectorProducer.cpp.s
 
 # target to generate assembly for a file
 FeatureVectorProducer.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FeatureVectorProducer.cpp.s
 .PHONY : FeatureVectorProducer.cpp.s
 
 FileDesc.o: FileDesc.cpp.o
@@ -844,7 +890,7 @@ FileDesc.o: FileDesc.cpp.o
 
 # target to build an object file
 FileDesc.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.o
 .PHONY : FileDesc.cpp.o
 
 FileDesc.i: FileDesc.cpp.i
@@ -853,7 +899,7 @@ FileDesc.i: FileDesc.cpp.i
 
 # target to preprocess a source file
 FileDesc.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.i
 .PHONY : FileDesc.cpp.i
 
 FileDesc.s: FileDesc.cpp.s
@@ -862,7 +908,7 @@ FileDesc.s: FileDesc.cpp.s
 
 # target to generate assembly for a file
 FileDesc.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/FileDesc.cpp.s
 .PHONY : FileDesc.cpp.s
 
 GrayScaleImagesFV.o: GrayScaleImagesFV.cpp.o
@@ -871,7 +917,7 @@ GrayScaleImagesFV.o: GrayScaleImagesFV.cpp.o
 
 # target to build an object file
 GrayScaleImagesFV.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.o
 .PHONY : GrayScaleImagesFV.cpp.o
 
 GrayScaleImagesFV.i: GrayScaleImagesFV.cpp.i
@@ -880,7 +926,7 @@ GrayScaleImagesFV.i: GrayScaleImagesFV.cpp.i
 
 # target to preprocess a source file
 GrayScaleImagesFV.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.i
 .PHONY : GrayScaleImagesFV.cpp.i
 
 GrayScaleImagesFV.s: GrayScaleImagesFV.cpp.s
@@ -889,7 +935,7 @@ GrayScaleImagesFV.s: GrayScaleImagesFV.cpp.s
 
 # target to generate assembly for a file
 GrayScaleImagesFV.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFV.cpp.s
 .PHONY : GrayScaleImagesFV.cpp.s
 
 GrayScaleImagesFVProducer.o: GrayScaleImagesFVProducer.cpp.o
@@ -898,7 +944,7 @@ GrayScaleImagesFVProducer.o: GrayScaleImagesFVProducer.cpp.o
 
 # target to build an object file
 GrayScaleImagesFVProducer.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.o
 .PHONY : GrayScaleImagesFVProducer.cpp.o
 
 GrayScaleImagesFVProducer.i: GrayScaleImagesFVProducer.cpp.i
@@ -907,7 +953,7 @@ GrayScaleImagesFVProducer.i: GrayScaleImagesFVProducer.cpp.i
 
 # target to preprocess a source file
 GrayScaleImagesFVProducer.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.i
 .PHONY : GrayScaleImagesFVProducer.cpp.i
 
 GrayScaleImagesFVProducer.s: GrayScaleImagesFVProducer.cpp.s
@@ -916,7 +962,7 @@ GrayScaleImagesFVProducer.s: GrayScaleImagesFVProducer.cpp.s
 
 # target to generate assembly for a file
 GrayScaleImagesFVProducer.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/GrayScaleImagesFVProducer.cpp.s
 .PHONY : GrayScaleImagesFVProducer.cpp.s
 
 ImageFeaturesDataIndexed.o: ImageFeaturesDataIndexed.cpp.o
@@ -925,7 +971,7 @@ ImageFeaturesDataIndexed.o: ImageFeaturesDataIndexed.cpp.o
 
 # target to build an object file
 ImageFeaturesDataIndexed.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.o
 .PHONY : ImageFeaturesDataIndexed.cpp.o
 
 ImageFeaturesDataIndexed.i: ImageFeaturesDataIndexed.cpp.i
@@ -934,7 +980,7 @@ ImageFeaturesDataIndexed.i: ImageFeaturesDataIndexed.cpp.i
 
 # target to preprocess a source file
 ImageFeaturesDataIndexed.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.i
 .PHONY : ImageFeaturesDataIndexed.cpp.i
 
 ImageFeaturesDataIndexed.s: ImageFeaturesDataIndexed.cpp.s
@@ -943,7 +989,7 @@ ImageFeaturesDataIndexed.s: ImageFeaturesDataIndexed.cpp.s
 
 # target to generate assembly for a file
 ImageFeaturesDataIndexed.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesDataIndexed.cpp.s
 .PHONY : ImageFeaturesDataIndexed.cpp.s
 
 ImageFeaturesNameIndexed.o: ImageFeaturesNameIndexed.cpp.o
@@ -952,7 +998,7 @@ ImageFeaturesNameIndexed.o: ImageFeaturesNameIndexed.cpp.o
 
 # target to build an object file
 ImageFeaturesNameIndexed.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.o
 .PHONY : ImageFeaturesNameIndexed.cpp.o
 
 ImageFeaturesNameIndexed.i: ImageFeaturesNameIndexed.cpp.i
@@ -961,7 +1007,7 @@ ImageFeaturesNameIndexed.i: ImageFeaturesNameIndexed.cpp.i
 
 # target to preprocess a source file
 ImageFeaturesNameIndexed.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.i
 .PHONY : ImageFeaturesNameIndexed.cpp.i
 
 ImageFeaturesNameIndexed.s: ImageFeaturesNameIndexed.cpp.s
@@ -970,7 +1016,7 @@ ImageFeaturesNameIndexed.s: ImageFeaturesNameIndexed.cpp.s
 
 # target to generate assembly for a file
 ImageFeaturesNameIndexed.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ImageFeaturesNameIndexed.cpp.s
 .PHONY : ImageFeaturesNameIndexed.cpp.s
 
 KKMLVariables.o: KKMLVariables.cpp.o
@@ -979,7 +1025,7 @@ KKMLVariables.o: KKMLVariables.cpp.o
 
 # target to build an object file
 KKMLVariables.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.o
 .PHONY : KKMLVariables.cpp.o
 
 KKMLVariables.i: KKMLVariables.cpp.i
@@ -988,7 +1034,7 @@ KKMLVariables.i: KKMLVariables.cpp.i
 
 # target to preprocess a source file
 KKMLVariables.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.i
 .PHONY : KKMLVariables.cpp.i
 
 KKMLVariables.s: KKMLVariables.cpp.s
@@ -997,7 +1043,7 @@ KKMLVariables.s: KKMLVariables.cpp.s
 
 # target to generate assembly for a file
 KKMLVariables.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/KKMLVariables.cpp.s
 .PHONY : KKMLVariables.cpp.s
 
 MLClass.o: MLClass.cpp.o
@@ -1006,7 +1052,7 @@ MLClass.o: MLClass.cpp.o
 
 # target to build an object file
 MLClass.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.o
 .PHONY : MLClass.cpp.o
 
 MLClass.i: MLClass.cpp.i
@@ -1015,7 +1061,7 @@ MLClass.i: MLClass.cpp.i
 
 # target to preprocess a source file
 MLClass.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.i
 .PHONY : MLClass.cpp.i
 
 MLClass.s: MLClass.cpp.s
@@ -1024,7 +1070,7 @@ MLClass.s: MLClass.cpp.s
 
 # target to generate assembly for a file
 MLClass.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/MLClass.cpp.s
 .PHONY : MLClass.cpp.s
 
 Model.o: Model.cpp.o
@@ -1033,7 +1079,7 @@ Model.o: Model.cpp.o
 
 # target to build an object file
 Model.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.o
 .PHONY : Model.cpp.o
 
 Model.i: Model.cpp.i
@@ -1042,7 +1088,7 @@ Model.i: Model.cpp.i
 
 # target to preprocess a source file
 Model.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.i
 .PHONY : Model.cpp.i
 
 Model.s: Model.cpp.s
@@ -1051,7 +1097,7 @@ Model.s: Model.cpp.s
 
 # target to generate assembly for a file
 Model.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Model.cpp.s
 .PHONY : Model.cpp.s
 
 ModelDual.o: ModelDual.cpp.o
@@ -1060,7 +1106,7 @@ ModelDual.o: ModelDual.cpp.o
 
 # target to build an object file
 ModelDual.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.o
 .PHONY : ModelDual.cpp.o
 
 ModelDual.i: ModelDual.cpp.i
@@ -1069,7 +1115,7 @@ ModelDual.i: ModelDual.cpp.i
 
 # target to preprocess a source file
 ModelDual.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.i
 .PHONY : ModelDual.cpp.i
 
 ModelDual.s: ModelDual.cpp.s
@@ -1078,7 +1124,7 @@ ModelDual.s: ModelDual.cpp.s
 
 # target to generate assembly for a file
 ModelDual.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelDual.cpp.s
 .PHONY : ModelDual.cpp.s
 
 ModelKnn.o: ModelKnn.cpp.o
@@ -1087,7 +1133,7 @@ ModelKnn.o: ModelKnn.cpp.o
 
 # target to build an object file
 ModelKnn.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.o
 .PHONY : ModelKnn.cpp.o
 
 ModelKnn.i: ModelKnn.cpp.i
@@ -1096,7 +1142,7 @@ ModelKnn.i: ModelKnn.cpp.i
 
 # target to preprocess a source file
 ModelKnn.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.i
 .PHONY : ModelKnn.cpp.i
 
 ModelKnn.s: ModelKnn.cpp.s
@@ -1105,7 +1151,7 @@ ModelKnn.s: ModelKnn.cpp.s
 
 # target to generate assembly for a file
 ModelKnn.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelKnn.cpp.s
 .PHONY : ModelKnn.cpp.s
 
 ModelOldSVM.o: ModelOldSVM.cpp.o
@@ -1114,7 +1160,7 @@ ModelOldSVM.o: ModelOldSVM.cpp.o
 
 # target to build an object file
 ModelOldSVM.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.o
 .PHONY : ModelOldSVM.cpp.o
 
 ModelOldSVM.i: ModelOldSVM.cpp.i
@@ -1123,7 +1169,7 @@ ModelOldSVM.i: ModelOldSVM.cpp.i
 
 # target to preprocess a source file
 ModelOldSVM.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.i
 .PHONY : ModelOldSVM.cpp.i
 
 ModelOldSVM.s: ModelOldSVM.cpp.s
@@ -1132,7 +1178,7 @@ ModelOldSVM.s: ModelOldSVM.cpp.s
 
 # target to generate assembly for a file
 ModelOldSVM.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelOldSVM.cpp.s
 .PHONY : ModelOldSVM.cpp.s
 
 ModelParam.o: ModelParam.cpp.o
@@ -1141,7 +1187,7 @@ ModelParam.o: ModelParam.cpp.o
 
 # target to build an object file
 ModelParam.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.o
 .PHONY : ModelParam.cpp.o
 
 ModelParam.i: ModelParam.cpp.i
@@ -1150,7 +1196,7 @@ ModelParam.i: ModelParam.cpp.i
 
 # target to preprocess a source file
 ModelParam.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.i
 .PHONY : ModelParam.cpp.i
 
 ModelParam.s: ModelParam.cpp.s
@@ -1159,7 +1205,7 @@ ModelParam.s: ModelParam.cpp.s
 
 # target to generate assembly for a file
 ModelParam.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParam.cpp.s
 .PHONY : ModelParam.cpp.s
 
 ModelParamDual.o: ModelParamDual.cpp.o
@@ -1168,7 +1214,7 @@ ModelParamDual.o: ModelParamDual.cpp.o
 
 # target to build an object file
 ModelParamDual.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.o
 .PHONY : ModelParamDual.cpp.o
 
 ModelParamDual.i: ModelParamDual.cpp.i
@@ -1177,7 +1223,7 @@ ModelParamDual.i: ModelParamDual.cpp.i
 
 # target to preprocess a source file
 ModelParamDual.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.i
 .PHONY : ModelParamDual.cpp.i
 
 ModelParamDual.s: ModelParamDual.cpp.s
@@ -1186,7 +1232,7 @@ ModelParamDual.s: ModelParamDual.cpp.s
 
 # target to generate assembly for a file
 ModelParamDual.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamDual.cpp.s
 .PHONY : ModelParamDual.cpp.s
 
 ModelParamKnn.o: ModelParamKnn.cpp.o
@@ -1195,7 +1241,7 @@ ModelParamKnn.o: ModelParamKnn.cpp.o
 
 # target to build an object file
 ModelParamKnn.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.o
 .PHONY : ModelParamKnn.cpp.o
 
 ModelParamKnn.i: ModelParamKnn.cpp.i
@@ -1204,7 +1250,7 @@ ModelParamKnn.i: ModelParamKnn.cpp.i
 
 # target to preprocess a source file
 ModelParamKnn.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.i
 .PHONY : ModelParamKnn.cpp.i
 
 ModelParamKnn.s: ModelParamKnn.cpp.s
@@ -1213,7 +1259,7 @@ ModelParamKnn.s: ModelParamKnn.cpp.s
 
 # target to generate assembly for a file
 ModelParamKnn.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamKnn.cpp.s
 .PHONY : ModelParamKnn.cpp.s
 
 ModelParamOldSVM.o: ModelParamOldSVM.cpp.o
@@ -1222,7 +1268,7 @@ ModelParamOldSVM.o: ModelParamOldSVM.cpp.o
 
 # target to build an object file
 ModelParamOldSVM.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.o
 .PHONY : ModelParamOldSVM.cpp.o
 
 ModelParamOldSVM.i: ModelParamOldSVM.cpp.i
@@ -1231,7 +1277,7 @@ ModelParamOldSVM.i: ModelParamOldSVM.cpp.i
 
 # target to preprocess a source file
 ModelParamOldSVM.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.i
 .PHONY : ModelParamOldSVM.cpp.i
 
 ModelParamOldSVM.s: ModelParamOldSVM.cpp.s
@@ -1240,7 +1286,7 @@ ModelParamOldSVM.s: ModelParamOldSVM.cpp.s
 
 # target to generate assembly for a file
 ModelParamOldSVM.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamOldSVM.cpp.s
 .PHONY : ModelParamOldSVM.cpp.s
 
 ModelParamSvmBase.o: ModelParamSvmBase.cpp.o
@@ -1249,7 +1295,7 @@ ModelParamSvmBase.o: ModelParamSvmBase.cpp.o
 
 # target to build an object file
 ModelParamSvmBase.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.o
 .PHONY : ModelParamSvmBase.cpp.o
 
 ModelParamSvmBase.i: ModelParamSvmBase.cpp.i
@@ -1258,7 +1304,7 @@ ModelParamSvmBase.i: ModelParamSvmBase.cpp.i
 
 # target to preprocess a source file
 ModelParamSvmBase.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.i
 .PHONY : ModelParamSvmBase.cpp.i
 
 ModelParamSvmBase.s: ModelParamSvmBase.cpp.s
@@ -1267,7 +1313,7 @@ ModelParamSvmBase.s: ModelParamSvmBase.cpp.s
 
 # target to generate assembly for a file
 ModelParamSvmBase.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamSvmBase.cpp.s
 .PHONY : ModelParamSvmBase.cpp.s
 
 ModelParamUsfCasCor.o: ModelParamUsfCasCor.cpp.o
@@ -1276,7 +1322,7 @@ ModelParamUsfCasCor.o: ModelParamUsfCasCor.cpp.o
 
 # target to build an object file
 ModelParamUsfCasCor.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.o
 .PHONY : ModelParamUsfCasCor.cpp.o
 
 ModelParamUsfCasCor.i: ModelParamUsfCasCor.cpp.i
@@ -1285,7 +1331,7 @@ ModelParamUsfCasCor.i: ModelParamUsfCasCor.cpp.i
 
 # target to preprocess a source file
 ModelParamUsfCasCor.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.i
 .PHONY : ModelParamUsfCasCor.cpp.i
 
 ModelParamUsfCasCor.s: ModelParamUsfCasCor.cpp.s
@@ -1294,7 +1340,7 @@ ModelParamUsfCasCor.s: ModelParamUsfCasCor.cpp.s
 
 # target to generate assembly for a file
 ModelParamUsfCasCor.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelParamUsfCasCor.cpp.s
 .PHONY : ModelParamUsfCasCor.cpp.s
 
 ModelSvmBase.o: ModelSvmBase.cpp.o
@@ -1303,7 +1349,7 @@ ModelSvmBase.o: ModelSvmBase.cpp.o
 
 # target to build an object file
 ModelSvmBase.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.o
 .PHONY : ModelSvmBase.cpp.o
 
 ModelSvmBase.i: ModelSvmBase.cpp.i
@@ -1312,7 +1358,7 @@ ModelSvmBase.i: ModelSvmBase.cpp.i
 
 # target to preprocess a source file
 ModelSvmBase.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.i
 .PHONY : ModelSvmBase.cpp.i
 
 ModelSvmBase.s: ModelSvmBase.cpp.s
@@ -1321,7 +1367,7 @@ ModelSvmBase.s: ModelSvmBase.cpp.s
 
 # target to generate assembly for a file
 ModelSvmBase.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelSvmBase.cpp.s
 .PHONY : ModelSvmBase.cpp.s
 
 ModelUsfCasCor.o: ModelUsfCasCor.cpp.o
@@ -1330,7 +1376,7 @@ ModelUsfCasCor.o: ModelUsfCasCor.cpp.o
 
 # target to build an object file
 ModelUsfCasCor.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.o
 .PHONY : ModelUsfCasCor.cpp.o
 
 ModelUsfCasCor.i: ModelUsfCasCor.cpp.i
@@ -1339,7 +1385,7 @@ ModelUsfCasCor.i: ModelUsfCasCor.cpp.i
 
 # target to preprocess a source file
 ModelUsfCasCor.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.i
 .PHONY : ModelUsfCasCor.cpp.i
 
 ModelUsfCasCor.s: ModelUsfCasCor.cpp.s
@@ -1348,7 +1394,7 @@ ModelUsfCasCor.s: ModelUsfCasCor.cpp.s
 
 # target to generate assembly for a file
 ModelUsfCasCor.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/ModelUsfCasCor.cpp.s
 .PHONY : ModelUsfCasCor.cpp.s
 
 NormalizationParms.o: NormalizationParms.cpp.o
@@ -1357,7 +1403,7 @@ NormalizationParms.o: NormalizationParms.cpp.o
 
 # target to build an object file
 NormalizationParms.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.o
 .PHONY : NormalizationParms.cpp.o
 
 NormalizationParms.i: NormalizationParms.cpp.i
@@ -1366,7 +1412,7 @@ NormalizationParms.i: NormalizationParms.cpp.i
 
 # target to preprocess a source file
 NormalizationParms.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.i
 .PHONY : NormalizationParms.cpp.i
 
 NormalizationParms.s: NormalizationParms.cpp.s
@@ -1375,7 +1421,7 @@ NormalizationParms.s: NormalizationParms.cpp.s
 
 # target to generate assembly for a file
 NormalizationParms.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/NormalizationParms.cpp.s
 .PHONY : NormalizationParms.cpp.s
 
 Orderings.o: Orderings.cpp.o
@@ -1384,7 +1430,7 @@ Orderings.o: Orderings.cpp.o
 
 # target to build an object file
 Orderings.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.o
 .PHONY : Orderings.cpp.o
 
 Orderings.i: Orderings.cpp.i
@@ -1393,7 +1439,7 @@ Orderings.i: Orderings.cpp.i
 
 # target to preprocess a source file
 Orderings.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.i
 .PHONY : Orderings.cpp.i
 
 Orderings.s: Orderings.cpp.s
@@ -1402,7 +1448,7 @@ Orderings.s: Orderings.cpp.s
 
 # target to generate assembly for a file
 Orderings.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/Orderings.cpp.s
 .PHONY : Orderings.cpp.s
 
 SVMModel.o: SVMModel.cpp.o
@@ -1411,7 +1457,7 @@ SVMModel.o: SVMModel.cpp.o
 
 # target to build an object file
 SVMModel.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.o
 .PHONY : SVMModel.cpp.o
 
 SVMModel.i: SVMModel.cpp.i
@@ -1420,7 +1466,7 @@ SVMModel.i: SVMModel.cpp.i
 
 # target to preprocess a source file
 SVMModel.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.i
 .PHONY : SVMModel.cpp.i
 
 SVMModel.s: SVMModel.cpp.s
@@ -1429,7 +1475,7 @@ SVMModel.s: SVMModel.cpp.s
 
 # target to generate assembly for a file
 SVMModel.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMModel.cpp.s
 .PHONY : SVMModel.cpp.s
 
 SVMparam.o: SVMparam.cpp.o
@@ -1438,7 +1484,7 @@ SVMparam.o: SVMparam.cpp.o
 
 # target to build an object file
 SVMparam.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.o
 .PHONY : SVMparam.cpp.o
 
 SVMparam.i: SVMparam.cpp.i
@@ -1447,7 +1493,7 @@ SVMparam.i: SVMparam.cpp.i
 
 # target to preprocess a source file
 SVMparam.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.i
 .PHONY : SVMparam.cpp.i
 
 SVMparam.s: SVMparam.cpp.s
@@ -1456,7 +1502,7 @@ SVMparam.s: SVMparam.cpp.s
 
 # target to generate assembly for a file
 SVMparam.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SVMparam.cpp.s
 .PHONY : SVMparam.cpp.s
 
 SizeDistribution.o: SizeDistribution.cpp.o
@@ -1465,7 +1511,7 @@ SizeDistribution.o: SizeDistribution.cpp.o
 
 # target to build an object file
 SizeDistribution.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.o
 .PHONY : SizeDistribution.cpp.o
 
 SizeDistribution.i: SizeDistribution.cpp.i
@@ -1474,7 +1520,7 @@ SizeDistribution.i: SizeDistribution.cpp.i
 
 # target to preprocess a source file
 SizeDistribution.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.i
 .PHONY : SizeDistribution.cpp.i
 
 SizeDistribution.s: SizeDistribution.cpp.s
@@ -1483,7 +1529,7 @@ SizeDistribution.s: SizeDistribution.cpp.s
 
 # target to generate assembly for a file
 SizeDistribution.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SizeDistribution.cpp.s
 .PHONY : SizeDistribution.cpp.s
 
 SvmWrapper.o: SvmWrapper.cpp.o
@@ -1492,7 +1538,7 @@ SvmWrapper.o: SvmWrapper.cpp.o
 
 # target to build an object file
 SvmWrapper.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.o
 .PHONY : SvmWrapper.cpp.o
 
 SvmWrapper.i: SvmWrapper.cpp.i
@@ -1501,7 +1547,7 @@ SvmWrapper.i: SvmWrapper.cpp.i
 
 # target to preprocess a source file
 SvmWrapper.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.i
 .PHONY : SvmWrapper.cpp.i
 
 SvmWrapper.s: SvmWrapper.cpp.s
@@ -1510,7 +1556,7 @@ SvmWrapper.s: SvmWrapper.cpp.s
 
 # target to generate assembly for a file
 SvmWrapper.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/SvmWrapper.cpp.s
 .PHONY : SvmWrapper.cpp.s
 
 TrainingClass.o: TrainingClass.cpp.o
@@ -1519,7 +1565,7 @@ TrainingClass.o: TrainingClass.cpp.o
 
 # target to build an object file
 TrainingClass.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.o
 .PHONY : TrainingClass.cpp.o
 
 TrainingClass.i: TrainingClass.cpp.i
@@ -1528,7 +1574,7 @@ TrainingClass.i: TrainingClass.cpp.i
 
 # target to preprocess a source file
 TrainingClass.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.i
 .PHONY : TrainingClass.cpp.i
 
 TrainingClass.s: TrainingClass.cpp.s
@@ -1537,7 +1583,7 @@ TrainingClass.s: TrainingClass.cpp.s
 
 # target to generate assembly for a file
 TrainingClass.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingClass.cpp.s
 .PHONY : TrainingClass.cpp.s
 
 TrainingConfiguration2.o: TrainingConfiguration2.cpp.o
@@ -1546,7 +1592,7 @@ TrainingConfiguration2.o: TrainingConfiguration2.cpp.o
 
 # target to build an object file
 TrainingConfiguration2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.o
 .PHONY : TrainingConfiguration2.cpp.o
 
 TrainingConfiguration2.i: TrainingConfiguration2.cpp.i
@@ -1555,7 +1601,7 @@ TrainingConfiguration2.i: TrainingConfiguration2.cpp.i
 
 # target to preprocess a source file
 TrainingConfiguration2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.i
 .PHONY : TrainingConfiguration2.cpp.i
 
 TrainingConfiguration2.s: TrainingConfiguration2.cpp.s
@@ -1564,7 +1610,7 @@ TrainingConfiguration2.s: TrainingConfiguration2.cpp.s
 
 # target to generate assembly for a file
 TrainingConfiguration2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingConfiguration2.cpp.s
 .PHONY : TrainingConfiguration2.cpp.s
 
 TrainingProcess2.o: TrainingProcess2.cpp.o
@@ -1573,7 +1619,7 @@ TrainingProcess2.o: TrainingProcess2.cpp.o
 
 # target to build an object file
 TrainingProcess2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.o
 .PHONY : TrainingProcess2.cpp.o
 
 TrainingProcess2.i: TrainingProcess2.cpp.i
@@ -1582,7 +1628,7 @@ TrainingProcess2.i: TrainingProcess2.cpp.i
 
 # target to preprocess a source file
 TrainingProcess2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.i
 .PHONY : TrainingProcess2.cpp.i
 
 TrainingProcess2.s: TrainingProcess2.cpp.s
@@ -1591,7 +1637,7 @@ TrainingProcess2.s: TrainingProcess2.cpp.s
 
 # target to generate assembly for a file
 TrainingProcess2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/TrainingProcess2.cpp.s
 .PHONY : TrainingProcess2.cpp.s
 
 UsfCasCor.o: UsfCasCor.cpp.o
@@ -1600,7 +1646,7 @@ UsfCasCor.o: UsfCasCor.cpp.o
 
 # target to build an object file
 UsfCasCor.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.o
 .PHONY : UsfCasCor.cpp.o
 
 UsfCasCor.i: UsfCasCor.cpp.i
@@ -1609,7 +1655,7 @@ UsfCasCor.i: UsfCasCor.cpp.i
 
 # target to preprocess a source file
 UsfCasCor.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.i
 .PHONY : UsfCasCor.cpp.i
 
 UsfCasCor.s: UsfCasCor.cpp.s
@@ -1618,7 +1664,7 @@ UsfCasCor.s: UsfCasCor.cpp.s
 
 # target to generate assembly for a file
 UsfCasCor.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/UsfCasCor.cpp.s
 .PHONY : UsfCasCor.cpp.s
 
 svm.o: svm.cpp.o
@@ -1627,7 +1673,7 @@ svm.o: svm.cpp.o
 
 # target to build an object file
 svm.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.o
 .PHONY : svm.cpp.o
 
 svm.i: svm.cpp.i
@@ -1636,7 +1682,7 @@ svm.i: svm.cpp.i
 
 # target to preprocess a source file
 svm.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.i
 .PHONY : svm.cpp.i
 
 svm.s: svm.cpp.s
@@ -1645,7 +1691,7 @@ svm.s: svm.cpp.s
 
 # target to generate assembly for a file
 svm.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm.cpp.s
 .PHONY : svm.cpp.s
 
 svm2.o: svm2.cpp.o
@@ -1654,7 +1700,7 @@ svm2.o: svm2.cpp.o
 
 # target to build an object file
 svm2.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.o
 .PHONY : svm2.cpp.o
 
 svm2.i: svm2.cpp.i
@@ -1663,7 +1709,7 @@ svm2.i: svm2.cpp.i
 
 # target to preprocess a source file
 svm2.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.i
 .PHONY : svm2.cpp.i
 
 svm2.s: svm2.cpp.s
@@ -1672,7 +1718,7 @@ svm2.s: svm2.cpp.s
 
 # target to generate assembly for a file
 svm2.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm2.cpp.s
 .PHONY : svm2.cpp.s
 
 svm289_BFS.o: svm289_BFS.cpp.o
@@ -1681,7 +1727,7 @@ svm289_BFS.o: svm289_BFS.cpp.o
 
 # target to build an object file
 svm289_BFS.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.o
 .PHONY : svm289_BFS.cpp.o
 
 svm289_BFS.i: svm289_BFS.cpp.i
@@ -1690,7 +1736,7 @@ svm289_BFS.i: svm289_BFS.cpp.i
 
 # target to preprocess a source file
 svm289_BFS.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.i
 .PHONY : svm289_BFS.cpp.i
 
 svm289_BFS.s: svm289_BFS.cpp.s
@@ -1699,7 +1745,7 @@ svm289_BFS.s: svm289_BFS.cpp.s
 
 # target to generate assembly for a file
 svm289_BFS.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKMachineLearning/CMakeFiles/KKMachineLearning.dir/build.make KKMachineLearning/CMakeFiles/KKMachineLearning.dir/svm289_BFS.cpp.s
 .PHONY : svm289_BFS.cpp.s
 
 # Help Target
@@ -1708,10 +1754,14 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... KKMachineLearning"
+	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... test"
+	@echo "... list_install_components"
+	@echo "... KKMachineLearning"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... install"
 	@echo "... Attribute.o"
 	@echo "... Attribute.i"
 	@echo "... Attribute.s"
@@ -1897,6 +1947,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

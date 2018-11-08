@@ -1010,7 +1010,7 @@ void  ConfusionMatrix2::PrintConfusionMatrixHTML (ostream&  o)  const
   PrintSingleLineHTML (o, 
                        KKStr ("Totals"),
                        totalCount,
-                       INT_MAX,
+                       int32_max,
                        totals
                       );
 
@@ -1099,10 +1099,10 @@ void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)  cons
 
   o << "<tr><td colspan=\"" << (classCount + 2) << "\">&nbsp</td></tr>" << endl;
 
-  kkuint32 knownClassNum = INT_MAX;
+  kkuint32 knownClassNum = uint32_max;
   PrintAvgPredProbLineHTML (o, 
                             "AllClasses",
-                             totalPredProb,
+                            totalPredProb,
                             totalCount,
                             knownClassNum,
                             totalPredProbByPredClass,
@@ -1392,7 +1392,7 @@ void   ConfusionMatrix2::PrintConfusionMatrixLatexTable (ostream&  outFile)
   outFile << "\\hline" << endl;
 
   PrintSingleLineLatexTable (outFile, 
-                             INT_MAX,
+                             int32_max,
                              KKStr ("Totals"),
                              totalCount,
                              totals

@@ -9,3 +9,4 @@ add_library(KKBase
 	${source_files}
 	)
 
+install (TARGETS KKBase DESTINATION bin)

@@ -821,7 +821,7 @@ namespace  KKB
       errMsg << "KKQueue<Entry>::SwapIndexes  idx1: " << idx1 << " and/or idx2: " << idx2
              << " exceeds QueueSize: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw std::range_error (errMsg.str ().c_str ());
     }
 
     EntryPtr  tempPtr = std::vector<Entry*>::operator[] (idx1);

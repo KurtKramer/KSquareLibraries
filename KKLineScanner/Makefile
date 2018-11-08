@@ -51,32 +51,34 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /mnt/c/Code/KSquareLibraries
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/code/KSquareLibraries
+CMAKE_BINARY_DIR = /mnt/c/Code/KSquareLibraries
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target test
 test:
@@ -89,16 +91,60 @@ test/fast: test
 
 .PHONY : test/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/code/KSquareLibraries/CMakeFiles /mnt/c/code/KSquareLibraries/KKLineScanner/CMakeFiles/progress.marks
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/code/KSquareLibraries/CMakeFiles 0
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Code/KSquareLibraries/CMakeFiles /mnt/c/Code/KSquareLibraries/KKLineScanner/CMakeFiles/progress.marks
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Code/KSquareLibraries/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/clean
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/clean
 .PHONY : clean
 
 # The main clean target
@@ -108,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/preinstall
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/preinstall
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 KKLineScanner/CMakeFiles/KKLineScanner.dir/rule:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/CMakeFiles/KKLineScanner.dir/rule
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f CMakeFiles/Makefile2 KKLineScanner/CMakeFiles/KKLineScanner.dir/rule
 .PHONY : KKLineScanner/CMakeFiles/KKLineScanner.dir/rule
 
 # Convenience name for target.
@@ -133,7 +179,7 @@ KKLineScanner: KKLineScanner/CMakeFiles/KKLineScanner.dir/rule
 
 # fast build rule for target.
 KKLineScanner/fast:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/build
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/build
 .PHONY : KKLineScanner/fast
 
 FlatFieldCorrection.o: FlatFieldCorrection.cpp.o
@@ -142,7 +188,7 @@ FlatFieldCorrection.o: FlatFieldCorrection.cpp.o
 
 # target to build an object file
 FlatFieldCorrection.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.o
 .PHONY : FlatFieldCorrection.cpp.o
 
 FlatFieldCorrection.i: FlatFieldCorrection.cpp.i
@@ -151,7 +197,7 @@ FlatFieldCorrection.i: FlatFieldCorrection.cpp.i
 
 # target to preprocess a source file
 FlatFieldCorrection.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.i
 .PHONY : FlatFieldCorrection.cpp.i
 
 FlatFieldCorrection.s: FlatFieldCorrection.cpp.s
@@ -160,7 +206,7 @@ FlatFieldCorrection.s: FlatFieldCorrection.cpp.s
 
 # target to generate assembly for a file
 FlatFieldCorrection.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlatFieldCorrection.cpp.s
 .PHONY : FlatFieldCorrection.cpp.s
 
 FlowMeterTracker.o: FlowMeterTracker.cpp.o
@@ -169,7 +215,7 @@ FlowMeterTracker.o: FlowMeterTracker.cpp.o
 
 # target to build an object file
 FlowMeterTracker.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.o
 .PHONY : FlowMeterTracker.cpp.o
 
 FlowMeterTracker.i: FlowMeterTracker.cpp.i
@@ -178,7 +224,7 @@ FlowMeterTracker.i: FlowMeterTracker.cpp.i
 
 # target to preprocess a source file
 FlowMeterTracker.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.i
 .PHONY : FlowMeterTracker.cpp.i
 
 FlowMeterTracker.s: FlowMeterTracker.cpp.s
@@ -187,7 +233,7 @@ FlowMeterTracker.s: FlowMeterTracker.cpp.s
 
 # target to generate assembly for a file
 FlowMeterTracker.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/FlowMeterTracker.cpp.s
 .PHONY : FlowMeterTracker.cpp.s
 
 ScannerClock.o: ScannerClock.cpp.o
@@ -196,7 +242,7 @@ ScannerClock.o: ScannerClock.cpp.o
 
 # target to build an object file
 ScannerClock.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.o
 .PHONY : ScannerClock.cpp.o
 
 ScannerClock.i: ScannerClock.cpp.i
@@ -205,7 +251,7 @@ ScannerClock.i: ScannerClock.cpp.i
 
 # target to preprocess a source file
 ScannerClock.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.i
 .PHONY : ScannerClock.cpp.i
 
 ScannerClock.s: ScannerClock.cpp.s
@@ -214,7 +260,7 @@ ScannerClock.s: ScannerClock.cpp.s
 
 # target to generate assembly for a file
 ScannerClock.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerClock.cpp.s
 .PHONY : ScannerClock.cpp.s
 
 ScannerFile.o: ScannerFile.cpp.o
@@ -223,7 +269,7 @@ ScannerFile.o: ScannerFile.cpp.o
 
 # target to build an object file
 ScannerFile.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.o
 .PHONY : ScannerFile.cpp.o
 
 ScannerFile.i: ScannerFile.cpp.i
@@ -232,7 +278,7 @@ ScannerFile.i: ScannerFile.cpp.i
 
 # target to preprocess a source file
 ScannerFile.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.i
 .PHONY : ScannerFile.cpp.i
 
 ScannerFile.s: ScannerFile.cpp.s
@@ -241,7 +287,7 @@ ScannerFile.s: ScannerFile.cpp.s
 
 # target to generate assembly for a file
 ScannerFile.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile.cpp.s
 .PHONY : ScannerFile.cpp.s
 
 ScannerFile2BitEncoded.o: ScannerFile2BitEncoded.cpp.o
@@ -250,7 +296,7 @@ ScannerFile2BitEncoded.o: ScannerFile2BitEncoded.cpp.o
 
 # target to build an object file
 ScannerFile2BitEncoded.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.o
 .PHONY : ScannerFile2BitEncoded.cpp.o
 
 ScannerFile2BitEncoded.i: ScannerFile2BitEncoded.cpp.i
@@ -259,7 +305,7 @@ ScannerFile2BitEncoded.i: ScannerFile2BitEncoded.cpp.i
 
 # target to preprocess a source file
 ScannerFile2BitEncoded.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.i
 .PHONY : ScannerFile2BitEncoded.cpp.i
 
 ScannerFile2BitEncoded.s: ScannerFile2BitEncoded.cpp.s
@@ -268,7 +314,7 @@ ScannerFile2BitEncoded.s: ScannerFile2BitEncoded.cpp.s
 
 # target to generate assembly for a file
 ScannerFile2BitEncoded.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile2BitEncoded.cpp.s
 .PHONY : ScannerFile2BitEncoded.cpp.s
 
 ScannerFile3BitEncoded.o: ScannerFile3BitEncoded.cpp.o
@@ -277,7 +323,7 @@ ScannerFile3BitEncoded.o: ScannerFile3BitEncoded.cpp.o
 
 # target to build an object file
 ScannerFile3BitEncoded.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.o
 .PHONY : ScannerFile3BitEncoded.cpp.o
 
 ScannerFile3BitEncoded.i: ScannerFile3BitEncoded.cpp.i
@@ -286,7 +332,7 @@ ScannerFile3BitEncoded.i: ScannerFile3BitEncoded.cpp.i
 
 # target to preprocess a source file
 ScannerFile3BitEncoded.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.i
 .PHONY : ScannerFile3BitEncoded.cpp.i
 
 ScannerFile3BitEncoded.s: ScannerFile3BitEncoded.cpp.s
@@ -295,7 +341,7 @@ ScannerFile3BitEncoded.s: ScannerFile3BitEncoded.cpp.s
 
 # target to generate assembly for a file
 ScannerFile3BitEncoded.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile3BitEncoded.cpp.s
 .PHONY : ScannerFile3BitEncoded.cpp.s
 
 ScannerFile4BitEncoded.o: ScannerFile4BitEncoded.cpp.o
@@ -304,7 +350,7 @@ ScannerFile4BitEncoded.o: ScannerFile4BitEncoded.cpp.o
 
 # target to build an object file
 ScannerFile4BitEncoded.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.o
 .PHONY : ScannerFile4BitEncoded.cpp.o
 
 ScannerFile4BitEncoded.i: ScannerFile4BitEncoded.cpp.i
@@ -313,7 +359,7 @@ ScannerFile4BitEncoded.i: ScannerFile4BitEncoded.cpp.i
 
 # target to preprocess a source file
 ScannerFile4BitEncoded.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.i
 .PHONY : ScannerFile4BitEncoded.cpp.i
 
 ScannerFile4BitEncoded.s: ScannerFile4BitEncoded.cpp.s
@@ -322,7 +368,7 @@ ScannerFile4BitEncoded.s: ScannerFile4BitEncoded.cpp.s
 
 # target to generate assembly for a file
 ScannerFile4BitEncoded.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFile4BitEncoded.cpp.s
 .PHONY : ScannerFile4BitEncoded.cpp.s
 
 ScannerFileEntry.o: ScannerFileEntry.cpp.o
@@ -331,7 +377,7 @@ ScannerFileEntry.o: ScannerFileEntry.cpp.o
 
 # target to build an object file
 ScannerFileEntry.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.o
 .PHONY : ScannerFileEntry.cpp.o
 
 ScannerFileEntry.i: ScannerFileEntry.cpp.i
@@ -340,7 +386,7 @@ ScannerFileEntry.i: ScannerFileEntry.cpp.i
 
 # target to preprocess a source file
 ScannerFileEntry.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.i
 .PHONY : ScannerFileEntry.cpp.i
 
 ScannerFileEntry.s: ScannerFileEntry.cpp.s
@@ -349,7 +395,7 @@ ScannerFileEntry.s: ScannerFileEntry.cpp.s
 
 # target to generate assembly for a file
 ScannerFileEntry.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileEntry.cpp.s
 .PHONY : ScannerFileEntry.cpp.s
 
 ScannerFileSimple.o: ScannerFileSimple.cpp.o
@@ -358,7 +404,7 @@ ScannerFileSimple.o: ScannerFileSimple.cpp.o
 
 # target to build an object file
 ScannerFileSimple.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.o
 .PHONY : ScannerFileSimple.cpp.o
 
 ScannerFileSimple.i: ScannerFileSimple.cpp.i
@@ -367,7 +413,7 @@ ScannerFileSimple.i: ScannerFileSimple.cpp.i
 
 # target to preprocess a source file
 ScannerFileSimple.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.i
 .PHONY : ScannerFileSimple.cpp.i
 
 ScannerFileSimple.s: ScannerFileSimple.cpp.s
@@ -376,7 +422,7 @@ ScannerFileSimple.s: ScannerFileSimple.cpp.s
 
 # target to generate assembly for a file
 ScannerFileSimple.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSimple.cpp.s
 .PHONY : ScannerFileSimple.cpp.s
 
 ScannerFileSipper3.o: ScannerFileSipper3.cpp.o
@@ -385,7 +431,7 @@ ScannerFileSipper3.o: ScannerFileSipper3.cpp.o
 
 # target to build an object file
 ScannerFileSipper3.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.o
 .PHONY : ScannerFileSipper3.cpp.o
 
 ScannerFileSipper3.i: ScannerFileSipper3.cpp.i
@@ -394,7 +440,7 @@ ScannerFileSipper3.i: ScannerFileSipper3.cpp.i
 
 # target to preprocess a source file
 ScannerFileSipper3.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.i
 .PHONY : ScannerFileSipper3.cpp.i
 
 ScannerFileSipper3.s: ScannerFileSipper3.cpp.s
@@ -403,7 +449,7 @@ ScannerFileSipper3.s: ScannerFileSipper3.cpp.s
 
 # target to generate assembly for a file
 ScannerFileSipper3.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileSipper3.cpp.s
 .PHONY : ScannerFileSipper3.cpp.s
 
 ScannerFileZLib3BitEncoded.o: ScannerFileZLib3BitEncoded.cpp.o
@@ -412,7 +458,7 @@ ScannerFileZLib3BitEncoded.o: ScannerFileZLib3BitEncoded.cpp.o
 
 # target to build an object file
 ScannerFileZLib3BitEncoded.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.o
 .PHONY : ScannerFileZLib3BitEncoded.cpp.o
 
 ScannerFileZLib3BitEncoded.i: ScannerFileZLib3BitEncoded.cpp.i
@@ -421,7 +467,7 @@ ScannerFileZLib3BitEncoded.i: ScannerFileZLib3BitEncoded.cpp.i
 
 # target to preprocess a source file
 ScannerFileZLib3BitEncoded.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.i
 .PHONY : ScannerFileZLib3BitEncoded.cpp.i
 
 ScannerFileZLib3BitEncoded.s: ScannerFileZLib3BitEncoded.cpp.s
@@ -430,7 +476,7 @@ ScannerFileZLib3BitEncoded.s: ScannerFileZLib3BitEncoded.cpp.s
 
 # target to generate assembly for a file
 ScannerFileZLib3BitEncoded.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFileZLib3BitEncoded.cpp.s
 .PHONY : ScannerFileZLib3BitEncoded.cpp.s
 
 ScannerFrame.o: ScannerFrame.cpp.o
@@ -439,7 +485,7 @@ ScannerFrame.o: ScannerFrame.cpp.o
 
 # target to build an object file
 ScannerFrame.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.o
 .PHONY : ScannerFrame.cpp.o
 
 ScannerFrame.i: ScannerFrame.cpp.i
@@ -448,7 +494,7 @@ ScannerFrame.i: ScannerFrame.cpp.i
 
 # target to preprocess a source file
 ScannerFrame.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.i
 .PHONY : ScannerFrame.cpp.i
 
 ScannerFrame.s: ScannerFrame.cpp.s
@@ -457,7 +503,7 @@ ScannerFrame.s: ScannerFrame.cpp.s
 
 # target to generate assembly for a file
 ScannerFrame.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerFrame.cpp.s
 .PHONY : ScannerFrame.cpp.s
 
 ScannerHeaderFields.o: ScannerHeaderFields.cpp.o
@@ -466,7 +512,7 @@ ScannerHeaderFields.o: ScannerHeaderFields.cpp.o
 
 # target to build an object file
 ScannerHeaderFields.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.o
 .PHONY : ScannerHeaderFields.cpp.o
 
 ScannerHeaderFields.i: ScannerHeaderFields.cpp.i
@@ -475,7 +521,7 @@ ScannerHeaderFields.i: ScannerHeaderFields.cpp.i
 
 # target to preprocess a source file
 ScannerHeaderFields.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.i
 .PHONY : ScannerHeaderFields.cpp.i
 
 ScannerHeaderFields.s: ScannerHeaderFields.cpp.s
@@ -484,7 +530,7 @@ ScannerHeaderFields.s: ScannerHeaderFields.cpp.s
 
 # target to generate assembly for a file
 ScannerHeaderFields.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/ScannerHeaderFields.cpp.s
 .PHONY : ScannerHeaderFields.cpp.s
 
 StartStopPoint.o: StartStopPoint.cpp.o
@@ -493,7 +539,7 @@ StartStopPoint.o: StartStopPoint.cpp.o
 
 # target to build an object file
 StartStopPoint.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.o
 .PHONY : StartStopPoint.cpp.o
 
 StartStopPoint.i: StartStopPoint.cpp.i
@@ -502,7 +548,7 @@ StartStopPoint.i: StartStopPoint.cpp.i
 
 # target to preprocess a source file
 StartStopPoint.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.i
 .PHONY : StartStopPoint.cpp.i
 
 StartStopPoint.s: StartStopPoint.cpp.s
@@ -511,7 +557,7 @@ StartStopPoint.s: StartStopPoint.cpp.s
 
 # target to generate assembly for a file
 StartStopPoint.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/StartStopPoint.cpp.s
 .PHONY : StartStopPoint.cpp.s
 
 Variables.o: Variables.cpp.o
@@ -520,7 +566,7 @@ Variables.o: Variables.cpp.o
 
 # target to build an object file
 Variables.cpp.o:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.o
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.o
 .PHONY : Variables.cpp.o
 
 Variables.i: Variables.cpp.i
@@ -529,7 +575,7 @@ Variables.i: Variables.cpp.i
 
 # target to preprocess a source file
 Variables.cpp.i:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.i
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.i
 .PHONY : Variables.cpp.i
 
 Variables.s: Variables.cpp.s
@@ -538,7 +584,7 @@ Variables.s: Variables.cpp.s
 
 # target to generate assembly for a file
 Variables.cpp.s:
-	cd /mnt/c/code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.s
+	cd /mnt/c/Code/KSquareLibraries && $(MAKE) -f KKLineScanner/CMakeFiles/KKLineScanner.dir/build.make KKLineScanner/CMakeFiles/KKLineScanner.dir/Variables.cpp.s
 .PHONY : Variables.cpp.s
 
 # Help Target
@@ -547,10 +593,14 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... KKLineScanner"
+	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... test"
+	@echo "... KKLineScanner"
+	@echo "... list_install_components"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... install"
 	@echo "... FlatFieldCorrection.o"
 	@echo "... FlatFieldCorrection.i"
 	@echo "... FlatFieldCorrection.s"
@@ -607,6 +657,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /mnt/c/code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/c/Code/KSquareLibraries && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

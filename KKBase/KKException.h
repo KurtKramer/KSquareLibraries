@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <string>
+#include <sstream>
 
 #ifdef  WIN32
 #else
