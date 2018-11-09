@@ -82,5 +82,8 @@ void  KKObserver::UnRegisterObservable (KKObservablePtr observable)
 
 void  KKObserver::Notify (KKObservablePtr  obj)
 {
-  obj->observers.size ();
+  for (auto observer: obj->observers)
+  {
+    observer.first->Notify(obj);
+  }
 }  /* Notify */

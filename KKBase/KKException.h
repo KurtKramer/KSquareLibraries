@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <string>
+#include <sstream>
 
 #ifdef  WIN32
 #else
@@ -16,8 +17,6 @@
 #endif
 
 #include "KKBaseTypes.h"
-#include "KKQueue.h"
-
 
 
 #define  EnterChar   13

@@ -519,6 +519,12 @@ namespace  KKB
                           kkStrUint  lastCharIdx
                          )  const;
 
+    KKStr     SubStrPart (kkStrUint     firstCharIdx,
+                          OptionUInt32  lastCharIdx
+                         )  const;
+
+
+
     KKStr     SubStrSeg (kkStrUint  firstCharIdx,
                          kkStrUint  segmentLen
                         )  const;

@@ -25,6 +25,7 @@
 //****************************************************************************************
 
 #include <fstream>
+#include <string.h>
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -33,7 +34,8 @@
 
 namespace  KKB
 {
-  template<typename T>  class  Row; 
+  template<typename T>
+  class  Row;
 
   /**
    *@class  Matrix
@@ -99,7 +101,8 @@ namespace  KKB
 
     Row<T>&     operator[] (kkuint32  rowIDX) const;
 
-    friend  Matrix<T>  operator- (T left, const Matrix<T>& right);
+    template<typename U>   friend
+    Matrix<U>  operator- (U left, const Matrix<U>& right);
 
 
     Matrix<T>*     CalcCoFactorMatrix ();
@@ -150,9 +153,10 @@ namespace  KKB
 
     Matrix<T>       Transpose ();
 
-    friend  std::ostream&  operator<< (      std::ostream&  os, 
-                                       const Matrix<T>&     matrix
-                                      );
+    template<typename U>  friend
+    std::ostream&  operator<< (      std::ostream&  os, 
+                               const Matrix<U>&     matrix
+                               );
 
   private:
     void  Destroy ();
@@ -207,6 +211,12 @@ namespace  KKB
   void  MultiplyMatrix (const Matrix<double>& a, const Matrix<double>& b, Matrix<double>& c);
 
 
+  template<typename T>
+  std::ostream&  operator<< (std::ostream&     os,
+                             const Matrix<T>&  matrix
+                            );
+
+
 
   template<typename T>
   class  Row
@@ -238,15 +248,6 @@ namespace  KKB
 
   typedef Row<double> RowD;
   typedef Row<float> RowF;
-
-  template<typename T>
-  Matrix<T>  operator- (T left, const Matrix<T>& right);
-
-  template<typename T>
-  std::ostream&  operator<< (std::ostream&  os,
-                             const Matrix<T>&     matrix
-                            );
-
 
 
   template<typename T>
@@ -645,18 +646,18 @@ namespace  KKB
 
 
 
-  template<typename T>
-  Matrix<T>  KKB::operator- (T                left,
-                             const Matrix<T>& right
-                            )
+  template<typename U>
+  Matrix<U>  operator- (U                left,
+                        const Matrix<U>& right
+                       )
   {
     kkuint32  numOfRows   = right.NumOfRows ();
     kkuint32  numOfCols   = right.NumOfCols ();
     kkuint32  totNumCells = right.totNumCells;
 
-    Matrix<T>  result (numOfRows, numOfCols);
-    T*  resultDataArea = result.dataArea;
-    T*  rightDataArea = right.dataArea;
+    Matrix<U>  result (numOfRows, numOfCols);
+    U*  resultDataArea = result.dataArea;
+    U*  rightDataArea = right.dataArea;
 
     for (kkuint32 x = 0; x < totNumCells; ++x)
       resultDataArea[x] = left - rightDataArea[x];
@@ -1002,10 +1003,10 @@ namespace  KKB
 
 
 
-  template<typename T>
-  std::ostream&  KKB::operator<< (std::ostream&     os,
-                                  const Matrix<T>&  matrix
-                                 )
+  template<typename U>
+  std::ostream&  operator<< (std::ostream&     os,
+                             const Matrix<U>&  matrix
+                            )
   {
     os << "[" << matrix.NumOfRows () << "," << matrix.NumOfCols () << "]" << std::endl;
 

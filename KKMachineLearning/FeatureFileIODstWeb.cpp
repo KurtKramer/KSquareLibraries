@@ -241,7 +241,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
   _changesMade = false;
   if (!_maxCount)
-    _maxCount = INT_MAX;
+    _maxCount = int32_max;
 
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");
   MLClassPtr  falseClass = _classes.GetMLClassPtr ("FALSE");

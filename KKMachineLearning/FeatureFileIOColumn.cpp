@@ -142,7 +142,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
   kkint32     numOfFeatures = _fileDesc->NumOfFields ();
 
   if (!_maxCount)
-    _maxCount = INT_MAX;
+    _maxCount = int32_max;
 
   // Each row will represent a specific feature
   // Will initially create empty examples, then populate

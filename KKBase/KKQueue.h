@@ -11,11 +11,14 @@
 #include <algorithm>
 #include <assert.h>
 #include <ctype.h>
+
+#include <stdlib.h>
+#include <algorithm>
+#include <exception>
 #include <functional>
 #include <iostream>
 #include <memory>
-#include <numeric>
-#include <stdlib.h>
+#include <vector>
 #include <sstream>
 #include <vector>
 
@@ -744,7 +747,7 @@ namespace  KKB
 
       errMsg << "KKQueue<Entry>::SetIdxToPtr  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw std::range_error (errMsg.str ());
     }
     
     std::vector<Entry*>::operator[] (_idx) = _ptr;
@@ -818,7 +821,7 @@ namespace  KKB
       errMsg << "KKQueue<Entry>::SwapIndexes  idx1: " << idx1 << " and/or idx2: " << idx2
              << " exceeds QueueSize: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw std::range_error (errMsg.str ().c_str ());
     }
 
     EntryPtr  tempPtr = std::vector<Entry*>::operator[] (idx1);
@@ -835,10 +838,10 @@ namespace  KKB
 
     if  (idx >= KKQueue<Entry>::size ())
     {
-      std::stringstream errMsg;
+      std::ostringstream errMsg;
       errMsg << "KKQueue<Entry>::operator[]  idx: " << idx << " exceeds QueueSize: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw KKB::KKException(errMsg.str ().c_str ());
     }
 
     return  (Entry&)*(std::vector<Entry*>::operator[] (idx));

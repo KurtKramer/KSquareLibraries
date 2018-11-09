@@ -126,7 +126,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
   bool  eof;
 
   if  (!_maxCount)
-    _maxCount = UINT_MAX;
+    _maxCount = uint32_max;
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 

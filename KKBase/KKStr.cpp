@@ -41,9 +41,9 @@ char*  KKB::STRCOPY (char*        dest,
     if  ((strlen(src) + 1) > destSize)
     {
       stringstream errMsg;
-      errMsg << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]" 
+      errMsg << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize << "]"; 
       std::cerr << errMsg.str () << std::endl;
-      throw std::exception(errMsg.str ().c_str ());
+      throw KKB::KKException (errMsg.str ());
     }
 
     strcpy (dest, src);
@@ -66,7 +66,7 @@ char*  KKB::STRCOPY (char*        dest,
       stringstream errMsg;
       errMsg << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]";
       cerr << errMsg.str () << endl;
-      throw std::exception (errMsg.str ().c_str ());
+      throw KKB::KKException (errMsg.str ());
     }
 
     strcpy (dest, src);
@@ -2465,6 +2465,18 @@ KKStr  KKStr::SubStrPart (kkStrUint  firstCharIdx,
 
 
 
+
+KKStr  KKStr::SubStrPart (kkStrUint     firstCharIdx,
+                          OptionUInt32  lastCharIdx
+                         )  const
+{
+  if  (!lastCharIdx)
+    throw bad_optional_access ();
+  return SubStrPart (firstCharIdx, lastCharIdx.value ());
+}
+
+
+
 KKStr  KKStr::SubStrSeg (kkStrUint     firstCharIdx,
                          OptionUInt32  segmentLen
                         )  const
@@ -3933,7 +3945,7 @@ KKStr&  KKStr::operator<< (istream&  right)
     }
     else
     {
-      Append(ch);
+      Append((char)ch);
     }
     ch = right.get();
   }

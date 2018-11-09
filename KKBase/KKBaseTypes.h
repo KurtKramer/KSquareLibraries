@@ -250,7 +250,7 @@ namespace KKB
       ++x;
     }
     while  (x < Max(oldSize, newSize))  {
-      newA[x] = NULL;
+      newA[x] = (T)0;
       ++x;
     }
     delete[]  oldA;

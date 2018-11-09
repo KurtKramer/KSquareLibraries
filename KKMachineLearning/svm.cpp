@@ -25,8 +25,12 @@ using namespace KKMLL;
 #pragma warning(disable : 4996)
 
 
-
 #include "svm.h"
+
+#pragma warning( disable: 4100) 
+#pragma warning( disable: 4189) 
+#pragma warning( disable: 4458)
+
 
 
 // Forward defining several functions.

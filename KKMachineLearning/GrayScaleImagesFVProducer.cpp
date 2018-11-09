@@ -8,6 +8,7 @@
 #include <istream>
 #include <iostream>
 #include <queue>
+#include <math.h>
 #include <map>
 #include <vector>
 #if  defined(WIN32)

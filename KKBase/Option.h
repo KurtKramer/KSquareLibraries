@@ -8,6 +8,10 @@
 
 namespace KKB 
 {
+  void  ValidateValidUint32 (kkint64 newValue);
+
+
+
   template<typename T>
   OptionUInt32  operator+ (const OptionUInt32& lhs, T rhs)
   {
@@ -18,6 +22,7 @@ namespace KKB
   }
 
 
+  
   template<typename T>
   OptionUInt32 operator+ (T lhs, const OptionUInt32& rhs)
   {
@@ -40,7 +45,7 @@ namespace KKB
 
 
 
-    template<typename T>
+  template<typename T>
   OptionUInt32 operator- (T lhs, const OptionUInt32& rhs)
   {
     KKCheck(rhs, "OptionUInt32::operator-  Can not subtract from NONE!")
@@ -85,6 +90,7 @@ namespace KKB
 
     return s;
   }
+
 
 
   void  ValidateValidUint32 (kkint64 newValue);
