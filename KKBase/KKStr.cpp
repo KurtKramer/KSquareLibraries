@@ -3945,7 +3945,7 @@ KKStr&  KKStr::operator<< (istream&  right)
     }
     else
     {
-      Append(ch);
+      Append((char)ch);
     }
     ch = right.get();
   }

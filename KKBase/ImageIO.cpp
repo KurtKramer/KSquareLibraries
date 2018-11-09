@@ -10,11 +10,18 @@
 #include <string.h>
 
 #if  defined(KKOS_WINDOWS)
+
+#pragma warning( push )  
+#pragma warning( disable : 4458 )  
+
 #include <windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
+
+#pragma warning( pop ) 
+
 #endif
 
 #include "MemoryDebug.h"
@@ -156,7 +163,7 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
   if  (!gdiStarted)
   {
     GdiplusStartupInput gdiplusStartupInput;
-    ULONG_PTR           gdiplusToken;
+
     // Initialize GDI+.
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
@@ -847,7 +854,7 @@ void  KKB::ImageIoFinaleCleanUp ()
 #if  defined(KKOS_WINDOWS)
   if  (gdiStarted)
   {
-    GdiplusShutdown(gdiplusToken);
+    GdiplusShutdown (gdiplusToken);
     gdiStarted = false;
   }
 #endif

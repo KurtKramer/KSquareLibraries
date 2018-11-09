@@ -1890,14 +1890,25 @@ double  KKB::osGetKernalTimeUsed ()
 
 
 #ifdef  WIN32
+kkuint64  FileTimeToMiliSecs (const FILETIME& ft)
+{
+  ULARGE_INTEGER ui;
+  ui.LowPart=ft.dwLowDateTime;
+  ui.HighPart=ft.dwHighDateTime;
+  return (kkuint64)ui.QuadPart / 1000;
+}
+
 kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 {
   FILETIME lpIdleTime;
   FILETIME lpKernelTime;
   FILETIME lpUserTime;
 
-  //GetSystemTimes(&lpIdleTime, &lpKernelTime, &lpUserTime);
-  return 0;
+  GetSystemTimes(&lpIdleTime, &lpKernelTime, &lpUserTime);
+
+  return FileTimeToMiliSecs (lpKernelTime) + 
+         FileTimeToMiliSecs (lpUserTime) +
+         FileTimeToMiliSecs (lpIdleTime);
 } 
 
 #else
