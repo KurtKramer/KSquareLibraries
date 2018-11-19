@@ -354,10 +354,8 @@ Raster::Raster (const Raster&  _raster,
   maxPixVal             = _raster.maxPixVal;
   totPixels             = _height * _width;
   weOwnRasterData       = true;
-  width                 =_raster.width;
+  width                 = _width;
   
-  AddRasterInstance (this);
-
   green = _raster.GetSubSet (_raster.green, _topRow, _leftCol, _height, _width);
   greenArea = green[0];
 
@@ -389,7 +387,7 @@ Raster::Raster (const Raster& _raster,
   kkint32 biases = MorphOp::Biases (_mask);
   backgroundPixelValue = _raster.backgroundPixelValue;
   backgroundPixelTH    = _raster.backgroundPixelTH;
-  foregroundPixelValue =_raster.foregroundPixelValue;
+  foregroundPixelValue = _raster.foregroundPixelValue;
   height = width = (biases * 2 + 1);
   totPixels = height * width;
   weOwnRasterData  = true;
@@ -961,7 +959,7 @@ void  Raster::GetPixelValue (kkint32   row,
   KKCheck((row >= 0) && (row < height), "Raster::GetPixelValue  row: " << row << " out of range; height: " << height)
   KKCheck((col >= 0) && (col < width),  "Raster::GetPixelValue  col: " << col << " out of range; width: "  << width)
 
-    g = green [row][col];
+  g = green [row][col];
 
   if  (color)
   {
