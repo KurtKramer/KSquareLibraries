@@ -10,7 +10,6 @@ using namespace std;
 #include "KKBaseTypes.h"
 #include "KKStr.h"
 #include "Option.h"
-using namespace KKB;
 
 #include "KKQueueTest.h"
 

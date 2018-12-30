@@ -586,8 +586,8 @@ namespace  KKB
     else
     {
       // This should not be able to happen; but if it does then we have a flaw in the code or the logic somewhere,
-      cerr << "KKQueue<Entry>::FindTheKthElementIdx  ***ERROR***  An invalid situation just occurred." << endl
-           <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m          << endl;
+      std::cerr << "KKQueue<Entry>::FindTheKthElementIdx  ***ERROR***  An invalid situation just occurred." << std::endl
+                <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m             << std::endl;
       return  m - 1;
     }
   }  /* FindTheKthElementIdx */
@@ -760,7 +760,7 @@ namespace  KKB
   {
     if  (_idx >=  KKQueue<Entry>::size ())
     {
-      stringstream errMsg;
+      std::stringstream errMsg;
       errMsg << "KKQueue<Entry>::DeleteEntry  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
       throw std::exception (errMsg.str ().c_str ());
