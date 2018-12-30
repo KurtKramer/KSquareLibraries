@@ -63,7 +63,6 @@ const ClassStatistic&  ClassStatistic::operator+= (const ClassStatistic&  right)
 
 
 
-
 ClassStatisticList::ClassStatisticList (bool  _owner):
    KKQueue<ClassStatistic> (_owner)
 {
@@ -87,7 +86,6 @@ void  ClassStatisticList::PushOnFront (ClassStatisticPtr  stat)
 
 
 
-
 const  ClassStatisticList&  ClassStatisticList::operator+= (const ClassStatisticList&  right)
 {
   ClassStatisticList::const_iterator  idx;
@@ -107,8 +105,6 @@ const  ClassStatisticList&  ClassStatisticList::operator+= (const ClassStatistic
 
 
 
-
-
 ClassStatisticPtr  ClassStatisticList::LookUpByMLClass (MLClassPtr  mlClass)  const
 {
   map<MLClassPtr, ClassStatisticPtr>::const_iterator  idx;
@@ -118,7 +114,6 @@ ClassStatisticPtr  ClassStatisticList::LookUpByMLClass (MLClassPtr  mlClass)  co
   else
     return idx->second;
 }
-
 
 
 
@@ -140,41 +135,41 @@ public:
 class  ClassStatisticList::ClassStatSortByCount
 {
 public:
-  ClassStatSortByCount () {}
+  ClassStatSortByCount (bool ascending): ascending (ascending) {}
 
    bool  operator () (ClassStatisticPtr  p1,
                       ClassStatisticPtr  p2
                      )
    {
-     if  (p1->Count () > p2->Count ())
+     if  (!ascending)
+       std::swap (p1, p2);
+
+     if  (p1->Count () < p2->Count ())
        return true;
 
-     else if  (p1->Count () < p2->Count ())
+     else if  (p1->Count () > p2->Count ())
        return false;
 
      return  p1->MLClass ()->UpperName () < p2->MLClass ()->UpperName ();
    }
+
+   bool ascending;
 };  /* ManagedClasssesSortByImageCount */
-
-
 
 
 
 void  ClassStatisticList::SortByClassName ()
 {
   ClassStatisticSortComparrison  c;
-  //KKQueue<ClassStatistic>::Sort (&c);
-  sort (begin (), end (), c);
+  std::sort (begin (), end (), c);
 }  /* Sort */
 
 
 
-
-void  ClassStatisticList::SortByCount  ()
+void  ClassStatisticList::SortByCount (bool ascending)
 {
-  ClassStatSortByCount  c;
-  //KKQueue<ClassStatistic>::Sort (&c);
-  sort (begin (), end (), c);
+  ClassStatSortByCount sortComp (ascending);
+  std::sort (begin (), end (), sortComp);
 }
 
 
@@ -193,6 +188,7 @@ void  ClassStatisticList::PrintReport (ostream& r)
   }
   r << endl;
 }
+
 
 
 kkint32  ClassStatisticList::operator[]  (MLClassPtr  mlClass)
