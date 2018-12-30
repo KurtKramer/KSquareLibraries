@@ -30,7 +30,7 @@ namespace  KKBaseTest
 
   void KKTest::Assert (bool passed, const KKStr& testName,  const KKStr& msg)
   {
-    cout << "Test: " << testName << "\t" << (passed ? "Passed" : "***FAILED***") << "\t" << msg << endl;
+    std::cout << "Test: " << testName << "\t" << (passed ? "Passed" : "***FAILED***") << "\t" << msg << std::endl;
     results.PushOnBack (new TestResult (passed, testName));
     if  (passed)
       ++passedCount;
