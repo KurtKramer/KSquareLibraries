@@ -523,8 +523,6 @@ namespace  KKB
                           OptionUInt32  lastCharIdx
                          )  const;
 
-
-
     KKStr     SubStrSeg (kkStrUint  firstCharIdx,
                          kkStrUint  segmentLen
                         )  const;

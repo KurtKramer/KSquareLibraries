@@ -91,7 +91,3 @@ RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
 
   return  erodedRaster;
 }  /* PerformOperation */
-
-
-
-
