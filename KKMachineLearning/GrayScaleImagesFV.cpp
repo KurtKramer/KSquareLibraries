@@ -444,22 +444,22 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
     }
     else
     {
-      GrayScaleImagesFVPtr  larcosFeatureVector = NULL;
+      GrayScaleImagesFVPtr  counterFeatureVector = NULL;
       if  (typeid(*featureVector) == typeid(GrayScaleImagesFV))
       {
-        larcosFeatureVector = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
+        counterFeatureVector = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
         featureVector = NULL;
       }
       else
       {
-        larcosFeatureVector = new GrayScaleImagesFV (*featureVector);
+        counterFeatureVector = new GrayScaleImagesFV (*featureVector);
         delete  featureVector;
         featureVector = NULL;
       }
 
-      larcosFeatureVector->ExampleFileName (*imageFileName);
-      _log.Level (30) << larcosFeatureVector->ExampleFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
-      PushOnBack (larcosFeatureVector);
+      counterFeatureVector->ExampleFileName (*imageFileName);
+      _log.Level (30) << counterFeatureVector->ExampleFileName () << "  " << counterFeatureVector->OrigSize () << endl;
+      PushOnBack (counterFeatureVector);
       count++;
     }
   }

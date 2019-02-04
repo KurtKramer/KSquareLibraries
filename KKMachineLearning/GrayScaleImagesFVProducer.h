@@ -185,7 +185,7 @@ namespace KKMLL
 
 
     /**
-     *@brief Manufactures a instance of a 'LarcosFeatureVectorList' class that will own its contents.
+     *@brief Manufactures a instance of a 'CounterFeatureVectorList' class that will own its contents.
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool owner)  const;
 
