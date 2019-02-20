@@ -1,6 +1,6 @@
 /* CameraAcquisition.cpp -- Base class for the Acquisition threads.
  * Copyright (C) 2011-2013  Kurt Kramer
- * For conditions of distribution and use, see copyright notice in LarcosCounterUnManaged.txt
+ * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
 #include "FirstIncludes.h"
 

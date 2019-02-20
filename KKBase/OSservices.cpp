@@ -911,7 +911,7 @@ KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
  * @code
  *                         1         2         3         4         5         6
  *  ex:          0123456789012345678901234567890123456789012345678901234567890123456789 
- *        str = "TrainingDirectory\${LarcosHomeDir}\Classifiers\${CurTrainLibrary"
+ *        str = "TrainingDirectory\${CounterHomeDir}\Classifiers\${CurTrainLibrary"
  * 
  *   idx = osLocateEnvStrStart (str, 0);  // returns 18
  *   idx = osLocateEnvStrStart (str, 34)  // returns 47

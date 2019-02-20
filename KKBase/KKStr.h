@@ -239,8 +239,7 @@ namespace  KKB
 
     
     /**  @brief  Static method that returns an Empty String.   */
-    static
-    const KKStr&  EmptyStr ();
+    static  KKStr const&  EmptyStr ();
 
     bool     EndsWith (const KKStr& value) const;
     bool     EndsWith (const char*  value) const;

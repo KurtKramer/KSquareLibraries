@@ -463,7 +463,7 @@ namespace KKMLL
 #define  _GrayScaleImagesFVList_Defined_
 
 
-}  /* namespace LarcosCounterUnManaged */
+}  /* namespace CounterUnManaged */
 
 #endif
 
