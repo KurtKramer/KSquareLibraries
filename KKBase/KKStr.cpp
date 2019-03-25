@@ -22,6 +22,8 @@ using namespace std;
 #include "KKQueue.h"
 
 #include "KKStr.h"
+
+#include "RNBase64.h"
 #include "KKException.h"
 #include "KKStrParser.h"
 #include "Option.h"
@@ -788,6 +790,13 @@ KKStr::~KKStr ()
 
 
 
+KKStr  KKStr::ToBase64Str (uchar const * buff, kkStrUint buffLen)
+{
+	return Nyffenegger::base64_encode (buff, buffLen);
+}
+
+
+
 kkint32  KKStr::Compare (const KKStr&  s2)  const
 {
   kkint32  zed = Min (len, s2.len);
@@ -1046,7 +1055,7 @@ KKStr  KKStr::Concat (const std::vector<std::string>&  values)
 
 
 
-bool  KKStr::Contains (const KKStr& value)    
+bool  KKStr::Contains (const KKStr& value) const
 {
   if  (value.Empty ())
     return true;
@@ -1056,7 +1065,7 @@ bool  KKStr::Contains (const KKStr& value)
 
 
 
-bool  KKStr::Contains (const char*  value)
+bool  KKStr::Contains (const char*  value) const
 {
   if  ((value == NULL)  ||  (*value == 0))
     return true;
