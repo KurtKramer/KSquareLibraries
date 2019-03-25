@@ -183,6 +183,10 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                       RunLog&             log
                                      )
 {
+	log.Level (-1) << " ModelKnn::ProbabilitiesByClasss   *** NOYT IMPLEMENTED ***" << std::endl;
+	KKCheck (_example != nullptr, "_example must not be NULL")
+	KKCheck (_probabilities != nullptr, "_probabilities must not be NULL");
+
 }  /* ProbabilitiesByClass */
 
 

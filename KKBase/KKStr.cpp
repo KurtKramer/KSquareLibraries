@@ -3066,7 +3066,7 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
  *@brief  Static method that returns an Empty String.
  *@return  a empty String.
  */
-const KKStr&  KKStr::EmptyStr ()
+KKStr const&  KKStr::EmptyStr ()
 {
   static  KKStr  emptyStr = "";
   return  emptyStr;
