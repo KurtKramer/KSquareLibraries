@@ -119,6 +119,9 @@ namespace  KKB
     ///<param name='endPos'> Index of last  character that we want to include in new instance.</param>
     KKStr (const char*  src,  kkuint32 startPos,  kkuint32 endPos);
 
+	static
+		KKStr  ToBase64Str (uchar const * buff, kkStrUint buffLen);
+
     //KKStr&   operator= (const KKStrConstPtr  src);
 
     KKStr&   operator= (const KKStr& src);
@@ -226,9 +229,9 @@ namespace  KKB
       KKStr  Concat (const std::vector<std::string>&  values);
 
 
-    bool     Contains (const KKStr& value);
+    bool     Contains (const KKStr& value) const;
 
-    bool     Contains (const char*  value);
+    bool     Contains (const char*  value) const;
 
     kkint32  CountInstancesOf (char  ch)  const;
 
