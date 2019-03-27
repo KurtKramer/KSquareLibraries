@@ -166,6 +166,8 @@ namespace  KKB
 
     void     Append (char ch);
 
+    void     Append (uchar ch) { Append ((char)ch); }
+
     void     Append (const KKStr&  str);
 
     void     Append (const std::string&  str);
