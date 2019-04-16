@@ -39,6 +39,12 @@ namespace KKBaseTest
     if (y < 0)
       cerr << "It Worked" << std::endl;
 
+    if (y)
+      cout << "y is true when it is none!" << endl;
+
+    if (!y)
+      cout << "y is false when it is none." << endl;
+
     if (y > 3)
       cout << "y > 3 when it is not defined!" << endl;
 
