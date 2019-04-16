@@ -46,7 +46,7 @@ namespace KKMLL
     ClassStatisticPtr  LookUpByMLClass (MLClassPtr  mlClass)  const;
 
     void  SortByClassName ();
-    void  SortByCount (bool ascending);
+    void  SortByCount (bool ascending = true);
 
     void  PushOnBack  (ClassStatisticPtr  stat);
     void  PushOnFront (ClassStatisticPtr  stat);
