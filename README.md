@@ -50,4 +50,7 @@ c++ Tool Kit routines developed over the past several years.
  * can handle both Grayscale and Color images.  It supports various morphological operations
  * as well as Connected Component Analysis, Fourier transform, etc.  Other classes that work
  * with Raster are Blob, MorphOp, ContourFollower, MorphOpStretcher, Histogram, ImageIO.h, 
- * PixelValue, Point, Sobel, and several others.
+ * PixelValue, Point, Sobel, and several others
+ *
+ *@section  LINUX linux Compatibility.
+
