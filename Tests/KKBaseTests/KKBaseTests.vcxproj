@@ -105,6 +105,9 @@
       <AdditionalDependencies>KKBase.lib;libfftw3-3.lib;libfftw3f-3.lib;zlib-1.2.11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;$(OutsidePackages)\zlib-1.2.11</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /Y "$(OutsidePackages)\fftw-3.3.5-dll64\*.dll"   "$(SolutionDir)$(Platform)\$(Configuration)\"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,11 +176,15 @@
       <AdditionalDependencies>KKBase.lib;libfftw3-3.lib;libfftw3f-3.lib;zlib-1.2.11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(OutsidePackages)\fftw-3.3.5-dll64;$(OutsidePackages)\zlib-1.2.11</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>copy /Y "$(OutsidePackages)\fftw-3.3.5-dll64\*.dll"   "$(SolutionDir)$(Platform)\$(Configuration)\"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KKQueueTest.h" />
     <ClInclude Include="KKStrTest.h" />
     <ClInclude Include="KKTest.h" />
+    <ClInclude Include="OptionTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KKBaseTests.cpp" />
@@ -187,6 +194,7 @@
     </ClCompile>
     <ClCompile Include="KKStrTest.cpp" />
     <ClCompile Include="KKTest.cpp" />
+    <ClCompile Include="OptionTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

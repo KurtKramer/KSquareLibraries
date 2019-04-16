@@ -92,7 +92,6 @@ namespace KKB
   }
 
 
-
   void  ValidateValidUint32 (kkint64 newValue);
 }
 

@@ -12,12 +12,13 @@ using namespace std;
 #include "KKQueueTest.h"
 #include "KKStrTest.h"
 #include "KKTest.h"
-
+#include "OptionTest.h"
 using namespace KKBaseTest;
 
   int main()
   {
     KKQueue<KKTest> tests;
+    tests.PushOnBack (new OptionTest ());
     tests.PushOnBack (new KKQueueTest ());
     tests.PushOnBack (new KKStrTest ());
 
