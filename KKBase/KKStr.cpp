@@ -4440,7 +4440,6 @@ private:
 
 
 
-
 void  KKStrList::Sort (bool  _reversedOrder)
 {
   StringComparison  stringComparison (_reversedOrder);
@@ -4801,6 +4800,7 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
 }  /* StrFormatInt */
 
 
+
 KKStr KKB::StrFromBuff (const char* buff, kkuint32 buffLen)
 {
   return KKStr (buff, 0, buffLen - 1);
@@ -5026,7 +5026,6 @@ KKStrListIndexed::KKStrListIndexed ():
   strIndex = new StrIndex (comparator);
   memoryConsumedEstimated = sizeof (*this);
 }
-
 
 
 
@@ -5294,6 +5293,7 @@ KKStr  KKStrListIndexed::ToTabDelString ()  const
 
 void  KKStrListIndexed::WriteXML (const KKStr& varName,  ostream& o)  const
 {
+
   XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);
 
   if  (!varName.Empty ())

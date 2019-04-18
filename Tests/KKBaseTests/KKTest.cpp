@@ -16,7 +16,10 @@ using namespace KKB;
 namespace  KKBaseTest
 {
 
-  KKTest::KKTest ()
+  KKTest::KKTest ():
+    failedCount (0),
+    passedCount (0),
+    results ()
   {
   }
 

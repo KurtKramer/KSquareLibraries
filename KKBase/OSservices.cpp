@@ -41,7 +41,6 @@ using namespace std;
 #include "ImageIO.h"
 #include "Option.h"
 #include "OSservices.h"
-
 using namespace KKB;
 
 
@@ -88,6 +87,7 @@ std::FILE*  KKB::osFOPEN (const char* fileName,
 }
 
 
+
 kkint64  KKB::osFTELL (std::FILE* f)
 {
 #if  defined(KKOS_WINDOWS)
@@ -110,8 +110,6 @@ int  KKB::osFSEEK (std::FILE*  f,
   return  fseeko(f, offset, origin);
 #endif
 }
-
-
 
 
 
@@ -172,7 +170,6 @@ KKStrListPtr  osParseSearchSpec (const KKStr&  searchSpec)
 
   return  searchFields;
 }  /*  osParseSearchSpec */
-
 
 
 
@@ -288,8 +285,6 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
 
 
 
-
-
 char  KKB::osGetDriveLetter (const KKStr&  pathName)
 {
 #ifndef  WIN32
@@ -307,10 +302,6 @@ char  KKB::osGetDriveLetter (const KKStr&  pathName)
   return 0;
 #endif
 }  /* osGetDriveLetter */
-
-
-
-
 
 
 
@@ -390,6 +381,7 @@ bool  KKB::osValidDirectory (KKStrConstPtr  name)
 }
 
 
+
 bool  KKB::osValidDirectory (const KKStr&  name)
 {
   #define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
@@ -430,7 +422,6 @@ bool  KKB::osValidDirectory (const KKStr&  name)
   closedir (openDir);
   return  true;
 }
-
 #endif
 
 
@@ -512,9 +503,6 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
 
 
 
-
-
-
 bool  KKB::osDeleteFile (KKStr  _fileName)
 {
   #ifdef  WIN32
@@ -541,7 +529,6 @@ bool  KKB::osDeleteFile (KKStr  _fileName)
     }
   }
 
-
   #else
   kkint32  returnCd;
 
@@ -553,13 +540,7 @@ bool  KKB::osDeleteFile (KKStr  _fileName)
 
 
 
-
-
-
-
-
 #ifdef WIN32
-
 bool  KKB::osFileExists (const KKStr&  _fileName)
 {
   const char* fileName = _fileName.Str ();
@@ -577,9 +558,8 @@ bool  KKB::osFileExists (const KKStr&  _fileName)
 
   return  true;
 }
-
-
 #else
+
 
 
 bool  KKB::osFileExists (const KKStr&  _fileName)
@@ -593,7 +573,6 @@ bool  KKB::osFileExists (const KKStr&  _fileName)
   else
      return  false;
 }
-
 #endif
 
 
@@ -644,8 +623,9 @@ bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
   else 
     return false;
 }
-
 #else
+
+
 
 bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
                                          const KKStr&  _srcDir,
@@ -657,9 +637,7 @@ bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
   cerr << endl << errMsg << endl << endl;
   return false;
 }
-
 #endif
-
 
 
 
@@ -695,9 +673,8 @@ bool  KKB::osCopyFile (const KKStr&  srcFileName,
     return false;
   }
 }
-
-
 #else
+
 
 
 bool  KKB::osCopyFile (const KKStr&  srcFileName,
@@ -709,13 +686,11 @@ bool  KKB::osCopyFile (const KKStr&  srcFileName,
   cerr << endl << errMsg << endl << endl;
   return false;
 }
-
 #endif
 
 
 
 #ifdef  WIN32
-
 bool  KKB::osRenameFile (const KKStr&  oldName,
                          const KKStr&  newName
                         )
@@ -741,6 +716,7 @@ bool  KKB::osRenameFile (const KKStr&  oldName,
 #else
 
 
+
 bool  KKB::osRenameFile (const KKStr&  oldName,
                          const KKStr&  newName
                         )
@@ -762,7 +738,6 @@ bool  KKB::osRenameFile (const KKStr&  oldName,
   return  false;
 }  /* osRenameFile */
 #endif
-
 
 
 
@@ -791,8 +766,7 @@ void  KKB::osChangeDir (const KKStr&  dirName,
   }
 
 #endif
-
-
+  
   return;
 }  /* osChangeDir */
 
@@ -840,11 +814,8 @@ bool  KKB::osCreateDirectoryPath (KKStr  _pathName)
     nextPartOfPath = _pathName.ExtractToken (DS);
   }
 
-
   return  true;
 }  /* osCreateDirectoryPath */
-
-
 
 
 
@@ -867,9 +838,7 @@ bool  KKB::osCreateDirectory (const KKStr&  _dirName)
 
 
 
-
 #ifdef  WIN32
- 
 KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
 {
   char    buff[1024];
@@ -886,8 +855,8 @@ KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
     return  new KKStr (buff);
   }
 } /* GetEnvVariable */
-
 #else
+
 
 
 KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
@@ -1329,8 +1298,7 @@ OptionKKStr   KKB::osGetHostName ()
   }  
 
   return  compName;  
-
-
+  
 #else
 
   char  buff[1024];
@@ -1433,7 +1401,6 @@ KKStr  KKB::osGetFileNamePartOfFile (KKStr  fullFileName)
 
 bool  backGroundProcess = false;
 
-
 void  KKB::osRunAsABackGroundProcess ()
 {
   backGroundProcess = true;
@@ -1496,7 +1463,6 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
 
   return  nameList;
 }  /* osGetListOfFiles */
-
 #else
 
 
@@ -1593,7 +1559,6 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
   
   return  resultList;
 }  /* osGetListOfFiles */
-
 #endif
 
 
@@ -1720,10 +1685,10 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 
   return  nameList;
 }  /* osGetListOfDirectories */
-
-
-
 #else
+
+
+
 KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 {
   KKStr  rootDirName;
@@ -1767,7 +1732,6 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 
   return  nameList;
 }  /* osGetListOfDirectories */
-
 #endif
 
 
@@ -1799,8 +1763,10 @@ double  KKB::osGetSystemTimeUsed ()
   // (kernelTime.dwLowDateTime + userTime.dwLowDateTime) / 10000000 + 0.5;
   return  numOfSecs;
 }  /* osGetSystemTimeUsed */
-
 #else
+
+
+
 double  KKB::osGetSystemTimeUsed ()
 {
   struct  tms  buff;
@@ -1835,9 +1801,6 @@ double  KKB::osGetUserTimeUsed ()
 
   return  ut;
 }  /* osGetSystemTimeUsed */
-
-
-
 #else
 
 
@@ -1939,10 +1902,10 @@ DateTime  KKB::osGetLocalDateTime ()
 
   return  dateTime;
 }  /* osGetCurrentDateTime */
-
-
-
 #else
+
+
+
 DateTime  KKB::osGetLocalDateTime ()
 {
   struct tm  *curTime;
@@ -1991,10 +1954,9 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
                    );
 
 }  /* osGetFileDateTime */
-
-
-
 #else
+
+
 
 DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
 {
@@ -2056,7 +2018,6 @@ KKB::kkint64 KKB::osGetFileSize (const KKStr&  fileName)
 
 
 
-
 #if  defined(WIN32)
 void  KKB::osDisplayWarning (KKStr  _message)
 {
@@ -2074,9 +2035,10 @@ void  KKB::osDisplayWarning (KKStr  _message)
   osWaitForEnter ();
 */
 }
-
-
 #else
+
+
+
 void  KKB::osDisplayWarning (KKStr  _message)
 {
   cerr << std::endl
@@ -2089,7 +2051,6 @@ void  KKB::osDisplayWarning (KKStr  _message)
     osWaitForEnter ();
 }
 #endif
-
 
 
 
@@ -2152,7 +2113,6 @@ KKStr   KKB::osLookForFile (const KKStr&  fileName,
 
 
 
-
 KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
 {
   if  (fileName.Empty ())
@@ -2183,8 +2143,6 @@ KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
 
   return  fileName;
 }  /* osCreateUniqueFileName */
-
-
 
 
 
@@ -2222,9 +2180,6 @@ KKStrPtr  KKB::osReadNextLine (FILE*  in)
 
   return  buff;
 }  /* osReadNextLine */
-
-
-
 
 
 
@@ -2370,7 +2325,6 @@ KKStr  KKB::osReadNextToken (FILE*       in,
 
 
 
-
 KKStr  KKB::osReadNextToken (FILE*       in, 
                              const char* delimiters,
                              bool&       eof
@@ -2475,7 +2429,6 @@ KKStrPtr   KKB::osReadRestOfLine (std::istream&  in,
 
 
 
-
 KKStrPtr  KKB::osReadRestOfLine (FILE*  in,
                                  bool&  eof
                                 )
@@ -2521,7 +2474,6 @@ KKB::KKStr  KKB::osReadRestOfLine2 (FILE*  in,
   l = NULL;
   return  result;
 }
-
 
 
 
@@ -2631,7 +2583,6 @@ KKStr  KKB::osReadNextQuotedStr (FILE*        in,
 
 
 
-
 void  KKB::osSkipRestOfLine (FILE*  in,
                              bool&  eof
                             )
@@ -2643,7 +2594,6 @@ void  KKB::osSkipRestOfLine (FILE*  in,
     ch = fgetc (in);  eof = (feof (in) != 0);
   }
 }  /* osSkipRestOfLine */
-
 
 
 
@@ -2691,6 +2641,7 @@ kkint32  KKB::osGetThreadId ()
 }
 
 
+
 void  KKB::osSleep (float secsToSleep)
 {
   #ifdef  WIN32
@@ -2708,7 +2659,6 @@ void  KKB::osSleep (float secsToSleep)
   sleep (secsToSleepInt);
   #endif
 }
-
 
 
 

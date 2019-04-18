@@ -36,34 +36,28 @@ namespace KKBaseTest
   {
     OptionUInt32 x = 5;
     OptionUInt32 y = {};
-    if (y < 0)
-      cerr << "It Worked" << std::endl;
+    Assert (y < 0, "OptionUInt32", "None < 0");
 
-    if (y)
-      cout << "y is true when it is none!" << endl;
+    Assert (!(x < 0), "OptionUInt32", "Optional.value(5) not less than 0");
 
-    if (!y)
-      cout << "y is false when it is none." << endl;
+    Assert (!y, "OptionUInt32", "not (y = None)");
 
-    if (y > 3)
-      cout << "y > 3 when it is not defined!" << endl;
+    Assert (!(y > 3), "OptionUInt32", "y = None > 3");
 
-    auto l = y + 2;
-    cout << "l = " << l << endl;
+    try
+    {
+      auto zed = y + 2;
+      Assert (false, "OptionUInt32", "y = None + 2 Should throw exception!");
+    }
+    catch (const std::exception& e)
+    {
+      Assert (true, "OptionUInt32", "y = None + 2 Should throw exception!");
+    }
 
-    if (y >= 0)
-      cout << "y >= 0" << endl;
+    Assert (x == 5, "OptionUInt32", "x = Optional(5) == 5");
 
-    if (x == 5)
-      cout << "x == 5" << endl;
-
-    if  (x < 0)
-      cout << "x < 0  true when it is not" << endl;
-
-    auto z = x + 2;
-    cout << "x = " << z << endl;
+    Assert ((x + 2) == 7, "OptionUInt32", "Optional(5) + 2 == 7!");
 
     return true;
   }
-
 }
