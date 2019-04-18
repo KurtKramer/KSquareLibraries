@@ -47,7 +47,7 @@ namespace KKBaseTest
 
   bool  KKStrTest::ExtractQuotedStr ()
   {
-    KKStr s = "TokenOne, Token;Two,'Token Three',\"\\\"Token Four\\\"\",Token\\tFive";
+    KKStr s = "TokenOne, Token;Two,'Token Three',\"\\\"Token Four\\\"\",\"Token\\tFive\"";
 
     auto t1 = s.ExtractQuotedStr (",", true);
     AssertAreEqual ("TokenOne", t1, "ExtractQuotedStr");
@@ -62,7 +62,7 @@ namespace KKBaseTest
     AssertAreEqual ("\"Token Four\"", t4, "ExtractQuotedStr Decode Escape Characters");
 
     auto t5 = s.ExtractQuotedStr (",", false);
-    AssertAreEqual ("\"Token\\tFive\"", t5, "ExtractQuotedStr Don't Decode Escape Characters");
+    AssertAreEqual ("Token\\tFive", t5, "ExtractQuotedStr Don't Decode Escape Characters");
 
     return true;
   }
