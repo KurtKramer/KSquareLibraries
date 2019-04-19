@@ -76,6 +76,7 @@ BitString::BitString (kkuint32  _bitLen):
 }
 
 
+
 BitString::BitString (const BitString&  bs):
   bitLen  (bs.bitLen),
   byteLen (bs.byteLen),
@@ -84,6 +85,7 @@ BitString::BitString (const BitString&  bs):
   str = new uchar[byteLen];
   memcpy (str, bs.str, (size_t)byteLen);
 }
+
 
 
 BitString::BitString (kkuint32   _bitLen,
@@ -151,7 +153,6 @@ kkuint32  BitString::Count  ()  const
 
   return  count;
 }  /* Count */
-
 
 
 

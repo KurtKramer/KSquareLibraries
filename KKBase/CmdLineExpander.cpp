@@ -48,7 +48,6 @@ CmdLineExpander::CmdLineExpander (const KKStr&  _applicationName,
 }
 
 
-
   
 CmdLineExpander::CmdLineExpander (const KKStr&  _applicationName,
                                   RunLog&       _log,
@@ -78,13 +77,9 @@ CmdLineExpander::CmdLineExpander (const KKStr&  _applicationName,
 
 
 
-
-
 CmdLineExpander::~CmdLineExpander ()
 {
 }
-
-
 
 
 
@@ -109,7 +104,6 @@ void  CmdLineExpander::ExpandCmdLine (kkint32 argc,
 
 
 
-
 bool  FileInStack (const KKStr&       cmdFileName, 
                    const VectorKKStr& cmdFileStack
                   )
@@ -123,7 +117,6 @@ bool  FileInStack (const KKStr&       cmdFileName,
   return  false;
 
 }  /* FileInStack */
-
 
 
 
@@ -219,7 +212,6 @@ void  CmdLineExpander::BuildCmdLineParameters (const VectorKKStr&  argv)
 
 
 
-
 void  CmdLineExpander::BuildExpandedParameterPairs ()
 {
   kkuint32  x = 0;
@@ -258,7 +250,6 @@ void  CmdLineExpander::BuildExpandedParameterPairs ()
 
 
 
-
 bool  CmdLineExpander::ParameterIsASwitch (const KKStr&  parm)
 {
   if  (parm.Len () < 1)
@@ -276,7 +267,6 @@ bool  CmdLineExpander::ParameterIsASwitch (const KKStr&  parm)
 
   return true;
 }  /* ParameterIsASwitch */
-
 
 
 
@@ -309,4 +299,3 @@ void  CmdLineExpander::ExtractParametersFromFile (const KKStr&  cmdFileName,
 
   std::fclose (in);
 }  /* ExtractParametersFromFile */
-

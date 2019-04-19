@@ -142,7 +142,6 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
       }
     } while (strm.avail_out == 0);
    
-
     if  (strm.avail_in != 0)
     {
       // There is still input data;  so something went wrong. We will prompt a diagnostic message and return NULL
@@ -205,7 +204,6 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     GlobalGoalKeeper::EndBlock ();
     return NULL;
   }
-
 
   outBufferLen = compressedBuffLen * 4;
   outBuffer    = new Bytef[outBufferLen];
@@ -284,9 +282,6 @@ void*   Compressor::Decompress (const void*  compressedBuff,
 
 
 
-
-
-
 void   Compressor::Decompress (const void*  compressedBuff,
                                kkuint32     compressedBuffLen,
                                uchar*&      unCompressedBuff,
@@ -319,8 +314,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
     unCompressedBuffLen = 0;
     return;
   }
-
-  
+    
   if  (unCompressedBuff == NULL)
   {
     unCompressedBuffSize = compressedBuffLen * 4;
@@ -385,4 +379,3 @@ void   Compressor::Decompress (const void*  compressedBuff,
   return;
 #endif
 }  /* Decompress */
-
