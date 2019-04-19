@@ -18,7 +18,6 @@ using namespace KKB;
 
 
 
-
 Blob::Blob (kkint32  _id):
   colLeft    (0),
   colRight   (0),
@@ -156,7 +155,6 @@ void  BlobList::MergeBlobIds (BlobPtr    blob,
 
 
 
-
 BlobPtr  BlobList::MergeIntoSingleBlob (BlobPtr    blob1,
                                         kkint32    blob2Id,
                                         kkint32**  blobIds
@@ -222,8 +220,6 @@ BlobPtr  BlobList::MergeIntoSingleBlob (BlobPtr    blob1,
 
 
 
-
-
 BlobPtr  BlobList::LocateLargestBlob ()
 {
   BlobPtr   blob        = NULL;
@@ -271,9 +267,6 @@ BlobPtr  BlobList::LocateMostComplete ()
 
 
 
-
-
-
 void  BlobList::PushOnBack  (BlobPtr  blob)
 {
   insert (BlobIndexPair (blob->Id (), blob));
@@ -285,4 +278,3 @@ void  BlobList::PushOnFront (BlobPtr  blob)
 {
   insert (BlobIndexPair (blob->Id (), blob));
 }
-
