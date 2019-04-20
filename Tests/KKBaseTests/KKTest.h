@@ -1,6 +1,8 @@
 #pragma once
 
+#include "KKQueue.h"
 #include "KKStr.h"
+using namespace KKB;
 
 
 namespace  KKBaseTest

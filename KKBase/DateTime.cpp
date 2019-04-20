@@ -38,6 +38,7 @@ const char*  DateType::monthlyNames[] =
 };
 
 
+
 const char*  DateType::monthlyShortNames[] = 
 {
   "",
@@ -56,6 +57,7 @@ const char*  DateType::monthlyShortNames[] =
 };
 
 
+
 const kkuint8  DateType::daysInEachMonth[] =
 {
   0, 
@@ -72,6 +74,7 @@ const kkuint8  DateType::daysInEachMonth[] =
   30, // Nov
   31  // Dec
 };
+
 
 
 const kkint16  DateType::daysYTDforMonth[] =
@@ -108,7 +111,6 @@ uchar  DateType::MonthFromStr (const KKStr&  monthStr)
 
   return  month;
 }  /* MonthFromStr */
-
 
 
 
@@ -152,9 +154,6 @@ kkint32  DateType::DaysYTDforMonth (kkint32 year,
 
 
 
-
-
-
 DateType::DateType ():
      year  (0),
      month (0),
@@ -183,6 +182,7 @@ DateType::DateType (kkint16 _year,
 
 {
 }
+
 
 
 DateType::DateType (KKStr  s):
@@ -298,7 +298,6 @@ DateType::DateType (KKStr  s):
 
 
 
-
 kkint32  DaysInYear (kkint32 year)
 {
   if  ((year % 4) == 0)
@@ -315,10 +314,12 @@ DateType::DateType (kkint32  days)
 }
 
 
+
 uchar  DateType::DaysThisMonth ()  const
 {
   return  DaysInTheMonth (year, month);
 }
+
 
 
 void  DateType::SetFromNumOfDaysInTime (kkint32  days)
@@ -378,7 +379,6 @@ void  DateType::AdjustYear ()
 
 
 
-
 void   DateType::AddDays (kkint32  _days)
 {
   if  (_days < 0)
@@ -408,7 +408,6 @@ void   DateType::AddDays (kkint32  _days)
 
   day = (uchar)newDay;
 }  /* AddDays */
-
 
 
 
@@ -677,6 +676,7 @@ KKStr   DateType::MMM_DD_YYYY ()  const
 }  /* MMM_DD_YYYY */
 
 
+
 KKStr   DateType::YY_MM_DD ()  const
 {
   KKStr  s (9);
@@ -685,6 +685,7 @@ KKStr   DateType::YY_MM_DD ()  const
     << StrFormatInt (day,        "00");
   return  s;
 }  /* YY_MM_DD */
+
 
 
 KKStr   DateType::YYYY_MM_DD ()  const
@@ -723,6 +724,7 @@ KKStr   DateType::YYYYMMDD () const
 }
 
 
+
 KKStr&  KKB::operator<< (      KKStr&     left,
                          const DateType&  right
                         )
@@ -748,7 +750,6 @@ TimeType::TimeType ():
    minute (0),
    second (0)
 {}
-
 
 
 
@@ -783,8 +784,6 @@ TimeType::TimeType (kkint32  seconds)
   minute = (uchar)minutes;
   second = (uchar)seconds;
 }
-
-
 
 
 
@@ -827,16 +826,18 @@ TimeType::TimeType (KKStr  s):
 
 
 
- KKStr  TimeType::HH_MM_SS ()  const
- {
-   return  StrFormatInt (hour, "00") + ":" + StrFormatInt (minute, "00") + ":" + StrFormatInt (second, "00");
- }
+KKStr  TimeType::HH_MM_SS ()  const
+{
+  return  StrFormatInt (hour, "00") + ":" + StrFormatInt (minute, "00") + ":" + StrFormatInt (second, "00");
+}
+
 
 
 KKStr  TimeType::HHMMSS   ()  const
 {
   return  StrFormatInt (hour, "00") + StrFormatInt (minute, "00") + StrFormatInt (second, "00");
 }
+
 
 
 kkint32  TimeType::Compare (const TimeType&  right)  const
@@ -875,7 +876,6 @@ TimeType&  TimeType::operator= (const TimeType&  right)
 
 
 
-
 bool  TimeType::operator== (const TimeType&  right)  const
 {
   return  (Compare (right) == 0);
@@ -887,7 +887,6 @@ bool  TimeType::operator!= (const TimeType&  right)  const
 {
   return  (Compare (right) == 0);
 }
-
 
 
 
@@ -911,16 +910,19 @@ bool  TimeType::operator<  (const TimeType&  right)  const
 }
 
 
+
 kkuint32  TimeType::Seconds ()  const
 {
   return  hour * 3600 + minute * 60 + second;
 }
 
 
+
 double  TimeType::ToHours ()  const
 {
   return  (double)hour +  (double)(minute * 60 + second) / 3600.0;
 }
+
 
 
 double  TimeType::ToMinutes ()  const
@@ -930,13 +932,12 @@ double  TimeType::ToMinutes ()  const
 
 
 
-
-
 TimeType  TimeType::operator+ (const TimeType&  right)  const
 {
   kkint32  totSeconds = Seconds () + right.Seconds ();
   return  TimeType (totSeconds);
 }
+
 
 
 TimeType  TimeType::operator- (const TimeType&  right)  const
@@ -951,7 +952,6 @@ bool  TimeType::operator<= (const TimeType&  right)  const
 {
   return  (Compare (right) <= 0);
 }
-
 
 
 
@@ -981,14 +981,10 @@ std::ostream&  KKB::operator<< (      std::ostream&  os,
 
 
 
-
-
 DateTime::DateTime ():  
       date(),
       time ()
 {}
-
-
 
 
 
@@ -999,18 +995,12 @@ DateTime::DateTime (const DateTime&  dateTime):
 
 
 
-
-
-
 DateTime::DateTime (const DateType&  _date,
                     const TimeType&  _time
                    ):
        date (_date),
        time (_time)
 {}
-
-
-
 
 
 
@@ -1024,8 +1014,6 @@ DateTime::DateTime (kkint16 _year,
       date (_year, _month, _day),
       time (_hour, _minute, _second)
 {}
-
-
 
 
 
@@ -1059,9 +1047,6 @@ DateTime::DateTime (const KKStr&  s):
     time = TimeType (field2);
   }
 }
-
-
-
 
 
 
@@ -1100,6 +1085,7 @@ void  KKB::DateTime::AddDays (kkint32  _days)
 }
 
 
+
 void  DateTime::AddHours (kkint32  _hours)
 {
   if  (_hours < 0)
@@ -1125,6 +1111,7 @@ void  DateTime::AddHours (kkint32  _hours)
 }  /* AddHours */
 
 
+
 void  DateTime::AddMinutes  (kkint32  _mins)
 {
   kkint32  newMins = time.Minute () + _mins;
@@ -1143,6 +1130,7 @@ void  DateTime::AddMinutes  (kkint32  _mins)
 
   time.Minute ((uchar)newMins);
 }  /* AddMinutes */
+
 
 
 void  DateTime::AddSeconds  (kkint64 _secs)
@@ -1171,7 +1159,6 @@ void  DateTime::AddSeconds  (kkint64 _secs)
 
 
 
-
 void  DateTime::HoursAdd (kkint32  _hours)
 {
   AddHours (_hours);
@@ -1179,12 +1166,10 @@ void  DateTime::HoursAdd (kkint32  _hours)
 
 
 
-
 void  DateTime::MinutesAdd  (kkint32 _mins)
 {
   AddMinutes (_mins);
 }  /* MinutesAdd */
-
 
 
 
@@ -1208,6 +1193,7 @@ KKStr  DateTime::YYYY_MM_DD_HH_MM_SS () const
 }
 
 
+
 KKStr  DateTime::HH_MM_SS () const
 {
   return  StrFormatInt ((date.ToHours () + time.Hour ()), "###00") + ":" + 
@@ -1223,7 +1209,6 @@ DateTime&  DateTime::operator= (const DateTime&  right)
   time = right.time;
   return *this;
 }
-
 
 
 
@@ -1254,10 +1239,12 @@ bool  DateTime::operator>= (const DateTime&  right)  const
 }
 
 
+
 bool  DateTime::operator<  (const DateTime&  right)  const
 {
   return  Compare (right) < 0;
 }
+
 
 
 bool  DateTime::operator<= (const DateTime&  right)  const
@@ -1275,7 +1262,6 @@ DateTime   DateTime::operator+ (const DateTime& right)  const
 
   return  DateTime (DateType (netDays), TimeType (netSecs));
 }
-
 
 
 
@@ -1302,9 +1288,6 @@ DateTime   DateTime::operator- (const DateTime& right)  const
 
 
 
-
-
-
 KKStr&  KKB::operator<< (      KKStr&     left,
                          const DateTime&  right
                         )
@@ -1315,7 +1298,6 @@ KKStr&  KKB::operator<< (      KKStr&     left,
 
 
 
-
 std::ostream&  KKB::operator<< (      std::ostream&  os, 
                                 const DateTime&      right
                                )
@@ -1323,6 +1305,3 @@ std::ostream&  KKB::operator<< (      std::ostream&  os,
   os << right.Date () << "-" << right.Time ();
   return  os;
 }
-
-
-

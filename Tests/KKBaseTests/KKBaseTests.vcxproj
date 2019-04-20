@@ -181,12 +181,14 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DateTimeTest.h" />
     <ClInclude Include="KKQueueTest.h" />
     <ClInclude Include="KKStrTest.h" />
     <ClInclude Include="KKTest.h" />
     <ClInclude Include="OptionTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DateTimeTest.cpp" />
     <ClCompile Include="KKBaseTests.cpp" />
     <ClCompile Include="KKQueueTest.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\KKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
