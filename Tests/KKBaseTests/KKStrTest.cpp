@@ -30,6 +30,7 @@ namespace KKBaseTest
   bool  KKStrTest::RunTests ()
   {
     ExtractQuotedStr ();
+    FormatDouble ();
     return true;
   }
 
@@ -41,6 +42,13 @@ namespace KKBaseTest
     KKStr msg;
     msg << "Expected: " << expected << "\t" << "Found: " << found.Str ();
     Assert(equal, testName, msg);
+  }
+
+
+  bool  KKStrTest::FormatDouble ()
+  {
+    AssertAreEqual (" 7,823.98", StrFormatDouble (7823.9812, "##,##0.00"), "KKStrTest::FormatDouble");
+    return true;
   }
 
 

@@ -142,7 +142,6 @@ MLClassPtr  MLClass::GetByClassId (kkint32  _classId)
 
 
 
-
 MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
 {
   if  (parent == NULL)
@@ -778,7 +777,7 @@ MLClassPtr  MLClassList::PopFromFront ()
 
 
 void  MLClassList::PushOnBack (MLClassPtr  _mlClass)
-  {
+{
   if  (_mlClass->Name ().Empty ())
     {
     cerr << "MLClassList::PushOnBack   Class Name Empty" << endl;
@@ -786,7 +785,7 @@ void  MLClassList::PushOnBack (MLClassPtr  _mlClass)
 
   KKQueue<MLClass>::PushOnBack (_mlClass);
   AddMLClassToNameIndex (_mlClass);
-  }
+}
 
 
 
@@ -1291,7 +1290,6 @@ bool  MLClassList::operator== (const MLClassList&  right)  const
 
 
 
-
 bool  MLClassList::operator!= (const MLClassList&  right)  const
 {
   return  (!operator== (right));
@@ -1375,8 +1373,8 @@ MLClassList  MLClassList::operator- (const MLClassList&  right)  const
 
 
 
-ostream&  KKMLL::operator<< (      ostream&          os, 
-                             const MLClassList&   classList
+ostream&  KKMLL::operator<< (ostream&            os, 
+                             MLClassList const&  classList
                             )
 {
   os << classList.ToString ();
@@ -1392,7 +1390,6 @@ KKStr&  KKMLL::operator<< (      KKStr&            str,
   str << classList.ToString ();
   return  str;
 }
-
 
 
 
@@ -1455,6 +1452,7 @@ MLClassListPtr  XmlElementMLClassNameList::TakeOwnership ()
   value = NULL;
   return  v;
 }
+
 
 
 void  XmlElementMLClassNameList::WriteXML (const MLClassList&  mlClassList,
@@ -1611,6 +1609,7 @@ MLClassPtr  MLClassIndexList::GetMLClass (kkint32 classIndex)
   }
   return GetMLClass ((kkint16)classIndex);
 }
+
 
 
 void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,

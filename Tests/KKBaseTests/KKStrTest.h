@@ -17,5 +17,7 @@ namespace KKBaseTest
     void  AssertAreEqual (const char* expected,  const KKStr& found,  const KKStr& testName);
   
     bool  ExtractQuotedStr ();
+
+    bool  FormatDouble ();
   };
 }

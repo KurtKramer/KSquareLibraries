@@ -40,10 +40,8 @@ namespace KKBaseTest
     DateType c ("2018-2-27");
     Assert (DateType ("2018-2-27") == DateType (2018, 2, 27), "DateTimeTest", "Construct DateType from string(2018-2-27)");
     Assert (DateType ("2018-feb-27") == DateType (2018, 2, 27), "DateTimeTest", "Construct DateType from string(2018-feb-27)");
-
+    Assert (DateType ("2018-October-27") == DateType (2018, 10, 27), "DateTimeTest", "Construct DateType from string(2018-October-27)");
     
-
-
     return true;
   }
 }

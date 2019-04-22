@@ -418,8 +418,8 @@ namespace KKMLL
 
 
 
-  std::ostream&  operator<< (      std::ostream&  os, 
-                             const MLClassList&   classList
+  std::ostream&  operator<< (std::ostream&       os, 
+                             MLClassList const&  classList
                             );
 
 
