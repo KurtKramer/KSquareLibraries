@@ -1114,20 +1114,20 @@ public:
     double r;  // for Solver_NU
   };
 
-  void  Solve (kkint32        l,
-               QMatrix&       Q, 
-               const double*  p_, 
-               const schar*   y_,
-               double*        alpha_, 
-               double         Cp, 
-               double         Cn, 
-               double         eps,
-               SolutionInfo*  si, 
-               kkint32        shrinking
+  void  Solve (kkint32        _l,
+               QMatrix&       _Q, 
+               const double*  _p, 
+               const schar*   _y,
+               double*        _alpha, 
+               double         _Cp, 
+               double         _Cn, 
+               double         _eps,
+               SolutionInfo*  _si, 
+               kkint32        _shrinking
               );
 
 protected:
-  kkint32           active_size;
+  kkint32         active_size;
   schar*          y;
   double*         G;   // gradient of objective function
   enum  {LOWER_BOUND, UPPER_BOUND, FREE};
@@ -1251,40 +1251,40 @@ void  SVM289_MFS::Solver::reconstruct_gradient ()
 
 
 
-void  SVM289_MFS::Solver::Solve (kkint32        l, 
-                                 QMatrix&       Q, 
-                                 const double*  p_, 
-                                 const schar*   y_,
-                                 double*        alpha_, 
-                                 double         Cp, 
-                                 double         Cn, 
-                                 double         eps,
-                                 SolutionInfo*  si, 
-                                 kkint32        shrinking
+void  SVM289_MFS::Solver::Solve (kkint32        _l, 
+                                 QMatrix&       _Q, 
+                                 const double*  _p, 
+                                 const schar*   _y,
+                                 double*        _alpha, 
+                                 double         _Cp, 
+                                 double         _Cn, 
+                                 double         _eps,
+                                 SolutionInfo*  _si, 
+                                 kkint32        _shrinking
                                 )
 {
-  this->l = l;
-  this->Q = &Q;
-  QD=Q.get_QD();
-  clone(p, p_,l);
-  clone(y, y_,l);
-  clone(alpha,alpha_,l);
-  this->Cp = Cp;
-  this->Cn = Cn;
-  this->eps = eps;
+  this->l = _l;
+  this->Q = &_Q;
+  QD = _Q.get_QD ();
+  clone(p, _p, l);
+  clone(y, _y, l);
+  clone(alpha, _alpha, l);
+  this->Cp = _Cp;
+  this->Cn = _Cn;
+  this->eps = _eps;
   unshrink = false;
 
   // initialize alpha_status
   {
     alpha_status = new char[l];
-    for  (kkint32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  ++i)
       update_alpha_status (i);
   }
 
   // initialize active set (for shrinking)
   {
     active_set = new kkint32[l];
-    for  (kkint32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  ++i)
       active_set[i] = i;
     active_size = l;
   }
@@ -1294,20 +1294,20 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
     G     = new double[l];
     G_bar = new double[l];
     kkint32  i;
-    for  (i = 0;  i < l;  i++)
+    for  (i = 0;  i < l;  ++i)
     {
       G[i]     = p[i];
       G_bar[i] = 0;
     }
 
-    for(i=0;i<l;i++)
+    for (i = 0;  i < l;  ++i)
     {
       if  (!is_lower_bound (i))
       {
-        Qfloat *Q_i = Q.get_Q(i,l);
+        Qfloat *Q_i = _Q.get_Q(i,l);
         double alpha_i = alpha[i];
         kkint32  j;
-        for  (j = 0;  j < l;  j++)
+        for  (j = 0;  j < l;  ++j)
           G[j] += alpha_i*Q_i[j];
 
         if  (is_upper_bound (i))
@@ -1331,7 +1331,7 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
     if (--counter == 0)
     {
       counter = Min (l, 1000);
-      if  (shrinking) 
+      if  (_shrinking) 
         do_shrinking();
       info(".");
     }
@@ -1354,8 +1354,8 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
 
     // update alpha[i] and alpha[j], handle bounds carefully
     
-    const Qfloat *Q_i = Q.get_Q(i,active_size);
-    const Qfloat *Q_j = Q.get_Q(j,active_size);
+    const Qfloat *Q_i = _Q.get_Q(i,active_size);
+    const Qfloat *Q_j = _Q.get_Q(j,active_size);
 
     double C_i = get_C(i);
     double C_j = get_C(j);
@@ -1473,7 +1473,7 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
       kkint32 k;
       if  (ui != is_upper_bound (i))
       {
-        Q_i = Q.get_Q (i,l);
+        Q_i = _Q.get_Q (i,l);
         if  (ui)
         {
           for  (k = 0;  k < l;  k++)
@@ -1488,7 +1488,7 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
 
       if(uj != is_upper_bound(j))
       {
-        Q_j = Q.get_Q(j,l);
+        Q_j = _Q.get_Q(j,l);
         if  (uj)
         {
           for  (k = 0;  k < l;  k++)
@@ -1504,7 +1504,7 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
   }
 
   // calculate rho
-  si->rho = calculate_rho();
+  _si->rho = calculate_rho();
 
   // calculate objective value
   {
@@ -1513,14 +1513,14 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
     for  (i = 0;  i < l;  i++)
       v += alpha[i] * (G[i] + p[i]);
 
-    si->obj = v/2;
+    _si->obj = v/2;
   }
 
   // put back the solution
   {
     for  (kkint32 i = 0;  i < l;  i++)
     {
-      alpha_[active_set[i]] = alpha[i];
+      _alpha[active_set[i]] = alpha[i];
     }
   }
 
@@ -1532,8 +1532,8 @@ void  SVM289_MFS::Solver::Solve (kkint32        l,
         // or Q.swap_index(i,active_set[i]);
   }*/
 
-  si->upper_bound_p = Cp;
-  si->upper_bound_n = Cn;
+  _si->upper_bound_p = Cp;
+  _si->upper_bound_n = Cn;
 
   //info("\noptimization finished, #iter = %d\n",iter);
 
@@ -1559,13 +1559,13 @@ kkint32  SVM289_MFS::Solver::select_working_set (kkint32&  out_i,
   //    (if quadratic coefficient <= 0, replace it with tau)
   //    -y_j*grad(f)_j < -y_i*grad(f)_i, j in I_low(\alpha)
   
-  double  Gmax         = -INF;
-  double  Gmax2        = -INF;
-  kkint32   Gmax_idx     = -1;
-  kkint32   Gmin_idx     = -1;
-  double  obj_diff_min = INF;
+  double   Gmax         = -INF;
+  double   Gmax2        = -INF;
+  kkint32  Gmax_idx     = -1;
+  kkint32  Gmin_idx     = -1;
+  double   obj_diff_min = INF;
 
-  for  (kkint32 t=0;t<active_size;t++)
+  for  (kkint32 t = 0;  t < active_size;  ++t)
   {
     if  (y[t] == +1)
     {
@@ -1591,13 +1591,12 @@ kkint32  SVM289_MFS::Solver::select_working_set (kkint32&  out_i,
     }
   }
 
-
   kkint32 i = Gmax_idx;
   const Qfloat *Q_i = NULL;
   if  (i != -1) // NULL Q_i not accessed: Gmax=-INF if i=-1
     Q_i = Q->get_Q(i,active_size);
 
-  for(kkint32 j=0;j<active_size;j++)
+  for(kkint32 j = 0;  j < active_size;  ++j)
   {
     if(y[j]==+1)
     {
@@ -1808,20 +1807,20 @@ class  SVM289_MFS::Solver_NU : public SVM289_MFS::Solver
 public:
   Solver_NU() {}
 
-  void  Solve (kkint32         l, 
-               QMatrix&        Q, 
-               const double*   p, 
-               const schar*    y,
-               double*         alpha, 
-               double          Cp, 
-               double          Cn, 
-               double          eps,
-               SolutionInfo*   si, 
-               kkint32         shrinking
+  void  Solve (kkint32         _l,
+               QMatrix&        _Q, 
+               const double*   _p, 
+               const schar*    _y,
+               double*         _alpha, 
+               double          _Cp, 
+               double          _Cn, 
+               double          _eps,
+               SolutionInfo*   _si, 
+               kkint32         _shrinking
               )
   {
-    this->si = si;
-    Solver::Solve (l, Q, p, y, alpha, Cp, Cn, eps, si, shrinking);
+    this->si = _si;
+    Solver::Solve (_l, _Q, _p, _y, _alpha, _Cp, _Cn, _eps, _si, _shrinking);
   }
 
 private:
@@ -1831,11 +1830,11 @@ private:
 
   double calculate_rho ();
 
-  bool  be_shrunk (kkint32   i, 
-                   double  Gmax1, 
-                   double  Gmax2, 
-                   double  Gmax3, 
-                   double  Gmax4
+  bool  be_shrunk (kkint32  i, 
+                   double   Gmax1, 
+                   double   Gmax2, 
+                   double   Gmax3, 
+                   double   Gmax4
                   );
 
   void do_shrinking ();
@@ -4360,6 +4359,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
                                       RunLog&         log
                                      )
 {
+  log.Level (50) << "SVM289_MFS::Svm_Model::ReadXML    tag->Name (): " << tag->Name () << endl;
   CleanUpMemory ();
   SV.Owner (true);
   weOwnSupportVectors = true;

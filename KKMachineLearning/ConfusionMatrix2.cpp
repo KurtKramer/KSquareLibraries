@@ -2585,7 +2585,7 @@ void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm,
   //  Create indirection array to handle the situation where the mlClass list's of the two 
   // confusion matrixes '*this'  and  'cm'  are not in the same order.
 
-  vector<OptionUInt32>  ind (numOfClasses, 0);
+  VectorOptionUInt32  ind (numOfClasses, 0);
   for  (classIDX = 0;  classIDX < numOfClasses;  ++classIDX)
   {
     MLClassPtr mlClass = classes.IdxToPtr (classIDX);

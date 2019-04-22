@@ -225,6 +225,10 @@ namespace  KKB
                       );
 
     void  AddAtribute (const KKStr&  attributeName,
+                       OptionUInt32  attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
                        kkint64       attributeValue
                       );
 

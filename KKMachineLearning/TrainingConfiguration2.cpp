@@ -38,16 +38,16 @@ using namespace  KKMLL;
 
 void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _parameterStr,
                                                      const FeatureNumList&  _selFeatures,
-                                                     kkint32                _sectionLineNum,
-                                                     kkint32                _parametersLineNum, 
-                                                     kkint32                _featuresIncludedLineNum,
+                                                     OptionUInt32           _sectionLineNum,
+                                                     OptionUInt32           _parametersLineNum,
+                                                     OptionUInt32           _featuresIncludedLineNum,
                                                      RunLog&                _log
                                                     )
 {
   delete  modelParameters;
   modelParameters = NULL;
 
-  if  (_parametersLineNum < 0)
+  if  (!_parametersLineNum)
   {
     KKStr errMsg = "'Parameters' setting was not specified.";
     _log.Level (-1) << endl << endl << "CreateModelParameters   ***ERROR***   " << errMsg << endl << endl;
@@ -90,7 +90,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
       FormatGood (false);
     }
 
-    else if  (_featuresIncludedLineNum > 0)
+    else if  (_featuresIncludedLineNum)
     {
       modelParameters->SelectedFeatures (_selFeatures);
     }
@@ -1358,8 +1358,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
     if  (!config->FormatGood ())
     {
       errorsFound = true;
-      const VectorKKStr&  errors   = config->FormatErrors ();
-      const VectorInt&    lineNums = config->FormatErrorsLineNums ();
+      const VectorKKStr&  errors  = config->FormatErrors ();
+      const VectorOptionUInt32&  lineNums = config->FormatErrorsLineNums ();
       size_t zed = Max (errors.size (), lineNums.size ());
       for  (size_t x = 0;  x < zed;  ++x)
         FormatErrorsAdd (lineNums[x], errors[x]);
@@ -1379,13 +1379,13 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  section
   if  (!numOfSettings)
     return NULL;
 
-  kkint32  classNameLineNum     = 0;
-  kkint32  countFactorLineNum   = 0;
-  kkint32  dirLineNum           = 0;
-  kkint32  subClassifierLineNum = 0;
-  kkint32  weightLineNum        = 0;
+  OptionUInt32  classNameLineNum     = 0;
+  OptionUInt32  countFactorLineNum   = 0;
+  OptionUInt32  dirLineNum           = 0;
+  OptionUInt32  subClassifierLineNum = 0;
+  OptionUInt32  weightLineNum        = 0;
 
-  kkint32  sectionLineNum = SectionLineNum (sectionNum);
+  auto  sectionLineNum = SectionLineNum (sectionNum);
 
   VectorKKStr  directories;
   KKStr        className;
@@ -1399,7 +1399,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  section
     if  (!settingNamePtr)
       continue;
 
-    kkint32 settingLineNum = 0;
+    OptionUInt32 settingLineNum = 0;
     KKStrConstPtr  setingValuePtr = SettingValue (sectionNum, settingNum, settingLineNum);
     KKStr  settingValue = "";
     if  (setingValuePtr)
@@ -1508,9 +1508,9 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkuint32  section
 
 
 
-void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr  classToValidate,
-                                                  kkint32&    lineNum,
-                                                  RunLog&     log
+void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr     classToValidate,
+                                                  OptionUInt32&  lineNum,
+                                                  RunLog&        log
                                                  )
 {
   KKStr  classDirToUse = osAddSlash (rootDir) + classToValidate->Name ();
@@ -1541,7 +1541,7 @@ void  TrainingConfiguration2::ValidateTrainingClassConfig (kkuint32  sectionNum,
 
 FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkuint32  sectionNum)
 {
-  kkint32  featuresIncludedLineNum = 0;
+  OptionUInt32  featuresIncludedLineNum = {};
 
   KKStr  includedFeaturesStr (SettingValueToStr (sectionNum, "FEATURES_INCLUDED", featuresIncludedLineNum));
 
@@ -1575,10 +1575,10 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
                                                       RunLog&   log
                                                      )
 {
-  kkint32  methodLineNum  = 0;
-  kkint32  rootDirLineNum = 0;
-  kkint32  sectionLineNum = SectionLineNum (sectionNum);
-  kkint32  fvFactoryLineNum = 0;
+  OptionUInt32  methodLineNum = {};
+  OptionUInt32  rootDirLineNum = {};
+  OptionUInt32  sectionLineNum = SectionLineNum (sectionNum);
+  OptionUInt32  fvFactoryLineNum = {};
 
   KKStr  modelingMethodStr  (SettingValueToStr (sectionNum, "MODELING_METHOD", methodLineNum));
   modelingMethodStr.Upper ();
@@ -1587,7 +1587,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
 
   modelingMethod = ModelTypeFromStr (modelingMethodStr);
 
-  if  (methodLineNum < 0)
+  if  (!methodLineNum)
   {
     KKStr errMsg = "No Modeling_Method was specified.";
     log.Level (-1) << endl 
@@ -1609,7 +1609,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
   }
 
   KKStr  fvFactoryProducerName (SettingValueToStr (sectionNum, "FEATURE_COMPUTER", fvFactoryLineNum));
-  if  (fvFactoryLineNum < 0)
+  if  (!fvFactoryLineNum)
   {
     fvFactoryProducerSpecified = false;
     if  (!fvFactoryProducer)
@@ -1642,7 +1642,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
   }
 
   KKStr  rootDirStr  (SettingValueToStr (sectionNum, "ROOT_DIR", rootDirLineNum));
-  if  (rootDirLineNum < 0)
+  if  (!rootDirLineNum)
   {
     // No Root Directory was specified.
     rootDir = osAddSlash (KKMLVariables::TrainingLibrariesDir ()) + osGetRootName (this->FileName ());
@@ -1656,7 +1656,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
     rootDirExpanded = osSubstituteInEnvironmentVariables (rootDir);
     if  (!rootDir.Empty ()  &&  (!osValidDirectory (rootDirExpanded))  &&  validateDirectories)
     {
-      KKStr errMsg = "Invalid RootDir[" + rootDirStr + "]  Specified on line[" + StrFormatInt (rootDirLineNum, "ZZZ0") + "].  Expanded to[" + RootDirExpanded () + "]";
+      KKStr errMsg = "Invalid RootDir[" + rootDirStr + "]  Specified on line[" + StrFormatInt (rootDirLineNum.value (), "ZZZ0") + "].  Expanded to[" + RootDirExpanded () + "]";
       log.Level (-1) << endl 
                      << "ValidateGlobalSection   ***ERROR*** " << errMsg << endl 
                      << endl;
@@ -1665,20 +1665,20 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
     }
   }
 
-  kkint32  parametersLineNum        = -1;
-  kkint32  featuresIncludedLineNum  = -1;
-  kkint32  examplesPerClassLineNum  = -1;
+  OptionUInt32  parametersLineNum       = {};
+  OptionUInt32  featuresIncludedLineNum = {};
+  OptionUInt32  examplesPerClassLineNum = {};
 
   KKStr  modelParametersStr  = SettingValueToStr (sectionNum, "Parameters",        parametersLineNum);
   KKStr  featuresIncludedStr = SettingValueToStr (sectionNum, "Features_Included", featuresIncludedLineNum);
 
-  if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
+  if  ((!parametersLineNum)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     modelParametersStr = SettingValueToStr ("Model3", "Parameters", parametersLineNum);
 
-  if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
+  if  ((!featuresIncludedLineNum)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     featuresIncludedStr = SettingValueToStr ("Model3", "Features_Included", featuresIncludedLineNum);
 
-  if  (parametersLineNum < 0)
+  if  (!parametersLineNum)
   {
     KKStr errMsg = "'Parameters' setting was not specified.";
     log.Level (-1) << endl 
@@ -1708,7 +1708,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
     if  (examplesPerClassStr.Empty ())
       examplesPerClassStr = SettingValueToStr (sectionNum, "Images_Per_Class", examplesPerClassLineNum);
 
-    if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
+    if  ((!examplesPerClassLineNum)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     {
       examplesPerClassStr = SettingValueToStr ("Model3", "Examples_Per_Class", examplesPerClassLineNum);
       if  (examplesPerClassStr.Empty ())
@@ -1735,14 +1735,14 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkuint32  sectionNum,
   CreateModelParameters (modelParametersStr, selFeatures, sectionLineNum, parametersLineNum, featuresIncludedLineNum, log);
   if  (modelParameters)
   {
-    if  (examplesPerClassLineNum >= 0)
+    if  (examplesPerClassLineNum)
       modelParameters->ExamplesPerClass (examplesPerClass);
     else
       examplesPerClass = modelParameters->ExamplesPerClass ();
   }
 
   KKStr  otherClassName (SettingValueToStr (sectionNum, "OtherClass", otherClassLineNum));
-  if  (otherClassLineNum >= 0)
+  if  (otherClassLineNum)
   {
     if  (otherClassName.Empty ())
     {
@@ -1770,19 +1770,19 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
     FormatGood (false);
   }
 
-  kkint32  class1NameLineNum = -1;
-  kkint32  class2NameLineNum = -1;
-  kkint32  parameterLinenum  = -1;
-  kkint32  weightLineNum     = -1;
+  OptionUInt32  class1NameLineNum = {};
+  OptionUInt32  class2NameLineNum = {};
+  OptionUInt32  parameterLinenum  = {};
+  OptionUInt32  weightLineNum     = {};
 
-  kkint32  sectionLineNum = SectionLineNum (sectionNum);
+  OptionUInt32  sectionLineNum = SectionLineNum (sectionNum);
 
   KKStr  class1Name   (SettingValueToStr (sectionNum, "CLASS1",     class1NameLineNum));
   KKStr  class2Name   (SettingValueToStr (sectionNum, "CLASS2",     class2NameLineNum));
   KKStr  parameterStr (SettingValueToStr (sectionNum, "PARAMETERS", parameterLinenum));
   KKStr  weightStr    (SettingValueToStr (sectionNum, "WEIGHT",     weightLineNum));
 
-  if  (class1NameLineNum < 0)
+  if  (!class1NameLineNum)
   {
     KKStr errMsg = "'Class1' setting was not defined.";
     log.Level (-1) << endl << "ValidateTwoClassParameters   ***ERROR***   " << errMsg << endl << endl;
@@ -1790,7 +1790,7 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
     FormatGood (false);
   }
 
-  if  (class2NameLineNum < 0)
+  if  (!class2NameLineNum)
   {
     KKStr errMsg = "'Class2' setting was not defined.";
     log.Level (-1) << endl << "ValidateTwoClassParameters   ***ERROR***   " << errMsg << endl << endl;
@@ -1820,7 +1820,7 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
   if  (!selectedFeatures)
     selectedFeatures = new FeatureNumList (fileDesc);
 
-  if  ((class1NameLineNum > 0)  &&  (!class1))
+  if  ((class1NameLineNum)  &&  (!class1))
   {
     KKStr errMsg = "Class[" + class1Name + "] is not defined.";
     log.Level (-1) << endl << "ValidateTwoClassParameters   ***ERROR***   " << errMsg << endl << endl;
@@ -1828,7 +1828,7 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkuint32  sectionNum,
     FormatGood (false);
   }
 
-  if  ((class2NameLineNum > 0)  &&  (!class2))
+  if  ((class2NameLineNum)  &&  (!class2))
   {
     KKStr errMsg = "Class[" + class2Name + "] is not defined.";
     log.Level (-1) << endl << "ValidateTwoClassParameters   ***ERROR***   " << errMsg << endl << endl;
@@ -2282,7 +2282,7 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
 
   rootDir = "";
 
-  if  (trainingClasses.QueueSize () < 0)
+  if  (trainingClasses.QueueSize () < 1)
     return;
 
   kkuint32 zed = 0;

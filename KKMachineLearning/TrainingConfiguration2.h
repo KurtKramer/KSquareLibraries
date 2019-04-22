@@ -385,9 +385,9 @@ namespace KKMLL
 
     void                   CreateModelParameters (const KKStr&           _parameterStr,
                                                   const FeatureNumList&  _selFeatures,
-                                                  kkint32                _sectionLineNum,
-                                                  kkint32                _parametersLineNum, 
-                                                  kkint32                _featuresIncludedLineNum,
+                                                  OptionUInt32           _sectionLineNum,
+                                                  OptionUInt32           _parametersLineNum, 
+                                                  OptionUInt32           _featuresIncludedLineNum,
                                                   RunLog&                _log
                                                  );
 
@@ -418,9 +418,9 @@ namespace KKMLL
                                                   RunLog&   log
                                                  );
 
-    void                   ValidateOtherClass (MLClassPtr  classToValidate,
-                                               kkint32&    lineNum,
-                                               RunLog&     log
+    void                   ValidateOtherClass (MLClassPtr     classToValidate,
+                                               OptionUInt32&  lineNum,
+                                               RunLog&        log
                                               );
 
     TrainingConfiguration2Ptr  
@@ -466,7 +466,7 @@ namespace KKMLL
                                                    * a class can not be determined.
                                                    */
 
-    kkint32                otherClassLineNum;     /**< Line where OtherClass in configuration was defined. */
+    OptionUInt32           otherClassLineNum;     /**< Line where OtherClass in configuration was defined. */
 
     KKStr                  rootDir;               /**< Common directory that all images for this training
                                                    * library come from. This is determined by iterating 

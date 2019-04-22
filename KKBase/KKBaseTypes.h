@@ -171,6 +171,8 @@ namespace KKB
 
   typedef std::optional<kkuint32> OptionUInt32;
 
+  typedef std::vector<OptionUInt32>  VectorOptionUInt32;
+
   template<typename T>
   T  Max (T x, T y) { return x > y ? x : y; }
     

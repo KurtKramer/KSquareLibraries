@@ -184,9 +184,9 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                      )
 {
 	log.Level (-1) << " ModelKnn::ProbabilitiesByClasss   *** NOYT IMPLEMENTED ***" << std::endl;
-	KKCheck (_example != nullptr, "_example must not be NULL")
-	KKCheck (_probabilities != nullptr, "_probabilities must not be NULL");
-
+	KKCheck (_example != nullptr, "_example must not be NULL!")
+	KKCheck (_probabilities != nullptr, "_probabilities must not be NULL!");
+  KKCheck (_mlClasses.QueueSize () > 0, "_mlClasses.QueueSize () must be greater than 0!")
 }  /* ProbabilitiesByClass */
 
 
@@ -240,6 +240,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
                          RunLog&         log
                         )
 {
+  log.Level (30) << "ModelKnn::ReadXML   tag->Name (): "  << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {

@@ -91,11 +91,11 @@ namespace KKMLL
     void  SubClassifierName (const KKStr&               _subClassifierName)  {subClassifierName = _subClassifierName;}
     void  Weight            (float                      _weight)             {weight            = _weight;}
 
-    void  ClassNameLineNum     (kkint32  _classNameLineNum)     { classNameLineNum     = _classNameLineNum; }
-    void  CountFactorLineNum   (kkint32  _countFactorLineNum)   { countFactorLineNum   = _countFactorLineNum; }
-    void  DirLineNum           (kkint32  _dirLineNum)           { dirLineNum           = _dirLineNum; }
-    void  SubClassifierLineNum (kkint32  _subClassifierLineNum) { subClassifierLineNum = _subClassifierLineNum; }
-    void  WeightLineNum        (kkint32  _weightLineNum)        { weightLineNum        = _weightLineNum; }
+    void  ClassNameLineNum     (OptionUInt32  _classNameLineNum)     { classNameLineNum     = _classNameLineNum; }
+    void  CountFactorLineNum   (OptionUInt32  _countFactorLineNum)   { countFactorLineNum   = _countFactorLineNum; }
+    void  DirLineNum           (OptionUInt32  _dirLineNum)           { dirLineNum           = _dirLineNum; }
+    void  SubClassifierLineNum (OptionUInt32  _subClassifierLineNum) { subClassifierLineNum = _subClassifierLineNum; }
+    void  WeightLineNum        (OptionUInt32  _weightLineNum)        { weightLineNum        = _weightLineNum; }
 
     void  Directory       (kkuint32      idx, 
                            const KKStr&  directory
@@ -107,8 +107,7 @@ namespace KKMLL
                    VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
-
-
+    
     virtual  
     void  WriteXML (const KKStr&   varName,
                     std::ostream&  o
@@ -119,8 +118,6 @@ namespace KKMLL
                     const KKStr&  rootDir,
                     std::ostream& o
                    )  const;
-
-
 
   private:
     float            countFactor;    /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
@@ -141,11 +138,11 @@ namespace KKMLL
                                       * the SVM Cost parameter from examples in this class will be weighted by this value.
                                       */
 
-    kkint32  classNameLineNum;
-    kkint32  countFactorLineNum;
-    kkint32  dirLineNum;
-    kkint32  subClassifierLineNum;
-    kkint32  weightLineNum;
+    OptionUInt32  classNameLineNum;
+    OptionUInt32  countFactorLineNum;
+    OptionUInt32  dirLineNum;
+    OptionUInt32  subClassifierLineNum;
+    OptionUInt32  weightLineNum;
   };  /* TrainingClass */
 
 
@@ -180,7 +177,7 @@ namespace KKMLL
 
     TrainingClassList*  DuplicateListAndContents ()  const;
 
-    TrainingClassPtr    LocateByMLClass (MLClassPtr       _mlClass)  const;
+    TrainingClassPtr    LocateByMLClass (MLClassPtr  _mlClass)  const;
 
     TrainingClassPtr    LocateByMLClassName (const KKStr&  className);
 
@@ -201,12 +198,10 @@ namespace KKMLL
   };  /* TrainingClassList*/
 
   typedef  TrainingClassList*  TrainingClassListPtr;
-
-
+  
 
   typedef  XmlElementTemplate<TrainingClass>  XmlElementTrainingClass;
   typedef  XmlElementTrainingClass*  XmlElementTrainingClassPtr;
-
 
   typedef  XmlElementTemplate<TrainingClassList>  XmlElementTrainingClassList;
   typedef  XmlElementTrainingClassList*  XmlElementTrainingClassListPtr;

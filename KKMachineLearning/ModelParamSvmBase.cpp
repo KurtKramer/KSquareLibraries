@@ -107,6 +107,7 @@ void  ModelParamSvmBase::ParseCmdLineParameter (const KKStr&  parameter,
                                                 RunLog&       log
                                                )
 {
+  log.Level (70) << "ModelParamSvmBase::ParseCmdLineParameter   parameter: " << parameter << "  value: " << parameter << endl;
   svmParam.ProcessSvmParameter (parameter, value, parameterUsed);
 }  /* ParseCmdLineParameter */
 

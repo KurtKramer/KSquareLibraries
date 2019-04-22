@@ -7,6 +7,7 @@
 
 #include "KKQueue.h"
 #include "KKStr.h"
+#include "Option.h"
 #include "RunLog.h"
 
 
@@ -65,13 +66,12 @@ namespace KKB
 
     void  FormatGood (bool _formatGood)  {formatGood = _formatGood;}
 
-    const VectorKKStr&   FormatErrors         ()  const {return formatErrors;}
-    const VectorInt&     FormatErrorsLineNums ()  const {return formatErrorsLineNums;}
+    const VectorKKStr&         FormatErrors         ()  const {return formatErrors;}
+    const VectorOptionUInt32&  FormatErrorsLineNums ()  const {return formatErrorsLineNums;}
 
+    VectorKKStr  FormatErrorsWithLineNumbers ()  const;
 
-    VectorKKStr          FormatErrorsWithLineNumbers ()  const;
-
-    void  FormatErrorsAdd (kkint32       lineNum, 
+    void  FormatErrorsAdd (OptionUInt32  lineNum,
                            const KKStr&  error
                           );
 
@@ -99,7 +99,7 @@ namespace KKB
 
     OptionUInt32       SectionNum (const KKB::KKStr&  sectionName)  const;
 
-    kkint32            SectionLineNum (kkuint32 sectionNum)  const;
+    OptionUInt32       SectionLineNum (kkuint32 sectionNum)  const;
 
     KKStrConstPtr      SettingName (const KKB::KKStr&  sectionName, 
                                     kkuint32           settingNum
@@ -112,31 +112,31 @@ namespace KKB
 
     KKStrConstPtr      SettingValue (const KKB::KKStr&  sectionName,
                                      const KKB::KKStr&  settingName,
-                                     kkint32&           lineNum
+                                     OptionUInt32&      lineNum
                                     )  const;
 
 
     KKStr              SettingValueToStr (const KKB::KKStr&  sectionName,
                                           const KKB::KKStr&  settingName,
-                                          kkint32&           lineNum
+                                          OptionUInt32&      lineNum
                                          )  const;
 
 
     KKStrConstPtr      SettingValue (kkuint32           sectionNum,
                                      const KKB::KKStr&  settingName,
-                                     kkint32&           lineNum
+                                     OptionUInt32&      lineNum
                                     )  const;
 
 
     KKStr              SettingValueToStr (kkuint32           sectionNum,
                                           const KKB::KKStr&  settingName,
-                                          kkint32&           lineNum
+                                          OptionUInt32&      lineNum
                                          )  const;
 
 
-    KKStrConstPtr      SettingValue (kkuint32 sectionNum,
-                                     kkuint32 settingNum,
-                                     kkint32& lineNum
+    KKStrConstPtr      SettingValue (kkuint32      sectionNum,
+                                     kkuint32      settingNum,
+                                     OptionUInt32& lineNum
                                     )  const;
 
 
@@ -144,7 +144,7 @@ namespace KKB
                       kkuint32        settingNum,
                       KKStrConstPtr&  name,
                       KKStrConstPtr&  value,
-                      kkint32&        lineNum
+                      OptionUInt32&   lineNum
                      );
 
   private:
@@ -157,12 +157,12 @@ namespace KKB
     typedef  ConfSection*      ConfSectionPtr;
     typedef  ConfSectionList*  ConfSectionListPtr;
 
-    KKB::KKStr          curSectionName;
-    KKB::KKStr          fileName;
-    bool                formatGood;
-    VectorKKStr         formatErrors;   /**< Configuration Format Errors will be recorder here. */
-    VectorInt           formatErrorsLineNums;
-    ConfSectionListPtr  sections; 
+    KKB::KKStr            curSectionName;
+    KKB::KKStr            fileName;
+    bool                  formatGood;
+    VectorKKStr           formatErrors;   /**< Configuration Format Errors will be recorder here. */
+    VectorOptionUInt32    formatErrorsLineNums;
+    ConfSectionListPtr    sections; 
   };  /* Configuration */
 
   typedef  Configuration*  ConfigurationPtr;

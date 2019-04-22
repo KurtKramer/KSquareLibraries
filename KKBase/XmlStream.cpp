@@ -632,12 +632,26 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 }
 
 
+
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            kkuint32      attributeValue
                           )
 {
   attributes.AddAttribute (attributeName, StrFromUint32 (attributeValue));
 }
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           OptionUInt32  attributeValue
+                          )
+{
+   if  (!attributeValue)
+     attributes.AddAttribute (attributeName, "");
+   else
+     attributes.AddAttribute (attributeName, StrFromUint32 (attributeValue.value ()));
+}
+
 
 
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
@@ -675,10 +689,12 @@ KKStrConstPtr  XmlTag::AttributeValueByName  (const KKStr&  _name)   const
 }
 
 
+
 KKStrConstPtr  XmlTag::AttributeValueByIndex (kkuint32  index)  const
 {
   return  attributes.AttributeValueByIndex (index);
 }
+
 
 
 KKStrConstPtr  XmlTag::AttributeNameByIndex  (kkuint32  index)  const
@@ -687,10 +703,12 @@ KKStrConstPtr  XmlTag::AttributeNameByIndex  (kkuint32  index)  const
 }
 
 
+
 kkint32  XmlTag::AttributeValueInt32 (const KKStr& attributeName)  const
 {
  return  this->attributes.AttributeValueInt32  (attributeName);
 }
+
 
 
 DateTime  XmlTag::AttributeValueDateTime (const KKStr&  attributeName)   const
@@ -699,10 +717,12 @@ DateTime  XmlTag::AttributeValueDateTime (const KKStr&  attributeName)   const
 }
 
 
+
 const KKStr&  XmlTag::AttributeValueKKStr (const KKStr& attributeName)  const
 {
  return  attributes.AttributeValueKKStr  (attributeName);
 }
+
 
 
 KKStr  XmlTag::ToString ()  const
@@ -1419,13 +1439,13 @@ XmlElementArrayFloat2DVarying::~XmlElementArrayFloat2DVarying ()
 
 
 
-
 float**   XmlElementArrayFloat2DVarying::TakeOwnership ()
 {
   float** v = value;
   value = NULL;
   return v;
 }
+
 
 
 kkuint32*   XmlElementArrayFloat2DVarying::TakeOwnershipWidths ()
@@ -1468,22 +1488,12 @@ XmlFactoryMacro(ArrayFloat2DVarying)
 
 
 
-
-
-
-
-
-
-
-
-
 XmlFactoryMacro(KKStr)
 
 XmlFactoryPtr  KKB::XmlElementKKStrFactoryInstance ()
 {
   return  XmlFactoryKKStr::FactoryInstance ();
 }
-
 
 
 

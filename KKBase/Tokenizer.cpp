@@ -19,8 +19,21 @@ using namespace KKB;
 
 
 
-Tokenizer::Tokenizer (TokenBufferPtr  _in):
+Tokenizer* Tokenizer::OpenFile (const KKStr&  _fileName)
+{
+  bool fileOpened = false;
+  auto  tokenizer = new Tokenizer (_fileName, fileOpened);
+  if  (!fileOpened)
+  {
+    delete tokenizer;
+    tokenizer = NULL;
+  }
+  return tokenizer;
+}
 
+
+
+Tokenizer::Tokenizer (TokenBufferPtr  _in):
   atEndOfFile           (false),
   in                    (_in),
   secondCharAtEndOfFile (false),
@@ -34,7 +47,6 @@ Tokenizer::Tokenizer (TokenBufferPtr  _in):
 
 
 Tokenizer::Tokenizer (const KKStr&  _str):
-
   atEndOfFile           (false),
   in                    (NULL),
   secondCharAtEndOfFile (false),
@@ -52,7 +64,6 @@ Tokenizer::Tokenizer (const KKStr&  _str):
 Tokenizer::Tokenizer (const KKStr&  _fileName,
                       bool&         _fileOpened
                      ):
-
   atEndOfFile           (false),
   in                    (NULL),
   secondCharAtEndOfFile (false),
@@ -108,6 +119,7 @@ void  Tokenizer::DefineOperatorChars (char const * _operatorChars)
 }
 
 
+
 KKStrPtr  Tokenizer::GetNextToken ()
 {
   while  (tokenList.QueueSize () < 1)
@@ -150,7 +162,6 @@ void  Tokenizer::PushTokenOnFront (KKStrPtr  t)
 {
   tokenList.PushOnFront (t);
 }
-
 
 
 
@@ -213,7 +224,6 @@ char  Tokenizer::GetNextChar ()
 
 
 
-
 void  Tokenizer::ReadInNextLogicalToken ()
 {
   KKStrPtr  t = GetNextTokenRaw ();
@@ -239,11 +249,11 @@ bool  Tokenizer::WhiteSpaceChar (char c)  const
 
 
 
-
 bool  Tokenizer::DelimiterChar (char c)  const
 {
   return  (strchr ("\n\r\t", c) != NULL);
 }
+
 
 
 bool  Tokenizer::OperatorChar (char c)  const
@@ -301,9 +311,6 @@ KKStrPtr  Tokenizer::GetNextTokenRaw ()
 
 
 
-
-
-
 KKStrPtr  Tokenizer::ProcessStringToken (char strDelChar)
 {
   if  (firstChar  == strDelChar)
@@ -346,7 +353,6 @@ KKStrPtr  Tokenizer::ProcessStringToken (char strDelChar)
   return new KKStr (str);
 
 }  /* ProcessStringToken */
-
 
 
 
@@ -407,7 +413,6 @@ KKStrPtr  Tokenizer::ProcessFieldToken ()
 
   return  field;
 }  /* ProcessFieldToken */
-
 
 
 

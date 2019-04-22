@@ -23,6 +23,9 @@ namespace  KKB
   class  Tokenizer
   {
   public:
+    static
+      Tokenizer* OpenFile (const KKStr&  _fileName);
+
     Tokenizer (TokenBufferPtr _in);
 
     Tokenizer (const KKStr&  _str);
@@ -32,8 +35,7 @@ namespace  KKB
               );
 
     ~Tokenizer ();
-
-
+    
     void  DefineOperatorChars (char const * _operatorChars);
 
     bool  EndOfFile ();
@@ -52,7 +54,6 @@ namespace  KKB
     void  PushTokenOnFront (KKStrPtr  t);
 
     KKStrConstPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
-
 
   private:
     bool       DelimiterChar (char c)  const;

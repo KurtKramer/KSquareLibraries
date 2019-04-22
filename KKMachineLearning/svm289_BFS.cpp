@@ -153,6 +153,7 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
   x           (_fileDesc, false),
   y           (NULL)
 {
+  _log.Level (50) << "SVM289_BFS::svm_problem::svm_problem" << endl;
 }
 
 
@@ -247,7 +248,7 @@ SVM289_BFS::svm_parameter::svm_parameter (KKStr&  paramStr):
   probability  (0),
   probParam    (0.0)
 {
-  cerr << endl << "SVM289_BFS::svm_parameter::svm_parameter   Not Doing anything with 'paramStr'" << endl << endl;
+  cerr << endl << "SVM289_BFS::svm_parameter::svm_parameter   Not Doing anything with paramStr: " << paramStr << endl << endl;
 }
 
 
@@ -934,6 +935,7 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
    x              (NULL)
 
 {
+  _log.Level (50) << "SVM289_BFS::Kernel::Kernel" << endl;
   x = new FeatureVectorList (_x, false);
 
   numSelFeatures = _selFeatures.NumSelFeatures ();
@@ -1150,7 +1152,7 @@ public:
                double*        alpha_, 
                double         Cp, 
                double         Cn, 
-               double         eps,
+               double         _eps,
                SolutionInfo*  si, 
                kkint32        shrinking
               );
@@ -1291,7 +1293,7 @@ void  SVM289_BFS::Solver::Solve (kkint32        l_,
                                  double*        alpha_, 
                                  double         Cp_, 
                                  double         Cn_, 
-                                 double         eps,
+                                 double         _eps,
                                  SolutionInfo*  si, 
                                  kkint32        shrinking
                                 )
@@ -1304,7 +1306,7 @@ void  SVM289_BFS::Solver::Solve (kkint32        l_,
   clone(alpha,alpha_,l);
   this->Cp = Cp_;
   this->Cn = Cn_;
-  this->eps = eps;
+  this->eps = _eps;
   unshrink = false;
 
   // initialize alpha_status
@@ -1840,20 +1842,20 @@ class  SVM289_BFS::Solver_NU : public SVM289_BFS::Solver
 public:
   Solver_NU() {}
 
-  void  Solve (kkint32         l_, 
-               QMatrix&        Q, 
-               const double*   p, 
-               const schar*    y,
-               double*         alpha, 
-               double          Cp, 
-               double          Cn, 
-               double          eps,
-               SolutionInfo*   si, 
-               kkint32         shrinking
+  void  Solve (kkint32         _l, 
+               QMatrix&        _Q, 
+               const double*   _p, 
+               const schar*    _y,
+               double*         _alpha, 
+               double          _Cp, 
+               double          _Cn, 
+               double          _eps,
+               SolutionInfo*   _si, 
+               kkint32         _shrinking
               )
   {
-    this->si = si;
-    Solver::Solve (l_, Q, p, y, alpha, Cp, Cn, eps, si, shrinking);
+    this->si = _si;
+    Solver::Solve (_l, _Q, _p, _y, _alpha, _Cp, _Cn, _eps, _si, _shrinking);
   }
 
 private:
@@ -1863,11 +1865,11 @@ private:
 
   double calculate_rho ();
 
-  bool  be_shrunk (kkint32   i, 
-                   double  Gmax1, 
-                   double  Gmax2, 
-                   double  Gmax3, 
-                   double  Gmax4
+  bool  be_shrunk (kkint32  i, 
+                   double   Gmax1, 
+                   double   Gmax2, 
+                   double   Gmax3, 
+                   double   Gmax4
                   );
 
   void do_shrinking ();
@@ -4057,6 +4059,7 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   prob_estimates      (NULL)
 
 {
+  _log.Level (50) << "SVM289_BFS::svm_model::svm_model" << endl;
   kkint32  m = nr_class - 1;
   kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
@@ -4143,6 +4146,7 @@ SVM289_BFS::svm_model::svm_model (FileDescConstPtr  _fileDesc,
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
 {
+  _log.Level (50) << "SVM289_BFS::svm_model::svm_model" << endl;
 }
 
 
@@ -4169,6 +4173,7 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
    prob_estimates      (NULL)
 
 {
+  _log.Level (50) << "SVM289_BFS::svm_model::svm_model" << endl;
 }
 
 

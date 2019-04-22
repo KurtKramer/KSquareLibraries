@@ -108,6 +108,7 @@ void  ModelParamKnn::ReadXML (XmlStream&      s,
                               RunLog&         log
                              )
 {
+  log.Level (30) << "ModelParamKnn::ReadXML   tag->Name (): "  << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
