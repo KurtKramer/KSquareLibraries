@@ -25,7 +25,7 @@ namespace KKB
    * [Header]
    * ClassifierType = SVM
    * Parameters = -K RBF  -S SVC -G 1.76 -C 12
-   * RootDir = ${LarcosHmeDir}\\Classifier\\TrainingLibraries\\
+   * RootDir = ${TFTCHomeDir}\\Classifier\\TrainingLibraries\\
    *
    * [Class]
    * Name = Shrimp_01
