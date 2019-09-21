@@ -816,7 +816,7 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
          paddedForgroudPixelCount++;
 
       newRows[newRow][newCol] = oldRow[col];
-      newCol++;
+      ++newCol;
     }
 
     newRow++;
