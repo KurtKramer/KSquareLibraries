@@ -615,6 +615,8 @@ KKStr::KKStr (double  d,
 KKStr::KKStr (kkStrUint  size):
         val (NULL)
 {
+  if  (size > MaxStrLen)
+    cerr << "KKStr::KKStr (kkStrUint  size)    size > MaxStrLen" << endl;
   KKCheck (size <= MaxStrLen, "KKStr::KKStr  size: " << size << " exceeds max allowed length: " << MaxStrLen)
   AllocateStrSpace ((kkStrUint)size);
   val[0] = 0;

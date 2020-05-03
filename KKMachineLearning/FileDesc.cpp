@@ -711,7 +711,7 @@ FileDescConstPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
       if  (lCode < 0)
       {
         bool  alreadyExists = false;
-        f->AddANominalValue (fieldNum, rightNomName, alreadyExists, log);
+        f->AddANominalValue (fieldNum, rightNomName, alreadyExists);
         lCode = f->LookUpNominalCode (fieldNum, rightNomName);
       }
     }

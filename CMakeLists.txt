@@ -4,6 +4,7 @@ project(KSquareUtilities VERSION 0.1.0)
 enable_testing()
 
 include_directories(KKBase)
+include_directories($ENVtsidePackages}/zlib128)
 
 
 subdirs(KKBase)

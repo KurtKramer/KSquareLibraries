@@ -11,6 +11,7 @@ using namespace std;
 
 #include "DateTimeTest.h"
 #include "KKQueueTest.h"
+#include "KKHeapTest.h"
 #include "KKStrTest.h"
 #include "KKTest.h"
 #include "OptionTest.h"
@@ -19,6 +20,7 @@ using namespace KKBaseTest;
   int main()
   {
     KKQueue<KKTest> tests;
+    tests.PushOnBack (new KKHeapTest   ());
     tests.PushOnBack (new DateTimeTest ());
     tests.PushOnBack (new OptionTest   ());
     tests.PushOnBack (new KKQueueTest  ());

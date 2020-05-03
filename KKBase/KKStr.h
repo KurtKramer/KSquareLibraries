@@ -105,7 +105,7 @@ namespace  KKB
 
     KKStr (KKB::KKStr  &&str);  /**< Move Constructor */
 
-    KKStr (kkStrUint  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
+    explicit KKStr (kkStrUint  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
     ///<summary> Initializes the string with a displayable version of <paramref name='d'/> with <paramref name='precision'/> decimal points. </summary>
     KKStr (double  d,  kkint32 precision);
