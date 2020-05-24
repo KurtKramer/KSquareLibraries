@@ -167,7 +167,7 @@ void  Tokenizer::PushTokenOnFront (KKStrPtr  t)
 
 KKStrConstPtr  Tokenizer::Peek (kkuint32 idx)
 {
-  while  ((tokenList.QueueSize () < (kkint32)(idx + 1))  &&  !atEndOfFile)
+  while  ((tokenList.QueueSize () < (idx + 1))  &&  !atEndOfFile)
     ReadInNextLogicalToken ();
 
   if  (idx >= tokenList.size ())

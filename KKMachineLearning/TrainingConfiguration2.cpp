@@ -2305,31 +2305,31 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
         if  (!(rootDirParts[zed].EqualIgnoreCase (parts[zed])))
           break;
         zed++;
+      }
+
+      while  (zed < rootDirParts.size ())
+        rootDirParts.pop_back ();
     }
-
-    while  (zed < rootDirParts.size ())
-      rootDirParts.pop_back ();
   }
-}
 
-
-
-//***********************************************************************************
-// We need to update the 'trainingClasses' structure before the 'rootDir' variable.
-// This is because the following code that updates the 'TrainingClass' objects in
-// 'trainingClasses' will use the 'rootDir' variable in the 'ExpandedDirectory' 
-// method.
-for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
-{
-  TrainingClassPtr  tc = *idx;
-
-  for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
+  //***********************************************************************************
+  // We need to update the 'trainingClasses' structure before the 'rootDir' variable.
+  // This is because the following code that updates the 'TrainingClass' objects in
+  // 'trainingClasses' will use the 'rootDir' variable in the 'ExpandedDirectory' 
+  // method.
+  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
   {
-    VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
+    TrainingClassPtr  tc = *idx;
 
-    KKStr newTrainClassSubDir = "";
-    for (zed = (kkuint32)rootDirParts.size ();  zed < (kkuint32)parts.size ();  zed++)
-      newTrainClassSubDir << parts[zed];
+    for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
+    {
+      VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
+
+      KKStr newTrainClassSubDir = "";
+      for (zed = (kkuint32)rootDirParts.size ();  zed < (kkuint32)parts.size ();  zed++)
+      {
+        newTrainClassSubDir << parts[zed];
+      }
       tc->Directory (dirIdx, newTrainClassSubDir);
     }
   }

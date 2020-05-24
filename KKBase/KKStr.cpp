@@ -2222,7 +2222,7 @@ KKStrPtr  KKStr::ToKKStrPtr () const
 
 
 
-bool  KKStr::ValidInt (kkint32  &value)
+bool  KKStr::ValidInt (kkint32  &value)  const
 {
 
   kkint32  sign = 1;
@@ -3297,8 +3297,9 @@ uint  KKStr::ToUint () const
 
 KKB::ulong  KKStr::ToUlong () const
 {
-  kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= ULONG_MAX), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
+  long long ll = atoll(val);
+  long long maxUnsignedLong = (long long)std::numeric_limits<unsigned long>::max();
+  KKCheck ((ll >= 0)  &&  (ll <= maxUnsignedLong), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
   return  (ulong)ll;
 }
 

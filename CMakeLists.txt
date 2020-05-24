@@ -9,6 +9,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #set_property(TARGET KKBase PROPERTY CXX_STANDARD 17)
 #target_compile_features(KKBase PUBLIC cxx_std_11)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+
 include_directories(KKBase)
 include_directories($ENV{OutsidePackages}/zlib-1.2.11)
 message(STATUS,"\n\n  $ENV{OutsidePackages}")

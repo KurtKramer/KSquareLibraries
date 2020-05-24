@@ -64,23 +64,34 @@ namespace  SVM289_BFS
 
 
 
-  enum class  SVM_Type
+  enum class  SVM_Type: int
   {
-    SVM_NULL,
     C_SVC,
     NU_SVC,
     ONE_CLASS,
     EPSILON_SVR,
-    NU_SVR
+    NU_SVR,
+    SVM_NULL
   };    /* svm_type */
 
-  typedef  enum  { Kernel_NULL, LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }     Kernel_Type; /* kernel_type */
 
 
-  SVM_Type  SVM_Type_FromStr (KKStr     s);
+  enum class Kernel_Type: int
+  {
+      LINEAR,
+      POLY,
+      RBF,
+      SIGMOID,
+      PRECOMPUTED,
+      Kernel_NULL
+  };
+
+
+
+  SVM_Type  SVM_Type_FromStr (const KKStr&  s);
   KKStr     SVM_Type_ToStr   (SVM_Type  svmType);
 
-  Kernel_Type  Kernel_Type_FromStr (KKStr        s);
+  Kernel_Type  Kernel_Type_FromStr (const KKStr& s);
   KKStr        Kernel_Type_ToStr   (Kernel_Type  kernelType);
 
 

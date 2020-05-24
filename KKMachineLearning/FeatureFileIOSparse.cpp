@@ -80,9 +80,8 @@ FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
       continue;
     }
 
-    MLClassPtr  mlClass = _classes->GetMLClassPtr (className);
-
-    mlClass = _classes->GetMLClassPtr (className);
+    // Calling 'GetMLClassPtr' to make sure an instance of MLClass exists for 'className'.
+    _classes->GetMLClassPtr (className);
 
     KKStr  field;
     GetToken (_in, " \t", field, eof, eol);

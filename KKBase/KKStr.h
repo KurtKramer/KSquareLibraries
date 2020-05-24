@@ -578,9 +578,9 @@ namespace  KKB
 
     void      Upper ();
 
-    bool      ValidInt (kkint32&  value); /**< returns true if KKStr is formated as a valid integer otherwise false.
-                                           *@param[out] value of string as interpreted as a integer.
-                                           */
+    bool      ValidInt (kkint32&  value) const; /**< returns true if KKStr is formated as a valid integer otherwise false.
+                                                  *@param[out] value of string as interpreted as a integer.
+                                                  */
 
     bool      ValidMoney (float&  value)  const;
 

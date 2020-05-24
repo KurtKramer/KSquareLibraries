@@ -3175,6 +3175,13 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
       }
     }
 
+    if  (!tokenProcessed)
+    {
+      log.Level (20) << endl
+          << "UsfCasCor::ReadXML   ***WARNING***  Token  SectionName: " << t->SectionName () << "  VarName: " << t->VarName () << " Unused!" << endl
+          << endl;
+    }
+
     delete t;
     t = s.GetNextToken (cancelFlag, log);
   }

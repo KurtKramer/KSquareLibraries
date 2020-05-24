@@ -32,7 +32,9 @@ using namespace  KKMLL;
 using  namespace  SVM289_MFS;
 
 
+#if defined(_MSC_VER)
 #pragma warning(disable : 4996)
+#endif
 
 //kkint32 libsvm_version = LIBSVM_VERSION;
 
@@ -544,8 +546,9 @@ KKStr  SVM289_MFS::SVM_Type_ToStr (SVM_Type  svmType)
   case  SVM_Type::ONE_CLASS:    return  "one_class";
   case  SVM_Type::EPSILON_SVR:  return  "epsilon_svr";
   case  SVM_Type::NU_SVR:       return  "nu_svr";
+  default:
+    return "NULL";
   }
-  return  "NULL";
 }
 
 
@@ -573,9 +576,8 @@ KKStr  SVM289_MFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
   case  Kernel_Type::RBF:          return  "rbf";
   case  Kernel_Type::SIGMOID:      return  "sigmoid";
   case  Kernel_Type::PRECOMPUTED:  return  "precomputed";
+  default: return "";
   } 
-
-  return  "";
 }
 
 
@@ -909,23 +911,23 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
                             RunLog&                   _log
                            ):
 
-   coef0          (_param.coef0),
-   degree         (_param.degree),
-   gamma          (_param.gamma), 
-   kernel_type    (_param.kernel_type), 
    l              (_x.QueueSize ()),
    numSelFeatures (0),
-   preComputed    (NULL),
-   selFeatures    (NULL),
-   x              (NULL)
-
+   selFeatures    (nullptr),
+   x              (nullptr),
+   x_square       (nullptr),
+   preComputed    (nullptr),
+   kernel_type    (_param.kernel_type), 
+   degree         (_param.degree),
+   gamma          (_param.gamma),
+   coef0          (_param.coef0)
 {
   _log.Level(30) << "SVM289_MFS::Kernel::Kernel  _param:" << _param.ToCmdLineStr () << endl;
   x = new FeatureVectorList (_x, false);
 
   numSelFeatures = _selFeatures.NumSelFeatures ();
   selFeatures = new kkint32[numSelFeatures];
-  for  (kkint32 zed = 0;  zed < numSelFeatures;  zed++)
+  for  (kkint32 zed = 0;  zed < numSelFeatures;  ++zed)
     selFeatures[zed] = _selFeatures[zed];
 
   switch  (kernel_type)
@@ -949,6 +951,11 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
         }
       }
       break;
+
+    default:
+      KKStr errMsg = "SVM289_MFS::Kernel::Kernel   ***ERROR***   kernel_type  not implemented: '" + StrFromInt32 ((kkint32)kernel_type) + "' : '" + SVM289_MFS::Kernel_Type_ToStr (kernel_type) + "'.";
+      _log.Level (-1) << endl << errMsg << endl << endl;
+      throw KKException (errMsg); 
   }
 
   if  (kernel_type == Kernel_Type::RBF)
@@ -4023,15 +4030,16 @@ SVM289_MFS::Svm_Model::Svm_Model ():
   rho                 (NULL),
   probA               (NULL),
   probB               (NULL),
+  selFeatures         (),
   label               (NULL),
   nSV                 (NULL),     // number of SVs for each class (nSV[k])
   weOwnSupportVectors (true),
-  selFeatures         (),
   dec_values          (NULL),
   pairwise_prob       (NULL),
   prob_estimates      (NULL)
 {
 }
+
 
 
 SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
@@ -4046,14 +4054,13 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
   rho                 (NULL),
   probA               (NULL),
   probB               (NULL),
+  selFeatures         (_model.selFeatures),
   label               (NULL),
   nSV                 (NULL),     // number of SVs for each class (nSV[k])
   weOwnSupportVectors (_model.weOwnSupportVectors),
-  selFeatures         (_model.selFeatures),
   dec_values          (NULL),
   pairwise_prob       (NULL),
   prob_estimates      (NULL)
-
 {
   if  (nr_class < 1)
   {
@@ -4139,10 +4146,10 @@ SVM289_MFS::Svm_Model::Svm_Model (FileDescConstPtr _fileDesc):
    rho                 (NULL),
    probA               (NULL),
    probB               (NULL),
+   selFeatures         (_fileDesc),
    label               (NULL),
    nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures         (_fileDesc),
    dec_values          (NULL),
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
@@ -4163,14 +4170,13 @@ SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
    rho                 (NULL),
    probA               (NULL),
    probB               (NULL),
+   selFeatures         (_selFeatures),
    label               (NULL),
    nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures         (_selFeatures),
    dec_values          (NULL),
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
-
 {
 }
 
@@ -4364,8 +4370,6 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
   SV.Owner (true);
   weOwnSupportVectors = true;
 
-  kkint32  numBinaryCombos = 0;
-
   KKStr  svmParametersStr;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
@@ -4420,7 +4424,6 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("nr_class"))
         {
           nr_class = valueUint32.value_or (valueInt32.value_or (0));
-          numBinaryCombos = nr_class * (nr_class - 1) / 2;
         }
 
         else if  (varName.EqualIgnoreCase ("numSVs"))
@@ -4441,13 +4444,13 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("probA"))
         {
           delete  probA;
-          probA = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();   // numBinaryCombos
+          probA = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();
         }  
 
         else if  (varName.EqualIgnoreCase ("probB"))
         {
           delete  probB;
-          probB = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();   // numBinaryCombos
+          probB = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();
         }
 
         else if  (varName.EqualIgnoreCase ("nSV"))

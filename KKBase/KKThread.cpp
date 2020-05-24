@@ -321,12 +321,7 @@ void*  ThreadStartCallBack (void* param)
     {
       tp->Run ();
     }
-    catch  (const KKException&  e1)
-    {
-      tp->Crashed (true);
-      tp->ExceptionText (e1.ToString ());
-    }
-    catch  (const std::exception e2)
+    catch  (const std::exception& e2)
     {
       tp->Crashed (true);
       const char* e2What = e2.what ();

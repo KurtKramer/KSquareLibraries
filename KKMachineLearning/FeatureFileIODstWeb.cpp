@@ -115,10 +115,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
 
   {
     // Make sure that the True and False _classes exist.
-    MLClassPtr  trueClass  = _classes->GetMLClassPtr ("True");
-    MLClassPtr  falseClass = _classes->GetMLClassPtr ("True");
-    trueClass  = NULL;
-    falseClass = NULL;
+    _classes->GetMLClassPtr ("True");
+    _classes->GetMLClassPtr ("False");
   }
 
   // We must first determine which Attribute line represents class.

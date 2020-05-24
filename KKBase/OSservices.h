@@ -164,6 +164,12 @@ namespace KKB
 
   double         osGetKernalTimeUsed ();
 
+  KKStrListPtr   osGetListOfFDirectoryEntries (const KKStr&  fileSpec, 
+                                               bool          includeSubdirectories,
+                                               bool          includeFiles
+                                              );
+
+
   /**
    *@brief  Returns a list of files that match the provided file specification.
    *@details You can provide any file specification including a directory path. If there is a failure will return NULL.
@@ -178,9 +184,9 @@ namespace KKB
                                          VectorKKStr&  fileNames   // The file names include full path.
                                         );
 
-  KKStrListPtr  osGetListOfDirectories (KKStr  fileSpec);
+  KKStrListPtr  osGetListOfDirectories (const KKStr&  fileSpec);
 
-  KKStrListPtr  osGetListOfImageFiles (KKStr  fileSpec);
+  KKStrListPtr  osGetListOfImageFiles (const KKStr&  fileSpec);
 
 
   /**

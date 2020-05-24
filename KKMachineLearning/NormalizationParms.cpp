@@ -344,7 +344,7 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
       else if  (varName.EqualIgnoreCase ("Sigma"))
       {
         XmlElementArrayDoublePtr  sss = dynamic_cast<XmlElementArrayDoublePtr>(e);
-        if  ((kkint32)sss->Count () == numOfFeatures)
+        if  (sss->Count () == numOfFeatures)
         {
           delete  sigma;
           sigma = sss->TakeOwnership ();

@@ -315,14 +315,13 @@ namespace  KKB
   Matrix<T>::Matrix (kkuint32  _numOfRows,
                      kkuint32  _numOfCols
                     ):
-    alignment   (64),
     data        (NULL),
     dataArea    (NULL),
+    alignment   (64),
     numOfCols   (_numOfCols),
     numOfRows   (_numOfRows),
     rows        (NULL),
     totNumCells (0)
-
   {
     AllocateStorage ();
   }  /*  Matrix::Matrix  */
@@ -331,9 +330,9 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>::Matrix (const Matrix&  _matrix) :
-    alignment   (_matrix.alignment),
     data        (NULL),
     dataArea    (NULL),
+    alignment   (_matrix.alignment),
     numOfCols   (_matrix.numOfCols),
     numOfRows   (_matrix.numOfRows),
     rows        (NULL),
@@ -347,9 +346,9 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>::Matrix (Matrix&&  _matrix) :
-    alignment   (_matrix.alignment),
     data        (_matrix.data),
     dataArea    (_matrix.dataArea),
+    alignment   (_matrix.alignment),
     numOfCols   (_matrix.numOfCols),
     numOfRows   (_matrix.numOfRows),
     rows        (_matrix.rows),
@@ -364,9 +363,9 @@ namespace  KKB
 
   template<typename T>
   Matrix<T>::Matrix (const std::vector<T>&  _v) :
-    alignment (64),
     data      (NULL),
     dataArea  (NULL),
+    alignment (64),
     numOfCols (1),
     numOfRows (kkuint32 (_v.size ())),
     rows      (NULL)

@@ -33,8 +33,8 @@ using namespace  KKMLL;
 
 ModelUsfCasCor::ModelUsfCasCor ():
   Model (),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
 }
 
@@ -42,8 +42,8 @@ ModelUsfCasCor::ModelUsfCasCor ():
 
 ModelUsfCasCor::ModelUsfCasCor (FactoryFVProducerPtr  _factoryFVProducer):
   Model (_factoryFVProducer),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
 }
 
@@ -54,8 +54,8 @@ ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 FactoryFVProducerPtr       _factoryFVProducer
                                ):
   Model (_name, _param, _factoryFVProducer),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
   param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
 }
@@ -64,8 +64,8 @@ ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
 
 ModelUsfCasCor::ModelUsfCasCor (const ModelUsfCasCor&   _model):
   Model (_model),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
   param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
   if  (_model.usfCasCorClassifier)

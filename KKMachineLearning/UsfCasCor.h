@@ -180,7 +180,9 @@
 /****************************************************************************/
 //#include "utils.h"
 
+#if defined(_MSC_VER)
 #pragma warning(disable:4996)
+#endif
 
 #ifndef INT_MAX
 #define INT_MAX 32767

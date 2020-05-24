@@ -22,14 +22,14 @@ using namespace KKB;
 #include  "KKMLLTypes.h"
 using namespace KKMLL;
 
-#pragma warning(disable : 4996)
-
-
-#include "svm.h"
-
+#if defined(_MSC_VER)
 #pragma warning( disable: 4100) 
 #pragma warning( disable: 4189) 
 #pragma warning( disable: 4458)
+#pragma warning(disable : 4996)
+#endif
+
+#include "svm.h"
 
 
 
@@ -282,8 +282,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
       const KKStr&  varName = e->VarName ();
-      const KKStr&  sectionName = e->SectionName ();
-
+      
       if  (varName.EqualIgnoreCase ("Param")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
       {
         param.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
@@ -2914,7 +2913,8 @@ static void  SVM233::solve_nu_svc (const svm_problem*    prob,
   double sum_pos = nu*l/2;
   double sum_neg = nu*l/2;
 
-  for(i=0;i<l;i++)
+  for(i = 0;  i < l;  i++)
+  {
     if(y[i] == +1)
     {
       alpha[i] = min(1.0,sum_pos);
@@ -2925,29 +2925,29 @@ static void  SVM233::solve_nu_svc (const svm_problem*    prob,
       alpha[i] = min(1.0,sum_neg);
       sum_neg -= alpha[i];
     }
+  }
+  double *zeros = new double[l];
 
-    double *zeros = new double[l];
+  for(i=0;i<l;i++)
+    zeros[i] = 0;
 
-    for(i=0;i<l;i++)
-      zeros[i] = 0;
+  Solver_NU s;
+  s.Solve(l, SVC_Q(*prob,*param,y), zeros, y,
+    alpha, 1.0, 1.0, param->eps, si,  param->shrinking);
+  double r = si->r;
 
-    Solver_NU s;
-    s.Solve(l, SVC_Q(*prob,*param,y), zeros, y,
-      alpha, 1.0, 1.0, param->eps, si,  param->shrinking);
-    double r = si->r;
+  info("C = %f\n",1/r);
 
-    info("C = %f\n",1/r);
+  for(i=0;i<l;i++)
+    alpha[i] *= y[i]/r;
 
-    for(i=0;i<l;i++)
-      alpha[i] *= y[i]/r;
+  si->rho /= r;
+  si->obj /= (r*r);
+  si->upper_bound_p = 1/r;
+  si->upper_bound_n = 1/r;
 
-    si->rho /= r;
-    si->obj /= (r*r);
-    si->upper_bound_p = 1/r;
-    si->upper_bound_n = 1/r;
-
-    delete[] y;
-    delete[] zeros;
+  delete[] y;
+  delete[] zeros;
 }  /* solve_nu_svc */
 
 
@@ -3580,6 +3580,7 @@ SvmModel233* SVM233::svm_train (const svm_problem*    prob,
 
     p = 0;
     for  (i = 0;  i < nr_class;  i++)
+    {
       for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         // classifier (i,j): coefficients with
@@ -3620,26 +3621,26 @@ SvmModel233* SVM233::svm_train (const svm_problem*    prob,
         }
         ++p;
       }
+    }
+    free(label);
+    free(count);
+    free(index);
+    free(start);
+    if (W != NULL)
+      free(W);
+    free(x);
+    free(weighted_C);
+    free(nonzero);
+    for(i=0;i<nr_class*(nr_class-1)/2;i++)
+      free(f[i].alpha);
+    free(f);
+    free(nz_count);
+    free(nz_start);
 
-      free(label);
-      free(count);
-      free(index);
-      free(start);
-      if (W != NULL)
-        free(W);
-      free(x);
-      free(weighted_C);
-      free(nonzero);
-      for(i=0;i<nr_class*(nr_class-1)/2;i++)
-        free(f[i].alpha);
-      free(f);
-      free(nz_count);
-      free(nz_start);
+    // KNS - this was commecnted out in the pre-BR svm
+    // svm_margin(model);
 
-      // KNS - this was commecnted out in the pre-BR svm
-      // svm_margin(model);
-
-      model->kValueTable = new double[model->l];
+    model->kValueTable = new double[model->l];
   }
 
   //svm_margin (model);
@@ -4497,23 +4498,25 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
       kkint32 this_label = (kkint32)prob->y[i];
       kkint32 j;
       for(j=0;j<nr_class;j++)
+      {
         if(this_label == label[j])
         {
           ++count[j];
           break;
         }
-        if(j == nr_class)
+      }
+      if(j == nr_class)
+      {
+        if(nr_class == max_nr_class)
         {
-          if(nr_class == max_nr_class)
-          {
-            max_nr_class *= 2;
-            label = (kkint32 *)realloc(label,max_nr_class*sizeof(kkint32));
-            count = (kkint32 *)realloc(count,max_nr_class*sizeof(kkint32));
-          }
-          label[nr_class] = this_label;
-          count[nr_class] = 1;
-          ++nr_class;
+          max_nr_class *= 2;
+          label = (kkint32 *)realloc(label,max_nr_class*sizeof(kkint32));
+          count = (kkint32 *)realloc(count,max_nr_class*sizeof(kkint32));
         }
+        label[nr_class] = this_label;
+        count[nr_class] = 1;
+        ++nr_class;
+      }
     }
 
     for(i=0;i<nr_class;i++)

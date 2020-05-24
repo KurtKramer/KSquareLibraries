@@ -26,6 +26,7 @@
 
 #include <ctype.h>
 #include <errno.h>
+#include <filesystem>
 #include <iostream>
 #include <fstream> 
 //#include <stdio.h>
@@ -43,6 +44,8 @@ using namespace std;
 #include "OSservices.h"
 using namespace KKB;
 
+
+namespace fs = std::filesystem;
 
 
 KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
@@ -1430,136 +1433,76 @@ void  KKB::osWaitForEnter ()
 } /* osWaitForEnter */
 
 
-
-#ifdef  WIN32
-KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
+KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
+                                                 bool          includeSubdirectories,
+                                                 bool          includeFiles
+                                                )
 {
-  WIN32_FIND_DATA     wfd;
+  fs::path fileSpecPath = fs::path (fileSpec.Str ());
 
-  HANDLE  handle = FindFirstFile  (fileSpec.Str (),  &wfd);
+  KKStr  rootDirName;
 
-  if  (handle == INVALID_HANDLE_VALUE)
+  KKStrListPtr searchParts = nullptr;
+
+  if  (fs::is_directory(fileSpecPath))
   {
-    return  NULL;
+    rootDirName = fileSpec;
+  }
+  else
+  {
+    auto lastDirSepIdx = osLocateLastSlashChar (fileSpec);
+    if  (!lastDirSepIdx)
+      lastDirSepIdx = fileSpec.LocateCharacter(':');
+
+    if  (lastDirSepIdx.has_value ())
+    {
+      rootDirName = fileSpec.SubStrPart(0, lastDirSepIdx);
+      searchParts = osParseSearchSpec (fileSpec.SubStrPart(lastDirSepIdx + 1));
+    }
+    else
+    {
+      rootDirName = osGetCurrentDirectory ();
+      searchParts = osParseSearchSpec (fileSpec);
+    }
   }
 
   KKStrListPtr  nameList = new KKStrList (true);
 
-  BOOL  moreFiles = true;
-  while  (moreFiles)
+  for (auto dirIter: fs::directory_iterator (fs::path (rootDirName.Str ())))
   {
-    if  ((wfd.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM) == 0)  
+    std::string  name = dirIter.path ().string ();
+    if  ((name == ".")  ||  (name == ".."))
+      continue;
+
+    if  (dirIter.is_directory ())
     {
-      if  ((wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
-      {
-        nameList->PushOnBack (new KKStr (wfd.cFileName));
-      }
+       if  (!includeSubdirectories)
+         continue;
+    }
+    else if  (!includeFiles)
+    {
+      continue;
     }
 
-    moreFiles = FindNextFile (handle, &wfd);
-  }
-
-  FindClose (handle);
-
-  return  nameList;
-}  /* osGetListOfFiles */
-#else
-
-
-
-KKStrListPtr  osDirectoryList (KKStr  dirName)   /*  Unix Version of Function  */
-{
-  if  (dirName.Empty ())
-  {
-    dirName = osGetCurrentDirectory ();
-  }
-  else
-  {
-    osAddLastSlash (dirName);
-  }
-
-  KKStrListPtr  nameList = new KKB::KKStrList (true);
-
-  DIR*  openDir = opendir (dirName.Str ());
-  if  (openDir == NULL)
-    return NULL;
-
-  struct dirent  *de;
-  de = readdir (openDir);
-
-  while  (de)
-  {
-    KKStr  rootName (de->d_name);
-    if  ((rootName != ".")  &&  (rootName != ".."))
+    KKStr fileName = dirIter.path ().string();
+    if  (!searchParts  ||  osFileNameMatchesSearchFields (fileName, searchParts))
     {
-      KKStr  fullName  (dirName);
-      fullName << rootName;
-      struct stat  fs;
-
-
-      if  ((fs.st_mode & S_IFDIR) == 0)
-      {
-        nameList->PushOnBack (new KKStr (rootName));
-      }
+      nameList->PushOnBack (new KKStr (fileName));
     }
-
-    de = readdir (openDir);
   }
 
-  closedir (openDir);
+  delete searchParts;
+  searchParts = nullptr;
 
-  return  nameList;
-}  /* osDirectoryList */
+  return nameList;
+}  /* osGetListOfFDirectoryEntries */
 
 
 
 KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
 {
-  KKStr  afterLastSlash;
-  KKStr  afterStar;
-  KKStr  beforeStar;
-  KKStr  dirPath;
-
-  auto lastSlash = osLocateLastSlashChar (fileSpec);
-    
-  if  (!lastSlash)
-  {
-    dirPath = osGetCurrentDirectory ();
-    afterLastSlash = fileSpec;
-  }
-  else
-  {
-    dirPath = fileSpec.SubStrPart (0, lastSlash);
-    afterLastSlash = fileSpec.SubStrPart (lastSlash + 1);
-  }
-
-  osAddLastSlash (dirPath);
-
-  KKStrListPtr  allFilesInDirecory = osDirectoryList (dirPath);
-
-  if  (!allFilesInDirecory)
-    return NULL;
-
-  KKStrListPtr  searchSpecParms = osParseSearchSpec (afterLastSlash);
-
-  KKStrListPtr  resultList = new KKStrList (true);
-
-  KKStrPtr  name = NULL;
-  KKStrList::iterator  nameIDX;
-  for  (nameIDX = allFilesInDirecory->begin ();  nameIDX != allFilesInDirecory->end ();  ++nameIDX)
-  {
-    name = *nameIDX;
-    if  (osFileNameMatchesSearchFields (*name, searchSpecParms))
-       resultList->PushOnBack (new KKStr (*name));
-  }  
-
-
-  delete  allFilesInDirecory;
-  delete  searchSpecParms;
-  
-  return  resultList;
+  return osGetListOfFDirectoryEntries (fileSpec, false, true);
 }  /* osGetListOfFiles */
-#endif
 
 
 
@@ -1610,7 +1553,7 @@ void  KKB::osGetListOfFilesInDirectoryTree (const KKStr&  rootDir,
 
 
 
-KKStrListPtr  KKB::osGetListOfImageFiles (KKStr  fileSpec)
+KKStrListPtr  KKB::osGetListOfImageFiles (const KKStr&  fileSpec)
 {
   KKStrListPtr  imageFileNames = new KKStrList (true);
 
@@ -1634,105 +1577,10 @@ KKStrListPtr  KKB::osGetListOfImageFiles (KKStr  fileSpec)
 
 
 
-#ifdef  WIN32
-KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
+KKStrListPtr  KKB::osGetListOfDirectories (const KKStr&  fileSpec)
 {
-  WIN32_FIND_DATA   wfd;
-  
-  if  (fileSpec.LastChar () == DSchar)
-  {
-    fileSpec << "*.*";
-  }
-
-  else if  (!fileSpec.LocateCharacter ('*'))
-  {
-    if  (osValidDirectory (&fileSpec))
-    {
-      fileSpec << "\\*.*";
-    }
-  }
-
-  KKStrListPtr  nameList = new KKStrList (true);
-
-  HANDLE  handle = FindFirstFile  (fileSpec.Str (),  &wfd);
-
-  if  (handle == INVALID_HANDLE_VALUE)
-  {
-    delete  nameList;
-    return  NULL;
-  }
-
-  BOOL  moreFiles = true;
-  while  (moreFiles)
-  {
-    if  ((wfd.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM) == 0)  
-    {
-      if  ((wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
-      {
-        KKStrPtr dirName = new KKStr (wfd.cFileName);
-
-        if  ((*dirName != ".")  &&  (*dirName != ".."))
-          nameList->PushOnBack (dirName);
-        else
-          delete  dirName;
-      }
-    }
-
-    moreFiles = FindNextFile (handle, &wfd);
-  }
-
-  FindClose (handle);
-
-  return  nameList;
+  return osGetListOfFDirectoryEntries (fileSpec, true, false);
 }  /* osGetListOfDirectories */
-#else
-
-
-
-KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
-{
-  KKStr  rootDirName;
-  auto  x = fileSpec.LocateCharacter ('*');
-  if  (x)
-    rootDirName = fileSpec.SubStrSeg (0, x);
-  else
-    rootDirName = fileSpec;
-
-  osAddLastSlash (rootDirName);
-
-  KKStrListPtr  nameList = new KKStrList (true);
-
-  DIR*  openDir = opendir (rootDirName.Str ());
-  if  (openDir == NULL)
-    return NULL;
-
-  struct dirent  *de;
-  de = readdir (openDir);
-
-  while  (de)
-  {
-    KKStr  rootName (de->d_name);
-    if  ((rootName != ".")  &&  (rootName != ".."))
-    {      
-      KKStr  fullName  (rootDirName);
-      fullName << rootName;
-      struct stat  fs;
-
-
-      if  ((fs.st_mode & S_IFDIR) != 0)
-      {
-        nameList->PushOnBack (new KKStr (rootName));
-      }
-    }
-
-    de = readdir (openDir);
-  }
-
-  closedir (openDir);
-
-  return  nameList;
-}  /* osGetListOfDirectories */
-#endif
 
 
 

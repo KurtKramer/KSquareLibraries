@@ -34,16 +34,17 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-
 ModelDual::ModelDual ():
   Model (),
-  param         (NULL),
-  config1       (NULL),
-  config2       (NULL),
-  trainer1      (NULL),
-  trainer2      (NULL),
-  classifier1   (NULL),
-  classifier2   (NULL)
+  config1           (NULL),
+  config2           (NULL),
+  trainer1          (NULL),
+  trainer2          (NULL),
+  classifier1       (NULL),
+  classifier2       (NULL),
+  trainer1StatusMsg (),
+  trainer2StatusMsg (),
+  param             (NULL)
 {
 }
 
@@ -51,13 +52,15 @@ ModelDual::ModelDual ():
 
 ModelDual::ModelDual (FactoryFVProducerPtr  _factoryFVProducer):
   Model (_factoryFVProducer),
-  param         (NULL),
-  config1       (NULL),
-  config2       (NULL),
-  trainer1      (NULL),
-  trainer2      (NULL),
-  classifier1   (NULL),
-  classifier2   (NULL)
+  config1           (NULL),
+  config2           (NULL),
+  trainer1          (NULL),
+  trainer2          (NULL),
+  classifier1       (NULL),
+  classifier2       (NULL),
+  trainer1StatusMsg (),
+  trainer2StatusMsg (),
+  param             (NULL)
 {
 }
 
@@ -68,13 +71,15 @@ ModelDual::ModelDual (const KKStr&           _name,
                       FactoryFVProducerPtr   _factoryFVProducer
                      ):
   Model (_name, _param, _factoryFVProducer),
-  param         (NULL),
-  config1       (NULL),
-  config2       (NULL),
-  trainer1      (NULL),
-  trainer2      (NULL),
-  classifier1   (NULL),
-  classifier2   (NULL)
+  config1           (NULL),
+  config2           (NULL),
+  trainer1          (NULL),
+  trainer2          (NULL),
+  classifier1       (NULL),
+  classifier2       (NULL),
+  trainer1StatusMsg (),
+  trainer2StatusMsg (),
+  param             (NULL)
 {
   param = dynamic_cast<ModelParamDualPtr> (Model::param);
 }
@@ -83,13 +88,15 @@ ModelDual::ModelDual (const KKStr&           _name,
 
 ModelDual::ModelDual (const ModelDual&   _model):
   Model  (_model),
-  param         (NULL),
-  config1       (NULL),
-  config2       (NULL),
-  trainer1      (NULL),
-  trainer2      (NULL),
-  classifier1   (NULL),
-  classifier2   (NULL)
+  config1           (NULL),
+  config2           (NULL),
+  trainer1          (NULL),
+  trainer2          (NULL),
+  classifier1       (NULL),
+  classifier2       (NULL),
+  trainer1StatusMsg (),
+  trainer2StatusMsg (),
+  param             (NULL)
 {
   param = dynamic_cast<ModelParamDualPtr> (Model::param);
 }

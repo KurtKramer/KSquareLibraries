@@ -727,12 +727,12 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
     sw << "Description"  << "\t" << "\t" << tl3 << endl;
    
     sw << "Classified Results" << "\t";
-    for  (kkuint32 col = 0;  col < numClasses;  col)
+    for  (kkuint32 col = 0;  col < numClasses;  ++col)
       sw << "\t" << StrFormatDouble (classifiedCounts[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
 
     sw << "Adjusted Results" << "\t";
-    for  (kkuint32 col = 0;  col < numClasses;  col)
+    for  (kkuint32 col = 0;  col < numClasses;  ++col)
       sw << "\t" << StrFormatDouble (adjustedReults[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
 

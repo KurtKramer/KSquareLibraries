@@ -32,7 +32,7 @@ RandomNumGenerator::RandomNumGenerator ()
 }
 
 
-RandomNumGenerator::RandomNumGenerator (long  _seed)
+RandomNumGenerator::RandomNumGenerator (long  _seed): RandomNumGenerator()
 {
   kkint64 seedMask = 65535;
   _lrand48_sequence &= seedMask;

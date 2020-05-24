@@ -932,7 +932,7 @@ void  KKB::XmlElementArray<T, ZZZZTypeName>::WriteXML (kkuint32       count,
   XmlTag startTag (ZZZZTypeName, XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
-  startTag.AddAtribute ("Count", (kkint32)count);
+  startTag.AddAtribute ("Count", count);
   startTag.WriteXML (o);
 
   for  (kkuint32 x = 0;  x < count;  ++x)
