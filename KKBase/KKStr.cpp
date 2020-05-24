@@ -6,7 +6,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <exception>
-#include <limits.h>
+#include <limits>
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
@@ -15,9 +15,9 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
 using namespace std;
+
 
 #include "KKQueue.h"
 
@@ -30,6 +30,10 @@ using namespace std;
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace KKB;
+
+// One of the includes defines macros for min and max; this inteferes with numeric_limits<>::max.
+#undef max
+#undef min
 
 
 char*  KKB::STRCOPY (char*        dest,
@@ -3298,7 +3302,8 @@ uint  KKStr::ToUint () const
 KKB::ulong  KKStr::ToUlong () const
 {
   long long ll = atoll(val);
-  long long maxUnsignedLong = (long long)std::numeric_limits<unsigned long>::max();
+  long long maxUnsignedLong = (long long)std::numeric_limits<unsigned long>::max ();
+  //long long maxUnsignedLong = (long long)ULONG_MAX;
   KKCheck ((ll >= 0)  &&  (ll <= maxUnsignedLong), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
   return  (ulong)ll;
 }

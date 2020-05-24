@@ -25,6 +25,7 @@
 #endif
 
 #include <ctype.h>
+#include <chrono>
 #include <errno.h>
 #include <filesystem>
 #include <iostream>
@@ -367,65 +368,26 @@ KKStr  KKB::osGetCurrentDirectory ()
 
 
 
-#ifdef WIN32
-bool  KKB::osValidDirectory (KKStrConstPtr  name)
+bool  KKB::osValidDirectory (const KKStr& name)
 {
-  DWORD  returnCd = GetFileAttributes (name->Str ());
-
-  if  (returnCd == 0xFFFFFFFF)
+  fs::path namePath = fs::path (name.Str ());
+  try
   {
+    return fs::is_directory (namePath);
+  }
+  catch (const std::exception& e)
+  {
+    cerr << endl << "osValidDirectory  name: " << name << "  exception: " << e.what () << endl << endl;
     return false;
   }
-
-  if  ((FILE_ATTRIBUTE_DIRECTORY & returnCd)  != FILE_ATTRIBUTE_DIRECTORY)
-    return false;
-  else
-    return true;
 }
 
 
-
-bool  KKB::osValidDirectory (const KKStr&  name)
-{
-  #define INVALID_FILE_ATTRIBUTES ((DWORD)-1)
-  DWORD  returnCd = GetFileAttributes (name.Str ());
-
-  if  (returnCd == INVALID_FILE_ATTRIBUTES)
-    return false;
-
-
-  if  ((FILE_ATTRIBUTE_DIRECTORY & returnCd)  != FILE_ATTRIBUTE_DIRECTORY)
-    return false;
-  else
-    return true;
-}
-
-#else
 
 bool  KKB::osValidDirectory (KKStrConstPtr  name)
 {
-  auto*  openDir = opendir (name->Str ());
-
-  if  (!openDir)
-    return  false;
-
-  closedir (openDir);
-  return  true;
+  return osValidDirectory (*name);
 }
-
-
-
-bool  KKB::osValidDirectory (const KKStr&  name)
-{
-  DIR*  openDir = opendir (name.Str ());
-
-  if  (!openDir)
-    return  false;
-
-  closedir (openDir);
-  return  true;
-}
-#endif
 
 
 
@@ -1044,30 +1006,12 @@ void   KKB::osParseFileName (KKStr   _fileName,
                              KKStr&  _extension
                             )
 {
-  auto  x = osLocateLastSlashChar (_fileName);
-  if  (!x)
-  {
-    _dirPath = "";
-  }
-
-  else
-  {
-    _dirPath  = _fileName.SubStrSeg (0, x);
-    _fileName = _fileName.SubStrPart (x + 1);
-  }
-      
-  x = _fileName.LocateLastOccurrence ('.');
-  if  (!x)
-  {
-    _rootName  = _fileName;
-    _extension = "";
-  }
-  else
-  {
-    _rootName  = _fileName.SubStrSeg (0, x);
-    _extension = _fileName.SubStrPart (x + 1);
-  }
-
+  fs::path z (_fileName.Str ());
+  _dirPath = z.parent_path ().string ();
+  _rootName = z.stem ().string ();
+  _extension = z.extension ().string ();
+  if (_extension.FirstChar () == '.')
+    _extension.ChopFirstChar ();
   return;
 }  /* ParseFileName */
 
@@ -1090,29 +1034,15 @@ KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
 
 KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
 {
-  auto  lastSlashChar = osLocateLastSlashChar (fullFileName);
-  auto  lastColon     = fullFileName.LocateLastOccurrence (':');
-  auto  lastSlashOrColon = Max (lastSlashChar, lastColon);
- 
-  KKStr  lastPart;
-  if  (!lastSlashOrColon)
-    lastPart = fullFileName;
-  else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon + 1);
-
-  auto  periodIdx = lastPart.LocateLastOccurrence ('.');
-
-  if  (!periodIdx)
-    return  lastPart;
-
-  return  lastPart.SubStrSeg (0, periodIdx);
+  fs::path z (fullFileName.Str ());
+  return z.stem ().string ();
 }  /*  osGetRootName */
 
 
 
 KKStr  KKB::osGetRootNameOfDirectory (KKStr  fullDirName)
 {
-  if  (fullDirName.LastChar () == DSchar)
+  if  (fullDirName.LastChar () == '/'  ||  fullDirName.LastChar () == '\\')
     fullDirName.ChopLastChar ();
 
   auto  lastSlashChar = osLocateLastSlashChar (fullDirName);
@@ -1133,7 +1063,7 @@ KKStr  KKB::osGetRootNameOfDirectory (KKStr  fullDirName)
 
 KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
 {
-  if  (path.LastChar () == DSchar) 
+  if (path.LastChar () == '/' || path.LastChar () == '\\')
     path.ChopLastChar ();
 
   auto  x1 = path.LocateLastOccurrence (DSchar);
@@ -1149,17 +1079,9 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
 
 KKStr  KKB::osGetRootNameWithExtension (const KKStr&  fullFileName)
 {
-  auto  lastSlashChar = osLocateLastSlashChar (fullFileName);
-  auto  lastColon     = fullFileName.LocateLastOccurrence (':');
-  auto  lastSlashOrColon = Max (lastSlashChar, lastColon);
- 
-  KKStr  lastPart;
-  if  (!lastSlashOrColon)
-    lastPart = fullFileName;
-  else
-    lastPart = fullFileName.SubStrPart (lastSlashOrColon + 1);
-
-  return  lastPart;
+  fs::path z (fullFileName.Str ());
+  KKStr rootNameWithExt = z.stem ().string () + z.extension ().string ();
+  return rootNameWithExt;
 }  /* osGetRootNameWithExtension */
 
 
@@ -1171,52 +1093,25 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
                             KKStr&  extension
                            )
 {
+  driveLetter = "";
   path = "";
   root = "";
   extension = "";
-  driveLetter = "";
+  
+  KKStr drivePlusPath;
+
+  osParseFileName (fullFileName, drivePlusPath, root, extension);
 
   // Look for Drive Letter
-  auto  driveLetterPos = fullFileName.LocateCharacter (':');
+  auto  driveLetterPos = drivePlusPath.LocateCharacter (':');
   if  (driveLetterPos)
   {
-    driveLetter  = fullFileName.SubStrSeg (0, driveLetterPos - 1);
-    fullFileName = fullFileName.SubStrPart (driveLetterPos + 1);
+    driveLetter  = drivePlusPath.SubStrSeg (0, driveLetterPos - 1);
+    path = fullFileName.SubStrPart (driveLetterPos + 1);
   }
-
-  KKStr  fileName;
-
-  if  (fullFileName.LastChar () == DSchar)
+  else
   {
-    // FileSpec must look like  'c:\xxx\xx\'
-    path      = fullFileName;
-    root      = "";
-    extension = "";
-    return;
-  }
-
-  auto  lastSlash =  osLocateLastSlashChar (fullFileName);
-  if  (!lastSlash)
-  {
-    path = "";
-    fileName = fullFileName;
-  }
-  else 
-  {
-    path     = fullFileName.SubStrSeg (0, lastSlash);
-    fileName = fullFileName.SubStrPart (lastSlash + 1);
-  }
-
-  auto  period = fileName.LocateLastOccurrence ('.');
-  if  (!period)
-  {
-    root = fileName;
-    extension = "";
-  }
-  else 
-  {
-    root      = fileName.SubStrSeg (0, period);
-    extension = fileName.SubStrPart (period + 1);
+    path = drivePlusPath;
   }
 
   return;
@@ -1380,24 +1275,9 @@ kkint32  KKB::osGetNumberOfProcessors ()
 
 
 
-KKStr  KKB::osGetFileNamePartOfFile (KKStr  fullFileName)
+KKStr  KKB::osGetFileNamePartOfFile (const KKStr&  fullFileName)
 {
-  if  (fullFileName.LastChar () == DSchar)
-    return  KKStr ("");
-
-  auto  lastSlash =  osLocateLastSlashChar (fullFileName);
-  if  (!lastSlash)
-  {
-   auto  colon = fullFileName.LocateCharacter (':');
-   if  (!colon)
-     return fullFileName;
-   else
-     return fullFileName.SubStrPart (colon + 1);
-  }
-  else
-  {
-    return  fullFileName.SubStrPart (lastSlash + 1);
-  }
+  return osGetRootNameWithExtension (fullFileName);
 }  /* FileNamePartOfFile */
 
 
@@ -1433,18 +1313,30 @@ void  KKB::osWaitForEnter ()
 } /* osWaitForEnter */
 
 
+
+bool osValidDirectory(const KKStr& name)
+{
+  fs::path namePath = fs::path (name.Str ());
+  try
+  {
+    return fs::is_directory (namePath);
+  }
+  catch (const std::exception& e)
+  {
+    cerr << endl << "osValidDirectory  name: " << name << "  exception: " << e.what () << endl << endl;
+    return false;
+  }
+}
+
+
 KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
                                                  bool          includeSubdirectories,
                                                  bool          includeFiles
                                                 )
 {
-  fs::path fileSpecPath = fs::path (fileSpec.Str ());
-
   KKStr  rootDirName;
-
   KKStrListPtr searchParts = nullptr;
-
-  if  (fs::is_directory(fileSpecPath))
+  if  (osValidDirectory (fileSpec))
   {
     rootDirName = fileSpec;
   }
@@ -1470,8 +1362,8 @@ KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
 
   for (auto dirIter: fs::directory_iterator (fs::path (rootDirName.Str ())))
   {
-    std::string  name = dirIter.path ().string ();
-    if  ((name == ".")  ||  (name == ".."))
+    KKStr fileName = osGetRootNameWithExtension (dirIter.path ().string ());
+    if  ((fileName == ".")  ||  (fileName == ".."))
       continue;
 
     if  (dirIter.is_directory ())
@@ -1484,7 +1376,6 @@ KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
       continue;
     }
 
-    KKStr fileName = dirIter.path ().string();
     if  (!searchParts  ||  osFileNameMatchesSearchFields (fileName, searchParts))
     {
       nameList->PushOnBack (new KKStr (fileName));
@@ -1511,43 +1402,19 @@ void  KKB::osGetListOfFilesInDirectoryTree (const KKStr&  rootDir,
                                             VectorKKStr&  fileNames   // The file names include full path.
                                            )
 { 
-  if  (fileSpec.Empty ())
-    fileSpec = "*.*";
+  fs::path path = fs::path (rootDir.Str ());
 
+  auto fileSpecParts = osParseSearchSpec ();
+
+  for (auto de: fs::recursive_directory_iterator (path))
   {
-    KKStrListPtr  filesInThisDirectory = osGetListOfFiles (osAddSlash (rootDir) + fileSpec);
-    if  (filesInThisDirectory)
-    {
-      KKStrList::iterator  idx;
-      for  (idx = filesInThisDirectory->begin ();  idx != filesInThisDirectory->end ();  idx++)
-      {
-        KKStrPtr  fn = *idx;
-        KKStr  fullName = osAddSlash (rootDir) + (*fn);
-        fileNames.push_back (fullName);
-      }
-      delete  filesInThisDirectory;  filesInThisDirectory = NULL;
-    }
+    KKStr fileName = de.path ().filename ().string ();
+    KKStr rootName = osGetRootNameWithExtension (fileName);
+    if (!de.is_directory () && osFileNameMatchesSearchFields (rootName, fileSpecParts))
+        fileNames.push_back(rootName);
   }
-
-  // Lets now process all sub directories below 'rootDir'
-  KKStrListPtr  subDirectories = osGetListOfDirectories (osAddSlash (rootDir) + "*.*");
-  if  (subDirectories)
-  {
-    KKStrList::iterator  idx;
-    for  (idx = subDirectories->begin ();  idx != subDirectories->end ();  idx++)
-    {
-      KKStr subDirName = **idx;
-      if  ((subDirName == ".")  ||  (subDirName == ".."))
-        continue;
-
-
-      KKStr  dirToSearch = osAddSlash (rootDir) + subDirName;
-      osGetListOfFilesInDirectoryTree (dirToSearch, fileSpec, fileNames);
-    }
-
-    delete  subDirectories;  subDirectories = NULL;
-  }
-
+  delete fileSpecParts;
+  fileSpecParts = nullptr;
   return;
 }  /* osGetListOfFilesInDirectoryTree */
 
@@ -1736,6 +1603,11 @@ kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 #ifdef  WIN32
 DateTime  KKB::osGetLocalDateTime ()
 {
+  std::chrono::time_point now = std::chrono::system_clock::now ();
+
+  
+
+
   SYSTEMTIME  sysTime;
 
   GetLocalTime(&sysTime);

@@ -120,7 +120,7 @@ namespace KKB
    *@param[in]  fullFileName  Sting that contains the full file name specification.
    *@return File Name.
    */
-  KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
+  KKStr          osGetFileNamePartOfFile (const KKStr&  fullFileName);
   
 
   KKStr          osGetFileExtension (const KKStr&  fullFileName);
