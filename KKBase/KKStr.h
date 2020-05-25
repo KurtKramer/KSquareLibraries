@@ -85,10 +85,9 @@ namespace  KKB
     typedef  KKStr*                 KKStrPtr;
     typedef  const KKStr*           KKStrConstPtr;
     typedef  std::optional<KKStr>   OptionKKStr;
-
-  private:
     static  const  kkStrUint  MaxStrLen;
 
+  private:
     kkStrUint  allocatedSize;
     kkStrUint  len;
     char*      val;
@@ -541,7 +540,7 @@ namespace  KKB
     bool      ToBool       () const;   /**< @brief Returns the bool equivalent of the string,  ex 'Yes' = true, 'No' = false, 'True' = true, etc.  */
     double    ToDouble     () const;
     float     ToFloat      () const;
-    kkint32   ToInt        () const;
+    int       ToInt        () const;
     kkint16   ToInt16      () const;
     kkint32   ToInt32      () const;
     kkint64   ToInt64      () const;

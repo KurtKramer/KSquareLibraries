@@ -42,7 +42,8 @@ namespace KKB
 
 
   bool           osCopyFile (const KKStr&  srcFileName,
-                             const KKStr&  destFileName
+                             const KKStr&  destFileName,
+                             bool          overwriteExisting
                             );
 
   bool           osCopyFileBetweenDirectories (const KKStr&  _fileName,

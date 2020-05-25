@@ -333,10 +333,10 @@ void   GoalKeeper::EndBlock ()
     return;
 
   else if  (errorCode == 1)
-    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
+    throw KKException ("GoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
 
   else if  (errorCode == 2)
-    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
+    throw KKException ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
 
   return;
 }  /* EndBlock */

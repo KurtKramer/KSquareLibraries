@@ -137,12 +137,12 @@ void  KKJobManager::InitilizeJobManager (bool&  successful)
     {
       LoadRunTimeData ();
     }
-    catch  (KKStr  errorMsg)
+    catch  (const std::exception& e)
     {
       log.Level (-1) << endl << endl
                      << "KKJobManager::InitilizeJobManager   ***ERROR***     Load of 'LoadRunTimeData' Failed." << endl
                      << endl
-                     << errorMsg << endl
+                     << e.what () << endl
                      << endl;
       successful = false;
       return;
@@ -156,12 +156,12 @@ void  KKJobManager::InitilizeJobManager (bool&  successful)
     {
       LoadRunTimeData ();
     }
-    catch  (KKStr  errorMsg)
+    catch  (const std::exception& e)
     {
       log.Level (-1) << endl << endl
                      << "KKJobManager::InitilizeJobManager   ***ERROR***     Load of 'LoadRunTimeData' Failed." << endl
                      << endl
-                     << errorMsg << endl
+                     << e.what () << endl
                      << endl;
       successful = false;
       return;
