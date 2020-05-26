@@ -54,7 +54,7 @@ FlatFieldCorrection::FlatFieldCorrection (kkint32       _numSampleLines,
   {
     history[x] = new uchar[lineWidth];
     for  (y = 0;  y < lineWidth;  y++)
-      history[x][y] = 255;
+      history[x][y] = (uchar)255;
   }
 
   totalLine = new kkint32[lineWidth];
@@ -99,13 +99,13 @@ FlatFieldCorrection::~FlatFieldCorrection ()
 }
 
 
+
 void  FlatFieldCorrection::CompensationTable (const uchar*  _compensationTable)
 {
   compensationTable = _compensationTable;
   for  (kkint32  x = 0;  x < lineWidth;  ++x)
     ReComputeLookUpForColumn (x);
 }
-
 
 
 
@@ -138,7 +138,6 @@ void  FlatFieldCorrection::AddSampleLine (const uchar*  sampleLine)
 
   numSampleLinesAdded++;
 }  /* AddSampleLine */
-
 
 
 
@@ -217,10 +216,6 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
     else
     {
       kkint32 newPixelValue = 0;
-      //kkint32 hpThreshold = (kkint32)(0.5f + (float)hp * 15.0f / 16.0f);
-      //kkint32 hpThreshold = hp - 15;
-      //hp = Max (0, (hp - 10));
-      //hp = Max (0, (hp - 15));
 
       for  (row = 0;  row < 256;  ++row)
       {

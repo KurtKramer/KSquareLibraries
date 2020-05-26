@@ -4,7 +4,6 @@
  */
 #include "FirstIncludes.h"
 
-
 #include <errno.h>
 #include <istream>
 #include <iostream>
@@ -13,7 +12,6 @@
 #include <vector>
 
 #include "KKBaseTypes.h"
-
 
 #if  defined(WIN32)
 #include <windows.h>
@@ -29,7 +27,6 @@ using namespace std;
 #include "GoalKeeper.h"
 #include "OSservices.h"
 using namespace  KKB;
-
 
 
 
@@ -108,8 +105,6 @@ GoalKeeper::~GoalKeeper ()
 #endif
 
 }
-
-
 
 
 
@@ -197,7 +192,6 @@ void  GoalKeeper::CriticalSectionStart ()
   pthread_mutex_lock (&mutex);
 #endif
 }
-
 
 
 
@@ -292,7 +286,6 @@ void  GoalKeeper::StartBlock ()
 
 
 
-
 void   GoalKeeper::EndBlock ()
 {
   kkint32  curProcessorId = KKB::osGetThreadId ();
@@ -340,7 +333,6 @@ void   GoalKeeper::EndBlock ()
 
   return;
 }  /* EndBlock */
-
 
 
 
@@ -401,7 +393,6 @@ void  GoalKeeper::Create (const KKStr&             _name,
   sem_close (semHandle);
 #endif
 }  /* Create */
-
 
 
 
@@ -484,8 +475,6 @@ void  GoalKeeper::CreateAndStartBlock (const KKStr&             _name,
   sem_close (semHandle);
 #endif
 }  /* CreateAndStartBlock */
-
-
 
 
 
@@ -575,8 +564,6 @@ void   GoalKeeper::FinalCleanUp ()
 
 
 
-
-
 kkint32  GoalKeeper::NumBlockedThreads ()
 {
   kkint32  x = 0;
@@ -592,5 +579,3 @@ kkint32  GoalKeeper::BlockerThreadId ()
   x =  blockerThreadId;
   return  x;
 }
-
-

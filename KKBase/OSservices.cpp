@@ -24,6 +24,7 @@
 #include <unistd.h>
 #endif
 
+#include <cstdlib>
 #include <ctype.h>
 #include <errno.h>
 #include <filesystem>
@@ -1365,8 +1366,6 @@ double  KKB::osGetKernalTimeUsed ()
                 st.wMinute * 60 + 
                 st.wSecond      +
                 st.wMilliseconds / 1000.0;
-
-
   return  kt;
 }  /* osGetSystemTimeUsed */
 
@@ -2096,7 +2095,6 @@ KKStr  KKB::osReadNextQuotedStr (FILE*        in,
       ungetc (ch, in);
     }
   }
-
 
   return  result;
 }  /* osReadNextQuotedStr */

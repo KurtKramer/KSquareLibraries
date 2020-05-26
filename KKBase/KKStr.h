@@ -83,7 +83,8 @@ namespace  KKB
   {
   public:
     typedef  KKStr*                 KKStrPtr;
-    typedef  const KKStr*           KKStrConstPtr;
+    typedef  const KKStr            KKStrConst;
+    typedef  KKStrConst*            KKStrConstPtr;
     typedef  std::optional<KKStr>   OptionKKStr;
     static  const  kkStrUint  MaxStrLen;
 
@@ -720,6 +721,7 @@ namespace  KKB
   };   /* KKStr */
 
   typedef  KKStr::KKStrPtr         KKStrPtr;
+  typedef  KKStr::KKStrConst       KKStrConst;
   typedef  KKStr::KKStrConstPtr    KKStrConstPtr;
   typedef  std::pair<KKStr,KKStr>  KKStrPair;
   typedef  KKStr::OptionKKStr      OptionKKStr;

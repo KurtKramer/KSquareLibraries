@@ -58,12 +58,10 @@ namespace  KKLSC
      */
     VectorUcharPtr  CameraHighPointsFromLastNSampleLines (kkint32 n)  const;
 
-    const uchar**  LookUpTable (uchar**&  lookUpTable);
-
   private:
     void  ReComputeLookUpForColumn (kkint32 col);
 
-    const uchar*  compensationTable;          /**< From ScannerFile::ConpensationTable(); used to compensate for the effects of ScannerFile compression. */
+    const uchar*  compensationTable;  /**< From ScannerFile::ConpensationTable(); used to compensate for the effects of ScannerFile compression. */
 
     bool      enabled;                /**< When set to 'true'  will apply flat field correction otherwise ignore.     */
     uchar*    highPoint;              /**< Highest pixel value in history for the respective column.                  */
@@ -71,10 +69,10 @@ namespace  KKLSC
     uchar**   history;                /**< 2D array (_numSampleLines x _lineWidth); each row represents a scan-line.  */
     kkint32   lastHistoryIdxAdded;    /**< Index of last history line to be added by 'AddSampleLine'                  */
     kkint32   lineWidth;
-    uchar**   lookUpTable;            /**< 2D array (lineWidth x 256) lookup table for each scan-line pixel location. *
-                                      * Each column will be the look up table for the respective scan line pixel.    *
-                                      * Every time a new high point s seen for a pixel location that column will get *
-                                      * recomputed.                                                                  *
+    uchar**   lookUpTable;            /**< 2D array (lineWidth x 256) lookup table for each scan-line pixel location.
+                                      * Each column will be the look uptable for the respective scan line pixel.
+                                      * Every time a new high point s seen for a pixel location that column will
+                                      * get recomputed.
                                       */
     kkint32   numSampleLines;         /* Number of history scan lines that are to be kept.                            */
     kkint32   numSampleLinesAdded;    /* Total number of sample lines kept.                                           */

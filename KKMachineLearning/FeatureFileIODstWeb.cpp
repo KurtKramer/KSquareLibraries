@@ -100,8 +100,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
                                                     RunLog&         _log
                                                    )
 {
-  _log.Level (10)
-      << "FeatureFileIODstWeb::GetFileDesc" << endl
+  _log.Level (10) << "FeatureFileIODstWeb::GetFileDesc" << endl
       << "    _fileName: " << _fileName << endl
       << "    _in.flags: " << _in.flags() << endl
       << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
@@ -127,10 +126,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
   GetLine (_in, line, eof);
   if  (eof)
   {
-    _log.Level (-1) << endl << endl 
-                    << "FeatureFileIODstWeb::GetFileDesc      ***ERROR***      File is empty." << endl
-                    << endl;
-    return  NULL;
+    _log.Level (-1) << "FeatureFileIODstWeb::GetFileDesc   ***ERROR***   File is empty." << endl;
+    return  nullptr;
   }
 
   {
@@ -141,10 +138,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     if  (!equalLoc)
     {
       _errorMessage = "First Line is not Class Identifier.";
-      _log.Level (-1) << endl << endl
-                      << "FeatureFileIODstWeb::GetFileDesc     *** ERROR ***   " << _errorMessage << endl
-                      << endl;
-      return  NULL;
+      _log.Level (-1) << "FeatureFileIODstWeb::GetFileDesc   ***ERROR***   " << _errorMessage << endl;
+      return  nullptr;
     }
 
     KKStr  leftSide  = line.SubStrSeg (0, equalLoc);
@@ -153,10 +148,8 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     leftSide.Upper ();
     if  (leftSide != "CLASS")
     {
-      _log.Level (-1) << endl << endl
-                      << "FeatureFileIODstWeb::GetFileDesc     *** ERROR ***   First Line is not Class Identifier." << endl
-                      << endl;
-      return  NULL;
+      _log.Level (-1) << "FeatureFileIODstWeb::GetFileDesc   ***ERROR***   First Line is not Class Identifier." << endl;
+      return  nullptr;
     }
 
     rightSide.TrimLeft ();
@@ -202,11 +195,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     fileDesc->AddAAttribute (attributes[x]->code, AttributeType::Nominal, alreadyExists);
     if  (alreadyExists)
     {
-      _log.Level (-1) << endl
-                      << endl
-                      << "FeatureFileIODstWeb::GetFileDesc    *** ERROR ***    Attribute Code Occurs more than once" << endl
-                      << "    code [" << attributes[x]->code << "]." << endl
-                      << endl;
+      _log.Level (-1) << "FeatureFileIODstWeb::GetFileDesc   ***ERROR***   Attribute Code Occurs more than once - code: " << attributes[x]->code << endl;
       // Can not delete an instance of a 'FileDesc' class once it has been created.
       // delete  fileDesc;
       return NULL;
@@ -317,14 +306,10 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
         if  (fieldNum < 0)
         {
           _errorMessage << "Invalid Attribute[" << attrName + "]  Line[" << lineCount << "]";
-          _log.Level (-1) << endl
-                          << "FeatureFileIODstWeb::LoadFile     ***ERROR***"  << endl
-                          << endl
-                          << "                        " << _errorMessage << endl
-                          << endl;
-          delete  examples;  examples = NULL;
-          delete  example;   example = NULL;
-          return  NULL;
+          _log.Level (-1) << "FeatureFileIODstWeb::LoadFile   ***ERROR***   " << _errorMessage << endl;
+          delete examples;  examples = nullptr;
+          delete example;   example  = nullptr;
+          return nullptr;
         }
 
         kkint32 code = attributeTable[fieldNum]->GetNominalCode ("T");
@@ -337,7 +322,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
     examples->PushOnBack (example);
   }
 
-  delete  [] attributeTable;
+  delete[] attributeTable;
   attributeTable = NULL;
 
   return  examples;
