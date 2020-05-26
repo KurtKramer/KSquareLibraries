@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-#cmake_minimum_required(VERSION 3.13)
-project(KSquareUtilities VERSION 0.1.0)
+project(KSquareUtilities VERSION 0.2.0)
 
 #enable_testing()
 #
@@ -23,7 +22,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++17 -lstdc++fs")
 
 include_directories(KKBase)
 include_directories($ENV{OutsidePackages}/zlib-1.2.11)
-message(STATUS,"\n\n  $ENV{OutsidePackages}")
+message(STATUS,"OutsidePackages: $ENV{OutsidePackages}")
 
 
 subdirs(KKBase)
