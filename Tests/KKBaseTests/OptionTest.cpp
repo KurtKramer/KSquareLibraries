@@ -12,6 +12,8 @@ using namespace KKB;
 
 #include "OptionTest.h"
 
+
+
 namespace KKBaseTest
 {
   OptionTest::OptionTest ()
@@ -19,9 +21,11 @@ namespace KKBaseTest
   }
 
 
+
   OptionTest::~OptionTest ()
   {
   }
+
 
 
   void  OptionTest::AssertAreEqual (const char* expected, const KKStr& found, const KKStr&  testName)
@@ -31,6 +35,8 @@ namespace KKBaseTest
     msg << "Expected: " << expected << "\t" << "Found: " << found.Str ();
     Assert (equal, testName, msg);
   }
+
+
 
   bool  OptionTest::RunTests ()
   {
