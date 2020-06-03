@@ -200,14 +200,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
-  catch (const KKException&  e)
-  {
-    validModel = false;
-    KKStr  errMsg = "ModelDual::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
-    throw  KKException (errMsg, e);
-  }
-  catch (const exception& e2)
+  catch (const std::exception& e2)
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";

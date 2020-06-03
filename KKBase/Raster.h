@@ -368,10 +368,10 @@ namespace KKB
                                 )  const;
 
 
-    kkuint8         GetPixelValue (ColorChannels  channel,
-                                   kkint32        row,
-                                   kkint32        col
-                                  )  const;
+    kkuint8        GetPixelValue (ColorChannels  channel,
+                                  kkint32        row,
+                                  kkint32        col
+                                 )  const;
 
 
     void          SetPixelValue (const Point&       point,
@@ -559,7 +559,7 @@ namespace KKB
 
     void          CalcOrientationAndEigerRatio (float&  eigenRatio,
                                                 float&  orientationAngle
-                                               );
+                                               )  const;
 
     float         CalcWeightedArea ()  const;
 
@@ -1062,7 +1062,8 @@ namespace KKB
 
     RasterPtr     Padded (kkint32 padding);  // Creates a Padded raster object.
 
-    RasterPtr     ReversedImage ();
+    virtual
+    RasterPtr     ReversedImage () const;
 
     RasterPtr     StreatchImage (float  rowFactor,
                                  float  colFactor
@@ -1086,9 +1087,10 @@ namespace KKB
                                  float             alpha
                                 );
 
-
+    virtual
     RasterPtr     ReduceByEvenMultiple (kkint32  multiple)  const;
 
+    virtual
     RasterPtr     ReduceByFactor (float factor)  const;  //  0 < factor <= 1.0  ex: 0.5 = Make raster half size
 
     /**
@@ -1097,7 +1099,8 @@ namespace KKB
      */
     void          ReduceToMostCompleteBlob (kkuint8 connectedComponentDist);
 
-    RasterPtr     Rotate (float  turnAngle);
+    virtual
+    RasterPtr     Rotate (float  turnAngle) const;
 
     /** 
      *@brief Determine the point in  an original Raster instance that has derived from a rotated raster instance.
@@ -1163,6 +1166,7 @@ namespace KKB
                                   const PixelValue&  flagValue
                                  );
 
+    virtual
     RasterPtr     ThinContour ()  const;
 
     RasterPtr     TightlyBounded (kkuint32 borderPixels)  const;  /**< Returns the smallest image that contains all the foreground pixels plus column and row padding specified by 'borderPixels'. */

@@ -62,7 +62,7 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (const KKStr&  _configFileNam
   {
     ReadXML (sr);
   }
-  catch  (const exception& e)
+  catch  (const std::exception& e)
   {
     valid = false;
     errMsgs.push_back (e.what ());
@@ -741,21 +741,14 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
       sw << "\t" << StrFormatDouble (stdErrors[col], "Z,ZZZ,ZZ0.0");
     sw << endl;
   }
-  catch  (KKException&  e)
+  catch  (const std::exception& e2)
   {
-    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  KKException";
-    runLog.Level (-1) << errMsg << endl << e.ToString () << endl;
-    throw KKException (errMsg, e);
-  }
-  catch  (std::exception& e2)
-  {
-    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  std::exception";
-    runLog.Level (-1) << errMsg << endl << e2.what() << endl;
-    throw KKException (errMsg, e2);
+    runLog.Level (-1) << endl << "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***   exception: " << e2.what() << endl;
+    throw;
   }
   catch  (...)
   {
-    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  Exception(...)";
+    KKStr errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***   anonymous exception";
     runLog.Level (-1) << endl << errMsg << endl;
     throw KKException (errMsg);
   }

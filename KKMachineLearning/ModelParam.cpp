@@ -424,8 +424,6 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
 
 
 
-
-
 void  ModelParam::WriteXMLFields (ostream&  o)  const
 
 {
@@ -515,5 +513,3 @@ XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
 
   return  t;
 }  /* ReadXMLModelParamToken */
-
-

@@ -529,7 +529,7 @@ const vector<string>  SVM_Type_As_Strings = {"C_SVC", "NU_SVC", "ONE_CLASS", "EP
 
 SVM_Type  SVM289_BFS::SVM_Type_FromStr (const KKStr&  s)
 {
-  int idx = -1;
+  kkint32 idx = -1;
 
   auto  i = find_if (SVM_Type_As_Strings.begin (), SVM_Type_As_Strings.end (), [s](const KKStr& r) {return s.EqualIgnoreCase (r);} );
 
@@ -540,7 +540,7 @@ SVM_Type  SVM289_BFS::SVM_Type_FromStr (const KKStr&  s)
   }
   else
   {
-    idx = std::distance (SVM_Type_As_Strings.begin (), i);
+    idx = (kkint32)std::distance (SVM_Type_As_Strings.begin (), i);
   }
   
   if (idx < 0  ||  idx >= (int)SVM_Type_As_Strings.size ())
@@ -568,7 +568,7 @@ const vector<string> Kernel_Type_As_Strings = {"LINEAR", "POLY", "RBF", "SIGMOID
 
 Kernel_Type  SVM289_BFS::Kernel_Type_FromStr (const KKStr&  s)
 {
-  int idx = -1;
+  kkint32 idx = -1;
 
   auto  i = find_if (Kernel_Type_As_Strings.begin (), Kernel_Type_As_Strings.end (), [s](const KKStr& r) -> bool {return s.EqualIgnoreCase (r);} );
 
@@ -579,7 +579,7 @@ Kernel_Type  SVM289_BFS::Kernel_Type_FromStr (const KKStr&  s)
   }
   else
   {
-    idx = std::distance (Kernel_Type_As_Strings.begin (), i);
+    idx = (kkint32)std::distance (Kernel_Type_As_Strings.begin (), i);
   }
   
   if (idx < 0  ||  idx >= (int)Kernel_Type_As_Strings.size ())

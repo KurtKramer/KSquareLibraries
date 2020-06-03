@@ -12,6 +12,8 @@ using namespace KKB;
 
 #include "KKStrTest.h"
 
+
+
 namespace KKBaseTest
 {
 
@@ -43,6 +45,7 @@ namespace KKBaseTest
     msg << "Expected: " << expected << "\t" << "Found: " << found.Str ();
     Assert(equal, testName, msg);
   }
+
 
 
   bool  KKStrTest::FormatDouble ()

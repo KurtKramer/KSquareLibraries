@@ -42,7 +42,8 @@ namespace KKB
 
 
   bool           osCopyFile (const KKStr&  srcFileName,
-                             const KKStr&  destFileName
+                             const KKStr&  destFileName,
+                             bool          overwriteExisting
                             );
 
   bool           osCopyFileBetweenDirectories (const KKStr&  _fileName,
@@ -120,7 +121,7 @@ namespace KKB
    *@param[in]  fullFileName  Sting that contains the full file name specification.
    *@return File Name.
    */
-  KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
+  KKStr          osGetFileNamePartOfFile (const KKStr&  fullFileName);
   
 
   KKStr          osGetFileExtension (const KKStr&  fullFileName);

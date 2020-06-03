@@ -163,7 +163,7 @@ namespace KKMLL
   {
     typedef  GrayScaleImagesFVProducerFactory*  GrayScaleImagesFVProducerFactoryPtr;
 
-    GrayScaleImagesFVProducerFactory ();
+    GrayScaleImagesFVProducerFactory (RunLog& _log);
 
   protected:
     /**

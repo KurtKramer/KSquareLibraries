@@ -267,7 +267,7 @@ SVMModel::SVMModel (const SVMparam&     _svmParam,      // Create new model from
       ConstructBinaryCombosModel (&_examples, _log);
     }
   }
-  catch  (const exception& e)
+  catch  (const std::exception& e)
   {
     _log.Level (-1) << endl
       << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl

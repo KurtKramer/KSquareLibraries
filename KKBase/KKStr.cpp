@@ -6,7 +6,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <exception>
-#include <limits.h>
+#include <limits>
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
@@ -15,9 +15,9 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
 using namespace std;
+
 
 #include "KKQueue.h"
 
@@ -30,6 +30,10 @@ using namespace std;
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace KKB;
+
+// One of the includes defines macros for min and max; this inteferes with numeric_limits<>::max.
+#undef max
+#undef min
 
 
 char*  KKB::STRCOPY (char*        dest,
@@ -3206,15 +3210,15 @@ float  KKStr::ToFloat () const
 
 
 
-kkint32  KKStr::ToInt () const
+int  KKStr::ToInt () const
 {
   if  (!val)
     return 0;
 
   kkint64 l = atoll (val);
-  KKCheck ((l >= INT_MIN) && (l <= INT_MAX), "KKStr::ToInt   val: " << val << " exceeds capacity of 32 bit int.")
+  KKCheck ((l >= std::numeric_limits<int>::min()) && (l <= std::numeric_limits<int>::max ()), "KKStr::ToInt   val: " << val << " exceeds capacity of 32 bit int.")
 
-  return (kkint32)l;
+  return (int)l;
 }  /* ToInt*/
 
 
@@ -3225,7 +3229,7 @@ kkint16  KKStr::ToInt16 () const
     return 0;
 
   kkint64 ll = atoll (val);
-  KKCheck ((ll >= INT16_MIN) && (ll <= INT16_MAX), "KKStr::ToInt16   val: " << val << " exceeds capacity of 16 bit int.")
+  KKCheck ((ll >= std::numeric_limits<kkint16>::min ()) && (ll <= std::numeric_limits<kkint16>::max ()), "KKStr::ToInt16   val: " << val << " exceeds capacity of 16 bit int.")
 
   return (kkint16)ll;
 }  /* ToInt16*/
@@ -3238,7 +3242,7 @@ kkint32  KKStr::ToInt32 () const
     return 0;
 
   kkint64 ll = atoll (val);
-  KKCheck ((ll >= INT32_MIN) && (ll <= INT32_MAX), "KKStr::ToInt32   val: " << val << " exceeds capacity of 32 bit int.")
+  KKCheck ((ll >= std::numeric_limits<kkint32>::min ()) && (ll <= std::numeric_limits<kkint32>::max ()), "KKStr::ToInt32   val: " << val << " exceeds capacity of 32 bit int.")
 
   return (kkint32)ll;
 }  /* ToInt32*/
@@ -3263,8 +3267,8 @@ long  KKStr::ToLong   () const
   if  (!val)
     return 0;
 
-  kkint64  ll = atoll (val);
-  KKCheck ((ll >= LONG_MIN)  &&  (ll <= LONG_MAX), "KKStr::ToLong  val: " << val << " exceeds capacity of long.")
+  long long  ll = atoll (val);
+  KKCheck ((ll >= std::numeric_limits<long>::min ())  &&  (ll <= std::numeric_limits<long>::max ()), "KKStr::ToLong  val: " << val << " exceeds capacity of long.")
 
   return (long)ll;
 }  /* ToLong */
@@ -3286,10 +3290,8 @@ float  KKStr::ToPercentage () const
 
 uint  KKStr::ToUint () const
 {
-  if  (!val)  return 0;
-
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT_MAX), "KKStr::ToUint ()    val: " << val << " exceeds capacity of uint.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<uint>::max ()), "KKStr::ToUint ()    val: " << val << " exceeds capacity of uint.")
   return  (kkuint32)ll;
 }
 
@@ -3297,10 +3299,14 @@ uint  KKStr::ToUint () const
 
 KKB::ulong  KKStr::ToUlong () const
 {
-  long long ll = atoll(val);
-  long long maxUnsignedLong = (long long)std::numeric_limits<unsigned long>::max();
-  KKCheck ((ll >= 0)  &&  (ll <= maxUnsignedLong), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
-  return  (ulong)ll;
+  long long ll = atoll (val);
+  KKCheck ((ll >= 0), "KKStr::ToUlong ()    val: " << val << " less that zero!");
+
+  auto ull = std::stoull(val);
+
+  unsigned long long maxUnsignedLong = std::numeric_limits<ulong>::max ();
+  KKCheck ((ull <= maxUnsignedLong), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
+  return  (ulong)ull;
 }
 
 
@@ -3308,7 +3314,7 @@ KKB::ulong  KKStr::ToUlong () const
 KKB::kkuint16  KKStr::ToUint16 () const
 {
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT16_MAX), "KKStr::ToUint16 ()    val: " << val << " exceeds capacity of uint16.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<kkuint16>::max ()), "KKStr::ToUint16 ()    val: " << val << " exceeds capacity of uint16.")
   return  (kkuint16)ll;
 }
 
@@ -3317,7 +3323,7 @@ KKB::kkuint16  KKStr::ToUint16 () const
 KKB::kkuint32  KKStr::ToUint32 () const
 {
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT32_MAX), "KKStr::ToUint32 ()    val: " << val << " exceeds capacity of uint32.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<kkuint32>::max ()), "KKStr::ToUint32 ()    val: " << val << " exceeds capacity of uint32.")
   return  (kkuint32)ll;
 }
 

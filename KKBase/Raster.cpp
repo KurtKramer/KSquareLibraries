@@ -829,7 +829,7 @@ RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
 
 
 
-RasterPtr  Raster::ReversedImage ()
+RasterPtr  Raster::ReversedImage () const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
   result->ReverseImage ();
@@ -4957,7 +4957,7 @@ void  Raster::FollowContour (float  countourFreq[5])  const
 
 void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
                                             float&  orientationAngle
-                                           )  
+                                           )  const
 {
   float  centroidColWeighted;
   float  centroidRowWeighted;
@@ -5066,7 +5066,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
 
 
 
-RasterPtr  Raster::Rotate (float  turnAngle)
+RasterPtr  Raster::Rotate (float  turnAngle) const
 {
 
   kkint32  diag = (kkint32)sqrt ((float)(Height () * Height () + Width () * Width ())) + 10;
