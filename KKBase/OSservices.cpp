@@ -28,7 +28,17 @@
 #include <cstdlib>
 #include <ctype.h>
 #include <errno.h>
-#include <filesystem>
+
+#if defined(_WIN32)
+ #include <filesystem>
+#else
+  #if __GNUC__ > 7
+    #include <filesystem>
+  #else
+    #include <experimental/filesystem>
+  #endif
+#endif
+
 #include <iostream>
 #include <fstream> 
 //#include <stdio.h>
@@ -48,8 +58,15 @@ using namespace std;
 using namespace KKB;
 
 
-namespace fs = std::filesystem;
-
+#if defined(_WIN32)
+ namespace fs = std::filesystem;
+#else
+  #if __GNUC__ > 7
+    namespace fs = std::filesystem;
+  #else
+    namespace fs = std::experimental::filesystem;
+  #endif
+#endif
 
 KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 {
