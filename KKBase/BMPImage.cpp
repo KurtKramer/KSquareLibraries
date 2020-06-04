@@ -1432,7 +1432,6 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
                                bool&  successfull
                               )
 {
-  //cout << "BmpImage::Load8BitColor" << std::endl;
   successfull = true;
   color = true;
   numOfColors = 256;
@@ -1441,17 +1440,6 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   std::fseek (inFile, sizeof (hdr) + sizeof (bmh), SEEK_SET);
   std::fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);
-
-
-/*
-  cout << std::endl;
-  for  (x = 0;  x < paletteEntries;  x++)
-    cout << x << "\t" << (kkuint32)palette[x].rgbRed
-              << "\t" << (kkuint32)palette[x].rgbGreen
-              << "\t" << (kkuint32)palette[x].rgbBlue
-              << std::endl;
-  osWaitForEnter ();
-*/
 
   kkuint32  bmpRowWidthInBytes = bmh.biWidth;
   kkuint32  paddingBytes = bmpRowWidthInBytes % 4;
@@ -1464,29 +1452,24 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
-  kkint32  row;
-
-  for  (row = bmh.biHeight - 1; row >= 0; row--)
+  for  (kkint32 row = bmh.biHeight - 1;  row >= 0;  --row)
   {
     memset (rowData, 0, bmpRowWidthInBytes);
     size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);
     if  (buffRead < bmpRowWidthInBytes)
     {
-      cerr << std::endl 
-        << "***ERROR*** BmpImage::Load8BitColor, Error Reading File" << std::endl
-        << std::endl;
+      KKStr errMsg (128);
+      errMsg << "BmpImage::Load8BitColor   ***ERROR***   Bytes read: " << buffRead << " less than expected: " << bmpRowWidthInBytes;
+      cerr << endl << errMsg << endl << endl;  
       successfull = false;
       delete[]  rowData;  rowData = NULL;
       return;
     }
 
-    kkint32  col;
-
-    for  (col = 0;  col < bmh.biWidth;  col++)
+    for  (kkint32 col = 0;  col < bmh.biWidth;  ++col)
     {
       kkint32  palletIdx = rowData[col];
 
-      //cout << "RowData" << "\t" << col << "\t" << palletIdx << "\t" << (kkuint32)(palette[palletIdx].rgbGreen) << std::endl;
       blue  [row][col] = palette[palletIdx].rgbBlue;
       image [row][col] = palette[palletIdx].rgbGreen;
       red   [row][col] = palette[palletIdx].rgbRed;
@@ -1516,7 +1499,9 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
 
   if  (buffRead < imageBuffSize)
   {
-    cerr << "***ERROR*** BmpImage::Load4BitColorCompressed   *** Error ***, Invalid File Format." << std::endl;
+    KKStr errMsg (128);
+    errMsg << "BmpImage::Load8BitColor   ***ERROR***   Bytes read: " << buffRead << " less than expected: " << imageBuffSize;
+    cerr << endl << errMsg << endl << endl;  
     successfull = false;
     return;
   }
@@ -1531,7 +1516,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
     if  (imageBuff[ifIDX] == 0)
     {
       // We have an Escape Sequence.
-      ifIDX++;
+      ++ifIDX;
 
       if  (imageBuff[ifIDX] == 0)
       {
@@ -1544,47 +1529,46 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
       else if  (imageBuff[ifIDX] == 1)
       {
         // End of BitMap
-
         ifIDX = imageBuffSize;
       }
 
       else if  (imageBuff[ifIDX] == 2)
       {
-        ifIDX++;
+        ++ifIDX;
         col = col + imageBuff[ifIDX];
 
-        ifIDX++;
+        ++ifIDX;
         row = row + imageBuff[ifIDX];
 
-        ifIDX++;
+        ++ifIDX;
       }
 
       else
       {
         // We have Absolute Mode
         kkint32  len = imageBuff[ifIDX];
-        ifIDX++;
+        ++ifIDX;
 
         for  (x = 0; x < len;)
         {
           uchar  pix1 = imageBuff[ifIDX] / 16;
           uchar  pix2 = imageBuff[ifIDX] % 16;
           SetPixelValue (row, col, paletteMap[pix1]);
-          x++;
-          col++;
+          ++x;
+          ++col;
 
           if  (x < len)
           {
             SetPixelValue (row, col, paletteMap[pix2]);
-            x++;
-            col++;
+            ++x;
+            ++col;
           } 
 
-          ifIDX++;
+          ++ifIDX;
         }
 
         if (((len + 1) / 2) % 2 != 0)
-           ifIDX++;
+           ++ifIDX;
       }
     }
 
@@ -1592,7 +1576,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
     {
       // We have a RLE
       kkint32  len = imageBuff[ifIDX];
-      ifIDX++;
+      ++ifIDX;
 
       uchar  pix1 = imageBuff[ifIDX] / 16;
       uchar  pix2 = imageBuff[ifIDX] % 16;
@@ -1600,18 +1584,18 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
       for  (x = 0; x < len;)
       {
         SetPixelValue (row, col, paletteMap[pix1]);
-        x++;
-        col++;
+        ++x;
+        ++col;
 
         if  (x < len)
         {
           SetPixelValue (row, col, paletteMap[pix2]);
-          x++;
-          col++;
+          ++x;
+          ++col;
         }
       }
 
-      ifIDX++;
+      ++ifIDX;
     }
   }
 
@@ -1624,8 +1608,6 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
                                          bool&  successfull
                                         )
 {
-  kkint32  x;
-
   successfull = true;
 
   kkuint32  imageBuffSize = bmh.biSizeImage;
@@ -1651,14 +1633,14 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
     if  (imageBuff[ifIDX] == 0)
     {
       // We have an Escape Sequence.
-      ifIDX++;
+      ++ifIDX;
 
       if  (imageBuff[ifIDX] == 0)
       {
         // End of Row.
-        row--;
+        --row;
         col = 0;
-        ifIDX++;
+        --ifIDX;
       }
 
       else if  (imageBuff[ifIDX] == 1)
@@ -1670,13 +1652,13 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
 
       else if  (imageBuff[ifIDX] == 2)
       {
-        ifIDX++;
+        ++ifIDX;
         col = col + imageBuff[ifIDX];
 
-        ifIDX++;
+        ++ifIDX;
         row = row + imageBuff[ifIDX];
 
-        ifIDX++;
+        ++ifIDX;
         // Insert Spaces
       }
 
@@ -1684,18 +1666,15 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
       {
         // We have Absolute Mode
         kkint32  len = imageBuff[ifIDX];
-        ifIDX++;
+        ++ifIDX;
 
-        for  (x = 0; x < len;)
+        for  (kkint32 x = 0;  x < len;  ++x, ++col, ++ifIDX)
         {
           SetPixelValue (row, col, paletteMap[imageBuff[ifIDX]]);
-          x++;
-          col++;
-          ifIDX++;
         }
 
         if  ((len % 2) != 0)
-          ifIDX++;
+          ++ifIDX;
       }
     }
 
@@ -1703,7 +1682,7 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
     {
       // We have a RLE
       kkint32  len = imageBuff[ifIDX];
-      ifIDX++;
+      ++ifIDX;
 
       kkint32  pixelVal = paletteMap[imageBuff[ifIDX]];
 
@@ -1713,15 +1692,13 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
       }
       else
       {
-        for  (x = 0; x < len;)
+        for  (kkint32 x = 0;  x < len;  ++x, ++col)
         {
           SetPixelValue (row, col, pixelVal);
-          x++;
-          col++;
         }
       }
 
-      ifIDX++;
+      ++ifIDX;
     }
   }
 
@@ -1834,10 +1811,9 @@ void  BmpImage::AllocateRaster ()
 
 void  BmpImage::CleanUpMemory ()
 {
-  kkint32  x = 0;
   if  (image)
   {
-    for  (x = bmh.biHeight - 1; x >= 0; x--)
+    for  (long x = bmh.biHeight - 1;  x >= 0;  --x)
     {
       delete  image[x];
       image[x] = NULL;
@@ -1850,7 +1826,7 @@ void  BmpImage::CleanUpMemory ()
   {
     // If red exists  then  blue must exists.
 
-    for  (x = bmh.biHeight - 1; x >= 0; x--)
+    for  (long x = bmh.biHeight - 1;  x >= 0;  --x)
     {
       delete  red [x];  red [x] = NULL;
       delete  blue[x];  blue[x] = NULL;
@@ -1867,29 +1843,24 @@ void  BmpImage::CleanUpMemory ()
 
 void  BmpImage::DownSize ()
 {
-  kkint32  newCol;
   kkint32  newHeight = bmh.biHeight / 2;
   kkint32  newWidth  = bmh.biWidth  / 2;
-  kkint32  newRow;
-
-  kkint32  oldCol;
-  kkint32  oldRow;
 
   uchar**  newImage = new uchar*[newHeight];
-  for  (newRow = 0; newRow < newHeight; newRow++)
+  for  (kkint32 newRow = 0;  newRow < newHeight;  ++newRow)
   {
-    oldRow = newRow * 2;
+    kkint32 oldRow = newRow * 2;
 
     newImage[newRow] = new uchar[newWidth];
    
-    for  (newCol = 0; newCol < newWidth;  newCol++)
+    for  (kkint32 newCol = 0;  newCol < newWidth;  ++newCol)
     {
-      oldCol = newCol * 2;
+      kkint32 oldCol = newCol * 2;
       newImage[newRow][newCol] = image[oldRow][oldCol];
     }
   }
 
-  for  (oldRow = 0; oldRow < bmh.biHeight; oldRow++)
+  for  (long oldRow = 0;  oldRow < bmh.biHeight;  ++oldRow)
   {
     delete  image[oldRow];
     image[oldRow] = NULL;
@@ -1951,9 +1922,6 @@ void  BmpImage::SetPixelValue (kkint32  row,
 
 bool  BmpImage::AreThereEdgePixels ()
 {
-  kkint32  row;
-  kkint32  col;
-
   kkint32  height = Height ();
   kkint32  width  = Width ();
 
@@ -1971,8 +1939,7 @@ bool  BmpImage::AreThereEdgePixels ()
   uchar*  rowL1 = image[height - 2];
   uchar*  rowL2 = image[height - 1];
 
-
-  for  (col = 0;  col < width;  col++)
+  for  (kkint32 col = 0;  col < width;  ++col)
   {
     if  ((row0[col] > 0)   ||
          (row1[col] > 0)   ||
@@ -1990,7 +1957,7 @@ bool  BmpImage::AreThereEdgePixels ()
 
   kkint32  lastRowToCheck = height - 3;
 
-  for  (row = 3;  row < lastRowToCheck;  row++)
+  for  (kkint32 row = 3;  row < lastRowToCheck;  ++row)
   {
     if  ((image[row][0]        > 0)  ||
          (image[row][1]        > 0)  ||
@@ -2009,27 +1976,22 @@ bool  BmpImage::AreThereEdgePixels ()
 
 void  BmpImage::EliminateVerticalLines ()
 {
-  kkint32  col = 0;
-  kkint32  row = 0;
-  kkint32  x;
-
-
   bool* potVertLine = new bool[bmh.biWidth];
   bool* pvl = potVertLine;
 
-  for  (col = 0; col < bmh.biWidth; col++)
+  for  (kkint32 col = 0;  col < bmh.biWidth;  ++col)
   {
     *pvl = true;
-    for  (row = 0; ((row < bmh.biHeight) && (*pvl));  row++)
+    for  (kkint32 row = 0;  ((row < bmh.biHeight) && (*pvl));  ++row)
     {
       if  (image[row][col] == 7)
         *pvl = false;
     }
     
-    pvl++;
+    ++pvl;
   }
 
-  col = 0;
+  kkint32 col = 0;
 
   while  (col < bmh.biWidth)
   {
@@ -2042,7 +2004,7 @@ void  BmpImage::EliminateVerticalLines ()
       {
         while  ((col < bmh.biWidth)  &&  (potVertLine[col]))
         {
-          col++;
+          ++col;
         }
       }
 
@@ -2056,14 +2018,13 @@ void  BmpImage::EliminateVerticalLines ()
       //  Scan down vertically, and any place that we are not in contact both left and right
       //  with other pixels erase from picture,
 
-
       bool leftSideIsClear = true;
       bool rightSizeIsClear = true;
 
       uchar  leftPixel = 0;
       uchar  rightPixel = 0;
 
-      for  (row = 0; row < bmh.biHeight; row++)
+      for  (kkint32 row = 0; row < bmh.biHeight; row++)
       {
         if  (firstCol > 0)
         {
@@ -2086,12 +2047,12 @@ void  BmpImage::EliminateVerticalLines ()
 
         if  (leftSideIsClear &&  rightSizeIsClear)
         {
-          for  (x = firstCol; x <= lastCol; x++)
+          for  (kkint32 x = firstCol;  x <= lastCol;  ++x)
             image[row][x] = 0;
         }
         else
         {
-          for  (x = firstCol; x <= lastCol; x++)
+          for  (kkint32 x = firstCol; x <= lastCol; ++x)
             image[row][x] = (uchar)((leftPixel + rightPixel) / 2);
 
           // Set up boolean for next loop around.
@@ -2101,7 +2062,7 @@ void  BmpImage::EliminateVerticalLines ()
       }
     }
 
-    col++;
+    ++col;
   }
 
   delete[]  potVertLine;
@@ -2158,14 +2119,11 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
     throw KKException (errMsg);
   }
 
-  kkint32  x = 0;
-  kkint32  y = 0;
-
   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
 
-  for  (x = (kkint32)bmh.biHeight - 1; x >= 0; x--)
+  for  (kkint32 x = (kkint32)bmh.biHeight - 1;  x >= 0;  --x)
   {
-    for  (y = 0; y < bmh.biWidth; y++)
+    for  (kkint32 y = 0;  y < bmh.biWidth;  ++y)
     {
       if  (color)
       {
@@ -2197,8 +2155,9 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
 
-  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);
-  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  kkint32 x;
+  x = (kkint32)std::fwrite (&hdr,    sizeof (hdr),     1, outFile);
+  x = (kkint32)std::fwrite (&bmh,    sizeof (bmh),     1, outFile);
   x = (kkint32)std::fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
   x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);
 
