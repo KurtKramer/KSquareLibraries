@@ -1199,7 +1199,7 @@ KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
     if  ((fileName == ".")  ||  (fileName == ".."))
       continue;
 
-    if  (dirIter.is_directory ())
+    if (fs::is_directory (dirIter.status()))
     {
        if  (!includeSubdirectories)
          continue;
@@ -1242,7 +1242,7 @@ void  KKB::osGetListOfFilesInDirectoryTree (const KKStr&  rootDir,
   for (auto de: fs::recursive_directory_iterator (path))
   {
     KKStr fileName = de.path ().filename ().string (); // filename () does not include directopry path.
-    if (!de.is_directory () && osFileNameMatchesSearchFields (fileName, fileSpecParts))
+    if (!fs::is_directory (de.status ()) && osFileNameMatchesSearchFields (fileName, fileSpecParts))
     {
       fileNames.push_back(de.path ().string ());
     }
