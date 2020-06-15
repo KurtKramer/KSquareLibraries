@@ -90,7 +90,6 @@ namespace  SVM289_MFS
     return  dest;
   }  /* GrowAllocation */
 
-
   inline double  powi (double base, kkint32 times)
   {
     double tmp = base, ret = 1.0;
@@ -582,12 +581,12 @@ KKStr  SVM289_MFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
 
 
 
-
 static void print_string_stdout (const char *s)
 {
   fputs(s,stdout);
   fflush(stdout);
 }
+
 
 
 void (*SVM289_MFS::svm_print_string) (const char *) = &print_string_stdout;
@@ -2814,11 +2813,6 @@ decision_function  SVM289_MFS::svm_train_one (const svm_problem&    prob,
 
 
 
-
-
-
-
-
 // Platt's binary SVM Probabilistic Output: an improvement from Lin et al.
 void  SVM289_MFS::sigmoid_train (kkint32        numExamples, 
                                  const double*  dec_values, 
@@ -2911,7 +2905,6 @@ void  SVM289_MFS::sigmoid_train (kkint32        numExamples,
     dB  = -(-h21 * g1  +  h11 * g2) / det;
     gd  = g1 * dA  +  g2 * dB;
 
-
     stepsize = 1;    // Line Search
     while (stepsize >= min_step)
     {
@@ -2967,7 +2960,6 @@ double  SVM289_MFS::sigmoid_predict (double  decision_value,
   else
     return 1.0 / (1 + exp (fApB));
 }  /* sigmoid_predict */
-
 
 
 
@@ -3057,7 +3049,6 @@ void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number 
   delete[]  Q;  Q  = NULL;
   delete[]  Qp; Qp = NULL;
 }  /* multiclass_probability */
-
 
 
 
@@ -3188,10 +3179,6 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
   delete[]  dec_values;  dec_values = NULL;
   delete[]  perm;        perm       = NULL;
 }  /* svm_binary_svc_probability */
-
-
-
-
 
 
 
@@ -3488,7 +3475,6 @@ Svm_Model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
       }
     }
 
-
     // At this point all the Binary Classifiers have been built.  They are now going 
     // to be packaged into one not so neat model.
 
@@ -3620,8 +3606,6 @@ Svm_Model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
 
   return  model;
 }  /* svm_train */
-
-
 
 
 
@@ -4568,13 +4552,11 @@ void  SVM289_MFS::svm_destroy_model (Svm_Model*&  model)
 
 
 
-
 void svm_destroy_param (svm_parameter*& param)
 {
   delete  param;
   param = NULL;
 }
-
 
 
 
@@ -4711,7 +4693,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 
 
-
 kkint32  svm_check_probability_model (const Svm_Model *model)
 {
   return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
@@ -4721,6 +4702,3 @@ kkint32  svm_check_probability_model (const Svm_Model *model)
 
 
 XmlFactoryMacro(Svm_Model)
-
-
-

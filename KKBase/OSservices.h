@@ -491,15 +491,15 @@ namespace KKB
   
   
   template<class T> 
-      inline T* osGrowAllocation (T*   src, 
+      inline T* osGrowAllocation (T*       src, 
                                   kkint32  origSize,
                                   kkint32  newSize
                                  )
   {
     kkint32  zed = 0;
     T*  dest = new T[newSize];
-    while  (zed < origSize)    {dest[zed] = src[zed];  zed++;}
-    while  (zed < newSize)     {dest[zed] = (T)0;      zed++;}
+    while  (zed < origSize)    {dest[zed] = src[zed];           ++zed;}
+    while  (zed < newSize)     {dest[zed] = static_cast<T>(0);  ++zed;}
     delete  src;
     return  dest;
   }  /* GrowAllocation */

@@ -218,8 +218,8 @@ namespace KKMLL
   #define  _MLClass_Defined_
 
 
-  typedef  MLClass*  MLClassPtr;
-    typedef  MLClass const *  MLClassConstPtr;
+  typedef  MLClass*         MLClassPtr;
+  typedef  MLClass const *  MLClassConstPtr;
 
 
     
@@ -371,9 +371,9 @@ namespace KKMLL
                           std::ostream&  o
                          )  const;
     
-    bool        operator== (const MLClassList&  right)  const;
+    bool        operator==  (const MLClassList&  right)  const;
 
-    bool        operator!= (const MLClassList&  right)  const;
+    bool        operator!=  (const MLClassList&  right)  const;
                                                                  
     MLClassList& operator=  (const MLClassList&  right);
 
@@ -431,7 +431,6 @@ namespace KKMLL
   typedef  MLClassList*  MLClassListPtr;
 
 
-
   /**
    *@class  MLClassIndexList
    *@brief  Maintains a list of classes and their associated integer index.  
@@ -443,7 +442,7 @@ namespace KKMLL
    *@see KKMLL::Model
    *@see KKMLL::FeatureEncoder2::compress
    */
-  class  MLClassIndexList: public  std::map<MLClassPtr, kkint16>
+  class  MLClassIndexList: public  std::map<MLClassPtr, kkuint16>
   {
   public:
     typedef  MLClassIndexList*  MLClassIndexListPtr;
@@ -463,22 +462,22 @@ namespace KKMLL
                     bool&       _dupEntry
                    );
 
-    void  AddClassIndexAssignment (MLClassPtr _ic,
-                                   kkint16    _classIndex,
-                                   bool&      _dupEntry
+    void  AddClassIndexAssignment (MLClassPtr  _ic,
+                                   kkuint16    _classIndex,
+                                   bool&       _dupEntry
                                   );
 
     /**
      @brief  Returns corresponding index to class 'c';  if not in list returns -1.
      */
-    kkint16  GetClassIndex (MLClassPtr  c);
+    OptionUInt16 GetClassIndex (MLClassPtr  c);
 
 
     /**
      *@brief  Locates the MLClass that was assigned classIndex.
      *@details If not found then returns NULL; if more than one class has the same classIndex will return the first one added.
      */
-    MLClassPtr  GetMLClass (kkint16 classIndex);
+    MLClassPtr  GetMLClass (kkuint16 classIndex);
 
     /**
     *@brief  Locates the MLClass that was assigned classIndex.
@@ -519,8 +518,17 @@ namespace KKMLL
 
 
   private:
-    kkint16                        largestIndex;   /**< largest index used so far. */
-    std::map<kkint16, MLClassPtr>  shortIdx;
+    typedef  std::map<kkuint16, MLClassPtr>   UInt16ToPtrMap;
+    typedef  UInt16ToPtrMap::iterator         UInt16ToPtrMapIterator;
+    typedef  UInt16ToPtrMap::const_iterator   UInt16ToPtrMapConstIterator;
+
+
+    typedef  std::map<kkuint16, MLClassPtr>   PtrToUInt16Map;
+    typedef  PtrToUInt16Map::iterator         PtrToUInt16MapIterator;
+    typedef  PtrToUInt16Map::const_iterator   PtrToUInt16MapConstIterator;
+    
+    kkint32         largestIndex;   /**< largest index used so far. */
+    UInt16ToPtrMap  shortIdx;
   };  /* MLClassIndexList */
 
   typedef  MLClassIndexList::MLClassIndexListPtr  MLClassIndexListPtr;

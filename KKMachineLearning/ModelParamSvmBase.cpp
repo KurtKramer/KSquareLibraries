@@ -24,7 +24,7 @@ using namespace  SVM289_MFS;
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  ():
+ModelParamSvmBase::ModelParamSvmBase ():
 
   ModelParam (),
   svmParam   ()
@@ -33,11 +33,11 @@ ModelParamSvmBase::ModelParamSvmBase  ():
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
-                                       Kernel_Type  _kernelType,
-                                       double       _cost,
-                                       double       _gamma
-                                      ):
+ModelParamSvmBase::ModelParamSvmBase (SVM_Type     _svm_type,
+                                      Kernel_Type  _kernelType,
+                                      double       _cost,
+                                      double       _gamma
+                                     ):
 
   ModelParam (),
   svmParam   ()
@@ -50,7 +50,7 @@ ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (const ModelParamSvmBase&  _param):
+ModelParamSvmBase::ModelParamSvmBase (const ModelParamSvmBase&  _param):
   ModelParam (_param),
   svmParam   (_param.svmParam)
 {
@@ -58,7 +58,7 @@ ModelParamSvmBase::ModelParamSvmBase  (const ModelParamSvmBase&  _param):
 
 
 
-ModelParamSvmBase::~ModelParamSvmBase  ()
+ModelParamSvmBase::~ModelParamSvmBase ()
 {
 }
 

@@ -20,11 +20,11 @@ using namespace KKBaseTest;
   int main()
   {
     KKQueue<KKTest> tests;
-    tests.PushOnBack (new KKHeapTest   ());
-    tests.PushOnBack (new DateTimeTest ());
+    //tests.PushOnBack (new KKHeapTest   ());
+    //tests.PushOnBack (new DateTimeTest ());
     tests.PushOnBack (new OptionTest   ());
-    tests.PushOnBack (new KKQueueTest  ());
-    tests.PushOnBack (new KKStrTest    ());
+    //tests.PushOnBack (new KKQueueTest  ());
+    //tests.PushOnBack (new KKStrTest    ());
 
     kkuint32 failedCount = 0;
 

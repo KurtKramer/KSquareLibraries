@@ -1,14 +1,68 @@
 #if !defined(_KKB_OPTION_)
 #define  _KKB_OPTION_
 #include <optional>
+#include <type_traits>
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
+
+#undef max
+#undef min
 
 
 namespace KKB 
 {
   void  ValidateValidUint32 (kkint64 newValue);
+
+
+  template<typename T>
+  class  Option: optional<T>
+  {
+  public:
+
+    template<typename U>
+    Option<T>& operator=(const U& rhs)
+    {
+      if  (std::is_unsigned<T>::value)
+      {
+        if (std::is_unsigned<U>::value)
+        {
+          KKCheck (rhs < std::numeric_limits<T>::max (), "Option<T> operator= rhs exceeds capacity of lhs!")
+        }
+        else
+        {
+          KKCheck (rhs >= 0 && (T)rhs < std::numeric_limits<T>::max (),  "Option<T> operator= rhs exceeds capacity of lhs!")
+        }
+      }
+      else
+      {
+        if (std::is_unsigned<U>::value)
+        {
+          KKCheck (rhs < (U)std::numeric_limits<T>::max (), "Option<T> operator= rhs exceeds capacity of lhs!")
+        }
+        else
+        {
+          //KKCheck (rhs >= 0 && (unsigned U)rhs < std::numeric_limits<T>::max (), "Option<T> operator= rhs exceeds capacity of lhs!")
+        }
+      }
+      optional<T>::operator= (rhs);
+    }
+
+    template<typename U>
+    Option<T> operator+(U rhs)
+    {
+      KKCheck (this->has_value (), "Option<T> operator+   lhs is None!");
+      return Option<T> (this->value() + rhs);
+    }
+
+    template<typename U>
+    Option<T> operator-(U rhs)
+    {
+      KKCheck (this->has_value (), "Option<T> operator+   lhs is None!");
+      return Option<T> (this->value () - rhs);
+    }
+  };
+
 
 
 
@@ -86,7 +140,7 @@ namespace KKB
     if (o.has_value())
       s << o.value ();
     else
-      s << "NONE";
+      s << "*NO_Value*";
 
     return s;
   }

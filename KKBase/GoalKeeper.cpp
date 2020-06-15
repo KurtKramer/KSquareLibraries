@@ -34,10 +34,10 @@ using namespace  KKB;
 class  GoalKeeper::BlockedStat
 {
 public:
-  BlockedStat (kkint32 _blockedThreadId,
-               kkint32 _blockerThreadId,
-               kkuint32  _milliSecsBlocked,
-               kkint32 _numBlockedThreads
+  BlockedStat (kkint32  _blockedThreadId,
+               kkint32  _blockerThreadId,
+               kkuint32 _milliSecsBlocked,
+               kkint32  _numBlockedThreads
               ):
     blockedThreadId   (_blockedThreadId),
     blockerThreadId   (_blockerThreadId),
@@ -290,7 +290,7 @@ void   GoalKeeper::EndBlock ()
 {
   kkint32  curProcessorId = KKB::osGetThreadId ();
 
-  kkint32 errorCode = 0;   // 0=No Error;  
+  kkint32 errorCode = 0; // 0=No Error;  
                          // 1=There is no Block
                          // 2=Different thread holds the block
                          // 3=Failure to get a lock

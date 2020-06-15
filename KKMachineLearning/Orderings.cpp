@@ -7,12 +7,10 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
 using namespace  KKB;
-
 
 #include "Orderings.h"
 #include "FeatureFileIO.h"
@@ -20,6 +18,7 @@ using namespace  KKB;
 #include "MLClass.h"
 #include "FeatureVector.h"
 using namespace  KKMLL;
+
 
 
 Orderings::Orderings (FeatureVectorListPtr  _data,
@@ -42,7 +41,6 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
 
   CreateOrderings (_log);
 }
-
 
 
 
@@ -72,6 +70,7 @@ Orderings::Orderings (const FeatureVectorListPtr  _data,
     Load (_log);
   }
 }
+
 
 
 Orderings::Orderings (FeatureVectorListPtr  _data,
@@ -114,9 +113,6 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
 
 
 
-
-
-
 Orderings::Orderings (const KKStr&      _featureFileName,
                       FeatureFileIOPtr  _driver,
                       RunLog&           _log,
@@ -155,7 +151,6 @@ Orderings::Orderings (const KKStr&      _featureFileName,
     return;
   }
 
-
   if  (!successful)
   {
     _log.Level (-1) << endl
@@ -178,7 +173,6 @@ Orderings::Orderings (const KKStr&      _featureFileName,
     return;
   }
 }
-
 
 
 
@@ -245,7 +239,6 @@ OrderingsPtr  Orderings::CreateOrderingsObjFromFileIfAvaliable (const FeatureVec
 
 
 
-
 void  Orderings::CreateOrderings (RunLog&  log)
 {
   DeleteOrderings ();
@@ -263,7 +256,6 @@ void  Orderings::CreateOrderings (RunLog&  log)
 
 
 
-
 void  Orderings::DeleteOrderings ()
 {
   while  (orderings.size () > 0)
@@ -273,6 +265,7 @@ void  Orderings::DeleteOrderings ()
     delete  ordering;
   }
 }  /* DeleteOrderings */
+
 
 
 void  Orderings::Load (RunLog&  log)
@@ -333,10 +326,9 @@ void  Orderings::Load (const KKStr&  _indexFileName,
     line.Upper ();
     if  (line != "//ORDERINGS")
     {
-      log.Level (-1) << endl << endl
-                     << "Orderings::Load    *** ERROR ***     Invalid File Heading[" << indexFileName << "]" << endl
-                     << "                   First Line[" << line << "]" << endl
-                     << "                   Expected  [//Orderings]" << endl
+      log.Level (-1) << endl
+                     << "Orderings::Load   *** ERROR ***   Invalid File Heading: " << indexFileName
+                     << "  First Line: " << line << "  Expected ://Orderings." << endl
                      << endl;
       successful = false;
       valid      = false;
@@ -378,7 +370,6 @@ void  Orderings::Load (const KKStr&  _indexFileName,
     i.close ();
     return;
   }
-
 
   log.Level (10) << "Orderings::Load  featureFileName[" << featureFileName << "]" << endl;
   log.Level (10) << "Orderings::Load  numOfOrderings [" << numOfOrderings << "]" << endl;
@@ -508,10 +499,9 @@ void  Orderings::Load (const KKStr&  _indexFileName,
 
   if  (orderings.size () != numOfOrderings)
   {
-    log.Level (-1) << endl << endl
-                   << "Orderings::Load  *** ERROR ***  Not orderings were loaded." << endl
-                   << "                 Expected     [" << numOfOrderings          << "]" << endl
-                   << "                 Number Found [" << (kkuint32)orderings.size () << "]" << endl
+    log.Level (-1) << endl
+                   << "Orderings::Load   ***ERROR***  Wrong num orderings loaded  "
+                   << "Expected: " << numOfOrderings << "  Found: " << orderings.size () << "." << endl
                    << endl;
     successful = false;
     valid      = false;

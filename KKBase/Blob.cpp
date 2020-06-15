@@ -102,11 +102,11 @@ BlobPtr  BlobList::NewBlob (kkuint32  rowTop,
     blob = new Blob (nextBlobId);
   }
   
-  blob->rowTop  = rowTop;
-  blob->rowBot  = rowTop;
+  blob->rowTop  = toint32_t (rowTop);
+  blob->rowBot  = toint32_t (rowTop);
 
-  blob->colLeft  = colLeft;
-  blob->colRight = colLeft; 
+  blob->colLeft  = toint32_t (colLeft);
+  blob->colRight = toint32_t (colLeft);
   
   nextBlobId++;
   PushOnBack (blob);

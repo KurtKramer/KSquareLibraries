@@ -122,7 +122,7 @@ namespace KKB
 
     bool     FourBitUncompressed ();
 
-    kkuint32 Height ()    const  {return  bmh.biHeight;}
+    kkuint32 Height ()    const  {return  static_cast<kkuint32>(bmh.biHeight);}
 
     const   
     uchar*   BlueRow (kkint32 row)  const;                  /**< @brief Returns the specified Row from the Blue Channel. */
@@ -137,7 +137,7 @@ namespace KKB
 
     uchar    MaxPixVal () const  {return  uchar (maxPixVal);}
 
-    kkuint32 Width ()     const  {return  bmh.biWidth;}
+    kkuint32 Width ()     const  {return  static_cast<kkuint32>(bmh.biWidth);}
 
 
     bool  AreThereEdgePixels ();

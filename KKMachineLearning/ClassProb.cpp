@@ -13,10 +13,10 @@ using namespace  std;
 #include "OSservices.h"
 using namespace  KKB;
 
-
 #include "ClassProb.h"
 #include "MLClass.h"
 using namespace  KKMLL;
+
 
 
 ClassProb::ClassProb (MLClassPtr _classLabel,
@@ -28,6 +28,7 @@ ClassProb::ClassProb (MLClassPtr _classLabel,
   votes       (_votes)
 {
 }
+
 
 
 ClassProb::ClassProb (const ClassProb&  _pair):
@@ -43,6 +44,7 @@ ClassProbList::ClassProbList ():
    KKQueue<ClassProb>  (true)
 {
 }
+
 
 
 ClassProbList::ClassProbList (bool _owner):
@@ -65,11 +67,11 @@ ClassProbList::ClassProbList (const ClassProbList&  pairList):
 }
  
 
+
 kkMemSize  ClassProbList::MemoryConsumedEstimated ()  const
 {
   return  ((kkMemSize)size ())  *  sizeof(ClassProb);
 }  /* MemoryConsumedEstimated */
-
 
 
 
@@ -81,10 +83,12 @@ bool  ClassProbList::CompairByClassName (const ClassProbPtr left,
 }
 
 
+
 void  ClassProbList::SortByClassName ()
 {
   sort (begin (), end (), CompairByClassName);
 }
+
 
 
 class  ClassProbList::ProbabilityComparer
@@ -139,7 +143,6 @@ private:
 
 
 
-
 void  ClassProbList::SortByProbability (bool highToLow)
 {
   ProbabilityComparer comparator (highToLow);
@@ -153,7 +156,6 @@ void  ClassProbList::SortByVotes (bool highToLow)
   VotesComparer comparator (highToLow);
   sort (begin (), end (), comparator);
 }  /* SortByVotes */
-
 
 
 
@@ -182,8 +184,7 @@ ClassProbPtr  ClassProbList::LookUpForUpdate (MLClassPtr  targetClass)
 
 
 
-
-kkint32   ClassProbList::LookUpPlace (MLClassPtr  targetClass)  const
+kkint32  ClassProbList::LookUpPlace (MLClassPtr  targetClass)  const
 {
   for  (kkint32  x = 0;  x < (kkint32)size ();  ++x)
   {
@@ -217,7 +218,6 @@ void  ClassProbList::DeleteEntry (kkuint32 idx)
   }
   DeleteEntry (IdxToPtr (idx));
 }
-
 
 
 
@@ -270,7 +270,6 @@ void  ClassProbList::AddIn (const ClassProbListPtr  otherPredictions)
 
 
 
-
 /**
  *@brief Adds the Prediction in 'cp' into this list.
  *@details If the class indicated by 'cp->classLabel' already exist in this 
@@ -281,7 +280,6 @@ void  ClassProbList::MergeIn (const ClassProbPtr cp)
 {
   MergeIn (cp->classLabel, cp->probability, cp->votes);
 }  /* MergeIn */
-
 
 
 
@@ -301,7 +299,6 @@ void  ClassProbList::MergeIn (MLClassPtr       target,
     PushOnBack (new ClassProb (target, probability, votes));
   }
 }  /* MergeIn */
-
 
 
 
@@ -343,8 +340,6 @@ void  ClassProbList::MergeIn (MLClassPtr              target,
 
 
 
-
-
 void  ClassProbList::NormalizeToOne ()
 {
   double  totalProb  = 0.0;
@@ -367,7 +362,6 @@ void  ClassProbList::NormalizeToOne ()
     cp->votes = (cp->votes / totalVotes) * expectedTotalNumOfVotes;
   }
 }  /* NormalizeToOne */
-
 
 
 
@@ -401,11 +395,6 @@ ClassProbListPtr  ClassProbList::CreateFromXMLStream (istream& i)
 
   return result;
 }  /* CreateFromXMLStream */
-
-
-
-
-
 
 
 
@@ -475,4 +464,3 @@ void  ClassProbList::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(ClassProbList)
-

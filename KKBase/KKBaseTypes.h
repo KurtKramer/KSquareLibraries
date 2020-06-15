@@ -47,6 +47,8 @@
 
 #include <limits>
 #include <optional>
+#include <sstream>
+#include <type_traits>
 #include <vector>
 
 
@@ -60,7 +62,8 @@
 #define  RadToDeg      57.29577951308240  /**< @brief Conversion factor from Radians to Degrees */
 #define  DegToRad       0.01745329251994  /**< @brief Conversion factor from Degrees to Radians */
 
-
+#undef min
+#undef max
 
 /*----------------------------------------------------------------------------
   Definition of the namespace "KKB"  which stands for Kurt Kramer Base Library.
@@ -173,6 +176,8 @@ namespace KKB
 
   typedef std::vector<OptionUInt32>  VectorOptionUInt32;
 
+
+
   template<typename T>
   T  Max (T x, T y) { return x > y ? x : y; }
     
@@ -194,6 +199,7 @@ namespace KKB
   {
     if  (!a)  return b; else if  (!b) return a; else return (a.value () > b.value ()) ? a : b;
   }
+
 
 
   template <class T>  T  Swap (T& x, T& y)  { T z = x;  x = y;  y = z; }
@@ -252,7 +258,7 @@ namespace KKB
       ++x;
     }
     while  (x < Max(oldSize, newSize))  {
-      newA[x] = (T)0;
+      newA[x] = static_cast<T>(0);
       ++x;
     }
     delete[]  oldA;
@@ -260,5 +266,111 @@ namespace KKB
     return newA;
   }  /* namespace KKB */
 }
+
+
+
+template<typename T>
+unsigned char  touchar_t (T x)
+{
+  if (std::is_signed<T>::value)
+  {
+    if (x < 0)
+    {
+      std::stringstream errMsg;
+      errMsg << "touchar_t  ***ERROR***  x: " << x << " is negative number!";
+      std::cerr << '\n' << errMsg.str () << "\n\n";
+      throw std::range_error (errMsg.str ());
+    }
+  }
+
+  if (x > std::numeric_limits<unsigned char>::max ())
+  {
+    std::stringstream errMsg;
+    errMsg << "touchar_t  ***ERROR***  x: " << x << " exceeds max range of uchar: " << std::numeric_limits<unsigned char>::max () << '!';
+    std::cerr << '\n' << errMsg.str () << "\n\n";
+    throw std::range_error (errMsg.str ());
+  }
+
+  return static_cast<unsigned char> (x);
+}
+
+
+
+template<typename T>
+int32_t  toint32_t (T x)
+{
+  if  constexpr (std::is_floating_point<T>::value)
+  {
+  }
+  else
+  {
+    static_assert(std::is_integral<T>::value, "Integral required.");
+
+    if (std::is_signed<T>::value)
+    {
+      if (x < std::numeric_limits<int32_t>::min ())
+      {
+        std::stringstream errMsg;
+        errMsg << "toint32_t  ***ERROR***  x: " << x << " exceeds min range of int32_t: " << std::numeric_limits<int32_t>::min () << '!';
+        std::cerr << '\n' << errMsg.str () << "\n\n";
+        throw std::range_error (errMsg.str ());
+      }
+    }
+  }
+  return static_cast<int32_t> (x);
+}
+
+
+
+template<typename T>
+uint32_t  touint32_t (T x)
+{
+  if (std::is_signed<T>::value)
+  {
+    if (x < 0)
+    {
+      std::stringstream errMsg;
+      errMsg << "touint32_t  ***ERROR***  x: " << x << " is negative number!";
+      std::cerr << '\n' << errMsg.str () << "\n\n";
+      throw std::range_error (errMsg.str ());
+    }
+  }
+  return static_cast<uint32_t> (x);
+}
+
+
+
+template<typename T>
+size_t tosize_t(T x)
+{
+  if  (std::is_signed<T>::value)
+  {
+    if (x < 0)
+    {
+      std::stringstream errMsg;
+      errMsg << "tosize_t  ***ERROR***  x: " << x << " is negative number!";
+      std::cerr << '\n' << errMsg.str () << "\n\n";
+      throw std::range_error (errMsg.str ());
+    }
+  }
+  return static_cast<size_t> (x);
+}
+
+
+
+template<typename T>
+float tofloat (T x)
+{
+  return static_cast<float> (x);
+}
+
+
+
+template<typename T>
+double todouble (T x)
+{
+  return static_cast<double> (x);
+}
+
 
 #endif

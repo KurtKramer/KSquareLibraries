@@ -7,8 +7,17 @@ file(GLOB source_files
     )
 
 
+
+
 add_library(KKBase
 	${source_files}
 	)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
+target_compile_features(KKBase PRIVATE cxx_lambda_init_captures cxx_variadic_templates)
+
 install (TARGETS KKBase DESTINATION bin)
+
+
+

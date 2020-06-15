@@ -72,7 +72,7 @@ BitString::BitString (kkuint32  _bitLen):
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
-  memset (str, 0, (size_t)byteLen);
+  memset (str, 0, tosize_t (byteLen));
 }
 
 
@@ -83,7 +83,7 @@ BitString::BitString (const BitString&  bs):
   str     (NULL)
 {
   str = new uchar[byteLen];
-  memcpy (str, bs.str, (size_t)byteLen);
+  memcpy (str, bs.str, tosize_t (byteLen));
 }
 
 
@@ -98,9 +98,9 @@ BitString::BitString (kkuint32   _bitLen,
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
-  memset (str, 0, (size_t)byteLen);
-  kkuint32  x;
-  for  (x = 0;  x < bitNumsLen;  x++)
+  memset (str, 0, tosize_t (byteLen));
+
+  for  (kkuint32 x = 0;  x < bitNumsLen;  ++x)
   {
     if  (bitNums[x] >= bitLen)
     {
@@ -135,7 +135,7 @@ void  BitString::CalcByteAndBitOffsets (kkuint32  bitNum,
                                         uchar&    bitOffset
                                        )  const
 {
-  byteOffset = bitNum / 8;
+  byteOffset = toint32_t (bitNum / 8);
   bitOffset  = bitNum % 8;
 } /* CalcByteAndBitOffsets */
 
@@ -172,7 +172,7 @@ bool  BitString::Test (kkuint32  bitNum) const
 
 void  BitString::Set ()
 {
-  memset (str, 255, (size_t)byteLen);
+  memset (str, 255, tosize_t (byteLen));
 }  /* Set */
 
 
@@ -195,7 +195,7 @@ void BitString::Set (kkuint32  bitNum)
 
 void  BitString::ReSet ()
 {
-  memset (str, 0, (size_t)byteLen);
+  memset (str, 0, tosize_t (byteLen));
 }
 
 
@@ -278,7 +278,7 @@ void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const
       {
         if  ((br % 2) == 1)
         {
-          setBits.push_back ((kkuint16)bitNum);
+          setBits.push_back (static_cast<kkuint16> (bitNum));
         }
 
         br = br / 2;
@@ -363,7 +363,7 @@ kkint32  BitString::HexCharToInt (uchar hexChar)
   if  ((hexChar >= '0')  &&  (hexChar <= '9'))
     return  (kkint32 (hexChar) - kkint32 ('0'));
 
-  hexChar = (char)std::toupper ((int)hexChar);
+  hexChar = touchar_t (std::toupper (hexChar));
   if  ((hexChar < 'A')  ||  (hexChar > 'F'))
     return -1;
 
@@ -377,25 +377,25 @@ BitString  BitString::FromHexStr (const KKStr&  hexStr,
                                  )
 {
   BitString  bs (hexStr.Len () * 4);
-  kkint32  byteNum = 0;
-  kkint32  hexStrLen = hexStr.Len ();
-  kkint32  high4Bits = 0;
-  kkint32  low4Bits  = 0;
-  kkint32  x = 0;
+  kkint32   byteNum = 0;
+  kkuint32  hexStrLen = hexStr.Len ();
+  kkint32   high4Bits = 0;
+  kkint32   low4Bits  = 0;
+  kkuint32  x = 0;
 
   validHexStr = true;
 
   while  (x < hexStrLen)
   {
-    low4Bits = HexCharToInt (hexStr[x]);
-    x++;
+    low4Bits = HexCharToInt (touchar_t (hexStr[x]));
+    ++x;
     if  (low4Bits < 0)
       validHexStr = false;
 
     if  (x < hexStrLen)
     {
-      high4Bits = HexCharToInt (hexStr[x]);
-      x++;
+      high4Bits = HexCharToInt (touchar_t (hexStr[x]));
+      ++x;
       if  (high4Bits < 0)
         validHexStr = false;
     }
@@ -404,8 +404,8 @@ BitString  BitString::FromHexStr (const KKStr&  hexStr,
       high4Bits = 0;
     }
 
-    bs.str[byteNum] = (uchar)((uchar)low4Bits + (uchar)high4Bits * (uchar)16);
-    byteNum++;
+    bs.str[byteNum] = touchar_t (touchar_t (low4Bits) + touchar_t (high4Bits) * touchar_t (16));
+    ++byteNum;
   }
 
   return  bs;

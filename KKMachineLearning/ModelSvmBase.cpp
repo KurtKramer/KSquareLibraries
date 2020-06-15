@@ -189,12 +189,12 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     for  (kkuint32 labelIndex = 0;  labelIndex < trainExamples->QueueSize ();  labelIndex++)
     {
-      kkint16  label = classesIndex->GetClassIndex (trainExamples->IdxToPtr (labelIndex)->MLClass ());
-      if  (label < 0)
+      auto  label = classesIndex->GetClassIndex (trainExamples->IdxToPtr (labelIndex)->MLClass ());
+      if  (!label.has_value ())
       {
         _log.Level (-1) << endl << " ModelSvmBase::TrainModel   ***ERROR***   Label computed to -1; should not be able to happen." << endl << endl;
       }
-      y[labelIndex] = (float)label;
+      y[labelIndex] = (float)label.value ();
     }
   }
 
@@ -299,7 +299,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
     throw KKException (errMsg);
   }
 
-  kkuint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
+  auto  knownClassIdx = classesIndex->GetClassIndex (knownClass);
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
@@ -362,14 +362,14 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
 
   breakTie = predClass1Prob - predClass2Prob;
 
-  if  ((knownClassIdx < 0)  ||  (knownClassIdx >= numOfClasses))
+  if  (knownClassIdx >= numOfClasses)
   {
     probOfKnownClass = 0.0;
     knownClassOneOfTheWinners = false;
   }
   else
   {
-    probOfKnownClass = (float)classProbs[knownClassIdx];
+    probOfKnownClass = (float)classProbs[knownClassIdx.value ()];
   }
 
   return;
@@ -457,8 +457,8 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
   for  (idx = 0;  idx < _mlClasses.size ();  idx++)
   {
     MLClassPtr  ic = _mlClasses.IdxToPtr (idx);
-    kkint32 classIndex = classesIndex->GetClassIndex (ic);
-    if  ((classIndex < 0)  ||  (classIndex >= (kkint32)numOfClasses))
+    auto classIndex = classesIndex->GetClassIndex (ic);
+    if  (!classIndex.has_value ()  ||  (classIndex >= numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -468,8 +468,8 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
     }
     else
     {
-      _votes         [idx] = votes      [classIndex];
-      _probabilities [idx] = classProbs [classIndex];
+      _votes         [idx] = votes      [classIndex.value ()];
+      _probabilities [idx] = classProbs [classIndex.value ()];
     }
   }
 
@@ -513,8 +513,8 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
   for  (idx = 0;  idx < _mlClasses.size ();  idx++)
   {
     MLClassPtr  ic = _mlClasses.IdxToPtr (idx);
-    kkint32 classIndex = classesIndex->GetClassIndex (ic);
-    if  ((classIndex < 0)  ||  (classIndex >= (kkint32)numOfClasses))
+    auto classIndex = classesIndex->GetClassIndex (ic);
+    if  (!classIndex.has_value ()  ||  (classIndex >= numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -523,7 +523,7 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
     }
     else
     {
-      _probabilities [idx] = classProbs [classIndex];
+      _probabilities [idx] = classProbs [classIndex.value ()];
     }
   }
 
@@ -538,12 +538,12 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
                                            )
 {
   kkuint32  idx1, idx2;
-  VectorInt  pairWiseIndexes (_classes.size (), 0);
+  VectorUint16  pairWiseIndexes (_classes.size (), 0);
   for  (idx1 = 0;  idx1 < _classes.size ();  idx1++)
   {
     MLClassPtr  ic = _classes.IdxToPtr (idx1);
-    kkint32 pairWiseIndex = classesIndex->GetClassIndex (ic);
-    if  ((pairWiseIndex < 0)  ||  (pairWiseIndex >= (kkint32)numOfClasses))
+    auto pairWiseIndex = classesIndex->GetClassIndex (ic);
+    if  (!pairWiseIndex.has_value ()  ||  (pairWiseIndex >= numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::RetrieveCrossProbTable  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -552,7 +552,7 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
     }
     else
     {
-      pairWiseIndexes[idx1] = pairWiseIndex;
+      pairWiseIndexes[idx1] = pairWiseIndex.value ();
     }
 
     for  (idx2 = 0;  idx2 < _classes.size ();  idx2++)
