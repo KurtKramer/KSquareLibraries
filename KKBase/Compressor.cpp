@@ -186,7 +186,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   uchar*     unCompressedBuff  = NULL;
 
   Bytef*     outBuffer    = NULL;
-  kkint32    outBufferLen = 0;
+  kkuint32   outBufferLen = 0;
 
   kkint32    ret;
   z_stream   strm;
@@ -247,6 +247,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       }
     }
 
+    assert (outBufferLen >= strm.avail_out)
     have = outBufferLen - strm.avail_out;
     if  (unCompressedBuff == NULL)
     {
@@ -256,7 +257,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     }
     else
     {
-      kkint32  newUnCompressedLen = unCompressedLen + have;
+      kkuint32  newUnCompressedLen = unCompressedLen + have;
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);
