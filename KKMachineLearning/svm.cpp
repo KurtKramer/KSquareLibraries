@@ -238,6 +238,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
                             RunLog&         log
                            )
 {
+  log.Level (50) << "SvmModel233::ReadXML   tag->Name(): " << tag->Name () << std::endl;
   exampleNames.clear ();
   kkuint32 numberOfBinaryClassifiers = 0;
   kkint32  numElementsLoaded         = 0;
@@ -709,7 +710,7 @@ template <class S, class T> inline void  clone(T*& dst, S* src, kkint32 n)
     fflush(stdout);
   }
 #else
-  void info(const char *fmt,...) {}
+  void info(const char *,...) {}
   void info_flush() {}
 #endif
 
@@ -892,7 +893,7 @@ kkMemSize svm_parameter::MemoryConsumedEstimated ()  const
 
 
 void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
-                                          KKStr   value,
+                                          KKStr,
                                           double  valueNum,
                                           bool&   parmUsed
                                          )
@@ -1299,7 +1300,6 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
 
 
 
-
 svm_problem::svm_problem ()
 {
   l     = 0;
@@ -1308,8 +1308,7 @@ svm_problem::svm_problem ()
   x     = NULL;
   W     = NULL;
   weOwnContents = false;
-};
-
+}
 
 
 
@@ -1329,8 +1328,6 @@ svm_problem::~svm_problem ()
   delete  x;      x     = NULL;
   delete  W;      W     = NULL;
 }
-
-
 
 
 
@@ -1713,7 +1710,6 @@ double SVM233::Kernel::dotSubspace(const svm_node *px, const svm_node *py, const
 
 
 
-
 double  SVM233::Kernel::k_function (const svm_node*       x,
                                     const svm_node*       y,
                                     const svm_parameter&  param
@@ -1857,9 +1853,6 @@ double  SVM233::Kernel::k_function_subspace (const svm_node*       x,
 
 
 
-
-
-
 void SVM233::Solver::swap_index(kkint32 i, kkint32 j)
 {
   Q->swap_index(i,j);
@@ -1872,7 +1865,6 @@ void SVM233::Solver::swap_index(kkint32 i, kkint32 j)
   Swap(G_bar[i],G_bar[j]);
   Swap(C[i], C[j]);
 }
-
 
 
 

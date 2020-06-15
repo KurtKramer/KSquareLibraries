@@ -2196,8 +2196,7 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
   {
     // There Class List does not have the same number of entries as our 'CrossProbTable'
     log.Level (-1) << endl
-                   << "SVMModel::RetrieveCrossProbTable    ***ERROR***" << endl
-                   << "            classes.QueueSize ()[" << classes.QueueSize () << "] != crossClassProbTableSize[" << crossClassProbTableSize << "]" << endl
+                   << "SVMModel::RetrieveCrossProbTable   ***ERROR***   classes.QueueSize (): " << classes.QueueSize () << " != crossClassProbTableSize: " << crossClassProbTableSize << endl
                    << endl;
     return;
   }
@@ -2212,25 +2211,21 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
     indexTable[x] = assignments.GetNumForClass (classes.IdxToPtr (x));
     if  (!indexTable[x])
     {
-      log.Level (-1) << endl << endl
-                     << "SVMModel::RetrieveCrossProbTable      ***WARNING***" << endl
-                     << endl
-                     << "      Class Index[" << x << "]  Name[" << classes[x].Name () << "]" << endl
-                     << "      will populate this index with zeros."                         << endl
-                     << endl;
+      log.Level (-1) << endl
+                     << "SVMModel::RetrieveCrossProbTable   ***WARNING***   Class Index: " << x << " Name: " << classes[x].Name ()
+                     << "  will populate this index with zeros." 
+                     << endl << endl;
     }
   }
 
   if  (classes.QueueSize () != crossClassProbTableSize)
   {
     log.Level (-1) << endl
-                   << "SVMModel::RetrieveCrossProbTable      ***ERROR***"                                       << endl
-                   << "                                     'classes.QueueSize () != crossClassProbTableSize'"  << endl
+                   << "SVMModel::RetrieveCrossProbTable   ***ERROR***   'classes.QueueSize () != crossClassProbTableSize'"  << endl
                    << endl;
     return;
   }
-
-
+  
   // x,y         = 'Callers'   Class Indexes..
   // xIdx, yIdx  = 'SVMNodel'  Class Indexed.
   for  (kkuint32 x = 0;  x < classes.QueueSize ();  x++)

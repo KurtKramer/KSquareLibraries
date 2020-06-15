@@ -748,9 +748,9 @@ void  Model::ReduceTrainExamples (RunLog&  log)
 
 
 
-void  Model::RetrieveCrossProbTable (MLClassList&   _classes,
-                                     double**       _crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
-                                     RunLog&        log
+void  Model::RetrieveCrossProbTable (MLClassList&  _classes,
+                                     double**      _crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                     RunLog&       log
                                     )
 {
   KKCheck (_classes.QueueSize () == crossClassProbTableSize,
@@ -764,15 +764,18 @@ void  Model::RetrieveCrossProbTable (MLClassList&   _classes,
     for  (kkuint32 y = 0;  y < _classes.QueueSize ();  y++)
        _crossClassProbTable[x][y] = 0.0;
 
-    indexTable[x] = classesIndex->GetClassIndex (_classes.IdxToPtr (x));
-    if  (indexTable[x] < 0)
+    auto indexOfClass = classesIndex->GetClassIndex (_classes.IdxToPtr (x));
+    if (indexOfClass)
+    {
+      indexTable[x] = indexOfClass.value ();
+    }
+    else
     {
       log.Level (-1) << endl
-                     << "SVMModel::RetrieveCrossProbTable   ***WARNING***" << endl
-                     << endl
-                     << "      Class Index[" << x << "]  Name[" << _classes[x].Name () << "]" << endl
-                     << "      will populate this index with zeros."                          << endl
-                     << endl;
+        << "SVMModel::RetrieveCrossProbTable   ***WARNING***   Class Index: " << x << " Name:" << _classes[x].Name ()
+        << "      will populate this index with zero." << endl
+        << endl;
+      indexTable[x] = -1;
     }
   }
 

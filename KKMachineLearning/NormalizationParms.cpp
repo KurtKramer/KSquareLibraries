@@ -377,7 +377,7 @@ double  NormalizationParms::Mean (kkuint32  i,
                                   RunLog&   log
                                  )
 {
-  if  ((i < 0)  ||  (i >= numOfFeatures))
+  if  (i >= numOfFeatures)
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return  -99999.99;
@@ -394,7 +394,7 @@ double  NormalizationParms::Sigma (kkuint32  i,
                                    RunLog&   log
                                   )
 {
-  if  ((i < 0)  ||  (i >= numOfFeatures))
+  if  (i >= numOfFeatures)
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return DBL_MIN;

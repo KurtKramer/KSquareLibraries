@@ -13,7 +13,6 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ModelParam.h"
 #include "ModelParamKnn.h"
 #include "ModelParamOldSVM.h"

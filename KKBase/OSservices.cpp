@@ -343,9 +343,8 @@ bool  KKB::osValidDirectory (const KKStr& name)
   {
     return fs::is_directory (namePath);
   }
-  catch (const std::exception& e)
+  catch (const std::exception&)
   {
-    cerr << endl << "osValidDirectory  name: " << name << "  exception: " << e.what () << endl << endl;
     return false;
   }
 }
@@ -1437,16 +1436,6 @@ kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 #ifdef  WIN32
 DateTime  KKB::osGetLocalDateTime ()
 {
-
-  chrono::system_clock::time_point today = chrono:::system_clock::now ();
-  chrono::system_clock::time_point tomorrow = today + one_day;
-
-  time_t tt;
-
-  tt = system_clock::to_time_t (today);
-  std::cout << "today is: " << ctime (&tt);
-  d.
-
   SYSTEMTIME  sysTime;
 
   GetLocalTime(&sysTime);

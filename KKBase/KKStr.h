@@ -166,7 +166,7 @@ namespace  KKB
 
     void     Append (char ch);
 
-    void     Append (uchar ch) { Append ((char)ch); }
+    void     Append (uchar ch) { Append (static_cast<char>(ch)); }
 
     void     Append (const KKStr&  str);
 
@@ -665,9 +665,9 @@ namespace  KKB
 #ifdef  KKDEBUG
       ValidateLen ();
 #endif
-      if ((!val) || (i < 0) || ((kkStrUint)i >= len))  
+      if ((!val) || (i < 0) || (static_cast<kkStrUint>(i) >= len))  
         return 0;
-      else  
+      else   
         return val[i];
     }
 

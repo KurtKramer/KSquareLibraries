@@ -285,7 +285,7 @@ namespace  KKB
   template <class Entry>
   kkuint32  KKQueue<Entry>::QueueSize ()  const    
   {
-    return  (kkint32)this->size ();
+    return  static_cast<kkuint32>(this->size ());
   }
 
 
@@ -844,7 +844,7 @@ namespace  KKB
       throw KKB::KKException(errMsg.str ().c_str ());
     }
 
-    return  (Entry&)*(std::vector<Entry*>::operator[] (idx));
+    return  static_cast<Entry&>(*(std::vector<Entry*>::operator[] (idx)));
   }  /* operator[] */
 
 }  /* namespace KKB; */

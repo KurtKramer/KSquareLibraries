@@ -195,7 +195,7 @@ namespace  KKB
     const KKStr&   Name ()           const  {return  name;}
     TagTypes       TagType ()        const  {return  tagType;}
 
-    kkint32        AttributeCount () const  {return  (kkint32)attributes.size ();}
+    kkint32        AttributeCount () const  {return  toint32_t (attributes.size ());}
 
     const XmlAttributeList&   Attributes ()  const {return attributes;}
 
@@ -519,8 +519,8 @@ namespace  KKB
 
     virtual  bool     ToBool   () const {return  value;}
     virtual  KKStr    ToKKStr  () const {return  value ? "True" : "False";}
-    virtual  double   ToDouble () const {return  (double)value;}
-    virtual  float    ToFloat  () const {return  (float)value;}
+    virtual  double   ToDouble () const {return  static_cast<double> (value);}
+    virtual  float    ToFloat  () const {return  static_cast<float>  (value);}
     virtual  kkuint16 ToUint16 () const {return  (value ? 1 : 0);}
     virtual  kkint32  ToInt32  () const {return  (value ? 1 : 0);}
 
@@ -552,8 +552,8 @@ namespace  KKB
 
     virtual  bool     ToBool   () const {return  (value.Seconds () > 0);}
     virtual  KKStr    ToKKStr  () const {return  value.YYYY_MM_DD_HH_MM_SS ();}
-    virtual  double   ToDouble () const {return  (double)value.Seconds ();}
-    virtual  float    ToFloat  () const {return  (float)value.Seconds ();}
+    virtual  double   ToDouble () const {return  static_cast<double> (value.Seconds ());}
+    virtual  float    ToFloat  () const {return  static_cast<float>  (value.Seconds ());}
     virtual  kkuint16 ToUint16 () const;
     virtual  kkint32  ToInt32  () const;
     
@@ -807,7 +807,7 @@ public:
       XmlElement (tag, s, log),
       count (0)
     {
-      count = tag->AttributeValueInt32 ("Count");
+      count = touint32_t (tag->AttributeValueInt32 ("Count"));
     }
 
     kkuint32  Count() const  {return count;}
@@ -855,7 +855,7 @@ public:
         {
           double  zed = p.GetNextTokenDouble ("\t,");
           if  (fieldsExtracted < count)
-            value[fieldsExtracted] = (T)zed;
+            value[fieldsExtracted] = static_cast<T> (zed);
           ++fieldsExtracted;
         }
       }
@@ -913,7 +913,7 @@ public:
      KKCheck(value, "XmlElementArray::ToUnit32  value == NULL !")
      kkuint32* result = new kkuint32 [count];
      for  (kkuint32 x = 0;  x < count;  ++x)
-         result[x] = (kkuint32)value[x];
+         result[x] = touint32_t (value[x]);
      return result;        
    }
 

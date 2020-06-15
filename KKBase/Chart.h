@@ -37,7 +37,7 @@ namespace  KKB
   
     ~Chart ();
 
-    kkint32    NumOfSeries ()  {return  (kkint32)series.size ();}
+    kkint32    NumOfSeries ()  {return  toint32_t (series.size ());}
   
     void       AddAValue (kkuint32  _seriesIDX,
                           float  _xVal,

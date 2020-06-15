@@ -2943,14 +2943,14 @@ KKStr  KKStr::DecodeQuotedStr ()  const
       {
         uchar escapeChar = 0;
         switch (val[idx]) {
-          case '0': escapeChar = 0;
-          case 'a': escapeChar = '\a';
-          case 'b': escapeChar = '\b';
-          case 'f': escapeChar = '\f';
-          case 'n': escapeChar = '\n';
-          case 'r': escapeChar = '\r';
-          case 't': escapeChar = '\t';
-          case 'v': escapeChar = '\v';
+          case '0': escapeChar = 0;      break;
+          case 'a': escapeChar = '\a';   break;
+          case 'b': escapeChar = '\b';   break;
+          case 'f': escapeChar = '\f';   break;
+          case 'n': escapeChar = '\n';   break;
+          case 'r': escapeChar = '\r';   break;
+          case 't': escapeChar = '\t';   break;
+          case 'v': escapeChar = '\v';   break;
           default:  escapeChar = val[idx];
         }
         result.Append (escapeChar);

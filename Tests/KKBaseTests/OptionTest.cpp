@@ -40,8 +40,14 @@ namespace KKBaseTest
 
   bool  OptionTest::RunTests ()
   {
+    Option<kkuint32>  i;
+
+    i = 100u;
+
+
+
     OptionUInt32 x = 5;
-    OptionUInt32 y = {};
+    OptionUInt32 y = nullopt;
     Assert (y < (kkuint32)0, "OptionUInt32", "None < 0");
 
     Assert (!(x < (kkuint32)0), "OptionUInt32", "Optional.value(5) not less than 0");

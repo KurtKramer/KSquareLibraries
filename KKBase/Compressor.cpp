@@ -81,7 +81,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   {
     // This was originally a a loop that read from a file;  but now we have a input buffer with a known amount of data.
     strm.avail_in = sourceLen;       // Number of bytes in 'source'  to compress.
-    strm.next_in  = (Bytef*)source;  // pointer to data that needs to be compressed.
+    strm.next_in  = static_cast<Bytef*> (source);  // pointer to data that needs to be compressed.
     
     do
     { 
@@ -231,7 +231,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //  ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {
@@ -356,7 +356,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //    ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {

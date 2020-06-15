@@ -10,7 +10,6 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "DateTime.h"
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
@@ -30,6 +29,7 @@ using namespace KKB;
 using namespace KKMLL;
 
 
+
 Attribute::Attribute ():
     fieldNum           (-1),
     name               (),
@@ -39,6 +39,7 @@ Attribute::Attribute ():
 
 {
 }
+
 
 
 Attribute::Attribute (const KKStr&   _name,
@@ -64,6 +65,7 @@ Attribute::Attribute (const KKStr&   _name,
 }
 
 
+
 Attribute::Attribute (const Attribute&  a):
     fieldNum           (a.fieldNum),
     name               (a.name),
@@ -82,11 +84,11 @@ Attribute::Attribute (const Attribute&  a):
 
 
 
-
 Attribute::~Attribute ()
 {
   delete  nominalValuesUpper;
 }
+
 
 
 kkMemSize  Attribute::MemoryConsumedEstimated ()  const
@@ -135,7 +137,6 @@ void  Attribute::AddANominalValue (const KKStr&  nominalValue,
   alreadyExists = false;
   nominalValuesUpper->Add (new KKStr (nominalValue));
 }  /* AddANominalValue */
-
 
 
 
@@ -217,8 +218,6 @@ bool  Attribute::operator!= (const Attribute&  rightSide)  const
 
 
 
-
-
 Attribute&  Attribute::operator= (const Attribute&  right)
 {
   fieldNum  = right.fieldNum;
@@ -237,12 +236,10 @@ Attribute&  Attribute::operator= (const Attribute&  right)
 
 
 
-
 KKStr  Attribute::TypeStr () const
 {
   return  AttributeTypeToStr (type);
 }  /* TypeStr */
-
 
 
 
@@ -276,7 +273,6 @@ void  Attribute::WriteXML (const KKStr&  varName,
     o << endl;
   }
 }  /* WriteXML */
-
 
 
 
@@ -320,14 +316,10 @@ void  Attribute::ReadXML (XmlStream&      s,
 
 
 
-
-
 AttributeList::AttributeList ():
   KKQueue<Attribute> (true)
 {
 }
-
-
 
 
 
@@ -341,6 +333,7 @@ AttributeList::AttributeList (bool _owner):
 AttributeList::~AttributeList ()
 {
 }
+
 
 
 kkMemSize  AttributeList::MemoryConsumedEstimated ()  const
@@ -380,11 +373,12 @@ AttributeConstPtr  AttributeList::LookUpByName (const KKStr&  name)  const
 
 
 
-void  AttributeList::PushOnBack   (AttributePtr  attribute)
+void  AttributeList::PushOnBack (AttributePtr  attribute)
 {
   AddToNameIndex (attribute);
   KKQueue<Attribute>::PushOnBack (attribute);
 }
+
 
 
 void  AttributeList::PushOnFront  (AttributePtr  attribute)
@@ -417,7 +411,6 @@ AttributeTypeVectorPtr  AttributeList::CreateAttributeTypeVector ()  const
 
 
 
-
 const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
 {
   static vector<KKStr> AttributeTypeStrings = 
@@ -434,7 +427,6 @@ const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
 
   return AttributeTypeStrings[(int)type];
 }  /* TypeStr */
-
 
 
 
@@ -458,7 +450,6 @@ AttributeType  KKMLL::AttributeTypeFromStr (const KKStr&  s)
   else
     return  AttributeType::NULLAttribute;
 }
-
 
 
 
@@ -520,9 +511,6 @@ void  AttributeList::WriteXML (const KKStr&  varName,
 
 
 
-
-
-
 void  AttributeList::ReadXML (XmlStream&      s,
                               XmlTagConstPtr  tag,
                               VolConstBool&   cancelFlag,
@@ -551,6 +539,7 @@ void  AttributeList::ReadXML (XmlStream&      s,
 }
 
 
+
 AttributeTypeVector:: AttributeTypeVector ():
    vector<AttributeType> ()
 {
@@ -565,10 +554,12 @@ AttributeTypeVector::AttributeTypeVector (kkuint32       initialSize,
 }
 
 
+
 AttributeType  KKMLL::operator++(AttributeType  zed)
 {
   return  (AttributeType)((int)zed + 1);
 }  /* operator++ */
+
 
 
 void  AttributeTypeVector::WriteXML (const KKStr&  varName,
@@ -596,6 +587,7 @@ void  AttributeTypeVector::WriteXML (const KKStr&  varName,
   tagEnd.WriteXML (o);
   o << endl;
 }
+
 
 
 void  AttributeTypeVector::ReadXML (XmlStream&      s,
@@ -648,7 +640,6 @@ void  AttributeTypeVector::ReadXML (XmlStream&      s,
   delete  t;
   t = NULL;
 }
-
 
 
 
