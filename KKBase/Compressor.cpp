@@ -81,7 +81,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   {
     // This was originally a a loop that read from a file;  but now we have a input buffer with a known amount of data.
     strm.avail_in = sourceLen;       // Number of bytes in 'source'  to compress.
-    strm.next_in  = (Bytef*)source;  // pointer to data that needs to be compressed.
+    strm.next_in  = static_cast<Bytef*> (source);  // pointer to data that needs to be compressed.
     
     do
     { 
@@ -117,11 +117,13 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
         return NULL;
       }
       
+      assert (outputBufferSize >= strm.avail_out);
+
       // Now we compute how much output deflate() provided on the last call, which is the difference between how much space
       // was provided before the call, and how much output space is still available after the call. Then that data, if any,
       // is written to the output file. We can then reuse the output buffer for the next call of deflate(). Again if there
       // is a file i/o error, we call deflateEnd() before returning to avoid a memory leak.
-      kkint32 have = outputBufferSize - strm.avail_out;
+      kkuint32 have = outputBufferSize - strm.avail_out;
       {
         if  (compressedBuff == NULL)
         {
@@ -231,7 +233,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //  ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {
@@ -356,7 +358,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //    ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {
