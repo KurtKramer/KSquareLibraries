@@ -16,7 +16,7 @@ namespace KKB
 
 
   template<typename T>
-  class  Option: optional<T>
+  class  Option: std::optional<T>
   {
   public:
 
@@ -31,14 +31,14 @@ namespace KKB
         }
         else
         {
-          KKCheck (rhs >= 0 && (T)rhs < std::numeric_limits<T>::max (),  "Option<T> operator= rhs exceeds capacity of lhs!")
+          KKCheck (rhs >= 0 && static_cast<T> (rhs) < std::numeric_limits<T>::max (),  "Option<T> operator= rhs exceeds capacity of lhs!")
         }
       }
       else
       {
         if (std::is_unsigned<U>::value)
         {
-          KKCheck (rhs < (U)std::numeric_limits<T>::max (), "Option<T> operator= rhs exceeds capacity of lhs!")
+          KKCheck (rhs < static_cast<U> (std::numeric_limits<T>::max ()), "Option<T> operator= rhs exceeds capacity of lhs!")
         }
         else
         {
@@ -46,7 +46,10 @@ namespace KKB
         }
       }
       optional<T>::operator= (rhs);
+      return *this;
     }
+
+
 
     template<typename U>
     Option<T> operator+(U rhs)
@@ -54,6 +57,8 @@ namespace KKB
       KKCheck (this->has_value (), "Option<T> operator+   lhs is None!");
       return Option<T> (this->value() + rhs);
     }
+
+    
 
     template<typename U>
     Option<T> operator-(U rhs)
@@ -64,15 +69,14 @@ namespace KKB
   };
 
 
-
-
+  
   template<typename T>
   OptionUInt32  operator+ (const OptionUInt32& lhs, T rhs)
   {
     KKCheck(lhs, "OptionUInt32::operator+  Can not add to NONE!")
-    kkint64 newValue = (kkint64)lhs.value() + (kkint64)rhs;
+    kkint64 newValue = static_cast<kkint64> (lhs.value()) + static_cast<kkint64> (rhs);
     ValidateValidUint32 (newValue);
-    return OptionUInt32((kkuint32)newValue);
+    return OptionUInt32(static_cast<kkuint32> (newValue));
   }
 
 
@@ -81,9 +85,9 @@ namespace KKB
   OptionUInt32 operator+ (T lhs, const OptionUInt32& rhs)
   {
     KKCheck(rhs, "OptionUInt32::operator+  Can not subtract from NONE!")
-    kkint64 newValue = (kkint64)lhs + (kkint64)rhs.value ();
+    kkint64 newValue = static_cast<kkint64> (lhs) + static_cast<kkint64> (rhs.value ());
     ValidateValidUint32 (newValue);
-    return OptionUInt32((kkuint32)newValue);
+    return OptionUInt32(static_cast<kkuint32> (newValue));
   }
 
 
@@ -92,9 +96,9 @@ namespace KKB
   OptionUInt32 operator- (const OptionUInt32& lhs, T rhs)
   {
     KKCheck(lhs, "OptionUInt32::operator-  Can not subtract from NONE!")
-    kkint64 newValue = (kkint64)lhs.value () - (kkint64)rhs;
+    kkint64 newValue = static_cast<kkint64> (lhs.value ()) - static_cast<kkint64> (rhs);
     ValidateValidUint32 (newValue);
-    return OptionUInt32((kkuint32)newValue);
+    return OptionUInt32(static_cast<kkuint32> (newValue));
   }
 
 
@@ -103,9 +107,9 @@ namespace KKB
   OptionUInt32 operator- (T lhs, const OptionUInt32& rhs)
   {
     KKCheck(rhs, "OptionUInt32::operator-  Can not subtract from NONE!")
-    kkint64 newValue = (kkint64)lhs - (kkint64)rhs.value ();
+    kkint64 newValue = static_cast<kkint64> (lhs) - static_cast<kkint64> (rhs.value ());
     ValidateValidUint32 (newValue);
-    return OptionUInt32((kkuint32)newValue);
+    return OptionUInt32(static_cast<kkuint32> (newValue));
   }
 
 
@@ -114,9 +118,9 @@ namespace KKB
   OptionUInt32& operator+= (OptionUInt32& lhs, T rhs)
   {
     KKCheck(lhs, "OptionUInt32::operator+=  Con not add to NONE!")
-    kkint64 newValue = (kkint64)lhs.value () + (kkint64)rhs;
+    kkint64 newValue = static_cast<kkint64> (lhs.value ()) + static_cast<kkint64> (rhs);
     ValidateValidUint32 (newValue);
-    lhs = (kkuint32)newValue;
+    lhs = static_cast<kkuint32> (newValue);
     return lhs;
   }
 
@@ -126,9 +130,9 @@ namespace KKB
   OptionUInt32& operator-= (OptionUInt32& lhs, T rhs)
   {
     KKCheck(lhs, "OptionUInt32::operator+=  Con not add to NONE!")
-    kkint64 newValue = (kkint64)lhs.value () - (kkint64)rhs;
+    kkint64 newValue = static_cast<kkint64> (lhs.value ()) - static_cast<kkint64> (rhs);
     ValidateValidUint32 (newValue);
-    lhs = (kkuint32)newValue;
+    lhs = static_cast<kkuint32> (newValue);
     return lhs;
   }
   

@@ -1235,6 +1235,11 @@ void  KKB::osGetListOfFilesInDirectoryTree (const KKStr&  rootDir,
                                            )
 { 
   fs::path path = fs::path (rootDir.Str ());
+  if  (!fs::exists (path))
+    return;
+
+  if (!fs::is_directory (path))
+    return;
 
   auto fileSpecParts = osParseSearchSpec (fileSpec);
 

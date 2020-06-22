@@ -925,6 +925,10 @@ namespace  KKB
                        const char*  mask
                       );
 
+  KKStr  StrFormatInt (kkuint32     val,
+                       const char*  mask
+                      );
+
   KKStr  StrFormatInt64 (kkint64      val,
                          const char*  mask
                         );

@@ -10,8 +10,10 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
 #include "zlib.h"
-
 
 #include "Compressor.h"
 #include "GlobalGoalKeeper.h"
@@ -247,7 +249,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       }
     }
 
-    assert (outBufferLen >= strm.avail_out)
+    assert (outBufferLen >= strm.avail_out);
     have = outBufferLen - strm.avail_out;
     if  (unCompressedBuff == NULL)
     {

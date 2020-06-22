@@ -20,7 +20,6 @@ using namespace std;
 #include "kku_fftw.h"
 using namespace KKB;
 
-
 /*
 fftw_plan_class::fftw_plan_class (kkint32         _n,
                                   fftw_direction  _dir,
@@ -220,7 +219,7 @@ void  KKB::FFT (float    data[],
   while  (n > mmax)
   {
     istep = mmax <<  1;
-    theta = (float)isign * (2.0f * (float)PIE / (float)mmax);
+    theta = scFLOAT (isign) * (2.0f * scFLOAT (PIE) / scFLOAT (mmax));
     wtemp = sin (0.5f * theta);
     wpr = -2.0f * wtemp * wtemp;
     wpi = sin (theta);

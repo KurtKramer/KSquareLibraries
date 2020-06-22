@@ -4672,12 +4672,21 @@ KKStr  KKB::StrFormatInt (kkint32      val,
                           const char*  mask
                          )
 {
-  return  KKB::StrFormatDouble ((double)val, mask);
+  return  KKB::StrFormatDouble (static_cast<double> (val), mask);
 }
 
 
 
-KKStr  KKB::StrFormatInt64 (kkint64        val,
+KKStr  KKB::StrFormatInt (kkuint32     val,
+                          const char*  mask
+                         )
+{
+  return  KKB::StrFormatDouble (static_cast<double> (val), mask);
+}
+
+
+
+KKStr  KKB::StrFormatInt64 (kkint64      val,
                             const char*  mask
                            )
 {
@@ -4820,7 +4829,6 @@ KKStr KKB::StrFromBuff (const char* buff, kkuint32 buffLen)
 KKStr  KKB::StrFromInt16 (kkint16 i)
 {
   char  buff[50];
-
   SPRINTF (buff, sizeof (buff), "%d", i);
   KKStr s (buff);
   return  s;
@@ -4831,7 +4839,6 @@ KKStr  KKB::StrFromInt16 (kkint16 i)
 KKStr  KKB::StrFromUint16 (kkuint16 ui)
 {
   char  buff[50];
-
   SPRINTF (buff, sizeof (buff), "%u", ui);
   KKStr s (buff);
   return  s;
@@ -4842,7 +4849,6 @@ KKStr  KKB::StrFromUint16 (kkuint16 ui)
 KKStr  KKB::StrFromInt32 (kkint32 i)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%ld", i);
   KKStr s (buff);
   return  s;
@@ -4853,7 +4859,6 @@ KKStr  KKB::StrFromInt32 (kkint32 i)
 KKStr  KKB::StrFromUint32 (kkuint32 ui)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%lu", ui);
   KKStr s (buff);
   return  s;
@@ -4864,7 +4869,6 @@ KKStr  KKB::StrFromUint32 (kkuint32 ui)
 KKStr  KKB::StrFromInt64 (kkint64 i64)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%lld", i64);
   KKStr s (buff);
   return  s;
@@ -4988,12 +4992,11 @@ void  VectorKKStr::WriteXML (const KKStr&  varName,
   startTag.AddAtribute ("Count", (kkint32)size ());
   startTag.WriteXML (o);
 
-  const_iterator  idx;
-  kkuint32 x = 0;
-  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  bool firstPass = true;
+  for (auto idx: *this)
   {
-    if  (x > 0)  o << "\t";
-    XmlContent::WriteXml (idx->QuotedStr (), o);
+    if  (firstPass) firstPass = false; else o << '\t';
+    XmlContent::WriteXml (idx.QuotedStr (), o);
   }
   XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);

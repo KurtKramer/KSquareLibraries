@@ -65,6 +65,19 @@
 #undef min
 #undef max
 
+
+#define scFLOAT(X)  static_cast<float>(##X)
+#define scDOUBLE(X)  static_cast<double>(##X)
+
+#define scINT16(X)  static_cast<int16_t>(##X)
+#define scUINT16(X)  static_cast<uint16_t>(##X)
+
+#define scINT32(X)  static_cast<int32_t>(##X)
+#define scUINT32(X)  static_cast<uint32_t>(##X)
+
+#define scINT64(X)  static_cast<int64_t>(##X)
+#define scUINT64(X)  static_cast<uint64_t>(##X)
+
 /*----------------------------------------------------------------------------
   Definition of the namespace "KKB"  which stands for Kurt Kramer Base Library.
   ---------------------------------------------------------------------------*/
@@ -371,6 +384,5 @@ double todouble (T x)
 {
   return static_cast<double> (x);
 }
-
 
 #endif
