@@ -302,7 +302,7 @@ namespace KKB
    *@param[in]  src  String that you want to scan for environment variables.
    *@return  'src' string with environment variables expanded.
    */
-  KKB::KKStr  osSubstituteInEnvironmentVariables (const KKStr&  src);
+  KKB::KKStr  osSubstituteInEnvironmentVariables (const KKStr&  src) noexcept;
 
 
   /**

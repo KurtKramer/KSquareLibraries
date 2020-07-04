@@ -147,7 +147,7 @@ int  KKB::osFSEEK (std::FILE*  f,
 //*  when no longer needed.                                                    *
 //*                                                                            *
 //******************************************************************************
-KKStrListPtr  osParseSearchSpec (const KKStr&  searchSpec)
+KKStrListPtr  osParseSearchSpec (const KKStr&  searchSpec)  noexcept
 {
   KKStrListPtr  searchFields = new KKStrList (true);
 
@@ -198,7 +198,7 @@ KKStrListPtr  osParseSearchSpec (const KKStr&  searchSpec)
 
 bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
                                      KKStrListPtr  searchFields
-                                    )
+                                    )  noexcept
 {
   if  (!searchFields)
     return  true;
@@ -291,7 +291,6 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
       lastFieldAStar = false;
     }
   }
-
 
   if  (lenLeftToCheck > 0)
   {
@@ -600,8 +599,6 @@ void  KKB::osChangeDir (const KKStr&  dirName,
                        )
 {
 #ifdef  WIN32
-
-
   BOOL  changeOk = SetCurrentDirectory(dirName.Str ());
   if  (changeOk)
     successful = true;
@@ -676,7 +673,6 @@ bool  KKB::osCreateDirectory (const KKStr&  _dirName)
 
 KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
 {
-  // Since c++11 std::getenv is thread safe.
   const char* value = std::getenv(_varName.Str ());
   if  (value == nullptr)
     return nullptr;
@@ -703,7 +699,7 @@ KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
  */
 OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
                                    kkuint32      startIdx  /**<  Index in 'str' to start search from. */
-                                  )
+                                  )  noexcept
 {
   kkStrUint  x = startIdx;
   kkStrUint  y = startIdx + 1;
@@ -730,7 +726,7 @@ OptionUInt32  osLocateEnvStrStart (const KKStr&  str,
 
 
 
-KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
+KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src) noexcept
 {
   auto  nextEnvVarIdx = osLocateEnvStrStart (src, 0);
   if  (!nextEnvVarIdx)  return  src;

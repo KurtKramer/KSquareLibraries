@@ -112,7 +112,7 @@ char*  KKB::STRCAT (char*        dest,
 
 kkint32  KKB::STRICMP (const char*  left,
                        const char*  right
-                      )
+                      )  noexcept
 {
   if  (left == NULL)
   {
@@ -138,7 +138,6 @@ kkint32  KKB::STRICMP (const char*  left,
     return 0;
   else
     return 1;
-
 }  /* STRICMP */
 
 
@@ -146,7 +145,7 @@ kkint32  KKB::STRICMP (const char*  left,
 kkint32  KKB::STRNICMP (const char*  left,
                         const char*  right,
                         kkint32      len
-                       )
+                       )  noexcept
 {
   if  (left == NULL)
     return  (right == NULL) ? 0 : -1;
@@ -3592,11 +3591,11 @@ OptionUInt32  SearchStr (const char*   src,
                         )
 {
   if  ((!src)  ||  (!srchStr))
-    return {};
+    return nullopt;
 
   kkuint32  zed = (startPos + srchStrLen - 1);
   if  (zed > srcLen)
-    return  {};
+    return  nullopt;
 
   kkuint32 numIter = (srcLen - zed);
   const char* startCh = src + startPos;
@@ -3606,7 +3605,7 @@ OptionUInt32  SearchStr (const char*   src,
     if  (strncmp (startCh, srchStr, srchStrLen) == 0)
       return  startPos + x;
   }
-  return {};
+  return nullopt;
 }
 
 

@@ -319,7 +319,7 @@ int32_t  toint32_t (T x)
   {
     static_assert(std::is_integral<T>::value, "Integral required.");
 
-    if (std::is_signed<T>::value)
+    if  constexpr(std::is_signed<T>::value)
     {
       if (x < std::numeric_limits<int32_t>::min ())
       {

@@ -759,8 +759,8 @@ namespace  KKB
 
   char*  STRDUP (const char* src);
 
-  kkint32  STRICMP  (const char*  left, const char*  right);
-  kkint32  STRNICMP (const char*  left, const char*  right,  kkint32  len);
+  kkint32  STRICMP  (const char*  left, const char*  right) noexcept;
+  kkint32  STRNICMP (const char*  left, const char*  right,  kkint32  len)  noexcept;
 
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint16      right);
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint16     right);
