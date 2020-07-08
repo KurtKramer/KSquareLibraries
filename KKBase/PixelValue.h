@@ -24,12 +24,22 @@ namespace KKB
   public:
 
     /** @brief  Constructs a 'PixelValue' instance from the the three provided values. */
-    PixelValue  ();
+    constexpr  PixelValue  ():
+      r(0),
+      g(0),
+      b(0)
+    {}
+
+    constexpr  PixelValue(const PixelValue& pixelValue):
+      r(pixelValue.r),
+      g(pixelValue.g),
+      b(pixelValue.b)
+    {}
 
     /** @brief Constructs a 'PixelValue' instance using the provided values for the color components. */
-    PixelValue  (uchar _r, uchar _g,  uchar _b);
-
-    PixelValue  (const PixelValue&  pixelValue);
+    constexpr  PixelValue  (uchar _r, uchar _g,  uchar _b): r(_r), g(_g), b(_b)
+    {
+    }
 
     static  PixelValue  Aqua;
     static  PixelValue  Black;
@@ -76,7 +86,7 @@ namespace KKB
     void  ToHSI (float&  hue, 
                  float&  sat,
                  float&  intensity
-                )  const;
+                ) const noexcept;
 
     /** @brief  Creates a displayable string reflecting the values of the three RGB components. */
     KKStr  ToStr ()  const;
@@ -85,8 +95,8 @@ namespace KKB
 
     PixelValue   operator*  (double  fact)  const;
 
-    bool         operator== (const PixelValue& right)  const;
-    bool         operator!= (const PixelValue& right)  const;
+    bool         operator== (const PixelValue& right)  const  noexcept;
+    bool         operator!= (const PixelValue& right)  const  noexcept;
   };
 }  /* KKB */
 

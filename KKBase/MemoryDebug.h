@@ -1,5 +1,6 @@
-#ifndef  _NO_MEMORY_LEAK_CHECK_
-#ifndef  _WINDOWS
+#if  !defined(_NO_MEMORY_LEAK_CHECK_)
+
+#if !defined(_WINDOWS)
 
 #if  defined(WIN32)  &&  defined(_DEBUG)
 // We need to make sure that these items are included before we override the new operator.
@@ -25,4 +26,7 @@
 #define new MYDEBUG_NEW
 #endif
 #endif
+
 #endif
+
+DisableWarningsPop ()

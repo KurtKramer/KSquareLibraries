@@ -907,6 +907,7 @@ namespace  KKB
     typedef  std::map<kkint32,  KKStrPtr const>  IndexIndex;
     typedef  std::pair<kkint32, KKStrPtr const>  IndexIndexPair;
 
+#pragma pack(push, 1)
     bool          caseSensative;
     KKStrPtrComp  comparator;
     IndexIndex    indexIndex;
@@ -914,6 +915,7 @@ namespace  KKB
     kkint32       nextIndex;
     bool          owner;
     StrIndex*     strIndex;
+#pragma pack(pop)
   };  /* KKStrListIndexed */
 
 

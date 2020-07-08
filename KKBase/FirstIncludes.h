@@ -6,6 +6,43 @@
 //#define WIN32
 //#endif
 
+#if defined(_WIN32)
+
+#define DisableWarningsPush()     \
+  __pragma(warning( push ))            \
+  __pragma(warning( disable : 4267)) \
+  __pragma(warning( disable : 4458)) \
+  __pragma(warning( disable : 4514)) \
+  __pragma(warning( disable : 4571)) \
+  __pragma(warning( disable : 4625)) \
+  __pragma(warning( disable : 4626)) \
+  __pragma(warning( disable : 4668)) \
+  __pragma(warning( disable : 4710)) \
+  __pragma(warning( disable : 4711)) \
+  __pragma(warning( disable : 4774)) \
+  __pragma(warning( disable : 4820)) \
+  __pragma(warning( disable : 4996)) \
+  __pragma(warning( disable : 5026)) \
+  __pragma(warning( disable : 5027)) \
+  __pragma(warning( disable : 5039)) 
+
+
+#define DisableWarningsPop()    \
+  __pragma(warning ( pop ))
+
+
+#else
+#define DisableWarningsPush()
+
+#define DisableWarningsPop()
+
+#endif
+
+
+// Matches #pragma warning( pop ) in "MemoryDebug.h"
+// We are taking advantag eof the fact that there is a "FirstIncludes.h"  and  "MemoryDebug.h" in every module.
+DisableWarningsPush()
+
 
 #if  defined(WIN32)
   #define  KKOS_WINDOWS
@@ -61,7 +98,7 @@
 #endif
 
 
-#if  defined(KKOS_WINDOWS)
+#if  defined(_WIN32)
 
 #define  DisableConversionWarning (alpha)  \
 #pragma warning( push )                    \

@@ -5,7 +5,9 @@
 #ifndef _CHART_
 #define _CHART_
 
+DisableWarningsPush()
 #include <vector>
+DisableWarningsPop()
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"
