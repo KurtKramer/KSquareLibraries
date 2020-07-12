@@ -173,7 +173,6 @@ namespace  KKB
   typedef  KK_DFT1D<double>  KK_DFT1D_Double;
 
 
-
   template<typename DftType>
   class  KK_DFT2D
   {

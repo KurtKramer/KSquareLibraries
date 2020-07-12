@@ -91,6 +91,22 @@ Point&  Point::operator= (const Point&  r)
 
 
 
+Point&  Point::operator+= (const Point&  r)
+{
+  row += r.row;
+  col += r.col;
+}
+
+
+
+Point&  Point::operator-= (const Point&  r)
+{
+  row -= r.row;
+  col -= r.col;
+}
+
+
+
 PointList::PointList (const PointList&  pointList):
     KKQueue<Point> (true)
 {
