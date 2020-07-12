@@ -705,7 +705,7 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else
     {
-      kkint32  runLenThisLoop = Min ((kkint32)1023, runLen);
+      kkint32  runLenThisLoop = Min (toint32_t (1023), runLen);
 
 #include "DisableConversionWarning.h"
       rec.runLen10Bit.opCode = 8;
@@ -941,8 +941,6 @@ void  ScannerFile2BitEncoded::WriteNextScanLine (const uchar*  buffer,
   /**@todo Write out OutputBuffer;  */
 
 }  /* WriteNextScanLine */
-
-
 
 
 

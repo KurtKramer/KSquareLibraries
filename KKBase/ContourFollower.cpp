@@ -949,9 +949,9 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
   for  (kkint32 x = 0;  x < numOfBuckets;  ++x)
   {
-    kkint32  borderPixelIdx = toint32_t ((todouble (x) * todouble (numOfBorderPixels)) /  todouble (numOfBuckets));
+    size_t  borderPixelIdx = tosize_t ((todouble (x) * todouble (numOfBorderPixels)) /  todouble (numOfBuckets));
 
-    Point&  point = (*points)[borderPixelIdx];
+    const Point&  point = points->at (borderPixelIdx);  // (*points)[borderPixelIdx];
 
     #if  defined(FFTW_AVAILABLE)
       src[x][0] = point.RowF ();
@@ -1059,7 +1059,7 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
 
   if  (bucketSize == 0.0f)
   {
-     buckets[numOfBuckets / 2] = points->QueueSize ();
+     buckets[numOfBuckets / 2] = toint32_t (points->QueueSize ());
   }
   else
   {
@@ -1154,7 +1154,7 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
      KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[numOfEdgePixels];
   #endif
 
-  for  (size_t  l = 0;  l < (kkint32)fourier.size ();  ++l)
+  for  (size_t  l = 0;  l < fourier.size ();  ++l)
   {
     #if  defined(FFTW_AVAILABLE)
     src[l][0] = fourier[l].real ();

@@ -349,7 +349,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
     }
 
     strm.avail_out = unCompressedBuffSize - unCompressedBuffLen;
-    strm.next_out  = (Bytef*)unCompressedBuff + unCompressedBuffLen;
+    strm.next_out  = static_cast<Bytef*> (unCompressedBuff) + unCompressedBuffLen;
 
     ret = inflate (&strm, Z_NO_FLUSH);
     if  (ret == Z_STREAM_ERROR)
