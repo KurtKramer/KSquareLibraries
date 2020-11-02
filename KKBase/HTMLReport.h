@@ -25,6 +25,8 @@ namespace KKB
                 AlignmentType  _alignment
                );
 
+    HTMLReport (const HTMLReport&) = delete;
+
     ~HTMLReport ();
 
 
@@ -49,6 +51,7 @@ namespace KKB
 
     friend  HTMLReport&  endl (HTMLReport& _outs);
 
+    HTMLReport operator= (const HTMLReport&) = delete;
 
   private:
     KKStr  CurStyleStr ();

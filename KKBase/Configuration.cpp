@@ -574,6 +574,7 @@ KKStrConstPtr   Configuration::SectionName (kkuint32 sectionNum)  const
 }
 
 
+
 OptionUInt32  Configuration::SectionNum (const KKStr&  sectionName)  const
 {
   if  (!sections)

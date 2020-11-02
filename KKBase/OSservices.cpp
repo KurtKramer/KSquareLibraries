@@ -375,12 +375,12 @@ bool   KKB::osValidFileName (const KKStr&  _name)
 KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
 {
   const char*  invalidChars = "\\\" :<>!?*";
-  const char*  invalidNames[] = {"CON",  "PRN",  "AUX",  "NUL",  "COM1", "COM2", 
-                                 "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", 
-                                 "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5",
-                                 "LPT6", "LPT7", "LPT8", "LPT9", 
-                                 NULL
-                                }; 
+  const char* const  invalidNames[] = {"CON",  "PRN",  "AUX",  "NUL",  "COM1", "COM2", 
+                                       "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", 
+                                       "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5",
+                                       "LPT6", "LPT7", "LPT8", "LPT9", 
+                                       nullptr
+                                      }; 
 
   KKStrListPtr  errors = new KKStrList (true);
   if  (_name.Empty ())
@@ -392,7 +392,7 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
   {
     // Check for invalid names.
     kkuint32  x = 0;
-    while  (invalidNames[x] != NULL)
+    while  (invalidNames[x] != nullptr)
     {
       if  (_name.EqualIgnoreCase (invalidNames[x]))
         errors->PushOnBack (new KKStr ("Can not use \"" + _name + "\""));
@@ -514,6 +514,7 @@ bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
 }
 
 
+
 bool  KKB::osMoveFileBetweenDirectories (const KKStr&  _fileName,
   const KKStr&  _srcDir,
   const KKStr&  _destDir
@@ -539,7 +540,6 @@ bool  KKB::osMoveFileBetweenDirectories (const KKStr&  _fileName,
     return false;
   }
 }
-
 
 
 
@@ -793,7 +793,7 @@ OptionUInt32  KKB::osLocateFirstSlashChar (const KKStr&  fileSpec)
 
 void  KKB::osAddLastSlash (KKStr&  fileSpec)
 {
-  char  c = fileSpec.LastChar ();
+  const char  c = fileSpec.LastChar ();
 
   if  ((c != '\\')  &&  (c != '/'))
     fileSpec << DS;
@@ -1017,7 +1017,7 @@ OptionKKStr   KKB::osGetHostName ()
  
   KKStr  compName = "";
 
-  BOOL returnCd = GetComputerNameA (buff, &buffSize);
+  const BOOL returnCd = GetComputerNameA (buff, &buffSize);
   if  (returnCd != 0)
   {
     compName = buff;
@@ -1060,7 +1060,7 @@ KKStr  KKB::osGetProgName ()
   KKStr  progName;
 
   char filename[ MAX_PATH ];
-  DWORD size = GetModuleFileNameA (NULL, filename, MAX_PATH);
+  const DWORD size = GetModuleFileNameA (NULL, filename, MAX_PATH);
   if  (size)
     progName = filename;  
   else
@@ -1186,7 +1186,7 @@ KKStrListPtr  KKB::osGetListOfFDirectoryEntries (const KKStr&  fileSpec,
     }
   }
 
-  KKStrListPtr  nameList = new KKStrList (true);
+  KKStrListPtr  nameList =  new KKStrList (true);
 
   for (auto dirIter: fs::directory_iterator (fs::path (rootDirName.Str ())))
   {
@@ -1328,7 +1328,7 @@ double  KKB::osGetSystemTimeUsed ()
 
 
 #ifdef  WIN32
-double  KKB::osGetUserTimeUsed ()
+double  KKB::osGetUserTimeUsed () noexcept
 {
   HANDLE h = GetCurrentProcess ();
 
@@ -1343,10 +1343,10 @@ double  KKB::osGetUserTimeUsed ()
   SYSTEMTIME  st;
 
   FileTimeToSystemTime(&userTime, &st);
-  double   ut =  st.wHour * 3600 + 
-                 st.wMinute * 60 + 
-                 st.wSecond      +
-                 st.wMilliseconds / 1000.0;
+  const double   ut =  st.wHour * 3600 + 
+                       st.wMinute * 60 + 
+                       st.wSecond      +
+                       st.wMilliseconds / 1000.0;
 
   return  ut;
 }  /* osGetSystemTimeUsed */
@@ -1366,13 +1366,13 @@ double  KKB::osGetUserTimeUsed ()
 
 
 #ifdef  WIN32
-double  KKB::osGetKernalTimeUsed ()
+double  KKB::osGetKernalTimeUsed () noexcept
 {
   HANDLE h = GetCurrentProcess ();
 
   FILETIME   creationTime, exitTime, kernelTime, userTime;
 
-  BOOL  ok = GetProcessTimes (h, &creationTime, &exitTime, &kernelTime, &userTime);
+  const BOOL  ok = GetProcessTimes (h, &creationTime, &exitTime, &kernelTime, &userTime);
 
   if  (!ok)
     return 0.0;
@@ -1400,7 +1400,7 @@ double  KKB::osGetKernalTimeUsed ()
 
 
 #ifdef  WIN32
-kkuint64  FileTimeToMiliSecs (const FILETIME& ft)
+kkuint64  FileTimeToMiliSecs (const FILETIME& ft) noexcept
 {
   ULARGE_INTEGER ui;
   ui.LowPart=ft.dwLowDateTime;
@@ -1410,7 +1410,7 @@ kkuint64  FileTimeToMiliSecs (const FILETIME& ft)
 
 
 
-kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+kkuint64  KKB::osGetSystemTimeInMiliSecs () noexcept
 {
   FILETIME lpIdleTime;
   FILETIME lpKernelTime;
@@ -1441,13 +1441,13 @@ DateTime  KKB::osGetLocalDateTime ()
 
   GetLocalTime(&sysTime);
 
-  DateTime  dateTime ((short)sysTime.wYear,
-                      (uchar)sysTime.wMonth,
-                      (uchar)sysTime.wDay,
-                      (uchar)sysTime.wHour,
-                      (uchar)sysTime.wMinute,
-                      (uchar)sysTime.wSecond
-                     );
+  const DateTime  dateTime ((short)sysTime.wYear,
+                            (uchar)sysTime.wMonth,
+                            (uchar)sysTime.wDay,
+                            (uchar)sysTime.wHour,
+                            (uchar)sysTime.wMinute,
+                            (uchar)sysTime.wSecond
+                           );
 
   return  dateTime;
 }  /* osGetCurrentDateTime */

@@ -40,7 +40,7 @@ namespace  KKBaseTest
     h.Push (TestCase (5));
 
     auto n = h.Pop();
-    cout << n.x << std::endl;
+    std::cout << n.x << std::endl;
 
     return true;
   }

@@ -55,7 +55,7 @@ WarningsLowered ()
 
 WarningsRestored ()
 
-#define  PIE            3.14159265358979
+#define  PIE            3.1415926535897932384626433832795
 #define  TwoPie         6.28318530717959
 #define  TwoThirdsPie   2.09439510239319
 #define  OneHalfPie     1.57079632679490
@@ -317,12 +317,15 @@ int32_t  toint32_t (T x)
 {
   if  constexpr (std::is_floating_point<T>::value)
   {
+    if  (x > static_cast<float>(std::numeric_limits<int32_t>::max()))
+    {
+    }
   }
   else
   {
     static_assert(std::is_integral<T>::value, "Integral required.");
 
-    if  constexpr(std::is_signed<T>::value)
+    if  constexpr (std::is_signed<T>::value)
     {
       if (x < std::numeric_limits<int32_t>::min ())
       {
@@ -341,7 +344,7 @@ int32_t  toint32_t (T x)
 template<typename T>
 uint32_t  touint32_t (T x)
 {
-  if (std::is_signed<T>::value)
+  if  constexpr (std::is_signed<T>::value)
   {
     if (x < 0)
     {
@@ -359,7 +362,7 @@ uint32_t  touint32_t (T x)
 template<typename T>
 size_t tosize_t(T x)
 {
-  if  (std::is_signed<T>::value)
+  if  constexpr (std::is_signed<T>::value)
   {
     if (x < 0)
     {

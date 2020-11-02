@@ -31,7 +31,7 @@ namespace  KKB
   public:
     PlotPoint (double _xVal,
                double _yVal
-              ):
+              ) noexcept :
       xVal (_xVal),
       yVal (_yVal)
     {}
@@ -39,14 +39,14 @@ namespace  KKB
 
     PlotPoint (kkint32 _xVal,
                kkint32 _yVal
-              ):
-      xVal (double (_xVal)),
-      yVal (double (_yVal))
+              ) noexcept  :
+      xVal (static_cast<double> (_xVal)),
+      yVal (static_cast<double> (_yVal))
     {}
 
 
-    double  XVal () const  {return xVal;}
-    double  YVal () const  {return yVal;}
+    double  XVal () const noexcept {return xVal;}
+    double  YVal () const noexcept {return yVal;}
 
 
   private:
@@ -96,11 +96,11 @@ namespace  KKB
      {}
 
    const  
-   KKStr&  Name ()  {return name;}
+   KKStr&  Name () noexcept {return name;}
 
-   double   XVal ()  {return xVal;}
+   double  XVal () noexcept {return xVal;}
 
-   bool  operator< (const XLabel&  right)  const
+   bool  operator< (const XLabel&  right) const noexcept
    {
      return  xVal < right.xVal;
    }
@@ -133,9 +133,6 @@ void  Chart::Series::AddAValue (float  _xVal,
 {
   points.push_back (PlotPoint (_xVal, _yVal));
 }  /* AddAValue */
-
-
-
 
 
 
@@ -474,9 +471,9 @@ void  Chart::Save (KKStr  _fileName)
 
   {
     // Make sure we have a XLabel for all Points Plotted
-    for  (kkuint32 seriesIDX = 0;  seriesIDX < series.size ();  seriesIDX++)
+    for  (kkuint32 seriesIDX = 0;  seriesIDX < series.size ();  ++seriesIDX)
     {
-      SeriesPtr s = series[seriesIDX];
+      SeriesPtr s = series.at(seriesIDX); //   .[seriesIDX];
       for  (kkuint32  plotIDX = 0;  plotIDX < s->points.size ();  plotIDX++)
       {
         PlotPoint& p = s->points[plotIDX];

@@ -1,5 +1,6 @@
-#ifndef  _NO_MEMORY_LEAK_CHECK_
-#ifndef  _WINDOWS
+#if  !defined(_NO_MEMORY_LEAK_CHECK_)
+
+#if !defined(_WINDOWS)
 
 WarningsLowered()
 #if  defined(WIN32)  &&  defined(_DEBUG)
@@ -30,4 +31,5 @@ WarningsRestored()
 
 #if defined(_WIN32)
 #pragma  warning (disable : 4820)
+
 #endif

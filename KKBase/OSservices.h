@@ -163,7 +163,7 @@ namespace KKB
 
   kkint64        osGetFileSize (const KKStr&  fileName);
 
-  double         osGetKernalTimeUsed ();
+  double         osGetKernalTimeUsed () noexcept;
 
   KKStrListPtr   osGetListOfFDirectoryEntries (const KKStr&  fileSpec, 
                                                bool          includeSubdirectories,
@@ -193,7 +193,7 @@ namespace KKB
   /**
    *@brief Returns mili-secs that system (Windows = has been started, Linux time in epoch).
    */
-  kkuint64  osGetSystemTimeInMiliSecs ();
+  kkuint64  osGetSystemTimeInMiliSecs () noexcept;
 
 
   /**
@@ -241,7 +241,7 @@ namespace KKB
 
   kkint32        osGetThreadId ();
 
-  double         osGetUserTimeUsed   ();
+  double         osGetUserTimeUsed () noexcept;
 
   OptionUInt32   osLocateFirstSlashChar (const KKStr&  fileSpec);
 

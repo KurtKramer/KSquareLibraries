@@ -6,11 +6,12 @@
 //#define WIN32
 //#endif
 
-
 #if  defined(_WIN32)
 
 #define  WarningsLowered()  \
 __pragma(warning( push )) \
+__pragma(warning( disable : 4267)) \
+__pragma(warning( disable : 4458)) \
 __pragma(warning( disable : 4514)) \
 __pragma(warning( disable : 4571)) \
 __pragma(warning( disable : 4625)) \
@@ -20,6 +21,7 @@ __pragma(warning( disable : 4710)) \
 __pragma(warning( disable : 4711)) \
 __pragma(warning( disable : 4774)) \
 __pragma(warning( disable : 4820)) \
+__pragma(warning( disable : 4996)) \
 __pragma(warning( disable : 5026)) \
 __pragma(warning( disable : 5027)) \
 __pragma(warning( disable : 5039))
@@ -95,3 +97,22 @@ WarningsLowered()
 #endif
 
 WarningsRestored()
+
+#if  defined(_WIN32)
+
+#define  DisableConversionWarning (alpha)  \
+#pragma warning( push )                    \
+#pragma warning( disable : 4101)
+
+#define  RestoreConversionWarning (alpha)  \
+#pragma warning( pop ) 
+#else
+
+#define  DisableConversionWarning (alpha)        \
+#pragma GCC diagnostic push                      \
+#pragma GCC diagnostic ignored "-Wconversion"
+
+#define  RestoreConversionWarning (alpha)  \
+#pragma GCC diagnostic pop 
+
+#endif

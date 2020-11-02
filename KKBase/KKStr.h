@@ -88,7 +88,7 @@ namespace  KKB
     typedef  const KKStr            KKStrConst;
     typedef  KKStrConst*            KKStrConstPtr;
     typedef  std::optional<KKStr>   OptionKKStr;
-    static  const  kkStrUint  MaxStrLen;
+    static  const  kkStrUint        MaxStrLen;
 
   private:
     kkStrUint  allocatedSize;
@@ -909,6 +909,7 @@ namespace  KKB
     typedef  std::map<kkint32,  KKStrPtr const>  IndexIndex;
     typedef  std::pair<kkint32, KKStrPtr const>  IndexIndexPair;
 
+#pragma pack(push, 1)
     bool          caseSensative;
     KKStrPtrComp  comparator;
     IndexIndex    indexIndex;
@@ -916,6 +917,7 @@ namespace  KKB
     kkint32       nextIndex;
     bool          owner;
     StrIndex*     strIndex;
+#pragma pack(pop)
   };  /* KKStrListIndexed */
 
 

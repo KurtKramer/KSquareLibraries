@@ -39,6 +39,8 @@ namespace  KKB
                   bool&         _fileOpened
                  );
 
+    XmlTokenizer (const XmlTokenizer&) = delete;
+
     ~XmlTokenizer ();
 
 

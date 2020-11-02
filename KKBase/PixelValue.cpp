@@ -42,28 +42,6 @@ PixelValue  PixelValue::Yellow    (255, 255,   0);
 
 
 
-PixelValue::PixelValue ():
-  r (0),
-  g (0),
-  b (0)
-{
-}
-
-
-PixelValue::PixelValue  (const PixelValue&  pixelValue):
-    r(pixelValue.r), 
-    g(pixelValue.g), 
-    b(pixelValue.b)  
-{
-}
-
-
-PixelValue::PixelValue  (uchar _r, uchar _g,  uchar _b): 
-    r(_r), g(_g), b(_b)  
-{
-}
-
-
 PixelValue&  PixelValue::operator=  (const PixelValue& right)  
 {
   r = right.r;
@@ -78,22 +56,22 @@ PixelValue&  PixelValue::operator=  (const PixelValue& right)
  */
 PixelValue  PixelValue::operator*  (double  fact)  const
 {
-  uchar newR = (uchar)((double)r * fact + 0.5);
-  uchar newG = (uchar)((double)g * fact + 0.5);
-  uchar newB = (uchar)((double)b * fact + 0.5);
+  const uchar newR = static_cast<uchar>((double)r * fact + 0.5f);
+  const uchar newG = static_cast<uchar>((double)g * fact + 0.5f);
+  const uchar newB = static_cast<uchar>((double)b * fact + 0.5f);
   return  PixelValue (newR, newG, newB);
 }
 
 
 
-bool  PixelValue::operator== (const PixelValue& right)  const
+bool  PixelValue::operator== (const PixelValue& right)  const  noexcept
 {
   return  ((r == right.r)  &&  (g == right.b)  &&  (b == right.b));
 }
 
 
 
-bool  PixelValue::operator!= (const PixelValue& right)  const
+bool  PixelValue::operator!= (const PixelValue& right)  const  noexcept
 {
   return  ((r != right.r)  ||  (g != right.b)  ||  (b != right.b));
 }
@@ -103,7 +81,7 @@ bool  PixelValue::operator!= (const PixelValue& right)  const
 void  PixelValue::ToHSI (float&  hue, 
                          float&  sat,
                          float&  intensity
-                        )  const
+                        )  const noexcept
 {
   float  redF    = (float)r / 255.0f;
   float  greenF  = (float)g / 255.0f;
@@ -112,14 +90,14 @@ void  PixelValue::ToHSI (float&  hue,
   if (blueF <= greenF)
   {
     // compute hue with this formula
-    hue = (float)acos ((0.5 * ((redF - greenF) + (redF - blueF))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF))));
+    hue = static_cast<float> (acos ((0.5f * ((redF - greenF) + (redF - blueF))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF)))));
   }
 
   // Otherwise
   else
   {
     // compute hue with this formula
-    hue = (float)(2.0f * 3.1415926535897932384626433832795 - acos ((0.5 * ((redF - greenF) + (redF - blueF)))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF))));
+    hue = static_cast<float> (2.0f * PIE - acos ((0.5f * ((redF - greenF) + (redF - blueF)))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF))));
   }
 
   // compute saturation
@@ -143,8 +121,8 @@ PixelValue  PixelValue::FromHSI (float  hue,
   if  (sat == 0.0f) 
   {
     // gray-scale image
-    kkint32  greyValue = (kkint32)(0.5f + intensity * 255.0f);
-    uchar  gv = (uchar)greyValue;
+    const kkint32  greyValue = static_cast<kkint32> (0.5f + intensity * 255.0f);
+    uchar  gv = static_cast<uchar> (greyValue);
     return  PixelValue (gv, gv, gv);
   }
 
@@ -227,9 +205,9 @@ PixelValue  PixelValue::FromHSI (float  hue,
     blue = red - (intensity - green) * domainOffset * 6.0f;
   }
 
-  return  PixelValue ((uchar)(0.5f + red   * 255.0f), 
-                      (uchar)(0.5f + green * 255.0f), 
-                      (uchar)(0.5f + blue  * 255.0f)
+  return  PixelValue (static_cast<uchar> (0.5f + red   * 255.0f), 
+                      static_cast<uchar> (0.5f + green * 255.0f), 
+                      static_cast<uchar> (0.5f + blue  * 255.0f)
                      );
 }  /* FromHSI */
 
