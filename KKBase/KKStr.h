@@ -86,7 +86,7 @@ namespace  KKB
     typedef  const KKStr            KKStrConst;
     typedef  KKStrConst*            KKStrConstPtr;
     typedef  std::optional<KKStr>   OptionKKStr;
-    static  const  kkStrUint  MaxStrLen;
+    static  const  kkStrUint        MaxStrLen;
 
   private:
     kkStrUint  allocatedSize;
