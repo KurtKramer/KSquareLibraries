@@ -12,7 +12,8 @@
 using namespace std;
 
 #include "Option.h"
-#include  "Point.h"
+
+#include "Point.h"
 using namespace KKB;
 
 
@@ -95,6 +96,7 @@ Point&  Point::operator+= (const Point&  r)
 {
   row += r.row;
   col += r.col;
+  return *this;
 }
 
 
@@ -103,6 +105,7 @@ Point&  Point::operator-= (const Point&  r)
 {
   row -= r.row;
   col -= r.col;
+  return *this;
 }
 
 

@@ -8,8 +8,11 @@
 #ifndef  _DATETIME_
 #define  _DATETIME_
 
+WarningsLowered ()
 #include <fstream>
 #include <iostream>
+WarningsRestored ()
+
 #include "KKStr.h"
 
 /**

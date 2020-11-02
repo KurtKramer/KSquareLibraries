@@ -33,6 +33,8 @@
 
 //#define WIN32
 
+WarningsLowered ()
+
 #if  defined(WIN32) || defined(WIN64)
 
 #include <windows.h>
@@ -51,6 +53,7 @@
 #include <type_traits>
 #include <vector>
 
+WarningsRestored ()
 
 #define  PIE            3.14159265358979
 #define  TwoPie         6.28318530717959
@@ -372,7 +375,7 @@ size_t tosize_t(T x)
 
 
 template<typename T>
-float tofloat (T x)
+float tofloat (T x)  noexcept
 {
   return static_cast<float> (x);
 }
@@ -380,7 +383,7 @@ float tofloat (T x)
 
 
 template<typename T>
-double todouble (T x)
+double todouble (T x)  noexcept
 {
   return static_cast<double> (x);
 }

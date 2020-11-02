@@ -9,14 +9,16 @@
 #include <ostream>
 #include <string>
 #include <vector>
-#include "MemoryDebug.h"
-using namespace std;
 
-#if  defined(WIN32)
+#if  defined(_WIN32)
 #include <windows.h>
 #else
 #include <pthread.h>
 #endif
+
+#include "MemoryDebug.h"
+using namespace std;
+
 
 #include "KKBaseTypes.h"
 #include "KKException.h"

@@ -8,6 +8,7 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
+WarningsLowered()
 #include <algorithm>
 #include <assert.h>
 #include <ctype.h>
@@ -21,6 +22,7 @@
 #include <vector>
 #include <sstream>
 #include <vector>
+WarningsRestored()
 
 #include "KKBaseTypes.h"
 #include "KKException.h"

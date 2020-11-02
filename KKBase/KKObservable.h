@@ -5,7 +5,9 @@
 #if  !defined(_KKOBSERVABLE_)
 #define  _KKOBSERVABLE_
 
+WarningsLowered()
 #include <map>
+WarningsRestored()
 
 #include "MsgQueue.h"
 

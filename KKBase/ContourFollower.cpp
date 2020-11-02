@@ -14,11 +14,14 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+WarningsLowered()
 #if defined(FFTW_AVAILABLE)
 #  include  <fftw3.h>
 //#else
 //#  include  "kku_fftw.h"
 #endif
+WarningsRestored()
+
 #include "kku_fftw.h"
 
 
@@ -951,7 +954,7 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
   {
     size_t  borderPixelIdx = tosize_t ((todouble (x) * todouble (numOfBorderPixels)) /  todouble (numOfBuckets));
 
-    const Point&  point = points->at (borderPixelIdx);  // (*points)[borderPixelIdx];
+    const Point point = *(points->at (borderPixelIdx));  // (*points)[borderPixelIdx];
 
     #if  defined(FFTW_AVAILABLE)
       src[x][0] = point.RowF ();
