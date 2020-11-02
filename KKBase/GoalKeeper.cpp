@@ -4,7 +4,6 @@
  */
 #include "FirstIncludes.h"
 
-
 #include <errno.h>
 #include <istream>
 #include <iostream>
@@ -13,7 +12,6 @@
 #include <vector>
 
 #include "KKBaseTypes.h"
-
 
 #if  defined(WIN32)
 #include <windows.h>
@@ -32,15 +30,14 @@ using namespace  KKB;
 
 
 
-
 #if  defined(GOALKEEPER_DEBUG)
 class  GoalKeeper::BlockedStat
 {
 public:
-  BlockedStat (kkint32 _blockedThreadId,
-               kkint32 _blockerThreadId,
-               kkuint32  _milliSecsBlocked,
-               kkint32 _numBlockedThreads
+  BlockedStat (kkint32  _blockedThreadId,
+               kkint32  _blockerThreadId,
+               kkuint32 _milliSecsBlocked,
+               kkint32  _numBlockedThreads
               ):
     blockedThreadId   (_blockedThreadId),
     blockerThreadId   (_blockerThreadId),
@@ -108,8 +105,6 @@ GoalKeeper::~GoalKeeper ()
 #endif
 
 }
-
-
 
 
 
@@ -197,7 +192,6 @@ void  GoalKeeper::CriticalSectionStart ()
   pthread_mutex_lock (&mutex);
 #endif
 }
-
 
 
 
@@ -292,12 +286,11 @@ void  GoalKeeper::StartBlock ()
 
 
 
-
 void   GoalKeeper::EndBlock ()
 {
   kkint32  curProcessorId = KKB::osGetThreadId ();
 
-  kkint32 errorCode = 0;   // 0=No Error;  
+  kkint32 errorCode = 0; // 0=No Error;  
                          // 1=There is no Block
                          // 2=Different thread holds the block
                          // 3=Failure to get a lock
@@ -333,14 +326,13 @@ void   GoalKeeper::EndBlock ()
     return;
 
   else if  (errorCode == 1)
-    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
+    throw KKException ("GoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
 
   else if  (errorCode == 2)
-    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
+    throw KKException ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
 
   return;
 }  /* EndBlock */
-
 
 
 
@@ -401,7 +393,6 @@ void  GoalKeeper::Create (const KKStr&             _name,
   sem_close (semHandle);
 #endif
 }  /* Create */
-
 
 
 
@@ -484,8 +475,6 @@ void  GoalKeeper::CreateAndStartBlock (const KKStr&             _name,
   sem_close (semHandle);
 #endif
 }  /* CreateAndStartBlock */
-
-
 
 
 
@@ -575,8 +564,6 @@ void   GoalKeeper::FinalCleanUp ()
 
 
 
-
-
 kkint32  GoalKeeper::NumBlockedThreads ()
 {
   kkint32  x = 0;
@@ -592,5 +579,3 @@ kkint32  GoalKeeper::BlockerThreadId ()
   x =  blockerThreadId;
   return  x;
 }
-
-

@@ -335,14 +335,12 @@ FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
   numOfFeatures (_examples.numOfFeatures),
   version       (_examples.version)
 {
-  MLClassIndexListPtr  classIdx = new MLClassIndexList (_mlClasses);
+  MLClassIndexList  classIdx  (_mlClasses);
   for  (auto idx:  _examples)
   {
-    if  (classIdx->GetClassIndex (idx->MLClass ()) >= 0)
+    if  (classIdx.GetClassIndex (idx->MLClass ()) >= 0)
       PushOnBack (idx);
   }
-  delete  classIdx;
-  classIdx = NULL;
 }
 
 
@@ -521,7 +519,7 @@ void  FeatureVectorList::ResetNumOfFeaturs (kkint32 newNumOfFeatures)
 
 void  FeatureVectorList::ResetFileDesc (FileDescConstPtr  newFileDesc)
 {
-  KKCheck (fileDesc, "FeatureVector::ResetFileDesc   ***ERROR***   newFileDesc == NULL.")
+  KKCheck (newFileDesc, "FeatureVector::ResetFileDesc   ***ERROR***   newFileDesc == NULL.")
 
   fileDesc = newFileDesc;
 

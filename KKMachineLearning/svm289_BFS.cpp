@@ -6,8 +6,10 @@
 #include <ctype.h>
 #include <float.h>
 #include <fstream>
+#include <algorithm>
 #include <iostream>
 #include <istream>
+#include <iterator>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,8 +31,9 @@ using namespace  KKMLL;
 #include "svm289_BFS.h"
 using  namespace  SVM289_BFS;
 
-
+#if defined(_MSC_VER)
 #pragma warning(disable : 4996)
+#endif
 
 //kkint32 libsvm_version = LIBSVM_VERSION;
 
@@ -175,7 +178,7 @@ FileDescConstPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 
 SVM289_BFS::svm_parameter::svm_parameter ():
   svm_type     (SVM_Type::C_SVC),
-  kernel_type  (RBF),
+  kernel_type  (Kernel_Type::RBF),
   degree       (3),
   gamma        (0.0),
   coef0        (0.0),
@@ -232,7 +235,7 @@ SVM289_BFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
 
 SVM289_BFS::svm_parameter::svm_parameter (KKStr&  paramStr):
   svm_type     (SVM_Type::C_SVC),
-  kernel_type  (RBF),
+  kernel_type  (Kernel_Type::RBF),
   degree       (3),
   gamma        (0.0),
   coef0        (0.0),
@@ -398,7 +401,7 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
 
 
 
-KKStr   SVM289_BFS::svm_parameter::ToTabDelStr ()  const
+KKStr  SVM289_BFS::svm_parameter::ToTabDelStr ()  const
 {
   KKStr  result (256);
 
@@ -444,7 +447,7 @@ KKStr   SVM289_BFS::svm_parameter::ToTabDelStr ()  const
 
 
 
-void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
+void  SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
 {
   KKStr  str = _str;
   kkint32  x;
@@ -521,81 +524,80 @@ void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
 }  /* ParseTabDelStr */
 
 
+const vector<string>  SVM_Type_As_Strings = {"C_SVC", "NU_SVC", "ONE_CLASS", "EPSILON_SVR", "NU_SVR", "NULL"};
 
-SVM_Type  SVM289_BFS::SVM_Type_FromStr (KKStr  s)
+
+SVM_Type  SVM289_BFS::SVM_Type_FromStr (const KKStr&  s)
 {
-  s.Upper ();
+  kkint32 idx = -1;
 
-  if  ((s.EqualIgnoreCase ("C_SVC"))       ||  (s == "0"))
-    return SVM_Type::C_SVC;
+  auto  i = find_if (SVM_Type_As_Strings.begin (), SVM_Type_As_Strings.end (), [s](const KKStr& r) {return s.EqualIgnoreCase (r);} );
 
-  if  ((s.EqualIgnoreCase ("NU_SVC"))       ||  (s == "1"))
-    return SVM_Type::NU_SVC;
-
-  if  ((s.EqualIgnoreCase ("ONE_CLASS"))    ||  (s == "2"))
-    return  SVM_Type::ONE_CLASS;
-
-  if  ((s.EqualIgnoreCase ("EPSILON_SVR"))  ||  (s == "3"))
-    return  SVM_Type::EPSILON_SVR;
-
-  if  ((s.EqualIgnoreCase ("NU_SVR"))       ||  (s == "4"))
-    return  SVM_Type::NU_SVR;
-
-  return  SVM_Type::SVM_NULL;
+  if  (i == SVM_Type_As_Strings.end ())
+  {
+    if  (!s.ValidInt (idx))
+      idx = -1;
+  }
+  else
+  {
+    idx = (kkint32)std::distance (SVM_Type_As_Strings.begin (), i);
+  }
+  
+  if (idx < 0  ||  idx >= (int)SVM_Type_As_Strings.size ())
+  {
+    cerr << endl << "SVM289_BFS::SVM_Type_FromStr   ***WARNNING***   Unrecognized SMM_Type: '" << s << "'" << endl << endl;
+    return SVM_Type::SVM_NULL; 
+  }
+  else
+  {
+    return (SVM_Type)idx;
+  }
 }
 
 
 
 KKStr  SVM289_BFS::SVM_Type_ToStr (SVM_Type  svmType)
 {
-  switch  (svmType)
-  {
-  case  SVM_Type::C_SVC:        return  "c_svc";
-  case  SVM_Type::NU_SVC:       return  "nu_svc";
-  case  SVM_Type::ONE_CLASS:    return  "one_class";
-  case  SVM_Type::EPSILON_SVR:  return  "epsilon_svr";
-  case  SVM_Type::NU_SVR:       return  "nu_svr";
-  }
-  return  "";
+  return SVM_Type_As_Strings[(int)svmType];
 }
 
 
 
- Kernel_Type  SVM289_BFS::Kernel_Type_FromStr (KKStr  s)
- {
-   s.Upper ();
-   if  ((s.EqualIgnoreCase ("LINEAR"))       ||  (s == "0"))
-     return  LINEAR;
+const vector<string> Kernel_Type_As_Strings = {"LINEAR", "POLY", "RBF", "SIGMOID", "PRECOMPUTED", "NULL"};
 
-   if  ((s.EqualIgnoreCase ("POLYNOMIAL"))   ||  (s.EqualIgnoreCase ("POLY"))  ||  (s == "1"))
-     return  POLY;
 
-   if  ((s.EqualIgnoreCase ("RBF"))          ||  (s == "2"))
-     return  RBF;
+Kernel_Type  SVM289_BFS::Kernel_Type_FromStr (const KKStr&  s)
+{
+  kkint32 idx = -1;
 
-   if  ((s.EqualIgnoreCase ("SIGMOID"))      ||  (s == "3"))
-     return  SIGMOID;
+  auto  i = find_if (Kernel_Type_As_Strings.begin (), Kernel_Type_As_Strings.end (), [s](const KKStr& r) -> bool {return s.EqualIgnoreCase (r);} );
 
-   if  ((s.EqualIgnoreCase ("PRECOMPUTED"))  ||  (s == "4"))
-     return  PRECOMPUTED;
-
-   return  Kernel_NULL;
- }
+  if  (i == Kernel_Type_As_Strings.end ())
+  {
+    if  (!s.ValidInt (idx))
+      idx = -1;
+  }
+  else
+  {
+    idx = (kkint32)std::distance (Kernel_Type_As_Strings.begin (), i);
+  }
+  
+  if (idx < 0  ||  idx >= (int)Kernel_Type_As_Strings.size ())
+  {
+    cerr << endl << "SVM289_BFS::SVM_Type_FromStr   ***WARNNING***   Unrecognized SMM_Type: '" << s << "'" << endl << endl;
+    return Kernel_Type::Kernel_NULL; 
+  }
+  else
+  {
+    return (Kernel_Type)idx;
+  }
+}
 
  
 
 KKStr  SVM289_BFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
 {
-  switch  (kernelType)
-  {
-  case  LINEAR:       return  "linear";
-  case  POLY:         return  "polynomial";
-  case  RBF:          return  "rbf";
-  case  SIGMOID:      return  "sigmoid";
-  case  PRECOMPUTED:  return  "precomputed";
-  } 
-
-  return  "";
+  return Kernel_Type_As_Strings[(int)kernelType];
 }
 
 
@@ -870,7 +872,7 @@ private:
   float                 **preComputed;
 
   // svm_parameter
-  const kkint32         kernel_type;
+  const Kernel_Type     kernel_type;
   const kkint32         degree;
   const double          gamma;
   const double          coef0;
@@ -924,16 +926,16 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
                             RunLog&                   _log
                            ):
 
-   coef0          (_param.coef0),
-   degree         (_param.degree),
-   gamma          (_param.gamma), 
-   kernel_type    (_param.kernel_type), 
    l              (_x.QueueSize ()),
    numSelFeatures (0),
-   preComputed    (NULL),
-   selFeatures    (NULL),
-   x              (NULL)
-
+   selFeatures    (nullptr),
+   x              (nullptr),
+   x_square       (nullptr),
+   preComputed    (nullptr),
+   kernel_type    (_param.kernel_type), 
+   degree         (_param.degree),
+   gamma          (_param.gamma), 
+   coef0          (_param.coef0)
 {
   _log.Level (50) << "SVM289_BFS::Kernel::Kernel" << endl;
   x = new FeatureVectorList (_x, false);
@@ -945,23 +947,23 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
   switch  (kernel_type)
   {
-    case LINEAR:
+    case SVM289_BFS::Kernel_Type::LINEAR:
       kernel_function = &Kernel::kernel_linear;
       break;
 
-    case POLY:
+    case SVM289_BFS::Kernel_Type::POLY:
       kernel_function = &Kernel::kernel_poly;
       break;
 
-    case RBF:
+    case SVM289_BFS::Kernel_Type::RBF:
       kernel_function = &Kernel::kernel_rbf;
       break;
 
-    case SIGMOID:
+    case SVM289_BFS::Kernel_Type::SIGMOID:
       kernel_function = &Kernel::kernel_sigmoid;
       break;
 
-    case PRECOMPUTED:
+    case SVM289_BFS::Kernel_Type::PRECOMPUTED:
       {
         kkint32  z1 = 0;
         kkint32  z2 = 0;
@@ -975,9 +977,14 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
         }
       }
       break;
+
+    default:
+       KKStr errMsg = "SVM289_BFS::Kernel::Kernel   ***ERROR***   kernel_type: '" + Kernel_Type_ToStr(kernel_type) + "' not implemented!!!";
+       _log.Level (-1) << endl << errMsg << endl << endl;
+       throw KKException (errMsg);
   }
 
-  if  (kernel_type == RBF)
+  if  (kernel_type == SVM289_BFS::Kernel_Type::RBF)
   {
     x_square = new double[l];
     for  (kkint32 i = 0;  i < l;  i++)
@@ -1014,8 +1021,8 @@ SVM289_BFS::Kernel::~Kernel()
 
 
 double  SVM289_BFS::Kernel::dot (const FeatureVector&  px, 
-                             const FeatureVector&  py
-                            )  const
+                                 const FeatureVector&  py
+                                )  const
 {
   double  sum = 0;
   kkint32  fn = 0;
@@ -1036,9 +1043,9 @@ double  SVM289_BFS::Kernel::dot (const FeatureVector&  px,
 
 
 double  SVM289_BFS::Kernel::DotStatic (const FeatureVector&   px, 
-                                   const FeatureVector&   py,
-                                   const FeatureNumList&  selFeatures
-                                  ) 
+                                       const FeatureVector&   py,
+                                       const FeatureNumList&  selFeatures
+                                      ) 
 {
   kkint32  numFeatures = selFeatures.NumSelFeatures ();
 
@@ -1068,13 +1075,13 @@ double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x,
 {
   switch  (param.kernel_type)
   {
-    case LINEAR:
+    case SVM289_BFS::Kernel_Type::LINEAR:
       return DotStatic(x, y, selFeatures);
 
-    case POLY:
+    case SVM289_BFS::Kernel_Type::POLY:
       return powi (param.gamma * DotStatic (x, y, selFeatures) + param.coef0,param.degree);
 
-    case RBF:
+    case SVM289_BFS::Kernel_Type::RBF:
     {
       kkint32  numSelFeatures = selFeatures.NumSelFeatures ();
       kkint32  fn  = 0;
@@ -1093,10 +1100,10 @@ double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x,
       return exp (-param.gamma * sum);
     }
 
-    case SIGMOID:
+    case SVM289_BFS::Kernel_Type::SIGMOID:
       return tanh(param.gamma * DotStatic (x, y, selFeatures) + param.coef0);
 
-    case PRECOMPUTED:  //x: test (validation), y: SV
+    case SVM289_BFS::Kernel_Type::PRECOMPUTED:  //x: test (validation), y: SV
       {
         cerr << endl
              << "SVM289_BFS::Kernel::k_function   ***ERROR*** does not support 'PRECOMPUTED'." << endl
@@ -1108,7 +1115,6 @@ double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x,
       return 0;  // Unreachable 
   }
 }  /* k_function */
-
 
 
 
@@ -4050,14 +4056,13 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   rho                 (NULL),
   probA               (NULL),
   probB               (NULL),
+  selFeatures         (_model.selFeatures),
   label               (NULL),
   nSV                 (NULL),     // number of SVs for each class (nSV[k])
   weOwnSupportVectors (_model.weOwnSupportVectors),
-  selFeatures         (_model.selFeatures),
   dec_values          (NULL),
   pairwise_prob       (NULL),
   prob_estimates      (NULL)
-
 {
   _log.Level (50) << "SVM289_BFS::svm_model::svm_model" << endl;
   kkint32  m = nr_class - 1;
@@ -4138,10 +4143,10 @@ SVM289_BFS::svm_model::svm_model (FileDescConstPtr  _fileDesc,
    rho                 (NULL),
    probA               (NULL),
    probB               (NULL),
+   selFeatures         (_fileDesc),
    label               (NULL),
    nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures         (_fileDesc),
    dec_values          (NULL),
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
@@ -4164,10 +4169,10 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
    rho                 (NULL),
    probA               (NULL),
    probB               (NULL),
+   selFeatures         (_selFeatures),
    label               (NULL),
    nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures         (_selFeatures),
    dec_values          (NULL),
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
@@ -4190,10 +4195,10 @@ SVM289_BFS::svm_model::svm_model (istream&          _in,
    rho                 (NULL),
    probA               (NULL),
    probB               (NULL),
+   selFeatures         (_fileDesc),
    label               (NULL),
    nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures         (_fileDesc),
    dec_values          (NULL),
    pairwise_prob       (NULL),
    prob_estimates      (NULL)
@@ -4280,13 +4285,13 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   o << "svm_type"    << "\t" << SVM_Type_ToStr    (param.svm_type)    << endl;
   o << "kernel_type" << "\t" << Kernel_Type_ToStr (param.kernel_type) << endl;
   
-  if  (param.kernel_type == POLY)
+  if  (param.kernel_type == Kernel_Type::POLY)
     o << "degree" << "\t" << param.degree << endl;
 
-  if  (param.kernel_type == POLY || param.kernel_type == RBF || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
     o << "gamma" << "\t" << param.gamma << endl;
 
-  if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
     o << "coef0" << "\t" << param.coef0 << endl;
 
   o << "SelFeatures" << "\t" << selFeatures.ToCommaDelStr () << endl;
@@ -4351,7 +4356,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
     //const svm_node *p = SV[i];
     o.precision (8);
 
-    if  (param.kernel_type == PRECOMPUTED)
+    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
     {
       //fprintf(fp,"0:%d ",(kkint32)(p->value));
       o << "\t" << p.FeatureData (0);
@@ -4387,9 +4392,6 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
   kkint32  buffLen = 80 * 1024;
   char*  buff = new char[buffLen];
 
-  bool  eof = false;
-  bool  eol = false;
-
   kkint32  numBinaryCombos = 0;
 
   while  (!in.eof ())
@@ -4414,19 +4416,19 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete  buff;
         buff = NULL;
-        throw  errorMsg;
+        throw  KKException (errorMsg);
       }
     }
 
     else if  (fieldName.EqualIgnoreCase ("kernel_type") == 0)
     {    
       param.kernel_type = Kernel_Type_FromStr (line);
-      if  (param.kernel_type == Kernel_NULL)
+      if  (param.kernel_type == Kernel_Type::Kernel_NULL)
       {
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  Invalid kernel_type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete[]  buff;  buff = NULL;
-        throw  errorMsg;
+        throw  KKException (errorMsg);
       }
     }
 
@@ -4512,21 +4514,20 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete[]  buff;
-        throw  errorMsg;
+        throw  KKException (errorMsg);
       }
 
       // We are now going to process one line per SV.
-      eof = false;
 
       KKStr  imageFileName = line.ExtractToken2 ("\t");
       //model->SV[i] = &x_space[j];
       FeatureVectorPtr  fv = new FeatureVector (fileDesc->NumOfFields ());
       fv->ExampleFileName (imageFileName);
 
-      for  (kkuint32 j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
+      for  (kkuint32 j = 0;  (j < (nr_class - 1));  ++j)
         sv_coef[j][i] = line.ExtractTokenDouble ("\t");
 
-      if  (param.kernel_type == PRECOMPUTED)
+      if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
       {
         log.Level (-1) << endl << endl
                        << "SVM289_BFS::svm_model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
@@ -4534,7 +4535,7 @@ void  SVM289_BFS::svm_model::Read (istream&          in,
       }
       else
       {
-        for  (kkuint32 zed = 0;  (zed < fileDesc->NumOfFields ())  &&  (!eol);  zed++)
+        for  (kkuint32 zed = 0;  (zed < fileDesc->NumOfFields ());  ++zed)
         {
           KKStr  featureField = line.ExtractToken2 ("\t");
           kkint32  featureNum   = featureField.ExtractTokenInt (":");
@@ -4626,13 +4627,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
   
   // kernel_type, degree
   
-  kkint32  kernel_type = param->kernel_type;
+  Kernel_Type  kernel_type = param->kernel_type;
 
-  if  (kernel_type != LINEAR       &&
-       kernel_type != POLY         &&
-       kernel_type != RBF          &&
-       kernel_type != SIGMOID      &&
-       kernel_type != PRECOMPUTED
+  if  (kernel_type != Kernel_Type::LINEAR       &&
+       kernel_type != Kernel_Type::POLY         &&
+       kernel_type != Kernel_Type::RBF          &&
+       kernel_type != Kernel_Type::SIGMOID      &&
+       kernel_type != Kernel_Type::PRECOMPUTED
       )
     return "unknown kernel type";
 

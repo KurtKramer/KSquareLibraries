@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.rs": "rust",
+			"map": "cpp",
+			"complex": "cpp"
+		}
+	}
+}

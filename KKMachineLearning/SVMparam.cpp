@@ -288,8 +288,6 @@ void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
   KKStr  field (_cmdLineStr.ExtractToken (" \t\n\r"));
   KKStr  value;
 
-  double  valueNum;
-
   while  (!field.Empty ()  &&  _validFormat)
   {
     if  (field[(kkint16)0] != '-')
@@ -309,8 +307,6 @@ void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
       if  (_cmdLineStr[(kkint16)0] != '-')
         value = _cmdLineStr.ExtractToken (" \t\n\r");
     }
-
-    valueNum = atof (value.Str ()); 
 
     field.Upper ();
     KKStr valueUpper (value);

@@ -73,6 +73,7 @@ FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  
                                                                   RunLog&       runLog
                                                                  )
 {
+  runLog.Level (30) << "FactoryFVProducer::ManufactureInstance   name: '" << name << "'." << endl;
   FactoryFVProducerPtr  factory = LookUpFactory (name);
   if  (factory)
     return factory->ManufactureInstance (runLog);

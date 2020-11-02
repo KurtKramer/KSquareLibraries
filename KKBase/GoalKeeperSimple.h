@@ -7,13 +7,14 @@
 
 #define  GOALKEEPER_DEBUG
 
-
+WarningsLowered()
 #if  defined(WIN32)
 #include  <windows.h>
 #else
 #include  <fcntl.h>
 #include  <semaphore.h>
 #endif
+WarningsRestored()
 
 #include "DateTime.h"
 #include "KKStr.h"

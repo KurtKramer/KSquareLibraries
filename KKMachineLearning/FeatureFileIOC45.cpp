@@ -139,8 +139,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
   namesFile.close ();
   fileDesc = FileDesc::GetExistingFileDesc (fileDesc);
 
-
-
   ifstream  dataFile (dataFileName.Str (), ios_base::in);
   if  (!dataFile.is_open ())
   {

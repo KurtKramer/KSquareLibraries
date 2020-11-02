@@ -49,7 +49,7 @@ namespace  KKB
     KKStrConstPtr   Name     ()  const {return  &name;}
     KKStrConstPtr   Value    ()  const {return  &value;}
 
-    kkMemSize MemoryConsumedEstimated ()  const  {return  (kkMemSize)sizeof (Setting) + 
+    kkMemSize MemoryConsumedEstimated ()  const  {return  sizeof (Setting) + 
                                                           name.MemoryConsumedEstimated () + 
                                                           value.MemoryConsumedEstimated ();}
 
@@ -355,8 +355,8 @@ kkMemSize Configuration::MemoryConsumedEstimated ()  const
   kkMemSize  memoryConsumedEstimated = sizeof (Configuration)
     + curSectionName.MemoryConsumedEstimated ()
     + fileName.MemoryConsumedEstimated ()
-    + (kkMemSize)formatErrors.size () * 100
-    + (kkMemSize)formatErrorsLineNums.size () * sizeof (OptionUInt32);
+    + formatErrors.size () * 100
+    + formatErrorsLineNums.size () * sizeof (OptionUInt32);
 
   if  (sections)
     memoryConsumedEstimated += sections->MemoryConsumedEstimated ();

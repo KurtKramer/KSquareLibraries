@@ -344,7 +344,7 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
       else if  (varName.EqualIgnoreCase ("Sigma"))
       {
         XmlElementArrayDoublePtr  sss = dynamic_cast<XmlElementArrayDoublePtr>(e);
-        if  ((kkint32)sss->Count () == numOfFeatures)
+        if  (sss->Count () == numOfFeatures)
         {
           delete  sigma;
           sigma = sss->TakeOwnership ();
@@ -377,7 +377,7 @@ double  NormalizationParms::Mean (kkuint32  i,
                                   RunLog&   log
                                  )
 {
-  if  ((i < 0)  ||  (i >= numOfFeatures))
+  if  (i >= numOfFeatures)
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return  -99999.99;
@@ -394,7 +394,7 @@ double  NormalizationParms::Sigma (kkuint32  i,
                                    RunLog&   log
                                   )
 {
-  if  ((i < 0)  ||  (i >= numOfFeatures))
+  if  (i >= numOfFeatures)
   {
     log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return DBL_MIN;

@@ -42,7 +42,8 @@ namespace KKB
 
 
   bool           osCopyFile (const KKStr&  srcFileName,
-                             const KKStr&  destFileName
+                             const KKStr&  destFileName,
+                             bool          overwriteExisting
                             );
 
   bool           osCopyFileBetweenDirectories (const KKStr&  _fileName,
@@ -120,7 +121,7 @@ namespace KKB
    *@param[in]  fullFileName  Sting that contains the full file name specification.
    *@return File Name.
    */
-  KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
+  KKStr          osGetFileNamePartOfFile (const KKStr&  fullFileName);
   
 
   KKStr          osGetFileExtension (const KKStr&  fullFileName);
@@ -164,6 +165,12 @@ namespace KKB
 
   double         osGetKernalTimeUsed ();
 
+  KKStrListPtr   osGetListOfFDirectoryEntries (const KKStr&  fileSpec, 
+                                               bool          includeSubdirectories,
+                                               bool          includeFiles
+                                              );
+
+
   /**
    *@brief  Returns a list of files that match the provided file specification.
    *@details You can provide any file specification including a directory path. If there is a failure will return NULL.
@@ -178,9 +185,9 @@ namespace KKB
                                          VectorKKStr&  fileNames   // The file names include full path.
                                         );
 
-  KKStrListPtr  osGetListOfDirectories (KKStr  fileSpec);
+  KKStrListPtr  osGetListOfDirectories (const KKStr&  fileSpec);
 
-  KKStrListPtr  osGetListOfImageFiles (KKStr  fileSpec);
+  KKStrListPtr  osGetListOfImageFiles (const KKStr&  fileSpec);
 
 
   /**
@@ -295,7 +302,7 @@ namespace KKB
    *@param[in]  src  String that you want to scan for environment variables.
    *@return  'src' string with environment variables expanded.
    */
-  KKB::KKStr  osSubstituteInEnvironmentVariables (const KKStr&  src);
+  KKB::KKStr  osSubstituteInEnvironmentVariables (const KKStr&  src) noexcept;
 
 
   /**
@@ -484,15 +491,15 @@ namespace KKB
   
   
   template<class T> 
-      inline T* osGrowAllocation (T*   src, 
+      inline T* osGrowAllocation (T*       src, 
                                   kkint32  origSize,
                                   kkint32  newSize
                                  )
   {
     kkint32  zed = 0;
     T*  dest = new T[newSize];
-    while  (zed < origSize)    {dest[zed] = src[zed];  zed++;}
-    while  (zed < newSize)     {dest[zed] = (T)0;      zed++;}
+    while  (zed < origSize)    {dest[zed] = src[zed];           ++zed;}
+    while  (zed < newSize)     {dest[zed] = static_cast<T>(0);  ++zed;}
     delete  src;
     return  dest;
   }  /* GrowAllocation */

@@ -71,13 +71,18 @@ namespace KKB
 
   private:
 
+    Point  GetFirstPixel ();
+
     void  GetFirstPixel (kkint32&  row,
                          kkint32&  col
                         );
 
+    Point  GetNextPixel ();
+    
     void  GetNextPixel (kkint32&  row,
                         kkint32&  col
                        );
+
 
     kkint32  PixelCountIn9PixelNeighborhood (kkint32  row, 
                                              kkint32  col

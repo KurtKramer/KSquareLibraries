@@ -33,8 +33,8 @@ using namespace  KKMLL;
 
 ModelUsfCasCor::ModelUsfCasCor ():
   Model (),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
 }
 
@@ -42,8 +42,8 @@ ModelUsfCasCor::ModelUsfCasCor ():
 
 ModelUsfCasCor::ModelUsfCasCor (FactoryFVProducerPtr  _factoryFVProducer):
   Model (_factoryFVProducer),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
 }
 
@@ -54,8 +54,8 @@ ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 FactoryFVProducerPtr       _factoryFVProducer
                                ):
   Model (_name, _param, _factoryFVProducer),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
   param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
 }
@@ -64,8 +64,8 @@ ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
 
 ModelUsfCasCor::ModelUsfCasCor (const ModelUsfCasCor&   _model):
   Model (_model),
-  param               (NULL),
-  usfCasCorClassifier (NULL)
+  usfCasCorClassifier (NULL),
+  param               (NULL)
 {
   param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
   if  (_model.usfCasCorClassifier)
@@ -145,19 +145,12 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
-  catch (const KKException&  e)
-  {
-    validModel = false;
-    KKStr  errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
-    throw  KKException (errMsg, e);
-  }
-  catch (const exception& e2)
+  catch (const std::exception& e2)
   {
     validModel = false;
     KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
     _log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
-    throw KKException (errMsg, e2);
+    throw;
   }
   catch (...)
   {

@@ -21,6 +21,8 @@ using namespace  KKB;
 #include "MLClass.h"
 using namespace  KKMLL;
 
+#undef max
+#undef min
 
 MLClassListPtr  MLClass::existingMLClasses = NULL;
 map<MLClassListPtr,MLClassListPtr>  MLClass::existingClassLists;
@@ -937,9 +939,6 @@ KKStr  MLClassList::ToTabDelimitedStr ()  const
 
 KKStr  MLClassList::ToCommaDelimitedStr ()  const
 {
-  if  (this == NULL)
-    return "NULL";
-
   KKStr s (10 * QueueSize ());
   for (kkuint32 i = 0;  i < QueueSize ();  i++)
   {
@@ -1485,13 +1484,13 @@ MLClassIndexList::MLClassIndexList ():
 
 
 MLClassIndexList::MLClassIndexList (const  MLClassIndexList&  _list):
-  std::map<MLClassPtr, kkint16>(),
+  std::map<MLClassPtr, kkuint16>(),
   largestIndex (-1),
   shortIdx ()
 {
   bool  dupEntry = false;
-  for  (auto idx = _list.begin ();  idx != _list.end ();  idx++)
-    AddClassIndexAssignment (idx->first, idx->second, dupEntry);
+  for  (auto idx: _list)
+    AddClassIndexAssignment (idx.first, idx.second, dupEntry);
 }  
 
 
@@ -1500,12 +1499,11 @@ MLClassIndexList::MLClassIndexList (const MLClassList&  classes):
     largestIndex (-1),
     shortIdx ()
 {
-  MLClassList::const_iterator  idx;
-  for  (idx = classes.begin ();  idx != classes.end ();  idx++)
+  for  (auto idx: classes)
   {
     ++largestIndex;
-    insert   (pair<MLClassPtr, kkint16> (*idx, largestIndex));
-    shortIdx.insert (pair<kkint16, MLClassPtr> (largestIndex, *idx));
+    insert   (pair (idx, (kkuint16)largestIndex));
+    shortIdx.insert (pair ((kkuint16)largestIndex, idx));
   }
 }
 
@@ -1532,39 +1530,38 @@ void  MLClassIndexList::AddClass (MLClassPtr  _ic,
                                  )
 {
   _dupEntry = false;
-  map<MLClassPtr, kkint16>::iterator p;
-  p = find (_ic);
+  auto p = find (_ic);
   if  (p != end ())
   {
     _dupEntry = true;
     return;
   }
 
-  kkint16  index = (kkint16)(largestIndex + 1);
-  largestIndex = index;
+  ++largestIndex;
+  kkuint16 index = (kkuint16)largestIndex;
 
-  insert (pair<MLClassPtr, kkint16> (_ic, index));
-  shortIdx.insert (pair<kkint16, MLClassPtr> (index, _ic));
+  insert (pair (_ic, index));
+  shortIdx.insert (pair (index, _ic));
 }  /* AddClass */
 
 
 
-void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
-                                                 kkint16    _classIndex,
-                                                 bool&      _dupEntry
+void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr  _ic,
+                                                 kkuint16    _classIndex,
+                                                 bool&       _dupEntry
                                                 )
 {
   _dupEntry = false;
-  map<MLClassPtr, kkint16>::iterator p;
-  p = find (_ic);
+
+  auto p = find (_ic);
   if  (p != end ())
   {
     _dupEntry = true;
     return;
   }
 
-  insert (pair<MLClassPtr, kkint16> (_ic, _classIndex));
-  shortIdx.insert (pair<kkint16, MLClassPtr> (_classIndex, _ic));
+  insert (pair (_ic, _classIndex));
+  shortIdx.insert (pair (_classIndex, _ic));
 
   if  (_classIndex > largestIndex)
     largestIndex = _classIndex;
@@ -1572,27 +1569,22 @@ void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
 
 
 
-kkint16  MLClassIndexList::GetClassIndex (MLClassPtr  c)
+OptionUInt16  MLClassIndexList::GetClassIndex (MLClassPtr  c)
 {
-  kkint16  index = -1;
-  map<MLClassPtr, kkint16>::iterator p;
-  p = find (c);
+  auto p = find (c);
   if  (p == end ())
-    index = -1;
+    return {};
   else
-    index = p->second;
-
-  return  index;
+    return p->second;
 }  /* GetClassIndex */
 
 
 
-MLClassPtr  MLClassIndexList::GetMLClass (kkint16  classIndex)
+MLClassPtr  MLClassIndexList::GetMLClass (kkuint16  classIndex)
 {
-  map<kkint16, MLClassPtr>::iterator p;
-  p = shortIdx.find (classIndex);
+  auto p = shortIdx.find (classIndex);
   if  (p == shortIdx.end ())
-    return NULL;
+    return nullptr;
   else
     return p->second;
 }  /* GetMLClass */
@@ -1601,13 +1593,13 @@ MLClassPtr  MLClassIndexList::GetMLClass (kkint16  classIndex)
 
 MLClassPtr  MLClassIndexList::GetMLClass (kkint32 classIndex)
 {
-  if (classIndex > int16_max)
+  if (classIndex > std::numeric_limits<kkuint16>::max ())
   {
     KKStr errMsg (256);
     errMsg << "MLClassIndexList::GetMLClass   classIndex[" << classIndex << "] exceeds max kjint16[" << int16_max << "] supported.";
     throw KKException (errMsg);
   }
-  return GetMLClass ((kkint16)classIndex);
+  return GetMLClass ((kkuint16)classIndex);
 }
 
 
@@ -1653,12 +1645,11 @@ void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
 KKStr  MLClassIndexList::ToCommaDelString ()  const
 {
   KKStr  delStr (255);
-  map<kkint16, MLClassPtr>::const_iterator  idx;
-  for  (idx = shortIdx.begin ();  idx != shortIdx.end ();  idx++)
+  for  (auto idx: shortIdx)
   {
     if  (!delStr.Empty ())
       delStr << ",";
-    delStr << idx->second->Name ().QuotedStr () << ":" << idx->first;
+    delStr << idx.second->Name ().QuotedStr () << ":" << idx.first;
   }
   return  delStr;
 }  /* ToCommaDelString */

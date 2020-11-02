@@ -14,6 +14,7 @@
 //*  KKStr class and string manipulation routines.
 //************************************************************************************
 
+WarningsLowered()
 #include <istream>
 #include <map>
 #include <ostream>
@@ -26,6 +27,7 @@
 #define  __cdecl
 #endif
 #endif
+WarningsRestored()
 
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
@@ -83,12 +85,12 @@ namespace  KKB
   {
   public:
     typedef  KKStr*                 KKStrPtr;
-    typedef  const KKStr*           KKStrConstPtr;
+    typedef  const KKStr            KKStrConst;
+    typedef  KKStrConst*            KKStrConstPtr;
     typedef  std::optional<KKStr>   OptionKKStr;
-
-  private:
     static  const  kkStrUint  MaxStrLen;
 
+  private:
     kkStrUint  allocatedSize;
     kkStrUint  len;
     char*      val;
@@ -166,7 +168,7 @@ namespace  KKB
 
     void     Append (char ch);
 
-    void     Append (uchar ch) { Append ((char)ch); }
+    void     Append (uchar ch) { Append (static_cast<char>(ch)); }
 
     void     Append (const KKStr&  str);
 
@@ -541,7 +543,7 @@ namespace  KKB
     bool      ToBool       () const;   /**< @brief Returns the bool equivalent of the string,  ex 'Yes' = true, 'No' = false, 'True' = true, etc.  */
     double    ToDouble     () const;
     float     ToFloat      () const;
-    kkint32   ToInt        () const;
+    int       ToInt        () const;
     kkint16   ToInt16      () const;
     kkint32   ToInt32      () const;
     kkint64   ToInt64      () const;
@@ -578,9 +580,9 @@ namespace  KKB
 
     void      Upper ();
 
-    bool      ValidInt (kkint32&  value); /**< returns true if KKStr is formated as a valid integer otherwise false.
-                                           *@param[out] value of string as interpreted as a integer.
-                                           */
+    bool      ValidInt (kkint32&  value) const; /**< returns true if KKStr is formated as a valid integer otherwise false.
+                                                  *@param[out] value of string as interpreted as a integer.
+                                                  */
 
     bool      ValidMoney (float&  value)  const;
 
@@ -665,9 +667,9 @@ namespace  KKB
 #ifdef  KKDEBUG
       ValidateLen ();
 #endif
-      if ((!val) || (i < 0) || ((kkStrUint)i >= len))  
+      if ((!val) || (i < 0) || (static_cast<kkStrUint>(i) >= len))  
         return 0;
-      else  
+      else   
         return val[i];
     }
 
@@ -721,6 +723,7 @@ namespace  KKB
   };   /* KKStr */
 
   typedef  KKStr::KKStrPtr         KKStrPtr;
+  typedef  KKStr::KKStrConst       KKStrConst;
   typedef  KKStr::KKStrConstPtr    KKStrConstPtr;
   typedef  std::pair<KKStr,KKStr>  KKStrPair;
   typedef  KKStr::OptionKKStr      OptionKKStr;
@@ -758,8 +761,8 @@ namespace  KKB
 
   char*  STRDUP (const char* src);
 
-  kkint32  STRICMP  (const char*  left, const char*  right);
-  kkint32  STRNICMP (const char*  left, const char*  right,  kkint32  len);
+  kkint32  STRICMP  (const char*  left, const char*  right) noexcept;
+  kkint32  STRNICMP (const char*  left, const char*  right,  kkint32  len)  noexcept;
 
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint16      right);
   kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint16     right);
@@ -921,6 +924,10 @@ namespace  KKB
                          );
 
   KKStr  StrFormatInt (kkint32      val,
+                       const char*  mask
+                      );
+
+  KKStr  StrFormatInt (kkuint32     val,
                        const char*  mask
                       );
 

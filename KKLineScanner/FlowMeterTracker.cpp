@@ -124,7 +124,6 @@ void  FlowMeterTracker::ScanRateChanged (float _newScanRate)
 
 
 
-
 void  FlowMeterTracker::AddEntry (kkuint32 _scanLineNum,
                                   kkuint32 _counterValue
                                  )
@@ -183,7 +182,6 @@ float  FlowMeterTracker::FlowRateInstantaneous ()
 
 
 
-
 float  FlowMeterTracker::FlowRateTrend ()
 {
   if  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))
@@ -206,7 +204,6 @@ float  FlowMeterTracker::FlowRateTrend ()
 
 
 
-
 void  FlowMeterTracker::GetFlowRateInstantaneous (float&   flowRate,
                                                   float&   flowRateRatio
                                                  )                                                 
@@ -223,6 +220,7 @@ void  FlowMeterTracker::GetFlowRateInstantaneous (float&   flowRate,
 
   return;
 }
+
 
 
 void  FlowMeterTracker::GetFlowRateTrend (float&   flowRate,

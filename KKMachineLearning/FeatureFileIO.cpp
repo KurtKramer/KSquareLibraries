@@ -41,7 +41,6 @@ using namespace KKMLL;
 
 
 
-
 void  ReportError (RunLog&       log,
                    const KKStr&  fileName,
                    const KKStr&  funcName,
@@ -56,8 +55,6 @@ void  ReportError (RunLog&       log,
                  << "           Error    [" << errorDesc     << "]" << endl
                  << endl;
 }  /* ReportError */
-
-
 
 
 
@@ -76,6 +73,7 @@ std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
 }
 
 
+
 void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
@@ -90,7 +88,6 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 
   GlobalGoalKeeper::EndBlock ();
 } /* RegisterFeatureFileIODriver */
-
 
 
 
@@ -116,7 +113,6 @@ void  FeatureFileIO::RegisterAllDrivers ()
 
 
 
-
 void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
@@ -139,10 +135,6 @@ void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
 
   GlobalGoalKeeper::EndBlock ();
 }  /* RegisterDriver */
-
-
-
-
 
 
 
@@ -173,8 +165,6 @@ void FeatureFileIO::FinalCleanUp ()
 
   GlobalGoalKeeper::EndBlock ();
 }  /* CleanUpFeatureFileIO */
-
-
 
 
 
@@ -785,8 +775,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStr  className = _unknownClass->Name ();
 
-  _log.Level (10) << "FeatureFileIO::FeatureDataReSink  dirName: " << _dirName << endl
-                  << "               fileName: " << _fileName << "  UnKnownClass: " << className << endl;
+  _log.Level (10) << "FeatureFileIO::FeatureDataReSink  dirName: " << _dirName << "  fileName: " << _fileName << "  UnKnownClass: " << className << endl;
 
   KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
 
@@ -943,19 +932,14 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       }
       catch  (...)
       {
-        _log.Level (-1) << endl << endl
-          << "FeatureDataReSink   ***ERROR***"  << endl
-          << "       Exception occurred calling constructor 'ComputeFeatureVector'." << endl
-          << endl;
+        _log.Level (-1) << "FeatureDataReSink   ***ERROR***   Exception occurred calling constructor 'ComputeFeatureVector'." << endl;
         featureVectorCoputaionSuccessful = false;
         fv = NULL;
       }
 
       if  (!featureVectorCoputaionSuccessful)
       {
-        _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
-                       << imageFileName << "]."
-                       << endl;
+        _log.Level (-1) << "FeatureFileIOKK::FeatureDataReSink   ***ERROR***   Processing Image File: "<< imageFileName << endl;
         delete  fv;
         fv = NULL;
       }
@@ -1017,14 +1001,12 @@ FileDescConstPtr  FeatureFileIO::GetFileDesc (const KKStr&    _fileName,
                                              )
 {
   _errorMessage = "Driver '" + DriverName () + "' does not implemenet  'GetFileDesc'  method.";
-  _log.Level (10) << endl 
-      << "FeatureFileIO::GetFileDesc   ***ERROR***    " << _errorMessage << endl
+  _log.Level (-1) << "FeatureFileIO::GetFileDesc   ***ERROR***    " << _errorMessage << endl
       << "    _fileName: " << _fileName << endl
       << "    _in.flags: " << _in.flags () << endl
       << "    _classes : " << _classes->ToCommaDelimitedStr () << endl
       << "    _estSize : " << _estSize << endl
       << endl;
-  _errorMessage = "ROBERTS read_estSize, functionality not implemented.";
   return NULL; 
 }
 
@@ -1042,8 +1024,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadFile (const KKStr&      _fileName,
                                               )
 {
   _errorMessage = "Driver '" + DriverName () + "' does not implemenet  'LoadFile'  method.";
-  _log.Level (10) << endl
-      << "FeatureFileIO::LoadFile   ***ERROR***   " << _errorMessage << endl
+  _log.Level (-1) << "FeatureFileIO::LoadFile   ***ERROR***   " << _errorMessage << endl
       << "    _fileName   : " << _fileName << endl
       << "    _fileDesc   : " << _fileDesc->NumOfFields () << endl
       << "    _classes    : " << _classes.ToCommaDelimitedStr () << endl
@@ -1052,8 +1033,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadFile (const KKStr&      _fileName,
       << "    _cancelFlag : " << _cancelFlag << endl
       << "    _changesMade: " << _changesMade << endl
       << endl;
-
-  _errorMessage = "ROBERTS read functionality not implemented.";
   return NULL;
 }
 

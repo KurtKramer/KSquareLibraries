@@ -68,7 +68,7 @@ namespace  KKB
                      float  _yVal
                     );
 
-    kkint32 Size ()  {return  (kkint32)points.size ();}
+    kkint32 Size ()  {return  toint32_t (points.size ());}
 
 
   private:
@@ -169,6 +169,7 @@ KKB::Chart::Chart (KKStr  _title):
 }
 
 
+
 KKB::Chart::~Chart ()
 {
   for  (kkuint32 x = 0;  x < series.size ();  x++)
@@ -177,7 +178,6 @@ KKB::Chart::~Chart ()
     series[x] = NULL;
   }
 }
-
 
 
 
@@ -214,7 +214,6 @@ void  KKB::Chart::AddAValue (kkuint32  _seriesIDX,
     maxYValue = _yVal;
 
 }  /* AddAValue */
-
 
 
 
@@ -268,20 +267,14 @@ void  KKB::Chart::DefineAXLabel (float  _xVal,
 
 
 
-
-
-
 Point  Chart::RasterCoordinates (const PlotPoint&  plotPoint)
 {
-  kkint32  x = (kkint32)(((double)plotPoint.XVal () - xMin) * xScale + (double)xOffset + 0.5);
-  kkint32  y = (kkint32)(((double)plotPoint.YVal () - yMin) * yScale + (double)yOffset + 0.5);
+  kkint32  x = toint32_t ((todouble (plotPoint.XVal ()) - xMin) * xScale + todouble (xOffset) + 0.5);
+  kkint32  y = toint32_t ((todouble (plotPoint.YVal ()) - yMin) * yScale + todouble (yOffset) + 0.5);
   return  Point (y, x);
 }    /* ConvertToRasterCoordinates */                                    
       
                                    
-
-
-
 
 RasterPtr  Chart::CreateRaster () 
 {
@@ -299,16 +292,14 @@ RasterPtr  Chart::CreateRaster ()
   if  (chartHeight > 500)
     chartHeight = 500;
 
-
   xOffset = 10;
   yOffset = 10;
-
   
   yRange = maxYValue - minYValue;
   xRange = maxXValue - minXValue;
 
-  yScale = (double)chartHeight / yRange;
-  xScale = (double)chartWidth  / xRange;
+  yScale = todouble (chartHeight) / yRange;
+  xScale = todouble (chartWidth)  / xRange;
 
   yMin = minYValue;
   yMax = maxYValue;
@@ -316,7 +307,6 @@ RasterPtr  Chart::CreateRaster ()
   xMin = minXValue;
   xMax = maxXValue;
   
-
   {
     // Lets refine the scaling
     double  sigTensPlace = floor (log10 (yRange));
@@ -325,7 +315,7 @@ RasterPtr  Chart::CreateRaster ()
 
     yIncrement = floor (yRange / sigTensPlace) * sigTensPlace;
 
-    kkint32  numOfYIncremets = (kkint32)((yRange / yIncrement) + 0.5);
+    kkint32  numOfYIncremets = toint32_t ((yRange / yIncrement) + 0.5);
 
     if  (numOfYIncremets < 2)
     {
@@ -344,11 +334,11 @@ RasterPtr  Chart::CreateRaster ()
       yIncrement = yIncrement * 4.0;
     }
 
-    yMin = floor (minYValue / yIncrement) * yIncrement;
-    yMax = ceil  (maxYValue / yIncrement) * yIncrement;
+    yMin = floor (todouble (minYValue) / yIncrement) * yIncrement;
+    yMax = ceil  (todouble (maxYValue) / yIncrement) * yIncrement;
 
     yRange = yMax - yMin;
-    yScale = (double)chartHeight / yRange;
+    yScale = todouble (chartHeight) / yRange;
   }
 
 
@@ -371,8 +361,8 @@ RasterPtr  Chart::CreateRaster ()
 
     while  (y < yMax)
     {
-      chart->DrawLine (RasterCoordinates (PlotPoint (0.0,  (double)y)),
-                       RasterCoordinates (PlotPoint (xMax, (double)y)),
+      chart->DrawLine (RasterCoordinates (PlotPoint (0.0,  todouble (y))),
+                       RasterCoordinates (PlotPoint (xMax, todouble (y))),
                        scaleColor
                       );
       y += yIncrement;
@@ -383,31 +373,25 @@ RasterPtr  Chart::CreateRaster ()
   if  ((yMin < 0.0)  &&  (yMax > 0.0))
   {
     // Draw a line for y=0.0
-    chart->DrawLine (RasterCoordinates (PlotPoint (double ((kkint32)(xMin + 0.5)),  0.0)),
-                     RasterCoordinates (PlotPoint (double ((kkint32)(xMax + 0.5)),  0.0)),
+    chart->DrawLine (RasterCoordinates (PlotPoint (todouble (toint32_t (xMin + 0.5)),  0.0)),
+                     RasterCoordinates (PlotPoint (todouble (toint32_t (xMax + 0.5)),  0.0)),
                      zeroAxisColor
                     );
-
   }
-
-
-
+   
   if  ((xMin < 0.0)  &&  (xMax > 0.0))
   {
     // Draw a line for x=0.0
-    chart->DrawLine (RasterCoordinates (PlotPoint (0.0,  double ((kkint32)(yMin + 0.5)))),
-                     RasterCoordinates (PlotPoint (0.0,  double ((kkint32)(yMax + 0.5)))),
+    chart->DrawLine (RasterCoordinates (PlotPoint (0.0, todouble (toint32_t (yMin + 0.5)))),
+                     RasterCoordinates (PlotPoint (0.0, todouble (toint32_t (yMax + 0.5)))),
                      zeroAxisColor
                     );
-
   }
-
-
 
   {
     // Lets plot the individual series
 
-    for  (kkuint32 seriesIDX = 0;  seriesIDX < series.size ();  seriesIDX++)
+    for  (kkuint32 seriesIDX = 0;  seriesIDX < series.size ();  ++seriesIDX)
     {
       SeriesPtr  s = series[seriesIDX];
 
@@ -434,10 +418,8 @@ RasterPtr  Chart::CreateRaster ()
     }
   }
 
-
   return  chart;
 }  /* CreateRaster */
-
 
 
 
@@ -449,13 +431,12 @@ void  Chart::SaveAsImage (KKStr  _fileName)
 
 
 
-
 kkint32  Chart::LookUpXLableIDX (double  xVal)
 {
   for  (kkuint32 x = 0;  x < xLabels.size ();  x++)
   {
     if  (xLabels[x].XVal () == xVal)
-      return  x;
+      return  toint32_t (x);
   }
 
   return -1;
@@ -463,15 +444,13 @@ kkint32  Chart::LookUpXLableIDX (double  xVal)
 
 
 
-
 Chart::PlotPointPtr  Chart::LookUpPoint (kkint32 seriesIDX,
                                          double  xVal
                                         )
 {
-  Series&  s = *(series[seriesIDX]);
+  Series&  s = *(series[tosize_t (seriesIDX)]);
 
-  kkuint32  pIDX;
-  for  (pIDX = 0;  pIDX <= s.points.size ();  pIDX++)
+  for  (kkuint32 pIDX = 0;  pIDX <= s.points.size ();  ++pIDX)
   {
     if  (s.points[pIDX].XVal () == xVal)
       return  &s.points[pIDX];
@@ -479,7 +458,6 @@ Chart::PlotPointPtr  Chart::LookUpPoint (kkint32 seriesIDX,
 
   return  NULL;
 }  /* LookUpPoint */
-
 
 
 
@@ -493,7 +471,6 @@ void  Chart::Save (KKStr  _fileName)
          << std::endl;
     return;
   }
-
 
   {
     // Make sure we have a XLabel for all Points Plotted
@@ -519,52 +496,41 @@ void  Chart::Save (KKStr  _fileName)
     }
   }
 
-
   std::sort (xLabels.begin (), xLabels.end ());
-
 
   {
     // Output Header Info
-    o << "Title" << "\t" << title << std::endl;
-    o << "MinAndMaxXValues:" << "\t" << minXValue << "\t" << maxXValue << std::endl;
-    o << "MinAndMaxYValues:" << "\t" << minYValue << "\t" << maxYValue << std::endl;
+    o << "Title" << "\t" << title << '\n';
+    o << "MinAndMaxXValues:" << "\t" << minXValue << "\t" << maxXValue << '\n';
+    o << "MinAndMaxYValues:" << "\t" << minYValue << "\t" << maxYValue << '\n';
 
-    o << "MaxPointsPlottedInASeries" << "\t" << maxPointsPlotedInASeries << std::endl;
-    o << std::endl;
+    o << "MaxPointsPlottedInASeries" << "\t" << maxPointsPlotedInASeries << '\n';
+    o << '\n';
   }
-
-
-  o << std::endl;
-  o << std::endl;
-
-
+  
+  o << '\n';
+  o << '\n';
+  
   {
     // Column Headers 
     o << "XLabel" << "\t" << "XValue"; 
-    for  (kkint32 seriesIDX = 0;  seriesIDX < NumOfSeries ();  seriesIDX++)
+    for  (kkint32 seriesIDX = 0;  seriesIDX < NumOfSeries ();  ++seriesIDX)
     {
-      o << "\t" << series[seriesIDX]->name;
+      o << "\t" << series[tosize_t (seriesIDX)]->name;
     }
-    o << std::endl;
+    o << '\n';
   }
 
-
-
   {
-    kkuint32  x;
-
-    for  (x = 0;  x < xLabels.size (); x++)
+    for  (kkuint32 x = 0;  x < xLabels.size ();  ++x)
     {
       XLabel&  xLabel = xLabels[x];
 
       double  xVal = xLabel.XVal ();
 
-
       o << xLabel.Name () << "\t" << xVal;
 
-      kkint32  seriesIDX = 0;
-
-      for  (seriesIDX = 0;  seriesIDX < NumOfSeries ();  seriesIDX++)
+      for  (kkint32 seriesIDX = 0;  seriesIDX < NumOfSeries ();  ++seriesIDX)
       {
         o << "\t";
 
@@ -575,11 +541,9 @@ void  Chart::Save (KKStr  _fileName)
         }
       }
 
-      o << std::endl;
+      o << '\n';
     }
   }
-     
-
+ 
   o.close ();
 }    /* Save */
-

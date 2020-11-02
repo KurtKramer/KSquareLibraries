@@ -287,23 +287,18 @@ extern "C"
     {
       tp->Run ();
     }
-    catch  (const KKException&  e1)
-    {
-      tp->Crashed (true);
-      tp->ExceptionText (e1.ToString ());
-    }
-    catch  (const std::exception e2)
+    catch  (const std::exception& e2)
     {
       tp->Crashed (true);
       const char* e2What = e2.what ();
-      KKStr  msg (30 + (kkStrUint)strlen (e2What));
-      msg << "std::exception: " << e2What;
+      KKStr  msg (40 + (kkStrUint)strlen (e2What));
+      msg << "ThreadStartCallBack  exception: " << e2What;
       tp->ExceptionText (msg);
     }
     catch  (...)
     {
       tp->Crashed (true);
-      tp->ExceptionText ("exception(...) trapped.");
+      tp->ExceptionText ("ThreadStartCallBack   anonymous exception(...) trapped.");
     }
 
     tp->Status (KKThread::ThreadStatus::Stopped);
@@ -321,12 +316,7 @@ void*  ThreadStartCallBack (void* param)
     {
       tp->Run ();
     }
-    catch  (const KKException&  e1)
-    {
-      tp->Crashed (true);
-      tp->ExceptionText (e1.ToString ());
-    }
-    catch  (const std::exception e2)
+    catch  (const std::exception& e2)
     {
       tp->Crashed (true);
       const char* e2What = e2.what ();

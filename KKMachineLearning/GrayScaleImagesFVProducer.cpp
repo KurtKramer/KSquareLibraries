@@ -680,9 +680,10 @@ FeatureVectorListPtr  GrayScaleImagesFVProducer::ManufacturFeatureVectorList (bo
 
 
 
-GrayScaleImagesFVProducerFactory::GrayScaleImagesFVProducerFactory ():
+GrayScaleImagesFVProducerFactory::GrayScaleImagesFVProducerFactory (RunLog& _log):
    FactoryFVProducer("GrayScaleImagesFVProducerFactory", "FeatureVector", "General Purpose Grayscale Image Feature Computer")
 {
+  _log.Level (30) << "GrayScaleImagesFVProducerFactory::GrayScaleImagesFVProducerFactory" << endl;
 }
 
 
@@ -735,7 +736,7 @@ FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorL
 
 
 
-GrayScaleImagesFVProducerFactory*  GrayScaleImagesFVProducerFactory::factory = Factory (NULL);
+GrayScaleImagesFVProducerFactory*  GrayScaleImagesFVProducerFactory::factory = Factory (nullptr);
 
 
 
@@ -745,11 +746,18 @@ GrayScaleImagesFVProducerFactory*  GrayScaleImagesFVProducerFactory::Factory (Ru
 
   if  (factory == NULL)
   {
-    factory = new GrayScaleImagesFVProducerFactory ();
+    if  (!runLog)
+    {
+      RunLog tempRunLog;
+      factory = new GrayScaleImagesFVProducerFactory (tempRunLog);
+    }
+    else
+    {
+      factory = new GrayScaleImagesFVProducerFactory (*runLog);
+    }
     FactoryFVProducer::RegisterFactory (factory, runLog);
   }
   GlobalGoalKeeper::EndBlock ();
 
   return  factory;
 }
-

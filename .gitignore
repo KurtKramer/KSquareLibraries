@@ -1,5 +1,9 @@
+Build
+build
 Debug
 Release
+CMakeFiles
+CMakeCache.txt
 *.libs
 *.a
 *.al

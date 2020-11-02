@@ -134,7 +134,7 @@ void  CmdLineExpander::BuildCmdLineParameters (const VectorKKStr&  argv)
     {
       if  (x < argv.size ())
       {
-        if  (argv[x][(kkint16)0] != '-')
+        if  (argv[x][0] != '-')
         {
           logFileName = argv[x];
           if  (!logFileName.Empty ())
@@ -160,7 +160,7 @@ void  CmdLineExpander::BuildCmdLineParameters (const VectorKKStr&  argv)
 
       if  (x < argv.size ())
       {
-        if  (argv[x][(kkint16)0] != '-')
+        if  (argv[x][0] != '-')
         {
           cmdFileName = argv[x];
           x++;
@@ -255,7 +255,7 @@ bool  CmdLineExpander::ParameterIsASwitch (const KKStr&  parm)
   if  (parm.Len () < 1)
     return false;
 
-  if  (parm[(kkint16)0] != '-')
+  if  (parm[0] != '-')
     return false;
 
   if  (parm.Len () == 1)

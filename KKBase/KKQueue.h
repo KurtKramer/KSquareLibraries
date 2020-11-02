@@ -8,6 +8,7 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
+WarningsLowered()
 #include <algorithm>
 #include <assert.h>
 #include <ctype.h>
@@ -21,6 +22,7 @@
 #include <vector>
 #include <sstream>
 #include <vector>
+WarningsRestored()
 
 #include "KKBaseTypes.h"
 #include "KKException.h"
@@ -96,18 +98,18 @@ namespace  KKB
                                                      */
 
       //  Access Methods that do not update the instance.
-      EntryPtr  BackOfQueue  () const;   /**< Returns pointer of last element without removing it; if empty returns NULL.  */
-      EntryPtr  FrontOfQueue () const;   /**< Returns pointer to first  element that is at from of the queue with out removing it from the queue.                  */
-      EntryPtr  GetFirst     () const;   /**< Same as FrontOfQueue. */
-      EntryPtr  GetLast      () const;   /**< Same as BackOfQueue.  */
-      EntryPtr  LookAtBack   () const;   /**< Same as BackOfQueue.  */
-      EntryPtr  LookAtFront  () const;   /**< Same as FrontOfQueue. */
-      kkuint32  QueueSize    () const;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
-      bool      Owner        () const;
+      EntryPtr  BackOfQueue  () const noexcept;   /**< Returns pointer of last element without removing it; if empty returns NULL.  */
+      EntryPtr  FrontOfQueue () const noexcept;   /**< Returns pointer to first  element that is at from of the queue with out removing it from the queue.                  */
+      EntryPtr  GetFirst     () const noexcept;   /**< Same as FrontOfQueue. */
+      EntryPtr  GetLast      () const noexcept;   /**< Same as BackOfQueue.  */
+      EntryPtr  LookAtBack   () const noexcept;   /**< Same as BackOfQueue.  */
+      EntryPtr  LookAtFront  () const noexcept;   /**< Same as FrontOfQueue. */
+      kkuint32  QueueSize    () const noexcept;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
+      bool      Owner        () const noexcept;
 
-      OptionUInt32  LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
-      EntryPtr      IdxToPtr     (size_t        idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
-      OptionUInt32  PtrToIdx     (EntryConstPtr _entry)  const;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
+      OptionUInt32  LocateEntry  (EntryConstPtr _entry)  const  noexcept;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
+      EntryPtr      IdxToPtr     (size_t        idx)     const  noexcept;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
+      OptionUInt32  PtrToIdx     (EntryConstPtr _entry)  const  noexcept;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
 
       // Basic Queue operators.
       virtual   void      Add          (EntryPtr _entry);    /**< same as PushOnBack   */
@@ -133,7 +135,7 @@ namespace  KKB
       void      DeleteEntry    (EntryPtr _entry);             /**< Removes from KKQueue the entry who's pointer = '_entry'                                      */
       void      DeleteEntry    (size_t   _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                         */
 
-      void      Owner          (bool     _owner);             /**< specifies who owns the contents of the container; when true the contents will
+      void      Owner          (bool     _owner) noexcept;    /**< specifies who owns the contents of the container; when true the contents will
                                                                 *  be deleted when the container is deleted.  
                                                                 */
 
@@ -267,7 +269,7 @@ namespace  KKB
 
 
   template <class Entry>
-  void   KKQueue<Entry>::Owner  (bool _owner)
+  void   KKQueue<Entry>::Owner (bool _owner) noexcept
   {
     owner = _owner;
   }
@@ -275,7 +277,7 @@ namespace  KKB
 
 
   template <class Entry>
-   bool  KKQueue<Entry>::Owner ()  const
+   bool  KKQueue<Entry>::Owner () const noexcept
   {
     return  (owner != 0);
   }
@@ -283,9 +285,9 @@ namespace  KKB
 
 
   template <class Entry>
-  kkuint32  KKQueue<Entry>::QueueSize ()  const    
+  kkuint32  KKQueue<Entry>::QueueSize () const noexcept
   {
-    return  (kkint32)this->size ();
+    return  static_cast<kkuint32>(this->size ());
   }
 
 
@@ -333,10 +335,9 @@ namespace  KKB
   }  /* AddQueue */
 
 
-
-
+  
   template <class Entry>
-  inline  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::GetFirst ()  const
+  inline  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::GetFirst () const noexcept
   {
     return  FrontOfQueue ();
   }
@@ -344,7 +345,7 @@ namespace  KKB
 
 
   template <class Entry>
-  inline  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::GetLast ()  const
+  inline  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::GetLast () const noexcept
   {
     return  BackOfQueue ();
   }
@@ -354,7 +355,7 @@ namespace  KKB
   template <class Entry>
   void  KKQueue<Entry>::PushOnFront (EntryPtr _entry)
   {
-	KKQueue<Entry>::insert (KKQueue<Entry>::begin (), _entry);
+	  KKQueue<Entry>::insert (KKQueue<Entry>::begin (), _entry);
 
     Entry*  e = *KKQueue<Entry>::begin ();
 
@@ -362,7 +363,6 @@ namespace  KKB
     {
       std::cout << "Error " << std::endl;
     }
-
   }
 
 
@@ -659,7 +659,7 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr KKQueue<Entry>::LookAtBack ()  const
+  typename  KKQueue<Entry>::EntryPtr KKQueue<Entry>::LookAtBack () const noexcept
   {
     if  (this->size () <= 0)
       return NULL;
@@ -670,7 +670,7 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr KKQueue<Entry>::LookAtFront ()  const
+  typename  KKQueue<Entry>::EntryPtr KKQueue<Entry>::LookAtFront () const noexcept
   {
     if  (this->size () <= 0)
       return NULL;
@@ -693,7 +693,7 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::BackOfQueue ()  const
+  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::BackOfQueue ()  const noexcept
   {
     if  (KKQueue<Entry>::size () <= 0)
       return NULL;
@@ -703,7 +703,7 @@ namespace  KKB
   
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::FrontOfQueue () const
+  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::FrontOfQueue () const noexcept
   {
     if  ( KKQueue<Entry>::size () <= 0)
        return NULL;
@@ -724,6 +724,7 @@ namespace  KKB
         return;
       }
     }
+    throw KKException ("KKQueue<Entry>::DeleteEntry   _entry  not found!!!");
   }  /* DeleteEntry */
 
 
@@ -736,15 +737,6 @@ namespace  KKB
     if  (_idx >=  KKQueue<Entry>::size ())
     {
       std::stringstream errMsg;
-
-      errMsg << "Test";
-
-      errMsg << _idx;
-
-      auto zed = KKQueue<Entry>::size ();
-
-      errMsg << zed;
-
       errMsg << "KKQueue<Entry>::SetIdxToPtr  _idx: " << _idx << " out of range: " << KKQueue<Entry>::size ();
       std::cerr << errMsg.str () << std::endl;
       throw std::range_error (errMsg.str ());
@@ -778,7 +770,7 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (size_t idx)  const
+  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (size_t idx)  const  noexcept
   {
     if  (idx >= KKQueue<Entry>::size ())
       return NULL;
@@ -789,7 +781,7 @@ namespace  KKB
 
 
   template <class Entry>
-  KKB::OptionUInt32 KKQueue<Entry>::LocateEntry (EntryConstPtr _entry)  const
+  KKB::OptionUInt32 KKQueue<Entry>::LocateEntry (EntryConstPtr _entry)  const  noexcept
   {
     kkint32  i = 0; 
 
@@ -805,7 +797,7 @@ namespace  KKB
 
 
   template <class Entry>
-  KKB::OptionUInt32  KKQueue<Entry>::PtrToIdx (EntryConstPtr _entry)  const
+  KKB::OptionUInt32  KKQueue<Entry>::PtrToIdx (EntryConstPtr _entry)  const  noexcept
   {
     return  LocateEntry (_entry);
   }
@@ -844,12 +836,10 @@ namespace  KKB
       throw KKB::KKException(errMsg.str ().c_str ());
     }
 
-    return  (Entry&)*(std::vector<Entry*>::operator[] (idx));
+    return  static_cast<Entry&>(*(std::vector<Entry*>::operator[] (idx)));
   }  /* operator[] */
 
 }  /* namespace KKB; */
-
-
 
 
 #endif

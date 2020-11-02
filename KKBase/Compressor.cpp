@@ -10,8 +10,10 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
 #include "zlib.h"
-
 
 #include "Compressor.h"
 #include "GlobalGoalKeeper.h"
@@ -81,7 +83,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   {
     // This was originally a a loop that read from a file;  but now we have a input buffer with a known amount of data.
     strm.avail_in = sourceLen;       // Number of bytes in 'source'  to compress.
-    strm.next_in  = (Bytef*)source;  // pointer to data that needs to be compressed.
+    strm.next_in  = static_cast<Bytef*> (source);  // pointer to data that needs to be compressed.
     
     do
     { 
@@ -117,11 +119,13 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
         return NULL;
       }
       
+      assert (outputBufferSize >= strm.avail_out);
+
       // Now we compute how much output deflate() provided on the last call, which is the difference between how much space
       // was provided before the call, and how much output space is still available after the call. Then that data, if any,
       // is written to the output file. We can then reuse the output buffer for the next call of deflate(). Again if there
       // is a file i/o error, we call deflateEnd() before returning to avoid a memory leak.
-      kkint32 have = outputBufferSize - strm.avail_out;
+      kkuint32 have = outputBufferSize - strm.avail_out;
       {
         if  (compressedBuff == NULL)
         {
@@ -184,7 +188,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   uchar*     unCompressedBuff  = NULL;
 
   Bytef*     outBuffer    = NULL;
-  kkint32    outBufferLen = 0;
+  kkuint32   outBufferLen = 0;
 
   kkint32    ret;
   z_stream   strm;
@@ -231,7 +235,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //  ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {
@@ -245,6 +249,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       }
     }
 
+    assert (outBufferLen >= strm.avail_out);
     have = outBufferLen - strm.avail_out;
     if  (unCompressedBuff == NULL)
     {
@@ -254,7 +259,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     }
     else
     {
-      kkint32  newUnCompressedLen = unCompressedLen + have;
+      kkuint32  newUnCompressedLen = unCompressedLen + have;
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);
@@ -344,7 +349,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
     }
 
     strm.avail_out = unCompressedBuffSize - unCompressedBuffLen;
-    strm.next_out  = (Bytef*)unCompressedBuff + unCompressedBuffLen;
+    strm.next_out  = static_cast<Bytef*> (unCompressedBuff) + unCompressedBuffLen;
 
     ret = inflate (&strm, Z_NO_FLUSH);
     if  (ret == Z_STREAM_ERROR)
@@ -356,7 +361,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
 
     switch (ret) 
     {
-    case Z_NEED_DICT:  ret = Z_DATA_ERROR;     /* and fall through */
+    case Z_NEED_DICT:  //    ret = Z_DATA_ERROR;     /* and fall through */
     case Z_DATA_ERROR:
     case Z_MEM_ERROR:
       {

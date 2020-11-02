@@ -4,7 +4,10 @@
  */
 #if  !defined(_KKU_MSGQUEUE_)
 #define  _KKU_MSGQUEUE_
+
+WarningsLowered()
 #include <queue>
+WarningsRestored()
 
 #include "GoalKeeperSimple.h"
 

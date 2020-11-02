@@ -6,7 +6,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <exception>
-#include <limits.h>
+#include <limits>
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
@@ -15,9 +15,9 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
 using namespace std;
+
 
 #include "KKQueue.h"
 
@@ -30,6 +30,10 @@ using namespace std;
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace KKB;
+
+// One of the includes defines macros for min and max; this inteferes with numeric_limits<>::max.
+#undef max
+#undef min
 
 
 char*  KKB::STRCOPY (char*        dest,
@@ -108,7 +112,7 @@ char*  KKB::STRCAT (char*        dest,
 
 kkint32  KKB::STRICMP (const char*  left,
                        const char*  right
-                      )
+                      )  noexcept
 {
   if  (left == NULL)
   {
@@ -134,7 +138,6 @@ kkint32  KKB::STRICMP (const char*  left,
     return 0;
   else
     return 1;
-
 }  /* STRICMP */
 
 
@@ -142,7 +145,7 @@ kkint32  KKB::STRICMP (const char*  left,
 kkint32  KKB::STRNICMP (const char*  left,
                         const char*  right,
                         kkint32      len
-                       )
+                       )  noexcept
 {
   if  (left == NULL)
     return  (right == NULL) ? 0 : -1;
@@ -2222,7 +2225,7 @@ KKStrPtr  KKStr::ToKKStrPtr () const
 
 
 
-bool  KKStr::ValidInt (kkint32  &value)
+bool  KKStr::ValidInt (kkint32  &value)  const
 {
 
   kkint32  sign = 1;
@@ -2939,14 +2942,14 @@ KKStr  KKStr::DecodeQuotedStr ()  const
       {
         uchar escapeChar = 0;
         switch (val[idx]) {
-          case '0': escapeChar = 0;
-          case 'a': escapeChar = '\a';
-          case 'b': escapeChar = '\b';
-          case 'f': escapeChar = '\f';
-          case 'n': escapeChar = '\n';
-          case 'r': escapeChar = '\r';
-          case 't': escapeChar = '\t';
-          case 'v': escapeChar = '\v';
+          case '0': escapeChar = 0;      break;
+          case 'a': escapeChar = '\a';   break;
+          case 'b': escapeChar = '\b';   break;
+          case 'f': escapeChar = '\f';   break;
+          case 'n': escapeChar = '\n';   break;
+          case 'r': escapeChar = '\r';   break;
+          case 't': escapeChar = '\t';   break;
+          case 'v': escapeChar = '\v';   break;
           default:  escapeChar = val[idx];
         }
         result.Append (escapeChar);
@@ -3206,15 +3209,15 @@ float  KKStr::ToFloat () const
 
 
 
-kkint32  KKStr::ToInt () const
+int  KKStr::ToInt () const
 {
   if  (!val)
     return 0;
 
   kkint64 l = atoll (val);
-  KKCheck ((l >= INT_MIN) && (l <= INT_MAX), "KKStr::ToInt   val: " << val << " exceeds capacity of 32 bit int.")
+  KKCheck ((l >= std::numeric_limits<int>::min()) && (l <= std::numeric_limits<int>::max ()), "KKStr::ToInt   val: " << val << " exceeds capacity of 32 bit int.")
 
-  return (kkint32)l;
+  return (int)l;
 }  /* ToInt*/
 
 
@@ -3225,7 +3228,7 @@ kkint16  KKStr::ToInt16 () const
     return 0;
 
   kkint64 ll = atoll (val);
-  KKCheck ((ll >= INT16_MIN) && (ll <= INT16_MAX), "KKStr::ToInt16   val: " << val << " exceeds capacity of 16 bit int.")
+  KKCheck ((ll >= std::numeric_limits<kkint16>::min ()) && (ll <= std::numeric_limits<kkint16>::max ()), "KKStr::ToInt16   val: " << val << " exceeds capacity of 16 bit int.")
 
   return (kkint16)ll;
 }  /* ToInt16*/
@@ -3238,7 +3241,7 @@ kkint32  KKStr::ToInt32 () const
     return 0;
 
   kkint64 ll = atoll (val);
-  KKCheck ((ll >= INT32_MIN) && (ll <= INT32_MAX), "KKStr::ToInt32   val: " << val << " exceeds capacity of 32 bit int.")
+  KKCheck ((ll >= std::numeric_limits<kkint32>::min ()) && (ll <= std::numeric_limits<kkint32>::max ()), "KKStr::ToInt32   val: " << val << " exceeds capacity of 32 bit int.")
 
   return (kkint32)ll;
 }  /* ToInt32*/
@@ -3263,8 +3266,8 @@ long  KKStr::ToLong   () const
   if  (!val)
     return 0;
 
-  kkint64  ll = atoll (val);
-  KKCheck ((ll >= LONG_MIN)  &&  (ll <= LONG_MAX), "KKStr::ToLong  val: " << val << " exceeds capacity of long.")
+  long long  ll = atoll (val);
+  KKCheck ((ll >= std::numeric_limits<long>::min ())  &&  (ll <= std::numeric_limits<long>::max ()), "KKStr::ToLong  val: " << val << " exceeds capacity of long.")
 
   return (long)ll;
 }  /* ToLong */
@@ -3286,10 +3289,8 @@ float  KKStr::ToPercentage () const
 
 uint  KKStr::ToUint () const
 {
-  if  (!val)  return 0;
-
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT_MAX), "KKStr::ToUint ()    val: " << val << " exceeds capacity of uint.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<uint>::max ()), "KKStr::ToUint ()    val: " << val << " exceeds capacity of uint.")
   return  (kkuint32)ll;
 }
 
@@ -3297,9 +3298,14 @@ uint  KKStr::ToUint () const
 
 KKB::ulong  KKStr::ToUlong () const
 {
-  kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= ULONG_MAX), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
-  return  (ulong)ll;
+  long long ll = atoll (val);
+  KKCheck ((ll >= 0), "KKStr::ToUlong ()    val: " << val << " less that zero!");
+
+  auto ull = std::stoull(val);
+
+  unsigned long long maxUnsignedLong = std::numeric_limits<ulong>::max ();
+  KKCheck ((ull <= maxUnsignedLong), "KKStr::ToUlong ()    val: " << val << " exceeds capacity of ulong.")
+  return  (ulong)ull;
 }
 
 
@@ -3307,7 +3313,7 @@ KKB::ulong  KKStr::ToUlong () const
 KKB::kkuint16  KKStr::ToUint16 () const
 {
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT16_MAX), "KKStr::ToUint16 ()    val: " << val << " exceeds capacity of uint16.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<kkuint16>::max ()), "KKStr::ToUint16 ()    val: " << val << " exceeds capacity of uint16.")
   return  (kkuint16)ll;
 }
 
@@ -3316,7 +3322,7 @@ KKB::kkuint16  KKStr::ToUint16 () const
 KKB::kkuint32  KKStr::ToUint32 () const
 {
   kkint64 ll = atoll(val);
-  KKCheck ((ll >= 0)  &&  (ll <= UINT32_MAX), "KKStr::ToUint32 ()    val: " << val << " exceeds capacity of uint32.")
+  KKCheck ((ll >= 0)  &&  (ll <= std::numeric_limits<kkuint32>::max ()), "KKStr::ToUint32 ()    val: " << val << " exceeds capacity of uint32.")
   return  (kkuint32)ll;
 }
 
@@ -3585,11 +3591,11 @@ OptionUInt32  SearchStr (const char*   src,
                         )
 {
   if  ((!src)  ||  (!srchStr))
-    return {};
+    return nullopt;
 
   kkuint32  zed = (startPos + srchStrLen - 1);
   if  (zed > srcLen)
-    return  {};
+    return  nullopt;
 
   kkuint32 numIter = (srcLen - zed);
   const char* startCh = src + startPos;
@@ -3599,7 +3605,7 @@ OptionUInt32  SearchStr (const char*   src,
     if  (strncmp (startCh, srchStr, srchStrLen) == 0)
       return  startPos + x;
   }
-  return {};
+  return nullopt;
 }
 
 
@@ -4665,12 +4671,21 @@ KKStr  KKB::StrFormatInt (kkint32      val,
                           const char*  mask
                          )
 {
-  return  KKB::StrFormatDouble ((double)val, mask);
+  return  KKB::StrFormatDouble (static_cast<double> (val), mask);
 }
 
 
 
-KKStr  KKB::StrFormatInt64 (kkint64        val,
+KKStr  KKB::StrFormatInt (kkuint32     val,
+                          const char*  mask
+                         )
+{
+  return  KKB::StrFormatDouble (static_cast<double> (val), mask);
+}
+
+
+
+KKStr  KKB::StrFormatInt64 (kkint64      val,
                             const char*  mask
                            )
 {
@@ -4813,7 +4828,6 @@ KKStr KKB::StrFromBuff (const char* buff, kkuint32 buffLen)
 KKStr  KKB::StrFromInt16 (kkint16 i)
 {
   char  buff[50];
-
   SPRINTF (buff, sizeof (buff), "%d", i);
   KKStr s (buff);
   return  s;
@@ -4824,7 +4838,6 @@ KKStr  KKB::StrFromInt16 (kkint16 i)
 KKStr  KKB::StrFromUint16 (kkuint16 ui)
 {
   char  buff[50];
-
   SPRINTF (buff, sizeof (buff), "%u", ui);
   KKStr s (buff);
   return  s;
@@ -4835,7 +4848,6 @@ KKStr  KKB::StrFromUint16 (kkuint16 ui)
 KKStr  KKB::StrFromInt32 (kkint32 i)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%ld", i);
   KKStr s (buff);
   return  s;
@@ -4846,7 +4858,6 @@ KKStr  KKB::StrFromInt32 (kkint32 i)
 KKStr  KKB::StrFromUint32 (kkuint32 ui)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%lu", ui);
   KKStr s (buff);
   return  s;
@@ -4857,7 +4868,6 @@ KKStr  KKB::StrFromUint32 (kkuint32 ui)
 KKStr  KKB::StrFromInt64 (kkint64 i64)
 {
   char  buff[50];
-  
   SPRINTF (buff, sizeof (buff), "%lld", i64);
   KKStr s (buff);
   return  s;
@@ -4981,12 +4991,11 @@ void  VectorKKStr::WriteXML (const KKStr&  varName,
   startTag.AddAtribute ("Count", (kkint32)size ());
   startTag.WriteXML (o);
 
-  const_iterator  idx;
-  kkuint32 x = 0;
-  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  bool firstPass = true;
+  for (auto idx: *this)
   {
-    if  (x > 0)  o << "\t";
-    XmlContent::WriteXml (idx->QuotedStr (), o);
+    if  (firstPass) firstPass = false; else o << '\t';
+    XmlContent::WriteXml (idx.QuotedStr (), o);
   }
   XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);

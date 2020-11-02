@@ -328,7 +328,8 @@ namespace KKMLL
 
       GrayScaleImagesFVPtr  operator*()
       {
-        return  (const GrayScaleImagesFVPtr)*idx;
+        auto zed = *idx;
+        return  dynamic_cast<GrayScaleImagesFVPtr>(zed);
       }
 
 

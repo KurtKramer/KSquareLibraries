@@ -13,7 +13,6 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-
 #include "ModelParam.h"
 #include "ModelParamKnn.h"
 #include "ModelParamOldSVM.h"
@@ -424,8 +423,6 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
 
 
 
-
-
 void  ModelParam::WriteXMLFields (ostream&  o)  const
 
 {
@@ -515,5 +512,3 @@ XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
 
   return  t;
 }  /* ReadXMLModelParamToken */
-
-
