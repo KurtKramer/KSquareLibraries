@@ -2,7 +2,12 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
+
+
 #include "FirstIncludes.h"
+
+WarningsLowered()
+
 #include <ctype.h>
 #include <limits.h>
 #include <math.h>
@@ -13,10 +18,16 @@
 #include <string>
 #include <vector>
 #include "MemoryDebug.h"
+
+WarningsRestored()
+
 using namespace std;
 
 #include "KKException.h"
 #include "KKStr.h"
+
+
+
 using namespace KKB;
 
 

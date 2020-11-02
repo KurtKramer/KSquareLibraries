@@ -93,7 +93,7 @@ Attribute::~Attribute ()
 
 kkMemSize  Attribute::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = (kkMemSize)sizeof (Attribute)  +
+  kkMemSize  memoryConsumedEstimated = static_cast<kkMemSize> (sizeof (Attribute))  +
              name.MemoryConsumedEstimated ()               +
              nameUpper.MemoryConsumedEstimated ();
 
@@ -178,7 +178,7 @@ kkint32 Attribute::Cardinality ()  const
       )
     return  (kkint32)nominalValuesUpper->size ();
   else
-    return int32_max;
+    return std::numeric_limits<kkint32>::max ();
 }  /* Cardinality */
 
 
@@ -338,7 +338,7 @@ AttributeList::~AttributeList ()
 
 kkMemSize  AttributeList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = (kkMemSize)sizeof (AttributeList) + nameIndex.size ();
+  kkMemSize  memoryConsumedEstimated = static_cast<kkMemSize> (sizeof (AttributeList) + nameIndex.size ());
   
   {
     std::map<KKStr, AttributePtr>::const_iterator  idx;

@@ -60,6 +60,8 @@ namespace  KKB
     const KKStr&              LogFileName            ()  const  {return logFileName;}
     bool                      ParmsGood              ()  const  {return parmsGood;}
 
+    CmdLineExpander  operator= (const CmdLineExpander& right) = delete;
+
   private:
      void  BuildCmdLineParameters (const VectorKKStr&  argv);
 

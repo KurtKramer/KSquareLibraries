@@ -5,9 +5,9 @@
 #ifndef _CHART_
 #define _CHART_
 
-DisableWarningsPush()
+WarningsLowered()
 #include <vector>
-DisableWarningsPop()
+WarningsRestored()
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"
@@ -30,9 +30,9 @@ namespace  KKB
     class  XLabel;
     class  PlotPoint;
 
-    typedef  Series*            SeriesPtr;
-    typedef  vector<SeriesPtr>  SeriesList;
-    typedef  PlotPoint*         PlotPointPtr;
+    typedef  Series*                 SeriesPtr;
+    typedef  std::vector<SeriesPtr>  SeriesList;
+    typedef  PlotPoint*              PlotPointPtr;
 
 
     Chart (KKStr  _title);

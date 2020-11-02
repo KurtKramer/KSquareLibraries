@@ -39,6 +39,12 @@ namespace KKB
     inline kkint32  Row () const {return row;}
     inline kkint32  Col () const {return col;}
 
+    inline float  RowF  () const {return tofloat (row);}
+    inline float  ColF  () const {return tofloat (col);}
+
+    inline double  RowD  () const {return todouble (row);}
+    inline double  ColD  () const {return todouble (col);}
+
     void   Row (kkint32 _row)  {row = _row;}
     void   Col (kkint32 _col)  {col = _col;}
 
@@ -56,6 +62,10 @@ namespace KKB
     Point  operator- (const Point&  r) const;
 
     Point&  operator= (const Point&  r);
+
+    Point&  operator+= (const Point&  r);
+
+    Point&  operator-= (const Point&  r);
 
   private:
     kkint32  row;

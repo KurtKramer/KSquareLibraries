@@ -6,42 +6,40 @@
 //#define WIN32
 //#endif
 
-#if defined(_WIN32)
+#if  defined(_WIN32)
 
-#define DisableWarningsPush()     \
-  __pragma(warning( push ))            \
-  __pragma(warning( disable : 4267)) \
-  __pragma(warning( disable : 4458)) \
-  __pragma(warning( disable : 4514)) \
-  __pragma(warning( disable : 4571)) \
-  __pragma(warning( disable : 4625)) \
-  __pragma(warning( disable : 4626)) \
-  __pragma(warning( disable : 4668)) \
-  __pragma(warning( disable : 4710)) \
-  __pragma(warning( disable : 4711)) \
-  __pragma(warning( disable : 4774)) \
-  __pragma(warning( disable : 4820)) \
-  __pragma(warning( disable : 4996)) \
-  __pragma(warning( disable : 5026)) \
-  __pragma(warning( disable : 5027)) \
-  __pragma(warning( disable : 5039)) 
+#define  WarningsLowered()  \
+__pragma(warning( push )) \
+__pragma(warning( disable : 4267)) \
+__pragma(warning( disable : 4458)) \
+__pragma(warning( disable : 4514)) \
+__pragma(warning( disable : 4571)) \
+__pragma(warning( disable : 4625)) \
+__pragma(warning( disable : 4626)) \
+__pragma(warning( disable : 4668)) \
+__pragma(warning( disable : 4710)) \
+__pragma(warning( disable : 4711)) \
+__pragma(warning( disable : 4774)) \
+__pragma(warning( disable : 4820)) \
+__pragma(warning( disable : 4996)) \
+__pragma(warning( disable : 5026)) \
+__pragma(warning( disable : 5027)) \
+__pragma(warning( disable : 5039))
 
-
-#define DisableWarningsPop()    \
-  __pragma(warning ( pop ))
-
-
+#define  WarningsRestored()   \
+__pragma(warning( pop )) 
 #else
-#define DisableWarningsPush()
 
-#define DisableWarningsPop()
+#define  WarningsLowered        \
+_Pragma( GCC diagnostic push)             \
+_Pragma( GCC diagnostic ignored "-Wall"()
 
+#define  WarningsRestored  \
+_Pragma(GCC diagnostic pop)
 #endif
 
 
-// Matches #pragma warning( pop ) in "MemoryDebug.h"
-// We are taking advantag eof the fact that there is a "FirstIncludes.h"  and  "MemoryDebug.h" in every module.
-DisableWarningsPush()
+WarningsLowered()
 
 
 #if  defined(WIN32)
@@ -64,6 +62,7 @@ DisableWarningsPush()
   // Since we are using Microsoft's memory leak detection and we are not using a MS compiler can not do memory leak check.
   #define  _NO_MEMORY_LEAK_CHECK_
 #endif
+
 
 #if  !defined(_NO_MEMORY_LEAK_CHECK_)
   //  _NO_MEMORY_LEAK_CHECK_  Put there by Kurt so that we can exclude
@@ -97,6 +96,7 @@ DisableWarningsPush()
 #define  STDLIB_INCLUDED
 #endif
 
+WarningsRestored()
 
 #if  defined(_WIN32)
 

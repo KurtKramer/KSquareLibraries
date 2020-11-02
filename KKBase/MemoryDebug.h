@@ -2,6 +2,7 @@
 
 #if !defined(_WINDOWS)
 
+WarningsLowered()
 #if  defined(WIN32)  &&  defined(_DEBUG)
 // We need to make sure that these items are included before we override the new operator.
 #include <algorithm>
@@ -21,12 +22,14 @@
 #include <string>
 #include <vector>
 #include <windows.h>
-
+WarningsRestored()
 
 #define new MYDEBUG_NEW
 #endif
 #endif
-
 #endif
 
-DisableWarningsPop ()
+#if defined(_WIN32)
+#pragma  warning (disable : 4820)
+
+#endif

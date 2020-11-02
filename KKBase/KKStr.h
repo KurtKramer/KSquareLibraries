@@ -14,6 +14,7 @@
 //*  KKStr class and string manipulation routines.
 //************************************************************************************
 
+WarningsLowered()
 #include <istream>
 #include <map>
 #include <ostream>
@@ -26,6 +27,7 @@
 #define  __cdecl
 #endif
 #endif
+WarningsRestored()
 
 #include "KKBaseTypes.h"
 #include "KKQueue.h"

@@ -5,8 +5,10 @@
 #ifndef  _KKSTRMATRIX_
 #define  _KKSTRMATRIX_
 
+WarningsLowered()
 #include <ostream>
 #include <string>
+WarningsRestored()
 
 //#ifdef  WIN32
 //#else
@@ -15,7 +17,6 @@
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"
-#include "KKStrMatrix.h"
 
 #define  EnterChar   13
 #define  EscapeChar  27
@@ -33,13 +34,27 @@ namespace KKB
     typedef  KKStrMatrix*  KKStrMatrixPtr;
 
 
+    KKStrMatrix (const KKStrMatrix& m): data (),  numCols (m.numCols)
+    {
+      for (auto zed : m.data)
+      {
+        KKStrListPtr sl = new KKStrList ();
+        data.Add (sl);
+        for (auto s : *zed)
+        {
+          sl->PushOnBack (new KKStr (*s));
+        }
+      }
+    }
+
+
     KKStrMatrix (kkuint32 _numCols):  
         data    (), 
         numCols (_numCols) 
     {
     }
 
-        
+
     KKStrMatrix (kkuint32 _numCols,
                  kkuint32 _numRows
                 ):  

@@ -33,7 +33,7 @@
 
 //#define WIN32
 
-DisableWarningsPush()
+WarningsLowered ()
 
 #if  defined(WIN32) || defined(WIN64)
 
@@ -52,7 +52,8 @@ DisableWarningsPush()
 #include <sstream>
 #include <type_traits>
 #include <vector>
-DisableWarningsPop()
+
+WarningsRestored ()
 
 #define  PIE            3.1415926535897932384626433832795
 #define  TwoPie         6.28318530717959
@@ -377,7 +378,7 @@ size_t tosize_t(T x)
 
 
 template<typename T>
-float tofloat (T x)
+float tofloat (T x)  noexcept
 {
   return static_cast<float> (x);
 }
@@ -385,7 +386,7 @@ float tofloat (T x)
 
 
 template<typename T>
-double todouble (T x)
+double todouble (T x)  noexcept
 {
   return static_cast<double> (x);
 }

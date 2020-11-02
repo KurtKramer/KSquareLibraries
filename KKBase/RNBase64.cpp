@@ -74,7 +74,7 @@ KKStr  KKB::Nyffenegger::base64_encode (uchar const * bytes_to_encode,
       char_array_4[3] =   char_array_3[2] & 0x3f;
       
       for (i = 0; (i < 4); i++)
-        ret.Append(base64_chars[char_array_4[i]]);
+        ret.Append (base64_chars[char_array_4[i]]);
       i = 0;
     }
   }
