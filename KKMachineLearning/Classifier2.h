@@ -150,7 +150,7 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
 
     virtual
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
 
     void  PredictRaw (FeatureVectorPtr  example,

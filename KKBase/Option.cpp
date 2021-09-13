@@ -25,7 +25,6 @@ namespace KKB
   void  ValidateValidUint32 (kkint64 newValue)
   {
     KKCheck(newValue >= 0, "OptionUInt32  result: " << newValue << " is nagative!")
-    KKCheck(newValue <= uint32_max,"OptionUInt32  result: " << newValue << "  exceeds capacity of uint32!")
+    KKCheck(newValue <= std::numeric_limits<uint32_t>::max (), "OptionUInt32  result: " << newValue << "  exceeds capacity of uint32!")
   }
 }
-

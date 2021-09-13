@@ -47,7 +47,7 @@ kkint32   MorphOp::Biases (MaskTypes  mt)
   else if  (mt > MaskTypes::SQUARE9)
     mt = MaskTypes::SQUARE9;
 
-  return  biases[(int)mt];
+  return  biases[scUINT16 (mt)];
 }
 
 
@@ -60,7 +60,7 @@ StructureType  MorphOp::MaskShapes (MaskTypes  mt)
   else if  (mt > MaskTypes::SQUARE9)
     mt = MaskTypes::SQUARE9;
 
-  return  maskShapes[(int)mt];
+  return  maskShapes[scUINT16 (mt)];
 }
 
 
@@ -89,7 +89,7 @@ MorphOp::~MorphOp ()
 
 
 
-kkMemSize  MorphOp::MemoryConsumedEstimated ()
+size_t  MorphOp::MemoryConsumedEstimated () const
 {
   return 0;
 }

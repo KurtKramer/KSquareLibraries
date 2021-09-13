@@ -209,7 +209,7 @@ double  ConvexHull::ConvexArea2 ()
   if  (upper->QueueSize () == 1)
   {
     // We have a dot
-    return (double)1.0;
+    return static_cast<double> (1.0);
   }
 
 
@@ -281,8 +281,8 @@ inline
 double  DistanceSquare (Point& p1,
                         Point& p2)
 {
-  double  deltaY = 1.0 + fabs ((float)(p1.Row () - p2.Row ()));
-  double  deltaX = 1.0 + fabs ((float)(p1.Col () - p2.Col ()));
+  double  deltaY = 1.0 + fabs (scDOUBLE (p1.Row () - p2.Row ()));
+  double  deltaX = 1.0 + fabs (scDOUBLE (p1.Col () - p2.Col ()));
 
   return deltaX * deltaX + deltaY * deltaY;
 }  /* Distance */
@@ -382,8 +382,8 @@ void  ConvexHull::DrawLine (Raster&  raster,
   // If we made it here then we are not a vertical line.
 
 
-  double  m = (double)(p1.Row () - p2.Row ()) / (double)(p1.Col () - p2.Col ());
-  double  c = (double)p2.Row () - m * (double)p2.Col ();
+  double  m = scDOUBLE (p1.Row () - p2.Row ()) / scDOUBLE (p1.Col () - p2.Col ());
+  double  c = scDOUBLE (p2.Row ()) - m * scDOUBLE (p2.Col ());
 
   if  (fabs (m) < 1)
   {
@@ -403,7 +403,7 @@ void  ConvexHull::DrawLine (Raster&  raster,
 
     for  (col = startCol; col <= endCol; col++)
     {
-      row = (kkint32)(m * (double)col + c + 0.5);  // The Extract 0.5 is for rounding.
+      row = scINT32 (m * scDOUBLE (col) + c + 0.5);  // The Extract 0.5 is for rounding.
       raster.SetPixelValue (row, col, pixVal);
     }
   }
@@ -425,7 +425,7 @@ void  ConvexHull::DrawLine (Raster&  raster,
 
     for  (row = startRow; row <= endRow; row++)
     {
-      col = (kkint32)((((double)row - c) / m) + 0.5);  // The Extract 0.5 is for rounding.
+      col = scINT32 (((scDOUBLE (row) - c) / m) + 0.5);  // The Extract 0.5 is for rounding.
       raster.SetPixelValue (row, col, pixVal);
     }
   }
@@ -591,8 +591,8 @@ kkint32 ConvexHull::RelativeCCW (Point&  sp,
   // If we made it here then we are not a vertical line.
 
 
-  double  m = (double)(sp.Row () - ep.Row ()) / (double)(sp.Col () - ep.Col ());
-  double  c = (double)ep.Row () - m * (double)ep.Col ();
+  double  m = scDOUBLE (sp.Row () - ep.Row ()) / scDOUBLE (sp.Col () - ep.Col ());
+  double  c = scDOUBLE (ep.Row ()) - m * scDOUBLE (ep.Col ());
 
   double  extendedY = m * p.Col () + c;  // This is where the line segment will be 
                                          // if extended to same col as "p".   
@@ -724,8 +724,6 @@ void   ConvexHull::BuildLowerLink ()
   lowerPoints = NULL;
 }  /* BuildLowerLink */
     
-
-
 
 
 /**

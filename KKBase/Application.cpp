@@ -15,14 +15,17 @@
 #include "MemoryDebug.h"
 using  namespace  std;
 
+#include "KKBaseTypes.h"
+KKB::kkint32  xZed = 100;
+
+
 #include "Application.h"
 #include "CmdLineExpander.h"
 #include "DateTime.h"
-#include "KKBaseTypes.h"
+
 #include "KKQueue.h"
 #include "OSservices.h"
 using  namespace  KKB;
-
 
 
 Application::Application (RunLog&  _log):

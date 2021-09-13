@@ -70,7 +70,7 @@ KKStr  KKB::ColorChannelToKKStr (ColorChannels  c)
 
 ColorChannels  KKB::ColorChannelFromKKStr(const KKStr& s)
 {
-  kkuint8  c = (kkuint8)tolower(s.FirstChar());
+  kkuint8  c = scUINT8 (tolower(s.FirstChar ()));
   if  (c == 'r')  return ColorChannels::Red;
   if  (c == 'g')  return ColorChannels::Green;
   if  (c == 'b')  return ColorChannels::Blue;
@@ -532,21 +532,21 @@ void  Raster::CleanUpMemory ()
 
 
 
-kkMemSize  Raster::MemoryConsumedEstimated ()  const
+size_t  Raster::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  blobIdsMem = 0;
+  size_t  blobIdsMem = 0;
   if  (blobIds)
-    blobIdsMem = (kkint32)sizeof(kkint32) * totPixels + (kkint32)sizeof (kkint32*) * height;
+    blobIdsMem = sizeof (kkint32) * static_cast<size_t> (totPixels) + sizeof (kkint32*) * static_cast<size_t> (height);
 
-  kkMemSize  fourierMem = 0;
+  size_t  fourierMem = 0;
   if  (fourierMagArea)
-    fourierMem = (kkint32)sizeof (float) * totPixels + (kkint32)sizeof (float*) * height;
+    fourierMem = sizeof (float) * static_cast<size_t> (totPixels) + sizeof (float*) * static_cast<size_t> (height);
 
-  kkMemSize  pixelMem = totPixels + (kkint32)sizeof (kkuint8*) * height;
+  size_t  pixelMem = static_cast<size_t> (totPixels) + sizeof (kkuint8*) * static_cast<size_t> (height);
   if  (color)
     pixelMem = pixelMem * 3;
 
-  kkMemSize  memoryConsumedEstimated = (kkMemSize)(
+  size_t  memoryConsumedEstimated = 
     sizeof (kkuint8)   * 4   +
     sizeof (float)     * 2   +
     sizeof (bool)      * 2   +
@@ -559,7 +559,7 @@ kkMemSize  Raster::MemoryConsumedEstimated ()  const
     fileName.MemoryConsumedEstimated () +
     blobIdsMem                          +
     fourierMem                          +
-    pixelMem);
+    pixelMem;
 
   return  memoryConsumedEstimated;
 }
@@ -852,20 +852,20 @@ void   Raster::ReverseImage ()
 {
   kkint32 x = 0;
 
-  for  (x = 0;  x < totPixels;  x++)
+  for  (x = 0;  x < totPixels;  ++x)
   {
-    greenArea[x] = (kkuint8)(255 - greenArea[x]);
+    greenArea[x] = scUINT8 (255 - greenArea[x]);
     if  (color)
     {
-      redArea[x]  = (kkuint8)(255 - redArea[x]);
-      blueArea[x] = (kkuint8)(255 - blueArea[x]);
+      redArea[x]  = scUINT8 (255 - redArea[x]);
+      blueArea[x] = scUINT8 (255 - blueArea[x]);
     }
   }
 
   kkuint8  temp = backgroundPixelValue;
   backgroundPixelValue = foregroundPixelValue;
   foregroundPixelValue = temp;
-  backgroundPixelTH = (kkuint8)(255 - backgroundPixelTH);
+  backgroundPixelTH = scUINT8 (255U - scUINT32 (backgroundPixelTH));
 }  /* ReversedImage */
 
 
@@ -963,8 +963,8 @@ void  Raster::GetPixelValue (kkint32   row,
 
   if  (color)
   {
-    r = red   [row][col];
-    b = blue  [row][col];
+    r = red  [row][col];
+    b = blue [row][col];
   }
   else
   {
@@ -996,7 +996,7 @@ kkuint8  Raster::GetPixelValue (ColorChannels  channel,
   if  (channel == ColorChannels::Green)
     return  green [row][col];
 
-  KKCheck(color, "Raster::GetPixelValue   channel: " << (int)channel << " but image not a Color Raster.")
+  KKCheck(color, "Raster::GetPixelValue   channel: " << scINT32 (channel) << " but image not a Color Raster.")
   if  (channel == ColorChannels::Red)
     return red [row][col];
   else
@@ -1169,7 +1169,7 @@ void  Raster::DrawGrid (float              pixelsPerMinor,
   //kkint32  horzOffset = (width - (kkint32)(((float)width / pixelsPerMinor) * pixelsPerMinor) / 2);
   while  (true)
   {
-    int  hashPos = (int)((float)x * pixelsPerMinor + 0.5f); // + horzOffset;
+    int32_t  hashPos = scINT32 (scFLOAT (x) * pixelsPerMinor + 0.5f); // + horzOffset;
     if  (hashPos >= (height - hashLen))
       break;
 
@@ -1190,7 +1190,7 @@ void  Raster::DrawGrid (float              pixelsPerMinor,
   // kkint32  vertOffset = (height - (kkint32)((height / pixelsPerMinor) * pixelsPerMinor) / 2);
   while  (true)
   {
-    int  hashPos = (int)((float)x * pixelsPerMinor + 0.5f); // + vertOffset;
+    int32_t  hashPos = scINT32 (scFLOAT (x) * pixelsPerMinor + 0.5f); // + vertOffset;
     if  (hashPos >= width)
       break;
 
@@ -1268,7 +1268,7 @@ RasterPtr  Raster::CreateDilatedRaster ()  const
 
         if  (numNeighbors > 0)
         {
-          resultRow[col] = (kkuint8)(totValue / numNeighbors);
+          resultRow[col] = scUINT8 (totValue / numNeighbors);
           resultForegroundPixelCount++;
         }
       }
@@ -3153,10 +3153,10 @@ void  Raster::ConnectedComponent8Conected ()
           }
 
           curRowBlobIds[col] = curBlobId;
-          curBlob->colLeft   = Min  (curBlob->colLeft,  col);
+          curBlob->colLeft   = Min (curBlob->colLeft,  col);
           curBlob->colRight  = Max (curBlob->colRight, col);
           curBlob->rowBot    = Max (curBlob->rowBot,   row);
-          curBlob->rowTop    = Min  (curBlob->rowTop,   row);
+          curBlob->rowTop    = Min (curBlob->rowTop,   row);
           curBlob->pixelCount++;
         }
       }
@@ -3167,7 +3167,7 @@ void  Raster::ConnectedComponent8Conected ()
         curBlobId = -1;
       }
 
-      col++;
+      ++col;
     }
   }
 
@@ -3182,11 +3182,11 @@ void  Raster::ConnectedComponent8Conected ()
 
     kkuint8**  newRows = new kkuint8*[height];
 
-    for  (kkint32 row = 0; row < height; row++)
+    for  (kkint32 row = 0;  row < height;  ++row)
     {
       newRows[row] = newImageAreaPtr;
       
-      for  (kkint32 col = 0; col < width; col++)
+      for  (kkint32 col = 0;  col < width;  ++col)
       {
         if  (blobIds[row][col] == blobId)
         {
@@ -3282,9 +3282,9 @@ kkint32  Raster::CalcArea ()
 
   maxPixVal = 0;
 
-  for  (kkint32 r = 0; r < height; ++r)
+  for  (kkint32 r = 0;  r < height;  ++r)
   {
-    for  (kkint32 c = 0; c < width;  ++c)
+    for  (kkint32 c = 0;  c < width;  ++c)
     {
       kkuint8 pixVal = green[r][c];
       
@@ -3333,7 +3333,7 @@ void  Raster::CalcAreaAndIntensityHistogramWhite (kkint32&  area,
     {
       if  (ForegroundPixel (curMaskRow[c]))
       {
-        area++;
+        ++area;
         pixVal = curRow[c];
         if  (pixVal > maxPixVal)
           maxPixVal = pixVal;
@@ -3365,7 +3365,7 @@ void  Raster::CalcAreaAndIntensityHistogram (kkint32&  area,
       
       if  (ForegroundPixel (pixVal))
       {
-        area++;
+        ++area;
 
         if  (pixVal > maxPixVal)
           maxPixVal = pixVal;
@@ -3432,7 +3432,7 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 
   foregroundPixelCount = area;
 
-  weightedSize = (float)totalPixelValues / (float)maxPixVal;
+  weightedSize = scFLOAT (totalPixelValues) / scFLOAT (maxPixVal);
 }  /* CalcAreaAndIntensityFeatures */
 
 
@@ -3453,12 +3453,9 @@ void   Raster::CalcAreaAndIntensityFeatures16 (kkint32&  area,
     intensityHistBuckets[x] = 0;
   }
 
-  maxPixVal = 0;
-  kkuint8  pixVal;
-
   for  (kkint32 x = 0;  x < totPixels;  x++)
   {
-    pixVal = greenArea [x];
+    kkuint8 pixVal = greenArea [x];
     if  (pixVal > maxPixVal)
       maxPixVal = pixVal;
     if  (ForegroundPixel (pixVal))
@@ -3471,7 +3468,7 @@ void   Raster::CalcAreaAndIntensityFeatures16 (kkint32&  area,
 
   foregroundPixelCount = area;
 
-  weighedSize = (float)totalPixelValues / (float)maxPixVal;
+  weighedSize = scFLOAT (totalPixelValues) / scFLOAT (maxPixVal);
 }  /* CalcAreaAndIntensityFeatures16 */
 
 
@@ -3508,36 +3505,33 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 
   foregroundPixelCount = area;
 
-  weightedSize = (float)totalPixelValues / (float)255.0f;
+  weightedSize = scFLOAT (totalPixelValues) / 255.0f;
 }  /* CalcAreaAndIntensityFeatures */
 
 
 
 float  Raster::CalcWeightedArea ()  const
 {
-
   float  area = 0;
 
   kkuint8  pixVal = 0;
   kkint32  maxPixValFound = 0;
 
-  //foregroundPixelCount = 0;
-
   for  (kkint32 r = 0;  r < height;  ++r)
   {
-    for  (kkint32 c = 0; c < width; ++c)
+    for  (kkint32 c = 0;  c < width;  ++c)
     {
       pixVal = green[r][c];
       if  (ForegroundPixel (pixVal))
       {
-        area = area + (float)pixVal;
+        area = area + scFLOAT (pixVal);
         if  (pixVal > maxPixValFound)
           maxPixValFound = pixVal;
       }
     }
   }
 
-  area = area / (float)maxPixValFound;
+  area = area / scFLOAT (maxPixValFound);
 
   return  area;
 }  /* CalcWeightedArea */
@@ -3555,14 +3549,16 @@ void  Raster::CentralMoments (float  features[9])  const
   kkint64  m00, m10, m01;
   Moment (m00, m10, m01);
 
-  centroidCol = (float)m10 / (float)m00;   // Center Col
-  centroidRow = (float)m01 / (float)m00;   // Center Row
+  float m00F = scFLOAT (m00);
 
-  foregroundPixelCount = (kkint32)m00;
+  centroidCol = scFLOAT (m10) / m00F;   // Center Col
+  centroidRow = scFLOAT (m01) / m00F;   // Center Row
 
-  float  cm00   = (float)m00;
-  float  gamma2 = (float)m00 * (float)m00;
-  float  gamma3 = gamma2 * (float)sqrt ((float)m00);
+  foregroundPixelCount = scINT32 (m00);
+
+  float  cm00   = m00F;
+  float  gamma2 = scFLOAT (m00 + m00);
+  float  gamma3 = gamma2 * sqrt (m00F);
         
   float  cm20 = 0.0;
   float  cm02 = 0.0;
@@ -3579,8 +3575,8 @@ void  Raster::CentralMoments (float  features[9])  const
 
     for  (kkint32 row = 0;  row < height;  ++row)
     {
-      deltaRow = (float)row - centroidRow;
-      float  rowPow0 = 1.0;
+      deltaRow = scFLOAT (row) - centroidRow;
+      float  rowPow0 = 1.0f;
       float  rowPow1 = deltaRow;
       float  rowPow2 = deltaRow * deltaRow;
       float  rowPow3 = rowPow2  * deltaRow;
@@ -3589,7 +3585,7 @@ void  Raster::CentralMoments (float  features[9])  const
       {
         if  (rowData[col] > backgroundPixelTH)
         {
-          deltaCol = (float)col - centroidCol;
+          deltaCol = scFLOAT (col) - centroidCol;
           float  colPow0 = 1.0f;
           float  colPow1 = deltaCol;
           float  colPow2 = deltaCol * deltaCol;
@@ -3695,7 +3691,7 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
         
   float cm00   = m00;
   float gamma2 = m00 * m00;
-  float gamma3 = gamma2 * (float)sqrt (m00);
+  float gamma3 = gamma2 * sqrt (m00);
         
   float cm20 = 0.0f;
   float cm02 = 0.0f;
@@ -3712,7 +3708,7 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
     for  (kkint32 row = 0;  row < height;  ++row)
     {
       kkuint8*  rowData = green[row];
-      float  deltaRow = float(row) - eh;
+      float  deltaRow = scFLOAT (row) - eh;
 
       float  rowPow0 = 1;
       float  rowPow1 = deltaRow;
@@ -3727,13 +3723,13 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
           if  (pv > maxPixVal)
             maxPixVal = pv;
 
-          float  deltaCol = float(col) - ew;
+          float  deltaCol = scFLOAT (col) - ew;
           float  colPow0 = 1;
           float  colPow1 = deltaCol;
           float  colPow2 = deltaCol * deltaCol;
           float  colPow3 = colPow2  * deltaCol;
 
-          float  pvFloat = (float)pv;
+          float  pvFloat = scFLOAT (pv);
 
           cm20 += pvFloat * colPow2 * rowPow0;
           cm02 += pvFloat * colPow0 * rowPow2;
@@ -3745,12 +3741,14 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
       }
     }
 
-    cm20 = cm20 / (float)maxPixVal;
-    cm02 = cm02 / (float)maxPixVal;
-    cm30 = cm30 / (float)maxPixVal;
-    cm03 = cm03 / (float)maxPixVal;
-    cm12 = cm12 / (float)maxPixVal;
-    cm21 = cm21 / (float)maxPixVal;
+    float maxPixValF = scFLOAT (maxPixVal);
+
+    cm20 /= maxPixValF;
+    cm02 /= maxPixValF;
+    cm30 /= maxPixValF;
+    cm03 /= maxPixValF;
+    cm12 /= maxPixValF;
+    cm21 /= maxPixValF;
   }
 
   cm20 = cm20 / gamma2;
@@ -3766,20 +3764,20 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
 
   features[1] = cm20 + cm02;
  
-  features[2] = (cm20 - cm02) * (cm20 - cm02) + (float)4.0 * cm11 * cm11;
+  features[2] = (cm20 - cm02) * (cm20 - cm02) + 4.0f * cm11 * cm11;
 
-  features[3] = (cm30 - (float)3.0 * cm12) * 
-                (cm30 - (float)3.0 * cm12) + 
-                ((float)3.0 * cm21 - cm03) * 
-                ((float)3.0 * cm21 - cm03);
+  features[3] = (cm30 - 3.0f * cm12) * 
+                (cm30 - 3.0f * cm12) + 
+                (3.0f * cm21 - cm03) * 
+                (3.0f * cm21 - cm03);
 
   features[4] = (cm30 + cm12) * (cm30 + cm12) + (cm21 + cm03) * (cm21 + cm03);
 
-  features[5] = (cm30 - (float)3.0 * cm12) * (cm30 + cm12) * 
+  features[5] = (cm30 - 3.0f * cm12) * (cm30 + cm12) * 
                 ((cm30 + cm12) * (cm30 + cm12) - 
-                (float)3.0 * (cm21 + cm03) * (cm21 + cm03)) +
-                ((float)3.0 * cm21 - cm03) * (cm21 + cm03) * 
-                ((float)3.0 * (cm30 + cm12) * (cm30 + cm12) - 
+                3.0f * (cm21 + cm03) * (cm21 + cm03)) +
+                (3.0f * cm21 - cm03) * (cm21 + cm03) * 
+                (3.0f * (cm30 + cm12) * (cm30 + cm12) - 
                 (cm21 + cm03) * (cm21 + cm03));
 
   features[6] = (cm20 - cm02) * 
@@ -3787,20 +3785,19 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
                  (cm30 + cm12) * (cm30 + cm12) - 
                  (cm21 + cm03) * (cm21 + cm03)
                 ) +
-                (float)4.0 * cm11 * (cm30 + cm12) * (cm21 + cm03);
+                4.0f * cm11 * (cm30 + cm12) * (cm21 + cm03);
 
-  features[7] = ((float)3.0 * cm21 - cm03) * 
+  features[7] = (3.0f * cm21 - cm03) * 
                 (cm30 + cm12) * ((cm30 + cm12) * 
-                (cm30 + cm12) - (float)3.0 * 
+                (cm30 + cm12) - 3.0f * 
                 (cm21 + cm03) * (cm21 + cm03)) -
-                (cm30 - (float)3.0 * cm12) * 
-                (cm21 + cm03) * ((float)3.0 * 
-                (cm30 + cm12) * (cm30 + cm12) - 
-                (cm21 + cm03) * (cm21 + cm03));
+                (cm30 - 3.0f * cm12) * 
+                (cm21 + cm03) * 
+                (3.0f * (cm30 + cm12) * (cm30 + cm12) - (cm21 + cm03) * (cm21 + cm03));
 
 //added by Baishali to calculate eccentricity
-  features[8] = (float)((((cm20 - cm02) * (cm20 - cm02)) - 
-                (4.0 * cm11 * cm11))/((cm20 + cm02) * (cm20 + cm02)));
+  features[8] = scFLOAT ((((cm20 - cm02) * (cm20 - cm02)) - 
+                (4.0f * cm11 * cm11)) / ((cm20 + cm02) * (cm20 + cm02)));
 
   return;
 }  /* CentralMomentsWeighted */
@@ -3839,10 +3836,12 @@ void  Raster::MomentWeighted (float& m00,
       }
     }
   }
+
+  float maxPixValF = scFLOAT (maxPixVal);
  
-  m00 = (float)m00Int / (float)maxPixVal;
-  m10 = (float)m10Int / (float)maxPixVal;
-  m01 = (float)m01Int / (float)maxPixVal;
+  m00 = scFLOAT (m00Int) / maxPixValF;
+  m10 = scFLOAT (m10Int) / maxPixValF;
+  m01 = scFLOAT (m01Int) / maxPixValF;
 
   return;
 }  /* MomentWeighted */
@@ -3860,33 +3859,35 @@ void    Raster::ComputeCentralMoments (kkint32&  _foregroundPixelCount,
   float    mw00, mw10, mw01;
   Moments (m00, m10, m01, mw00, mw10, mw01);
 
-  foregroundPixelCount =  (kkint32)m00;
+  float m00F = scFLOAT (m00);
+
+  foregroundPixelCount =  scINT32 (m00);
   _foregroundPixelCount = foregroundPixelCount;
 
   weightedPixelCount   = mw00;
 
-  centroidCol = (float)m10 / (float)m00;
-  centroidRow = (float)m01 / (float)m00;
+  centroidCol = scFLOAT (m10) / m00F;
+  centroidRow = scFLOAT (m01) / m00F;
 
   float centroidColW  = mw10 / mw00;
   float centroidRowW  = mw01 / mw00;
         
-  float  cm00   = (float)m00;
-  float  gamma2 = (float)m00 * (float)m00;
-  float  gamma3 = gamma2 * (float)sqrt ((float)m00);
+  float  cm00   = m00F;
+  float  gamma2 = scFLOAT (m00 * m00);
+  float  gamma3 = gamma2 * sqrt (m00F);
         
-  float  cm20 = 0.0;
-  float  cm02 = 0.0;
-  float  cm11 = 0.0;
+  float  cm20 = 0.0f;
+  float  cm02 = 0.0f;
+  float  cm11 = 0.0f;
 
-  float  cm30 = 0.0;
-  float  cm03 = 0.0;
-  float  cm12 = 0.0;
-  float  cm21 = 0.0;
+  float  cm30 = 0.0f;
+  float  cm03 = 0.0f;
+  float  cm12 = 0.0f;
+  float  cm21 = 0.0f;
 
   float cmw00   = mw00;
-  float gammaW2 = (float)mw00 * (float)mw00;
-  float gammaW3 = (float)gammaW2 * (float)sqrt ((float)mw00);
+  float gammaW2 = mw00 * mw00;
+  float gammaW3 = gammaW2 * sqrt (mw00);
         
   float cmw20 = 0.0f;
   float cmw02 = 0.0f;
@@ -3957,12 +3958,13 @@ void    Raster::ComputeCentralMoments (kkint32&  _foregroundPixelCount,
       }
     }
 
-    cmw20 = cmw20 / (float)maxPixVal;
-    cmw02 = cmw02 / (float)maxPixVal;
-    cmw30 = cmw30 / (float)maxPixVal;
-    cmw03 = cmw03 / (float)maxPixVal;
-    cmw12 = cmw12 / (float)maxPixVal;
-    cmw21 = cmw21 / (float)maxPixVal;
+    float maxPixValF = scFLOAT (maxPixVal);
+    cmw20 = cmw20 / maxPixValF;
+    cmw02 = cmw02 / maxPixValF;
+    cmw30 = cmw30 / maxPixValF;
+    cmw03 = cmw03 / maxPixValF;
+    cmw12 = cmw12 / maxPixValF;
+    cmw21 = cmw21 / maxPixValF;
   }
 
   cm20  = cm20  / gamma2;
@@ -4017,20 +4019,20 @@ void    Raster::ComputeCentralMoments (kkint32&  _foregroundPixelCount,
 
   centralMomentsWeighted[1] = cmw20 + cmw02;
  
-  centralMomentsWeighted[2] = (cmw20 - cmw02) * (cmw20 - cmw02) + (float)4.0 * cmw11 * cmw11;
+  centralMomentsWeighted[2] = (cmw20 - cmw02) * (cmw20 - cmw02) + 4.0f * cmw11 * cmw11;
 
-  centralMomentsWeighted[3] = (cmw30 - (float)3.0 * cmw12) * 
-                (cmw30 - (float)3.0 * cmw12) + 
-                ((float)3.0 * cmw21 - cmw03) * 
-                ((float)3.0 * cmw21 - cmw03);
+  centralMomentsWeighted[3] = (cmw30 - 3.0f * cmw12) * 
+                (cmw30 - 3.0f * cmw12) + 
+                (3.0f * cmw21 - cmw03) * 
+                (3.0f * cmw21 - cmw03);
 
   centralMomentsWeighted[4] = (cmw30 + cmw12) * (cmw30 + cmw12) + (cmw21 + cmw03) * (cmw21 + cmw03);
 
-  centralMomentsWeighted[5] = (cmw30 - (float)3.0 * cmw12) * (cmw30 + cmw12) * 
+  centralMomentsWeighted[5] = (cmw30 - 3.0f * cmw12) * (cmw30 + cmw12) * 
                 ((cmw30 + cmw12) * (cmw30 + cmw12) - 
-                 (float)3.0 * (cmw21 + cmw03) * (cmw21 + cmw03)) +
-                ((float)3.0 * cmw21 - cmw03) * (cmw21 + cmw03) * 
-                ((float)3.0 * (cmw30 + cmw12) * (cmw30 + cmw12) - 
+                (3.0f * cmw21 - cmw03) * (cmw21 + cmw03) * 
+                (3.0f * (cmw30 + cmw12) * (cmw30 + cmw12) - 
+                 3.0f * (cmw21 + cmw03) * (cmw21 + cmw03)) +
                 (cmw21 + cmw03) * (cmw21 + cmw03));
 
   centralMomentsWeighted[6] = (cmw20 - cmw02) * 
@@ -4038,20 +4040,20 @@ void    Raster::ComputeCentralMoments (kkint32&  _foregroundPixelCount,
                  (cmw30 + cmw12) * (cmw30 + cmw12) - 
                  (cmw21 + cmw03) * (cmw21 + cmw03)
                 ) +
-                (float)4.0 * cmw11 * (cmw30 + cmw12) * (cmw21 + cmw03);
+                4.0f * cmw11 * (cmw30 + cmw12) * (cmw21 + cmw03);
 
-  centralMomentsWeighted[7] = ((float)3.0 * cmw21 - cmw03) * 
+  centralMomentsWeighted[7] = (3.0f * cmw21 - cmw03) * 
                 (cmw30 + cmw12) * ((cmw30 + cmw12) * 
-                (cmw30 + cmw12) - (float)3.0 * 
+                (cmw30 + cmw12) - 3.0f * 
                 (cmw21 + cmw03) * (cmw21 + cmw03)) -
-                (cmw30 - (float)3.0 * cmw12) * 
-                (cmw21 + cmw03) * ((float)3.0 * 
+                (cmw30 - 3.0f * cmw12) * 
+                (cmw21 + cmw03) * (3.0f * 
                 (cmw30 + cmw12) * (cmw30 + cmw12) - 
                 (cmw21 + cmw03) * (cmw21 + cmw03));
 
 //added by baishali to calculate eccentricity
-  centralMomentsWeighted[8] = (float)((((cmw20 - cmw02) * (cmw20 - cmw02)) - 
-                (4.0 * cmw11 * cmw11))/((cmw20 + cmw02) * (cmw20 + cmw02)));
+  centralMomentsWeighted[8] = scFLOAT ((((cmw20 - cmw02) * (cmw20 - cmw02)) - 
+                (4.0f * cmw11 * cmw11)) / ((cmw20 + cmw02) * (cmw20 + cmw02)));
 
   return;
 }  /* CentralMoments */
@@ -4102,9 +4104,10 @@ void  Raster::Moments (kkint64&  m00,
     }
   }
  
-  mw00 = (float)m00Int / (float)maxPixVal;
-  mw10 = (float)m10Int / (float)maxPixVal;
-  mw01 = (float)m01Int / (float)maxPixVal;
+  float maxPixValF = scFLOAT (maxPixVal);
+  mw00 = scFLOAT (m00Int) / maxPixValF;
+  mw10 = scFLOAT (m10Int) / maxPixValF;
+  mw01 = scFLOAT (m01Int) / maxPixValF;
 
   return;
 }  /* Moments */
@@ -4275,26 +4278,26 @@ kkuint8  Raster::Hit  (MaskTypes  mask,
     //return 0;
   }
 
-  kkuint8    pixVal    = 0;
+  kkuint8  pixVal    = 0;
   kkint32  totPixVal = 0;
   kkint16  numOfHits = 0;
 
-  kkint32  startRow = Max (row - maskBias, (kkint32)0);
+  kkint32  startRow = Max (row - maskBias, scINT32 (0));
   kkint32  endRow   = Min (row + maskBias, height - 1);
-  kkint32  startCol = Max (col - maskBias, (kkint32)0);
+  kkint32  startCol = Max (col - maskBias, scINT32 (0));
   kkint32  endCol   = Min (col + maskBias, width - 1);
 
   if  (MorphOp::MaskShapes (mask) == StructureType::stSquare)
   {
-    for  (kkint32 r = startRow; r <= endRow; r++)
+    for  (kkint32 r = startRow;  r <= endRow;  ++r)
     {
-      for  (kkint32 c = startCol; c < endCol; c++)
+      for  (kkint32 c = startCol;  c < endCol;  ++c)
       {
         pixVal = green[r][c];
  
         if  (ForegroundPixel (pixVal))
         {
-          numOfHits++;
+          ++numOfHits;
           totPixVal = totPixVal + pixVal;
         }
       }
@@ -4303,7 +4306,7 @@ kkuint8  Raster::Hit  (MaskTypes  mask,
 
   else
   {
-    for  (kkint32 r = startRow, c = startCol; r <= endRow; r++, c++)
+    for  (kkint32 r = startRow, c = startCol;  r <= endRow;  ++r, ++c)
     {
       pixVal = green[r][col];
       if  (ForegroundPixel (pixVal))
@@ -4324,7 +4327,7 @@ kkuint8  Raster::Hit  (MaskTypes  mask,
   if  (numOfHits == 0)
     return 0;
   else
-    return  (kkuint8)(totPixVal / numOfHits);
+    return  scUINT8 (totPixVal / numOfHits);
 }  /* Hit */
 
 
@@ -4369,7 +4372,7 @@ RasterPtr  Raster::FastFourierKK ()  const
       double  r = dest[row][col].real ();
       double  i = dest[row][col].imag ();
 
-      mag = (float)(sqrt (r * r + i * i));
+      mag = scFLOAT (sqrt (r * r + i * i));
       if  (mag > maxAmplitude)
         maxAmplitude = mag;
 
@@ -4393,7 +4396,7 @@ RasterPtr  Raster::FastFourierKK ()  const
     // If we have an image who's maxPixVal is less than 255 then the values
     // being calculated for the Fourier features will not be consistent.
     // destData[idx] = (kkuint8)(dest[idx].re * 255 / maxAmplitude);
-    destData[idx] = (kkuint8)(log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
+    destData[idx] = scUINT8 (log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
   }
 
   delete  dest;      dest     = NULL;
@@ -4468,11 +4471,11 @@ RasterPtr  Raster::FastFourier ()  const
     {     
       // src[idx].re = (float)green[row][col] * scalingFact;
       #if  defined(FFTW_AVAILABLE)
-        src[idx][0] = (float)green[row][col];
+        src[idx][0] = scFLOAT (green[row][col]);
         src[idx][1] = 0.0;
       #else
-        srcArea[idx].real ((float)greenArea[idx]);
-        srcArea[idx].imag (0.0);
+        srcArea[idx].real (scFLOAT (greenArea[idx]));
+        srcArea[idx].imag (0.0f);
       #endif
       ++idx;
     }
@@ -4493,11 +4496,11 @@ RasterPtr  Raster::FastFourier ()  const
   fourierImage->AllocateFourierMagnitudeTable ();
   float* fourierMagArray = fourierImage->fourierMagArea;
 
-  float  mag = (float)0;
+  float  mag = 0.0f;
 
-  float  maxAmplitude = (float)0;
+  float  maxAmplitude = 0.0f;
 
-  for  (idx = 0; idx < totPixels; idx++)
+  for  (idx = 0;  idx < totPixels;  ++idx)
   {
     #if  defined(FFTW_AVAILABLE)
       float real = dest[idx][0];
@@ -4508,7 +4511,7 @@ RasterPtr  Raster::FastFourier ()  const
     #endif
 
     // mag = (float)log10 (sqrt (real * real + imag * imag));
-    mag = (float)(sqrt (real * real + imag * imag));
+    mag = (sqrt (real * real + imag * imag));
 
     if  (mag > maxAmplitude)
       maxAmplitude = mag;
@@ -4531,7 +4534,7 @@ RasterPtr  Raster::FastFourier ()  const
     // If we have an image who's maxPixVal is less than 255 then the values
     // being calculated for the Fourier features will not be consistent.
     // destData[idx] = (kkuint8)(dest[idx].re * 255 / maxAmplitude);
-    destData[idx] = (kkuint8)(log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
+    destData[idx] = scUINT8 (log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
   }            
 
   #if  defined(FFTW_AVAILABLE)
@@ -4551,8 +4554,8 @@ RasterPtr  Raster::SwapQuadrants ()  const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
 
-  kkint32  leftStart   = (kkint32)(width  / 2);
-  kkint32  bottomStart = (kkint32)(height / 2);
+  kkint32  leftStart   = scINT32 (width  / 2);
+  kkint32  bottomStart = scINT32 (height / 2);
 
   for  (kkint32 r1 = 0, r2 = bottomStart;  (r1 < bottomStart)  &&  (r2 < height);  ++r1, ++r2)
   {
@@ -4598,26 +4601,24 @@ void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
 {
   KKCheck(fourierMagArea, "Raster::FourierExtractFeatures     Raster image not the result of a Fast Fourier Transform")
 
-  float  cr = (float)height / (float)2.0;
-  float  cw = (float)width  / (float)2.0;
+  float  cr = scFLOAT (height) / 2.0f;
+  float  cw = scFLOAT (width)  / 2.0f;
 
   float  crSqr = cr * cr;
   float  cwSqr = cw * cw;
 
   //float  diagLen = crSqr + cwSqr;
-  float  r1Len = crSqr / (float)4.0 + cwSqr / (float)4.0;
+  float  r1Len = crSqr / 4.0f + cwSqr / 4.0f;
 
-  float  r2Len = (float)((9.0   /  16.0) * crSqr + (9.0   /  16.0) * cwSqr);  //  3/ 4 ths Len
+  float  r2Len = (9.0f   /  16.0f) * crSqr + (9.0f   /  16.0f) * cwSqr;  //  3/ 4 ths Len
+  float  r3Len = (81.0f  / 100.0f) * crSqr + (81.0f  / 100.0f) * cwSqr;  //  9/10 ths Len
+  float  r4Len = (361.0f / 400.0f) * crSqr + (361.0f / 400.0f) * cwSqr;  // 19/20 ths Len
 
-  float  r3Len = (float)((81.0  / 100.0) * crSqr + (81.0  / 100.0) * cwSqr);  //  9/10 ths Len
-
-  float  r4Len = (float)((361.0 / 400.0) * crSqr + (361.0 / 400.0) * cwSqr);  // 19/20 ths Len
-
-  fourierFeatures[0] = (float)0.0;
-  fourierFeatures[1] = (float)0.0;
-  fourierFeatures[2] = (float)0.0;
-  fourierFeatures[3] = (float)0.0;
-  fourierFeatures[4] = (float)0.0;
+  fourierFeatures[0] = 0.0f;
+  fourierFeatures[1] = 0.0f;
+  fourierFeatures[2] = 0.0f;
+  fourierFeatures[3] = 0.0f;
+  fourierFeatures[4] = 0.0f;
 
   kkint32  count[5];
 
@@ -4627,18 +4628,18 @@ void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
   count[3] = 0;
   count[4] = 0;
 
-  float  deltaRowSqr = (float)0.0;
+  float  deltaRowSqr = 0.0f;
 
-  float  deltaColSqr = (float)0.0;
+  float  deltaColSqr = 0.0f;
 
   for  (kkint32 row = 0;  row < height;  ++row)
   {
-    float deltaRow = cr - (float)row;
+    float deltaRow = cr - scFLOAT (row);
     deltaRowSqr = deltaRow * deltaRow;
 
-    for  (kkint32 col = 0;  col < (kkint32)cw;  ++col)
+    for  (kkint32 col = 0;  col < scINT32 (cw);  ++col)
     {
-      float deltaCol = cw - (float)col;
+      float deltaCol = cw - scFLOAT (col);
       deltaColSqr = deltaCol * deltaCol;
       
       float  distFromCent = deltaRowSqr + deltaColSqr;
@@ -4676,7 +4677,7 @@ void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
 
   for  (kkint32 x = 0;  x < 5;  ++x)
   {
-    fourierFeatures[x] = fourierFeatures[x] / (float)count[x];
+    fourierFeatures[x] = fourierFeatures[x] / scFLOAT (count[x]);
   }
 }  /* ExtractFourierFeatures */
 
@@ -4696,11 +4697,11 @@ float  DeltaAngle (float  ang1,
 {
   float  deltaAng = ang2 - ang1;
 
-  while  (deltaAng > 180.0)
-    deltaAng  = deltaAng - (float)360.0;
+  while  (deltaAng > 180.0f)
+    deltaAng  = deltaAng - 360.0f;
 
-  if  (deltaAng < -180.0)
-    deltaAng = deltaAng + (float)360;
+  if  (deltaAng < -180.0f)
+    deltaAng = deltaAng + 360.0f;
 
   return  deltaAng;
 }  /* DeltaAngle */
@@ -4867,8 +4868,8 @@ void  Raster::FollowContour (float  countourFreq[5])  const
       src[numOfAngles][0] = nextRow; 
       src[numOfAngles][1] = nextCol;
     #else
-      src[numOfAngles].real ((float)nextRow);
-      src[numOfAngles].imag ((float)nextCol);
+      src[numOfAngles].real (scFLOAT (nextRow));
+      src[numOfAngles].imag (scFLOAT (nextCol));
     #endif
 
     // sqrt ((float)(nextRow * nextRow + nextCol * nextCol));
@@ -4891,24 +4892,22 @@ void  Raster::FollowContour (float  countourFreq[5])  const
     plan.Transform(src, dest);
   #endif
     
-  float  middle = (float)(numOfAngles / 2.0);
-  float  r1 = (float)(middle / 2.0);
-  float  r2 = (float)(middle * ( 3.0  /   4.0));
-  float  r3 = (float)(middle * ( 7.0  /   8.0));
-  float  r4 = (float)(middle * (15.0  /  16.0));
+  float  middle = scFLOAT (numOfAngles) / 2.0f;
+  float  r1 = (middle / 2.0f);
+  float  r2 = (middle * ( 3.0f  /  4.0f));
+  float  r3 = (middle * ( 7.0f  /  8.0f));
+  float  r4 = (middle * (15.0f  / 16.0f));
 
-  float  deltaX;
-  float  mag;
 
   for  (kkint32 x = 0; x < numOfAngles; x++)
   {
     #if  defined(FFTW_AVAILABLE)
-      mag = (float)log (sqrt (dest[x][0] * dest[x][0] + dest[x][1] * dest[x][1]));
+      float mag = log (sqrt (dest[x][0] * dest[x][0] + dest[x][1] * dest[x][1]));
     #else
-      mag = (float)log (sqrt (dest[x].real () * dest[x].real () + dest[x].imag () * dest[x].imag ()));
+      float mag = log (sqrt (dest[x].real () * dest[x].real () + dest[x].imag () * dest[x].imag ()));
     #endif
 
-    deltaX = (float)fabs ((float)x - middle);
+    float deltaX = fabs (scFLOAT (x) - middle);
 
     if  (deltaX < r1)
     {
@@ -4942,7 +4941,7 @@ void  Raster::FollowContour (float  countourFreq[5])  const
   }
 
   for  (kkint32 x = 0; x < 5; x++)
-    countourFreq[x] = countourFreq[x] / (float)count[x];
+    countourFreq[x] = countourFreq[x] / scFLOAT (count[x]);
 
   #if  defined(FFTW_AVAILABLE)
     fftw_free (src);
@@ -4980,7 +4979,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
 
   for  (kkint32 row = 0;  row < height;  ++row)
   {
-    rowOffset = double (row) - centroidRow;
+    rowOffset = scDOUBLE (row) - scDOUBLE (centroidRow);
     rowOffsetSquare = rowOffset * rowOffset;
 
     for  (kkint32 col = 0;  col < width;  ++col)
@@ -4989,7 +4988,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
 
       if  (ForegroundPixel (pixVal))
       {
-        colOffset = double (col) - centroidCol;
+        colOffset = scDOUBLE (col) - scDOUBLE (centroidCol);
         cov[0][0] += (colOffset * colOffset);
         cov[1][1] += (rowOffsetSquare);
         cov[0][1] += (colOffset * rowOffset);
@@ -4997,11 +4996,13 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
     }
   }
 
+  double sizeD = scDOUBLE (size);
+
   cov[1][0] = cov[0][1];
-  cov[0][0] /= size;
-  cov[0][1] /= size;
-  cov[1][0] /= size;
-  cov[1][1] /= size;
+  cov[0][0] /= sizeD;
+  cov[0][1] /= sizeD;
+  cov[1][0] /= sizeD;
+  cov[1][1] /= sizeD;
 
   double  origCov00 = cov[0][0];
   double  origCov11 = cov[1][1];
@@ -5024,22 +5025,22 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
   if  (fabs (d[0]) > fabs (d[1]))
   {
     ang0 = atan2 (cov[0][0], cov[1][0]);
-    eigenRatio = (d[0] == 0.0) ? 9999.0f : float (d[1] / d[0]);
+    eigenRatio = (d[0] == 0.0) ? 9999.0f : scFLOAT (d[1] / d[0]);
   }
   else
   {
     ang0 = atan2 (cov[0][1], cov[1][1]);
-    eigenRatio = (d[1] == 0.0) ? 9999.0f : float (d[0] / d[1]);
+    eigenRatio = (d[1] == 0.0) ? 9999.0f : scFLOAT (d[0] / d[1]);
   }
   //double  ang1 = RadToDeg * atan2 (cov[0][1], cov[1][1]);
 
-  orientationAngle = float (-ang0 - 1.57079632679f);
+  orientationAngle = scFLOAT (-ang0 - 1.57079632679);
   if  (fabs (orientationAngle) > 1.57079632679f)
   {
-    if  (orientationAngle < 0.0)
-      orientationAngle += float (PIE);
+    if  (orientationAngle < 0.0f)
+      orientationAngle += scFLOAT (PIE);
     else
-      orientationAngle -= float (PIE);
+      orientationAngle -= scFLOAT (PIE);
   }
 
   //if  (d[0] == 0.0)
@@ -5047,7 +5048,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
   //else
   //  eigenRatio = (float) (d[1] / d[0]);
 
-  if  (origCov10 == 0)
+  if  (origCov10 == 0.0)
   {
     // Appears we have a image that is standing up Straight, 
     // but may be fatter than it is tall.
@@ -5069,7 +5070,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
 RasterPtr  Raster::Rotate (float  turnAngle) const
 {
 
-  kkint32  diag = (kkint32)sqrt ((float)(Height () * Height () + Width () * Width ())) + 10;
+  kkint32  diag = scINT32 (sqrt (scFLOAT (Height () * Height () + Width () * Width ())) + 10);
   kkint32  halfDiag = (diag + 1) / 2;
 
   //  J( x+width(J)/2, y+height(J)/2 )= I( A11x+A12y+b1, A21x+A22y+b2 ),
@@ -5078,39 +5079,30 @@ RasterPtr  Raster::Rotate (float  turnAngle) const
 
   RasterPtr  rotatedImage = AllocateARasterInstance (diag, diag, false);
 
-  float  a11 = (float)(cos (-turnAngle));
-  float  a12 = (float)(sin (-turnAngle));
-  float  b1  = (float)width  * 0.5f;
+  float  a11 = cos (-turnAngle);
+  float  a12 = sin (-turnAngle);
+  float  b1  = scFLOAT (width)  * 0.5f;
 
   float  a21 = -a12;
   float  a22 = a11;
-  float  b2  = (float)height * 0.5f;
+  float  b2  = scFLOAT (height) * 0.5f;
 
-  kkint32  centDestCol = 0;
-  kkint32  centDestRow = 0;
-
-  kkint32  srcCol;
-  kkint32  srcRow;
-
-  kkint32  destX;
-  kkint32  destY;
-
-  for  (centDestRow = -halfDiag; centDestRow <  halfDiag; centDestRow++)
+  for  (kkint32 centDestRow = -halfDiag;  centDestRow <  halfDiag;  ++centDestRow)
   {
-    for  (centDestCol = -halfDiag; centDestCol <  halfDiag; centDestCol++)
+    for  (kkint32 centDestCol = -halfDiag;  centDestCol <  halfDiag;  ++centDestCol)
     {
-      srcRow = (kkint32)((float)(a21 * (float)centDestCol) + (float)(a22 * (float)centDestRow) + b2 + 0.5);
+      kkint32 srcRow = scINT32 ((a21 * scFLOAT (centDestCol)) + (a22 * scFLOAT (centDestRow)) + b2 + 0.5f);
       if  ((srcRow >= 0)  &&  (srcRow < height))
       {
-        srcCol = (kkint32)((float)(a11 * (float)centDestCol) + (float)(a12 * (float)centDestRow) + b1 + 0.5);
+        kkint32 srcCol = scINT32 ((a11 * scFLOAT (centDestCol)) + (a12 * scFLOAT (centDestRow)) + b1 + 0.5f);
    
         if  ((srcCol >= 0)  &&  (srcCol < width))
         {
           kkuint8  pixVal = GetPixelValue (srcRow, srcCol);
           if  (pixVal > 0)
           {
-            destY = centDestRow + halfDiag;
-            destX = centDestCol + halfDiag;
+            kkint32 destY = centDestRow + halfDiag;
+            kkint32 destX = centDestCol + halfDiag;
             rotatedImage->SetPixelValue (destY, destX, pixVal);
           }
         }
@@ -5130,23 +5122,23 @@ Point  Raster::RotateDerivePreRotatedPoint (kkint32  origHeight,
                                            )
                                            const
 {
-  kkint32  diag = (kkint32)sqrt ((float)(origHeight * origHeight + origWidth * origWidth)) + 10;
+  kkint32  diag = scINT32 (sqrt (scFLOAT (origHeight * origHeight + origWidth * origWidth)) + 10);
 
-  float  a11 = (float)(cos (-turnAngle));
-  float  a12 = (float)(sin (-turnAngle));
-  float  b1  = (float)origWidth  * 0.5f;
+  float  a11 = (cos (-turnAngle));
+  float  a12 = (sin (-turnAngle));
+  float  b1  = scFLOAT (origWidth)  * 0.5f;
 
   float  a21 = -a12;
   float  a22 = a11;
-  float  b2  = (float)origHeight * 0.5f;
+  float  b2  = scFLOAT (origHeight) * 0.5f;
 
   kkint32  halfDiag = (diag + 1) / 2;
 
-  kkint32  centDestRow = rotatedPoint.Row () - halfDiag;
-  kkint32  centDestCol = rotatedPoint.Col () - halfDiag;
+  float  centDestRow = scFLOAT (rotatedPoint.Row () - halfDiag);
+  float  centDestCol = scFLOAT (rotatedPoint.Col () - halfDiag);
 
-  kkint32  srcY = (kkint32)((float)(a21 * (float)centDestCol) + (a22 * (float)centDestRow) + b2 + 0.5f);
-  kkint32  srcX = (kkint32)((float)(a11 * (float)centDestCol) + (a12 * (float)centDestRow) + b1 + 0.5f);
+  kkint32  srcY = scINT32 ((a21 * centDestCol) + (a22 * centDestRow) + b2 + 0.5f);
+  kkint32  srcX = scINT32 ((a11 * centDestCol) + (a12 * centDestRow) + b1 + 0.5f);
 
   return  Point (srcY, srcX);
 }  /* RotateDerivePreRotatedPoint */
@@ -5257,9 +5249,9 @@ void  Raster::FindBoundingBox (Point& topLeft, Point& botRight)  const
 kkuint8  Raster::DeltaMagnitude (kkuint8 c1, kkuint8 c2)
 {
   if  (c1 > c2)
-    return (kkuint8)(c1 - c2);
+    return scUINT8 (c1 - c2);
   else
-    return (kkuint8)(c2 - c1);
+    return scUINT8 (c2 - c1);
 }
 
 
@@ -5299,7 +5291,7 @@ RasterPtr   Raster::FindMagnitudeDifferences (const Raster&  r)
       int  deltaC = DeltaMagnitude (green[row][c], otherGreen[row][c]);
       if  (deltaC > 0)
         deltaC = Min (255, deltaC + 64);
-      resultGreen[row][c] = (kkuint8)deltaC;
+      resultGreen[row][c] = scUINT8 (deltaC);
       
       if  (color)
       {
@@ -5333,10 +5325,10 @@ void  Raster::CalcCentroid (kkint32&  size,
 
   for  (kkint32 row = 0; row < height;  ++row)
   {
-    float  rowFloat = (float)row;
+    float  rowFloat = scFLOAT (row);
     for  (kkint32 col = 0; col < width;  ++col)
     {
-      float  colFloat = (float)col;
+      float  colFloat = scFLOAT (col);
       intensity = green[row][col];
 
       if  (intensity > 0)
@@ -5345,21 +5337,21 @@ void  Raster::CalcCentroid (kkint32&  size,
         colCenter += colFloat;
         size++;
 
-        rowCenterWeighted += rowFloat * (float)intensity;
-        colCenterWeighted += colFloat * (float)intensity;
+        rowCenterWeighted += rowFloat * scFLOAT (intensity);
+        colCenterWeighted += colFloat * scFLOAT (intensity);
         weight += intensity;
       }
     }
   }
 
-  rowCenter /= (float)size;
-  colCenter /= (float)size;
+  rowCenter /= scFLOAT (size);
+  colCenter /= scFLOAT (size);
 
   this->centroidCol = colCenter;
   this->centroidRow = rowCenter;
   
-  rowCenterWeighted /= (float)weight;
-  colCenterWeighted /= (float)weight; 
+  rowCenterWeighted /= scFLOAT (weight);
+  colCenterWeighted /= scFLOAT (weight); 
 }  /* CalcCentroid */
 
 
@@ -5375,7 +5367,7 @@ RasterPtr  Raster::CreateColor ()  const
   PixelValue  pv[256];
   for  (x = 0;  x < 256;  ++x)
   {
-    pv[x] = PixelValue::FromHSI ((float)x, 1.0f, 1.0f);
+    pv[x] = PixelValue::FromHSI (scFLOAT (x), 1.0f, 1.0f);
   }
 
   for  (int r = 0;  r < height;  ++r)
@@ -5415,11 +5407,11 @@ RasterPtr  Raster::CreateGrayScale ()  const
 
   for  (kkint32 x = 0;  x < totPixels;  ++x, ++grayPtr, ++redPtr, ++greenPtr, ++bluePtr)
   {
-    *grayPtr = (kkuint8)((kkuint32)((0.30f) * (float)(*redPtr)    +  
-                                    (0.59f) * (float)(*greenPtr)  +  
-                                    (0.11f) * (float)(*bluePtr)
-                                   )
-                      );
+    *grayPtr = scUINT8 (scUINT32 ((0.30f) * scFLOAT (*redPtr)    +  
+                                  (0.59f) * scFLOAT (*greenPtr)  +  
+                                  (0.11f) * scFLOAT (*bluePtr)
+                                 )
+                       );
   }
   return  grayRaster;
 }  /* CreateGrayScale */
@@ -5488,7 +5480,7 @@ RasterPtr  Raster::HistogramEqualizedImage (HistogramPtr  equalizedHistogram)  c
 {
   if  (equalizedHistogram->NumOfBuckets () != 256)
   {
-    KKStr errMsg (255);
+    KKStr errMsg (255U);
     errMsg << "Raster::HistogramEqualizedImage  **** ERROR ****    Histogram Does not have 256 Buckets[" 
          << equalizedHistogram->NumOfBuckets () << "]";
     cerr << endl << errMsg << endl << endl;
@@ -5511,7 +5503,7 @@ RasterPtr  Raster::HistogramEqualizedImage (HistogramPtr  equalizedHistogram)  c
   {
     for  (kkint32 col = 0;  col < width;  ++col)
     {
-      dest[row][col] = (kkuint8)(equalizedMapTable[green[row][col]]);
+      dest[row][col] = scUINT8 (equalizedMapTable[green[row][col]]);
     }
   }
 
@@ -5668,11 +5660,11 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
     return;
   }
 
-  float  m = (float)deltaY / (float)deltaX;
+  float  m = scFLOAT (deltaY) / scFLOAT (deltaX);
 
-  float  c = (float)bpRow - m * (float)bpCol;
+  float  c = scFLOAT (bpRow) - m * scFLOAT (bpCol);
 
-  if  (fabs (m) < 0.5)
+  if  (fabs (m) < 0.5f)
   {
     kkint32  startCol;
     kkint32  endCol;
@@ -5690,7 +5682,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (kkint32 col = startCol;  col <= endCol;  ++col)
     {
-      kkint32 row = (kkint32)(m * (float)col + c + 0.5);
+      kkint32 row = scINT32 (m * scFLOAT (col) + c + 0.5f);
       green[row][col] = g;
       if  (color)
       {
@@ -5717,7 +5709,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (kkint32 row = startRow;  row <= endRow;  ++row)
     {
-      kkint32 col = (kkint32)((((float)row - c) / m) + 0.5);
+      kkint32 col = scINT32 (((scFLOAT (row) - c) / m) + 0.5f);
       green[row][col] = g;
       if  (color)
       {
@@ -5736,10 +5728,10 @@ kkuint8  MergeAlpfaBeta (float   alpha,
                          kkuint8 betaPixel
                         )
 {
-  int newPixelValue = (int)(0.5f + alpha * (float)alphaPixel  + beta  * (float)betaPixel);
+  uint32_t newPixelValue = scUINT32 (0.5f + alpha * scFLOAT (alphaPixel)  + beta  * scFLOAT (betaPixel));
   if  (newPixelValue > 255)
     newPixelValue = 255;
-  return (kkuint8)newPixelValue;
+  return scUINT8 (newPixelValue);
 }
 
 
@@ -5754,11 +5746,11 @@ void  Raster::PaintPoint (kkint32            row,
 
   float beta = 1.0f - alpha;
 
-  green[row][col] = (kkuint8)Min (255, (int)(0.5f + alpha * (float)pv.g  + beta  * (float)green[row][col]));
+  green[row][col] = scUINT8 (Min (255U, scUINT32 (0.5f + alpha * scFLOAT (pv.g)  + beta  * scFLOAT (green[row][col]))));
   if  (color)
   {
-    red [row][col] = (kkuint8)Min (255, (int)(0.5f + alpha * (float)pv.r  + beta  * (float)red [row][col]));
-    blue[row][col] = (kkuint8)Min (255, (int)(0.5f + alpha * (float)pv.b  + beta  * (float)blue[row][col]));
+    red [row][col] = scUINT8 (Min (255U, scUINT32 (0.5f + alpha * scFLOAT (pv.r)  + beta  * scFLOAT (red [row][col]))));
+    blue[row][col] = scUINT8 (Min (255U, scUINT32 (0.5f + alpha * scFLOAT (pv.b)  + beta  * scFLOAT (blue[row][col]))));
   }
 }
 
@@ -5883,11 +5875,11 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
     return;
   }
 
-  float  m = (float)deltaY / (float)deltaX;
+  float  m = scFLOAT (deltaY) / scFLOAT (deltaX);
 
-  float  c = (float)bpRow - m * (float)bpCol;
+  float  c = scFLOAT (bpRow) - m * scFLOAT (bpCol);
 
-  if  (fabs (m) < 0.5)
+  if  (fabs (m) < 0.5f)
   {
     kkint32  startCol;
     kkint32  endCol;
@@ -5905,7 +5897,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (kkint32 col = startCol;  col <= endCol;  ++col)
     {
-      kkint32 row = (kkint32)(m * (float)col + c + 0.5f);
+      kkint32 row = scINT32 (m * scFLOAT (col) + c + 0.5f);
       green[row][col] = MergeAlpfaBeta (alpha, g, beta, green[row][col]);
       if  (color)
       {
@@ -5932,7 +5924,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (kkint32 row = startRow;  row <= endRow;  ++row)
     {
-      kkint32  col = (kkint32)((((float)row - c) / m) + 0.5f);
+      kkint32  col = scINT32 (((scFLOAT (row) - c) / m) + 0.5f);
       green[row][col] = MergeAlpfaBeta (alpha, g, beta, green[row][col]);
       if  (color)
       {
@@ -6027,11 +6019,10 @@ void  Raster::DrawFatLine (Point       startPoint,
     return;
   }
 
-  float  m = (float)deltaY / (float)deltaX;
-
-  float  c = (float)bpRow - m * (float)bpCol;
-
-  if  (fabs (m) < 0.5)
+  float  m = scFLOAT (deltaY) / scFLOAT (deltaX);
+  float  c = scFLOAT (bpRow) - m * scFLOAT (bpCol);
+ 
+  if  (fabs (m) < 0.5f)
   {
     kkint32  startCol;
     kkint32  endCol;
@@ -6047,9 +6038,9 @@ void  Raster::DrawFatLine (Point       startPoint,
       endCol   = bpCol;
     }
 
-    for  (col = startCol;  col <= endCol;  col++)
+    for  (col = startCol;  col <= endCol;  ++col)
     {
-      row = (kkint32)(m * (float)col + c + 0.5);
+      row = scINT32 (m * scFLOAT (col) + c + 0.5f);
       PaintFatPoint (row, col, pv, alpha);
     }
   }
@@ -6071,7 +6062,7 @@ void  Raster::DrawFatLine (Point       startPoint,
 
     for  (row = startRow;  row <= endRow;  row++)
     {
-      col = (kkint32)((((float)row - c) / m) + 0.5);
+      col = scINT32 (((scFLOAT (row) - c) / m) + 0.5f);
       PaintFatPoint (row, col, pv, alpha);
     }
   }
@@ -6131,7 +6122,7 @@ void  Raster::DrawPointList (const PointList&   borderPixs,
                              const PixelValue&  pixelValue
                             )
 {
-  DrawPointList (Point ((kkint32)0, (kkint32)0), borderPixs, pixelValue.r, pixelValue.g, pixelValue.b);
+  DrawPointList (Point (0, 0), borderPixs, pixelValue.r, pixelValue.g, pixelValue.b);
 }
 
 
@@ -6152,7 +6143,7 @@ void  Raster::DrawPointList (const PointList&  borderPixs,
                              kkuint8           blueVal
                             )
 {
-  DrawPointList (Point ((kkint32)0, (kkint32)0), borderPixs, redVal, greenVal, blueVal);
+  DrawPointList (Point (0, 0), borderPixs, redVal, greenVal, blueVal);
 }  /* DrawPointList */
 
 
@@ -6248,14 +6239,14 @@ void  Raster::DrawDot (const Point&       point,
 {
   SetPixelValue (point, paintColor);
   
-  double  radius = (double)size / 2.0;
+  double  radius = scDOUBLE (size) / 2.0;
   double  radiusSquared = radius * radius;
 
-  kkint32  left  = Max ((kkint32)0,           (kkint32)floor ((double)point.Col () - radius));
-  kkint32  right = Min ((kkint32)(width - 1), (kkint32)ceil  ((double)point.Col () + radius));
+  kkint32  left  = Max (0,           scINT32 (floor (scDOUBLE (point.Col ()) - radius)));
+  kkint32  right = Min ((width - 1), scINT32 (ceil  (scDOUBLE (point.Col ()) + radius)));
 
-  kkint32  bot   = Max ((kkint32)0,            (kkint32)floor ((double)point.Row () - radius));
-  kkint32  top   = Min ((kkint32)(height - 1), (kkint32)ceil  ((double)point.Row () + radius));
+  kkint32  bot   = Max (0,            scINT32 (floor (scDOUBLE (point.Row ()) - radius)));
+  kkint32  top   = Min ((height - 1), scINT32 (ceil  (scDOUBLE (point.Row ()) + radius)));
 
   for  (kkint32 row = bot;  row <= top;  ++row)
   {
@@ -6290,29 +6281,27 @@ void  Raster::DrawCircle (float              centerRow,
   kkint32  row, col;
   float  x, y;
 
-  float  start = -(float)ceil  (radius);
-  float  end   = +(float)floor (radius);
+  float  start = -ceil  (radius);
+  float  end   = +floor (radius);
 
   float  radiusSquare = radius * radius;
 
-  for  (x = start;  x <= end;  x++)
+  for  (x = start;  x <= end;  ++x)
   {
-    y = (float)sqrt (radiusSquare - (x * x));
-    col = (kkint32)(x + centerCol + 0.5);
-    row = (kkint32)(centerRow + 0.5 + y);
+    y = scFLOAT (sqrt (radiusSquare - (x * x)));
+    col = scINT32 (x + centerCol + 0.5f);
+    row = scINT32 (centerRow + 0.5f + y);
     SetPixelValue (row, col, pixelValue);
 
-    row = (kkint32)(centerRow + 0.5 - y);
+    row = scINT32 (centerRow + 0.5f - y);
     SetPixelValue (row, col, pixelValue);
 
-
-    row = (kkint32)(x + centerRow + 0.5);
-    col = (kkint32)(centerCol + 0.5 + y);
+    row = scINT32 (x + centerRow + 0.5f);
+    col = scINT32 (centerCol + 0.5f + y);
     SetPixelValue (row, col, pixelValue);
 
-    col = (kkint32)(centerCol + 0.5 - y);
+    col = scINT32 (centerCol + 0.5f - y);
     SetPixelValue (row, col, pixelValue);
-
   }
 }  /* DrawCircle */
 
@@ -6328,17 +6317,19 @@ void  Raster::DrawCircle (float              centerRow,
 {
   float  row, col;
 
-  while  (startAngle < 0.0f)
-    startAngle += (float)TwoPie;
+  float twoPieF = scFLOAT (TwoPie);
 
-  while  (startAngle >= (float)TwoPie)
-    startAngle -= (float)TwoPie;
+  while  (startAngle < 0.0f)
+    startAngle += twoPieF;
+
+  while  (startAngle >= twoPieF)
+    startAngle -= twoPieF;
 
   while  (endAngle < startAngle)
-    endAngle += (float)TwoPie;
+    endAngle += twoPieF;
   
-  while  ((endAngle - startAngle) >= (float)TwoPie)
-    endAngle -= (float)TwoPie;
+  while  ((endAngle - startAngle) >= twoPieF)
+    endAngle -= twoPieF;
 
   float  angle = startAngle;
   float  angleIncrement = asin (0.5f / radius);
@@ -6348,18 +6339,18 @@ void  Raster::DrawCircle (float              centerRow,
     // 1st Determine Which Quarter we r in
 
     float  qtrAngle = angle;
-    while  (qtrAngle > (float)TwoPie)
-      qtrAngle -= (float)TwoPie;
+    while  (qtrAngle > twoPieF)
+      qtrAngle -= twoPieF;
 
     row = -(radius * cos (angle));
     col =  (radius * sin (angle));
 
-    kkint32  adjRow = (kkint32)(centerRow + row + 0.5f);
-    kkint32  adjCol = (kkint32)(centerCol + col + 0.5f);
+    kkint32  adjRow = scINT32 (centerRow + row + 0.5f);
+    kkint32  adjCol = scINT32 (centerCol + col + 0.5f);
 
     if  ((adjRow >= 0)  &&  (adjRow < height)  &&
          (adjCol >= 0)  &&  (adjCol < width))
-      SetPixelValue ((kkint32)(centerRow + row + 0.5f), (kkint32)(centerCol + col + 0.5f), pixelValue);
+      SetPixelValue (scINT32 (centerRow + row + 0.5f), scINT32 (centerCol + col + 0.5f), pixelValue);
 
     angle += angleIncrement;
   }
@@ -6372,9 +6363,9 @@ void  Raster::DrawCircle (const Point&       point,
                           const PixelValue&  paintColor
                          )
 {
-  DrawCircle ((float)point.Row (),
-              (float)point.Col (),
-              (float)radius,
+  DrawCircle (scFLOAT (point.Row ()),
+              scFLOAT (point.Col ()),
+              scFLOAT (radius),
               paintColor
              );
 }  /* DrawCircle */
@@ -6396,15 +6387,15 @@ void  Raster::SmoothImageChannel (kkuint8**  src,
     firstMaskRow = row - maskOffset;
     lastMaskRow  = firstMaskRow + maskSize - 1;
 
-    firstMaskRow = Max ((kkint32)0,  firstMaskRow);
-    lastMaskRow  = Min (lastMaskRow, (kkint32)(height - 1));
+    firstMaskRow = Max (0,  firstMaskRow);
+    lastMaskRow  = Min (lastMaskRow, (height - 1));
 
     for  (kkint32 col = 0;  col < width;  ++col)
     {
       firstMaskCol = col - maskOffset;
       lastMaskCol = firstMaskCol + maskSize - 1;
-      firstMaskCol = Max (firstMaskCol, (kkint32)0);
-      lastMaskCol  = Min (lastMaskCol,  (kkint32)(width - 1));
+      firstMaskCol = Max (firstMaskCol, 0);
+      lastMaskCol  = Min (lastMaskCol,  (width - 1));
 
       kkint32  total      = 0;
       kkint32  numOfCells = 0;
@@ -6418,7 +6409,7 @@ void  Raster::SmoothImageChannel (kkuint8**  src,
         }
       }
 
-      dest[row][col] = (kkuint8)((kkint32)((float)((float)total / (float)numOfCells) + 0.5f));
+      dest[row][col] = scUINT8 (scINT32 (scFLOAT ((scFLOAT (total) / scFLOAT (numOfCells)) + 0.5f)));
     }
   }
 
@@ -6480,15 +6471,15 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
     firstMaskRow = row - maskOffset;
     lastMaskRow  = firstMaskRow + maskSize - 1;
 
-    firstMaskRow = Max ((kkint32)0, firstMaskRow);
-    lastMaskRow  = Min (lastMaskRow, (kkint32)(height - 1));
+    firstMaskRow = Max (0, firstMaskRow);
+    lastMaskRow  = Min (lastMaskRow, (height - 1));
     
     for  (kkint32 col = 0;  col < width;  ++col)
     {
       firstMaskCol = col - maskOffset;
       lastMaskCol = firstMaskCol + maskSize - 1;
-      firstMaskCol = Max (firstMaskCol, (kkint32)0);
-      lastMaskCol  = Min (lastMaskCol,  (kkint32)(width - 1));
+      firstMaskCol = Max (firstMaskCol, 0);
+      lastMaskCol  = Min (lastMaskCol,  (width - 1));
 
       numCandidates = 0;
 
@@ -6762,9 +6753,9 @@ RasterPtr   Raster::SegmentImage (bool  save)
       count += 2;
     }
 
-    threshold = (float)totalOfPixelVals / (float)count;
+    threshold = scFLOAT (totalOfPixelVals) / scFLOAT (count);
 
-    imageIsWhiteOnBlack = (threshold < (float)175.0);
+    imageIsWhiteOnBlack = (threshold < 175.0f);
   }
 
   imageIsWhiteOnBlack = false;
@@ -6812,7 +6803,7 @@ RasterPtr   Raster::SegmentImage (bool  save)
       forgroundValue  = grayScaleHistogramSmoothed->AverageOfMaxBucketInRange (130, 255);
       //threshold = grayScaleHistogramSmoothed->AverageOfMinBucketInRange (backgroundValue, forgroundValue);
       //threshold = backgroundValue + 10;
-      threshold = (float)(backgroundValue + forgroundValue) / 2.0f;
+      threshold = (backgroundValue + forgroundValue) / 2.0f;
     }
     else
     {
@@ -6820,7 +6811,7 @@ RasterPtr   Raster::SegmentImage (bool  save)
       forgroundValue  = grayScaleHistogramSmoothed->AverageOfMaxBucketInRange (0, 120);
       //threshold = grayScaleHistogramSmoothed->AverageOfMinBucketInRange (forgroundValue, backgroundValue);
       //threshold = backgroundValue - 10; 
-      threshold = (float)(backgroundValue + forgroundValue) / 2.0f;
+      threshold = (backgroundValue + forgroundValue) / 2.0f;
     }
 
     //threshold = (backgroundValue + forgroundValue) / (float)2.0;
@@ -6856,22 +6847,22 @@ RasterPtr   Raster::SegmentImage (bool  save)
   }
 
   if  (save)
-    SaveImage (*mask, baseName + "_Mask_" + StrFormatInt ((kkint32)threshold, "zz0") + ".bmp");
+    SaveImage (*mask, baseName + "_Mask_" + StrFormatInt (scINT32 (threshold), "zz0") + ".bmp");
 
   RasterPtr  destRaster = AllocateARasterInstance (Height (), Width (), false);
   destRaster->BackgroundPixelValue (255);
   destRaster->ForegroundPixelValue (0);
 
-  for  (r = 0;  r < Height ();  r++)
+  for  (r = 0;  r < Height ();  ++r)
   {
-    for  (c = 0;  c < Width ();  c++)
+    for  (c = 0;  c < Width ();  ++c)
     {
       if  (mask->GetPixelValue (r, c) >= 150)
       {
         if  (imageIsWhiteOnBlack)
           destRaster->SetPixelValue (r, c, gsImage->GetPixelValue (r, c));
         else
-          destRaster->SetPixelValue (r, c, (kkuint8)(255 - gsImage->GetPixelValue (r, c)));
+          destRaster->SetPixelValue (r, c, scUINT8 (255 - gsImage->GetPixelValue (r, c)));
       }
       else
       {
@@ -6908,7 +6899,7 @@ RasterListPtr  Raster::SplitImageIntoEqualParts (kkint32 numColSplits,
  
   // because the image might not divide evenly we may have to do some
   // adjusting,  possibly loosing some rows and columns off the edges.
-  kkint32  partWidth  = (kkint32)((float)(width  / numColSplits) + 0.5);
+  kkint32  partWidth  = scINT32 (scFLOAT (width  / numColSplits) + 0.5f);
   kkint32  colsNeeded = numColSplits * partWidth;
   if  (colsNeeded > width)
   {
@@ -6916,7 +6907,7 @@ RasterListPtr  Raster::SplitImageIntoEqualParts (kkint32 numColSplits,
     partStartingCol = (width - (partWidth * numColSplits)) / 2;
   }
 
-  kkint32  partHeight = (kkint32)((float)(height  / numRowSplits) + 0.5);
+  kkint32  partHeight = scINT32 (scFLOAT (height)  / scFLOAT (numRowSplits) + 0.5f);
   kkint32  rowsNeeded = numRowSplits * partHeight;
   if  (rowsNeeded > height)
   {
@@ -7058,7 +7049,7 @@ RasterPtr  Raster::ToColor ()  const
     kkuint8* targetBlue  = r->BlueArea  ();
     for  (kkint32 x = 0;  x < this->totPixels;  ++x)
     {
-      kkuint8  pc = (kkuint8)(255 - *srcGreen);
+      kkuint8  pc = scUINT8 (255 - *srcGreen);
       *targetRed   = pc;
       *targetGreen = pc;
       *targetBlue  = pc;
@@ -7101,8 +7092,8 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
 
   kkint32  idx = 0;
 
-  double  centerCol = (double)width  / 2.0;
-  double  centerRow = (double)height / 2.0;
+  double  centerCol = scDOUBLE (width)  / 2.0;
+  double  centerRow = scDOUBLE (height) / 2.0;
 
   kkuint8  smallestPixelVal = 255;
   kkuint8  largestPixelVal  = 0;
@@ -7110,9 +7101,9 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
 
   // float scalingFact = (float)255.0 / maxPixVal;   // kk  2004-May-18
 
-  for  (kkint32 row = 0; row < height; row++ )
+  for  (kkint32 row = 0;  row < height;  ++row)
   {
-    for (kkint32 col = 0; col < width; col++ )
+    for (kkint32 col = 0;  col < width;  ++col)
     {     
       pixelVal = green[row][col];
       if  (pixelVal < smallestPixelVal)
@@ -7123,16 +7114,16 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
       // src[idx].re = (float)green[row][col] * scalingFact;  // kk 2004-May-18
 
       #if  defined(FFTW_AVAILABLE)
-        src[idx][0] = (float)green[row][col];                   // kk 2004-May-18
+        src[idx][0] = scFLOAT (green[row][col]);                   // kk 2004-May-18
         src[idx][1] = 0.0;
       #else
         if  (color)
         {
-          srcArea[idx].real ((float)(0.39f * redArea[idx] + 0.59f * greenArea[idx] + 0.11f * blueArea[idx]) / 3.0f);
+          srcArea[idx].real (scFLOAT (0.39f * redArea[idx] + 0.59f * greenArea[idx] + 0.11f * blueArea[idx]) / 3.0f);
         }
         else
         {
-          srcArea[idx].real ((float)greenArea[idx]);
+          srcArea[idx].real (scFLOAT (greenArea[idx]));
         }
         srcArea[idx].imag (0.0f);
       #endif
@@ -7165,24 +7156,24 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
   // Because the lower frequencies are further away from the center than higher frequencies
   // the 'lowerFreqBoundDistFromCenter' will be greater than 'upperFreqBoundDistFromCenter'
   
-  double  zzz = sqrt ((double)(centerCol * centerCol + centerRow * centerRow));
+  double  zzz = sqrt (scDOUBLE (centerCol * centerCol + centerRow * centerRow));
 
-  double  lowerFreqBoundDistFromCenter = (1.0 - (double)lowerFreqBound) * (double)zzz;
-  double  upperFreqBoundDistFromCenter = (1.0 - (double)upperFreqBound) * (double)zzz;
+  double  lowerFreqBoundDistFromCenter = (1.0 - scDOUBLE (lowerFreqBound) * zzz);
+  double  upperFreqBoundDistFromCenter = (1.0 - scDOUBLE (upperFreqBound) * zzz);
 
-  double  lowerFreqBoundDistFromCenterSquared = (lowerFreqBoundDistFromCenter * lowerFreqBoundDistFromCenter + 0.1f);
-  double  upperFreqBoundDistFromCenterSquared = (upperFreqBoundDistFromCenter * upperFreqBoundDistFromCenter - 0.1f);
+  double  lowerFreqBoundDistFromCenterSquared = (lowerFreqBoundDistFromCenter * lowerFreqBoundDistFromCenter + 0.1);
+  double  upperFreqBoundDistFromCenterSquared = (upperFreqBoundDistFromCenter * upperFreqBoundDistFromCenter - 0.1);
 
   idx = 0;
 
   for  (kkint32 row = 0;  row < height;  ++row)
   {
-    deltaRow = (double)row - centerRow;
+    deltaRow = scDOUBLE (row) - centerRow;
     deltaRowSquared = deltaRow * deltaRow;
 
-    for (kkint32 col = 0; col < width;  ++col)
+    for (kkint32 col = 0;  col < width;  ++col)
     {     
-      deltaCol = (double)col - centerCol;
+      deltaCol = scDOUBLE (col) - centerCol;
       deltaColSquared = deltaCol* deltaCol;
 
       double  distFromCenterSquared = deltaRowSquared + deltaColSquared;
@@ -7214,14 +7205,13 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
   #endif
 
   // We now need to transform the Fourier results back to GreayScale.
-  double  smallestNum;
-  double  largestNum;
 
   #if  defined(FFTW_AVAILABLE)
-    smallestNum = largestNum = src[0][0];
+    double largestNum = src[0][0];
   #else
-    smallestNum = largestNum = srcArea[0].real ();
+    double largestNum = srcArea[0].real ();
   #endif
+  double smallestNum = largestNum;
 
   {
     double  zed = 0;
@@ -7235,6 +7225,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
 
       if  (zed < smallestNum)
         smallestNum = zed;
+
       else if  (zed > largestNum)
         largestNum = zed;
     }
@@ -7242,14 +7233,12 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
 
   double  range = largestNum - smallestNum;
 
-
   RasterPtr  result = AllocateARasterInstance (height, width, false);
   kkuint8*  destData = result->greenArea;
   
   {
-    idx = 0;
     double  zed = 0;
-    for (idx = 0;  idx < totPixels;  idx++)
+    for (idx = 0;  idx < totPixels;  ++idx)
     {     
       if  (retainBackground  &&  BackgroundPixel (greenArea[idx]))
       {
@@ -7264,7 +7253,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
         #else
           zed = srcArea[idx].real ();
         #endif
-        destData[idx] = (kkuint8)(smallestPixelVal + Min (largestPixelVal, (kkuint8)(0.5 + pixelValRange * (zed - smallestNum) / range)));
+        destData[idx] = scUINT8 (smallestPixelVal + Min (largestPixelVal, scUINT8 (0.5 + pixelValRange * (zed - smallestNum) / range)));
       }
     }
   }
@@ -7318,11 +7307,11 @@ RasterPtr  RasterList::CreateSmoothedFrame ()
       kkuint8*  blueArea  = raster->BlueArea ();
       for (x = 0;  x < totPixels;  x++)
       {
-        totGreenArea[x] += (kkuint32)((float)redArea[x]   * 0.39f +
-                                  (float)greenArea[x] * 0.59f +
-                                  (float)blueArea[x]  * 0.11f +
-                                  0.5f
-                                 );
+        totGreenArea[x] += scUINT32 (scFLOAT (redArea  [x]) * 0.39f +
+                                     scFLOAT (greenArea[x]) * 0.59f +
+                                     scFLOAT (blueArea [x]) * 0.11f +
+                                     0.5f
+                                    );
       }
     }
     else
@@ -7339,7 +7328,7 @@ RasterPtr  RasterList::CreateSmoothedFrame ()
 
   kkuint8*  newGreenArea = smoothedRaster->GreenArea ();
   for  (x = 0;  x < totPixels;  x++)
-    newGreenArea[x] = (kkuint8)  (totGreenArea[x] / rastersAdded);
+    newGreenArea[x] = scUINT8 (totGreenArea[x] / rastersAdded);
 
   delete[]  totGreenArea;
 
@@ -7434,17 +7423,17 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
       << "Width"            << "\t"  << width
       << std::endl;
 
-    f <<  (kkint32)compressedBuff [0] << "\t"
-      <<  (kkint32)compressedBuff [1] << "\t"
-      <<  (kkint32)compressedBuff [2] << "\t"
-      <<  (kkint32)compressedBuff [3] << "\t"
-      <<  (kkint32)compressedBuff [4] << "\t"
-      <<  (kkint32)compressedBuff [5] << "\t"
-      <<  (kkint32)compressedBuff [6] << "\t"
-      <<  (kkint32)compressedBuff [7] << "\t"
-      <<  (kkint32)compressedBuff [8] << "\t"
-      <<  (kkint32)compressedBuff [9] << "\t"
-      <<  (kkint32)compressedBuff[10] 
+    f <<  scINT32 (compressedBuff [0]) << "\t"
+      <<  scINT32 (compressedBuff [1]) << "\t"
+      <<  scINT32 (compressedBuff [2]) << "\t"
+      <<  scINT32 (compressedBuff [3]) << "\t"
+      <<  scINT32 (compressedBuff [4]) << "\t"
+      <<  scINT32 (compressedBuff [5]) << "\t"
+      <<  scINT32 (compressedBuff [6]) << "\t"
+      <<  scINT32 (compressedBuff [7]) << "\t"
+      <<  scINT32 (compressedBuff [8]) << "\t"
+      <<  scINT32 (compressedBuff [9]) << "\t"
+      <<  scINT32 (compressedBuff[10]) 
       << std::endl;
 
       f.flush ();
@@ -7465,17 +7454,17 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
       << "Width"            << "\t"  << width
       << std::endl;
 
-    f <<  (kkint32)compressedBuff [0] << "\t"
-      <<  (kkint32)compressedBuff [1] << "\t"
-      <<  (kkint32)compressedBuff [2] << "\t"
-      <<  (kkint32)compressedBuff [3] << "\t"
-      <<  (kkint32)compressedBuff [4] << "\t"
-      <<  (kkint32)compressedBuff [5] << "\t"
-      <<  (kkint32)compressedBuff [6] << "\t"
-      <<  (kkint32)compressedBuff [7] << "\t"
-      <<  (kkint32)compressedBuff [8] << "\t"
-      <<  (kkint32)compressedBuff [9] << "\t"
-      <<  (kkint32)compressedBuff[10] 
+    f <<  scINT32 (compressedBuff [0]) << "\t"
+      <<  scINT32 (compressedBuff [1]) << "\t"
+      <<  scINT32 (compressedBuff [2]) << "\t"
+      <<  scINT32 (compressedBuff [3]) << "\t"
+      <<  scINT32 (compressedBuff [4]) << "\t"
+      <<  scINT32 (compressedBuff [5]) << "\t"
+      <<  scINT32 (compressedBuff [6]) << "\t"
+      <<  scINT32 (compressedBuff [7]) << "\t"
+      <<  scINT32 (compressedBuff [8]) << "\t"
+      <<  scINT32 (compressedBuff [9]) << "\t"
+      <<  scINT32 (compressedBuff[10]) 
       << std::endl;
 
     f.flush ();
@@ -7488,7 +7477,7 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
   kkuint32  nextIdx = 4;
   kkuint32  greanAreaIdx = 0;
 
-  while  ((nextIdx < (kkuint32)unCompressedSize)  &&  (greanAreaIdx < totalPixels))
+  while  ((nextIdx < scUINT32 (unCompressedSize))  &&  (greanAreaIdx < totalPixels))
   {
     greenArea[greanAreaIdx] = uncompressedBuff[nextIdx];
     nextIdx++;
@@ -7519,13 +7508,13 @@ kkuint8*  Raster::ToCompressor (kkuint32&  compressedBuffLen)  const
 
   memset (buff, 0, totalDataNeeded);
 
-  kkuint32  h = (kkuint32)height;
+  kkuint32  h = scUINT32 (height);
   buff[0] = h % 256;  h = h / 256;
   buff[1] = h % 256;  h = h / 256;
   buff[2] = h % 256;  h = h / 256;
   buff[3] = h % 256;  h = h / 256;
 
-  kkuint32  w = (kkuint32)width;
+  kkuint32  w = scUINT32 (width);
   
   buff[4] = w % 256;  w = w / 256;
   buff[5] = w % 256;  w = w / 256;
@@ -7549,7 +7538,7 @@ kkuint8*  Raster::ToCompressor (kkuint32&  compressedBuffLen)  const
   }
 
   compressedBuffLen = 0;
-  kkuint8*  compressedBuff = (kkuint8*)Compressor::CreateCompressedBuffer (buff, totalDataNeeded, compressedBuffLen);
+  kkuint8*  compressedBuff = static_cast<kkuint8*> (Compressor::CreateCompressedBuffer (buff, totalDataNeeded, compressedBuffLen));
   delete[]  buff;  buff = NULL;
   return  compressedBuff;
 }  /* ToCompressor */
@@ -7561,7 +7550,7 @@ RasterPtr  Raster::FromCompressor (const kkuint8*  compressedBuff,    // Creates
                                   )
 {
   kkuint32  unCompressedBuffLen = 0;
-  kkuint8*  unCompressedBuff = (kkuint8*)Compressor::Decompress (compressedBuff, compressedBuffLen, unCompressedBuffLen);
+  kkuint8*  unCompressedBuff = static_cast<kkuint8*> (Compressor::Decompress (compressedBuff, compressedBuffLen, unCompressedBuffLen));
   if  (!unCompressedBuff)
     return NULL;
 
@@ -7606,7 +7595,7 @@ RasterPtr  Raster::FromCompressor (const kkuint8*  compressedBuff,    // Creates
     return NULL;
   }
 
-  RasterPtr  r = new Raster ((kkint32)height, (kkint32)width, color);
+  RasterPtr  r = new Raster (scINT32 (height), scINT32 (width), color);
 
   kkuint32 nextIdx = 9;
 
@@ -7655,7 +7644,7 @@ RasterPtr   Raster::Padded (kkint32 padding)
 
 
 
-MatrixDPtr  Raster::BuildGaussian2dKernel (float  sigma)  
+MatrixDPtr  Raster::BuildGaussian2dKernel (double  sigma)  
 {
   kkint32 row, col, x, y;
 
@@ -7663,14 +7652,14 @@ MatrixDPtr  Raster::BuildGaussian2dKernel (float  sigma)
   double  twoSigmaSquared = 2.0 * sigma * sigma;
 
   // Determine size of kernel
-  double z = 100;
+  double z = 100.0;
   kkint32  delta = 0;
   while (true)
   {
     z = 256.0 * prefix * exp (-(delta * delta / twoSigmaSquared));
     if  (z < 1.0)
     {
-      delta--;
+      --delta;
       break;
     }
     ++delta;
@@ -7711,16 +7700,15 @@ void  Raster::SmoothUsingKernel (MatrixD&  kernel,
                                  kkuint8**   dest
                                 )  const
 {
-  kkint32  row, col;
   kkint32  kernelSideLen = kernel.NumOfCols ();
   kkint32  delta = kernelSideLen / 2;
 
   double const * const *  kernalData = kernel.Data ();
 
-  for  (row = 0;  row < height;  row++)
+  for  (int32_t row = 0;  row < height;  ++row)
   {
     kkint32  maskTop = row - delta;
-    for  (col = 0;  col < width;  col++)
+    for  (int32_t col = 0;  col < width;  ++col)
     {
       kkint32  maskLeft = col - delta;
       kkint32  maskRow  = maskTop;
@@ -7738,7 +7726,7 @@ void  Raster::SmoothUsingKernel (MatrixD&  kernel,
             if  (maskCol >= 0)
             {
               double  fact = kernalRowData[kernelCol];
-              total += fact * (float)(src[maskRow][maskCol]);
+              total += fact * scDOUBLE (src[maskRow][maskCol]);
               kernelTotal += fact;
             }
           }
@@ -7747,7 +7735,7 @@ void  Raster::SmoothUsingKernel (MatrixD&  kernel,
 
       total = total / kernelTotal;
 
-      dest[row][col] = (kkuint8)((kkint32)(total + 0.5));
+      dest[row][col] = scUINT8(scINT32(total + 0.5));
     }
   }
 }  /* SmoothUsingKernel */
@@ -7808,7 +7796,7 @@ RasterPtr  Raster::ThresholdInHSI (float              thresholdH,
 
       // Calculate the distance from the threshold initial point to the current pixelColor using
       // the euclidean distance
-      r = (float)(sqrt (pow (xOriginalPoint - x, 2) + pow (yOriginalPoint - y, 2) + pow (thresholdI - tempI, 2)));
+      r = scFLOAT (sqrt (pow (xOriginalPoint - x, 2.0f) + pow (yOriginalPoint - y, 2.0f) + pow (thresholdI - tempI, 2.0f)));
 
       if  (r <= distance)
          resultingImage->SetPixelValue (m, n, pixelColor);
@@ -7849,19 +7837,19 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
 
     for  (row = 0;  row < totPixels;  ++row)
     {
-      totals[0] += (double)redArea   [row];
-      totals[1] += (double)greenArea [row];
-      totals[2] += (double)blueArea  [row];
+      totals[0] += scDOUBLE (redArea   [row]);
+      totals[1] += scDOUBLE (greenArea [row]);
+      totals[2] += scDOUBLE (blueArea  [row]);
     }
 
     for  (col = 0;  col < 3;  ++col)
-      means[col] = totals[col] / (double)totPixels;
+      means[col] = totals[col] / scDOUBLE (totPixels);
 
     for  (row = 0;  row < totPixels;  ++row)
     {
-      centeredVals[0][row] = (double)redArea   [row] - means[0];
-      centeredVals[1][row] = (double)greenArea [row] - means[1];
-      centeredVals[2][row] = (double)blueArea  [row] - means[2];
+      centeredVals[0][row] = scDOUBLE (redArea   [row]) - means[0];
+      centeredVals[1][row] = scDOUBLE (greenArea [row]) - means[1];
+      centeredVals[2][row] = scDOUBLE (blueArea  [row]) - means[2];
     }
  
     for  (kkint32 varIdxX = 0;  varIdxX < 3;  ++varIdxX)
@@ -7875,7 +7863,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
         double total = 0.0f;
         for  (row = 0;  row < totPixels;  ++row)
           total += varXs[row] * varYs[row];
-        (*cov)[varIdxX][varIdxY] = total / (double)(totPixels - 1);
+        (*cov)[varIdxX][varIdxY] = total / scDOUBLE (totPixels - 1);
         (*cov)[varIdxY][varIdxX]  = (*cov)[varIdxX][varIdxY];
       }
     }
@@ -7930,9 +7918,9 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
   double*  adjChannel = new double [totPixels];
   for  (kkint32 y = 0;  y < totPixels;  ++y)
   {
-    adjVal = (double)redArea  [y] * redFact    +
-             (double)greenArea[y] * greenFact  +
-             (double)blueArea [y] * blueFact;
+    adjVal = scDOUBLE (redArea  [y]) * redFact    +
+             scDOUBLE (greenArea[y]) * greenFact  +
+             scDOUBLE (blueArea [y]) * blueFact;
     if  (adjVal < valMin)  valMin = adjVal;
     if  (adjVal > valMax)  valMax = adjVal;
     adjChannel[y] = adjVal;
@@ -7948,7 +7936,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
     kkuint8*  resultArea = result->GreenArea ();
     for  (kkint32 y = 0;  y < totPixels;  ++y)
     {
-      resultArea[y] = (kkuint8)Min ((kkint32)((adjChannel[y] - valMin) * adjScaleFact + 0.5), (kkint32)255);
+      resultArea[y] = scUINT8 (Min (scINT32 ((adjChannel[y] - valMin) * adjScaleFact + 0.5), scINT32 (255)));
     }
   }
   delete[]  adjChannel;  adjChannel   = NULL;
@@ -8000,22 +7988,22 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
     {
       if  (maskArea[row] > maskTh)
       {
-        totals[0] += (double)redArea   [row];
-        totals[1] += (double)greenArea [row];
-        totals[2] += (double)blueArea  [row];
+        totals[0] += scDOUBLE (redArea   [row]);
+        totals[1] += scDOUBLE (greenArea [row]);
+        totals[2] += scDOUBLE (blueArea  [row]);
       }
     }
 
     for  (kkint32 col = 0;  col < 3;  ++col)
-      means[col] = totals[col] / (double)totalMaskPixels;
+      means[col] = totals[col] / scDOUBLE (totalMaskPixels);
 
     for  (kkint32 x = 0;  x < totPixels;  ++x)
     {
       if  (maskArea[x] > maskTh)
       {
-        centeredVals[0][x] = (double)redArea   [x] - means[0];
-        centeredVals[1][x] = (double)greenArea [x] - means[1];
-        centeredVals[2][x] = (double)blueArea  [x] - means[2];
+        centeredVals[0][x] = scDOUBLE (redArea   [x]) - means[0];
+        centeredVals[1][x] = scDOUBLE (greenArea [x]) - means[1];
+        centeredVals[2][x] = scDOUBLE (blueArea  [x]) - means[2];
       }
     }
  
@@ -8033,7 +8021,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
           if  (maskArea[row] > maskTh)
             total += varXs[row] * varYs[row];
         }
-        (*cov)[varIdxX][varIdxY] = total / (double)(totalMaskPixels - 1);
+        (*cov)[varIdxX][varIdxY] = total / scDOUBLE (totalMaskPixels - 1);
         (*cov)[varIdxY][varIdxX]  = (*cov)[varIdxX][varIdxY];
       }
     }
@@ -8091,9 +8079,9 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
   {
     if  (maskArea[y] > maskTh)
     {
-      adjVal = (double)redArea  [y] * redFact    +
-               (double)greenArea[y] * greenFact  +
-               (double)blueArea [y] * blueFact;
+      adjVal = scDOUBLE (redArea  [y]) * redFact    +
+               scDOUBLE (greenArea[y]) * greenFact  +
+               scDOUBLE (blueArea [y]) * blueFact;
       if  (adjVal < valMin)  valMin = adjVal;
       if  (adjVal > valMax)  valMax = adjVal;
       adjChannel[y] = adjVal;
@@ -8115,7 +8103,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
     for  (kkint32 y = 0;  y < totPixels;  ++y)
     {
       if  (maskArea[y] > maskTh)
-        resultArea[y] = (kkuint8)Min ((kkint32)((adjChannel[y] - valMin) * adjScaleFact + 0.5), (kkint32)255);
+        resultArea[y] = scINT8 (Min (scINT32 ((adjChannel[y] - valMin) * adjScaleFact + 0.5), scINT32 (255)));
       else
         resultArea[y] = 0;
     }
@@ -8166,18 +8154,18 @@ RasterPtr  Raster::CreateColorImageFromLabels ()
   for  (x = 0;  x < 256;  ++x)
   {
     if  (freqCount[x] > 0)
-      sortedFreqCounts.insert (pair<kkint32,kkuint8> (freqCount[x], (kkuint8)x));
+      sortedFreqCounts.insert (pair<kkint32,kkuint8> (freqCount[x], scUINT8 (x)));
   }
 
   PixelValue  colorAssignments[256];
   colorAssignments[0] = PixelValue::Black;
-  kkint32  numUniqueValues = (kkint32)sortedFreqCounts.size ();
+  kkint32  numUniqueValues = scINT32 (sortedFreqCounts.size ());
   multimap<kkint32,kkuint8>::reverse_iterator  idx;
   x = 0;
   for  (idx = sortedFreqCounts.rbegin ();  idx != sortedFreqCounts.rend ();  ++idx)
   {
     kkint32  pixelValue = idx->second;
-    colorAssignments[pixelValue] = PixelValue::FromHSI ((float)x / (float)numUniqueValues, 1.0f, 1.0f);
+    colorAssignments[pixelValue] = PixelValue::FromHSI (scFLOAT (x) / scFLOAT (numUniqueValues), 1.0f, 1.0f);
     x++;
   }
 
@@ -8248,7 +8236,7 @@ PointListPtr  Raster::DeriveImageLength () const
   workRaster->CalcOrientationAndEigerRatio (eigenRatio,
                                             orientationAngle
                                            );
-  if  ((orientationAngle > TwoPie)  ||  (orientationAngle < -TwoPie))
+  if  ((orientationAngle > scFLOAT (TwoPie))  ||  (orientationAngle < scFLOAT (-TwoPie)))
   {
     orientationAngle = 0.0;
     eigenRatio = 1.0;
@@ -8267,8 +8255,8 @@ PointListPtr  Raster::DeriveImageLength () const
 
     kkint32  boxWidth  = brCol - tlCol;
 
-    kkint32  mark1Col = (kkint32)((float)boxWidth * 0.05f + 0.5f) + tlCol;
-    kkint32  mark2Col = (kkint32)((float)boxWidth * 0.95f + 0.5f) + tlCol;
+    kkint32  mark1Col = scINT32 (scFLOAT (boxWidth) * 0.05f + 0.5f) + tlCol;
+    kkint32  mark2Col = scINT32 (scFLOAT (boxWidth) * 0.95f + 0.5f) + tlCol;
 
     kkint32  a1RowTot   = 0;
     kkint32  a1ColTot   = 0;
@@ -8319,13 +8307,13 @@ PointListPtr  Raster::DeriveImageLength () const
       }
     }
 
-    a1PixCount = Max ((kkint32)1, a1PixCount);
-    a2PixCount = Max ((kkint32)1, a2PixCount);
-    a3PixCount = Max ((kkint32)1, a3PixCount);
+    a1PixCount = Max (scINT32 (1), a1PixCount);
+    a2PixCount = Max (scINT32 (1), a2PixCount);
+    a3PixCount = Max (scINT32 (1), a3PixCount);
 
-    Point p1 ((kkint16)(0.5f + (float)a1RowTot / (float)a1PixCount), (kkint16)(0.5f + (float)a1ColTot / (float)a1PixCount));
-    Point p2 ((kkint16)(0.5f + (float)a2RowTot / (float)a2PixCount), (kkint16)(0.5f + (float)a2ColTot / (float)a2PixCount));
-    Point p3 ((kkint16)(0.5f + (float)a3RowTot / (float)a3PixCount), (kkint16)(0.5f + (float)a3ColTot / (float)a3PixCount));
+    Point p2 (scINT16 (0.5f + scFLOAT (a2RowTot) / scFLOAT (a2PixCount)), scINT16 (0.5f + scFLOAT (a2ColTot) / scFLOAT (a2PixCount)));
+    Point p3 (scINT16 (0.5f + scFLOAT (a3RowTot) / scFLOAT (a3PixCount)), scINT16 (0.5f + scFLOAT (a3ColTot) / scFLOAT (a3PixCount)));
+    Point p1 (scINT16 (0.5f + scFLOAT (a1RowTot) / scFLOAT (a1PixCount)), scINT16 (0.5f + scFLOAT (a1ColTot) / scFLOAT (a1PixCount)));
 
     Point p1Orig = RotateDerivePreRotatedPoint (height, width, p1, orientationAngle);
     Point p2Orig = RotateDerivePreRotatedPoint (height, width, p2, orientationAngle);

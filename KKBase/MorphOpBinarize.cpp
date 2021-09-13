@@ -36,7 +36,7 @@ MorphOpBinarize::~MorphOpBinarize ()
 
 
 
-kkMemSize  MorphOpBinarize::MemoryConsumedEstimated ()
+size_t  MorphOpBinarize::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

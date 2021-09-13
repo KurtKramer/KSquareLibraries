@@ -44,8 +44,8 @@ SimpleCompressor::~SimpleCompressor ()
 
 void  SimpleCompressor::Add16BitInt (kkuint32  i)
 {
-  AddByte ((uchar)(i / 256));
-  AddByte ((uchar)(i % 256));
+  AddByte (scUCHAR (i / 256));
+  AddByte (scUCHAR (i % 256));
 }
 
 
@@ -190,8 +190,8 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSi
   uchar*  compressedBuff = new uchar[compressedBytesNeeded];
   kkuint32  compressedBuffUsed = 0;
 
-  AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, (uchar)(compressedBytesNeeded / 256));
-  AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, (uchar)(compressedBytesNeeded % 256));
+  AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, scUCHAR (compressedBytesNeeded / 256));
+  AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, scUCHAR (compressedBytesNeeded % 256));
 
   kkuint32  idx = 0;
 
@@ -199,7 +199,7 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSi
   {
     while  ((idx < buffSpaceUsed)  &&  (buffLens[idx] > 1))
     {
-      AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, (uchar)(128 + buffLens[idx]));
+      AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, scUCHAR (128 + buffLens[idx]));
       AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, buffBytes[idx]);
       idx++;
     }
@@ -219,7 +219,7 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSi
 
       endIdx--;
       
-      AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, (uchar)(0 + rawBytesInARow));
+      AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, scUCHAR (0 + rawBytesInARow));
       for  (kkuint32 x = 0;   x < rawBytesInARow;  x++)
       {
         AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, buffBytes[idx]);

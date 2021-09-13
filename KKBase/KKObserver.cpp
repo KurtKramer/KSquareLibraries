@@ -53,7 +53,7 @@ KKObserver::~KKObserver ()
 
 
 
-kkMemSize  KKObserver::MemoryConsumedEstimated ()
+size_t  KKObserver::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

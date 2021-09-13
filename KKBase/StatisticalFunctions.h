@@ -25,10 +25,9 @@ namespace  KKB
       return;
     }
 
-    kkuint32  idx;
     T  total = T(0);
 
-    for  (idx = 0;  idx < v.size ();  idx++)
+    for  (size_t idx = 0;  idx < v.size ();  idx++)
       total = total + v[idx];
 
     mean = total / T (v.size ());
@@ -36,18 +35,17 @@ namespace  KKB
     uld   deltaSqrTotal = 0.0;
     uld   deltaSquared  = 0.0;
     uld   delta         = 0.0;
-    
-    
-    for  (idx = 0;  idx < v.size ();  idx++)
+     
+    for  (size_t idx = 0;  idx < v.size ();  idx++)
     {
-      delta = (uld)fabs (mean - v[idx]);
+      delta = static_cast<uld> (fabs (mean - v[idx]));
       deltaSquared = delta * delta;
       deltaSqrTotal += deltaSquared;
     }
 
-    uld  varience = deltaSqrTotal / (uld)(v.size ());
+    uld  varience = deltaSqrTotal / static_cast<uld> (v.size ());
 
-    stdDev = (T)sqrt (varience);
+    stdDev = static_cast<T> (sqrt (varience));
 
     return;
   }  /* CalcMeanAndStdDev */
@@ -76,140 +74,132 @@ namespace  KKB
       return;
     }
 
-    kkuint32  idx;
-    total = T(0);
+    total = static_cast<T> (0);
 
     min = max = v[0];
 
-    for  (idx = 0;  idx < v.size ();  idx++)
+    for  (size_t idx = 0;  idx < v.size ();  ++idx)
     {
       total = total + v[idx];
       if  (v[idx] < min)  min = v[idx];
       if  (v[idx] > max)  max = v[idx];
     }
 
-    mean = total / T (v.size ());
+    mean = total / static_cast<T> (v.size ());
 
     uld   deltaSqrTotal = 0.0;
     uld   deltaSquared  = 0.0;
     uld   delta         = 0.0;
     
-    for  (idx = 0;  idx < v.size ();  idx++)
+    for  (size_t idx = 0;  idx < v.size ();  ++idx)
     {
-      delta = (uld)fabs (mean - v[idx]);
+      delta = static_cast<uld> (fabs (mean - v[idx]));
       deltaSquared = delta * delta;
       deltaSqrTotal += deltaSquared;
     }
 
-    uld  varience = deltaSqrTotal / (uld)(v.size ());
+    uld  varience = deltaSqrTotal / static_cast<uld> (v.size ());
 
-    stdDev = (T)sqrt (varience);
+    stdDev = static_cast<T> (sqrt (varience));
 
     return;
   }  /* CalcMeanAndStdDev */
 
 
+
   //  Quadrat-Valance Methods,  page 44
   template<typename T >
   T  CalcBQV (const vector<T>&  v,
-              kkint32           blockSize
+              size_t            blockSize
              )
   {
     //typedef long double  uld;
 
-    kkint32 zed = 0;
-    kkint32 x   = 0;
+    size_t zed = 0;
 
-    double  totalSquare = (T)0.0;
+    double  totalSquare = static_cast<T> (0.0);
 
     double  divisorFactor = 1.0 / pow(2.0, blockSize);
 
-    while  (zed < (kkint32)(v.size () - 2 * blockSize))
+    while  (zed < (v.size () - 2 * blockSize))
     {
-      T  plusSide  = (T)0.0;
-      T  minusSide = (T)0.0;
+      T  plusSide  = static_cast<T> (0.0);
+      T  minusSide = static_cast<T> (0.0);
 
       double  delta = 0.0;
 
-      for  (x = 0;  x < blockSize;  x++)
+      for  (size_t x = 0;  x < blockSize;  x++)
       {
         delta += v[zed];
-        zed++;
+        ++zed;
       }
      
-      for  (x = 0;  x < blockSize;  x++)
+      for  (size_t x = 0;  x < blockSize;  x++)
       {
         delta -= v[zed];
-        zed++;
+        ++zed;
       }
 
       double  deltaSquared = delta * delta;
 
-
       totalSquare += divisorFactor * deltaSquared;
     }
 
-
     double  result  = pow (2.0, blockSize) * totalSquare / zed;
 
-    return  (T)result;
+    return  static_cast<T> (result);
   }  /* CalcBQV */
-
-
 
 
 
   //  Quadrat-Valance Methods,  page 44
   template<typename T >
   T  CalcPQV (const vector<T>&  v,
-              kkint32           distance
+              size_t            distance
              )
   {
     //typedef long double  uld;
 
-    kkint32 x = 0;
-    kkint32 y = x + distance;
+    size_t x = 0;
+    size_t y = x + distance;
 
     double  totalDeltaSquared = 0.0;
 
-    while  (y < (kkint32)v.size ())
+    while  (y < v.size ())
     {
       T delta = v[x] - v[y];
       double deltaSquared = delta * delta;
       totalDeltaSquared += deltaSquared;
 
-      x++;
-      y++;
+      ++x;
+      ++y;
     }
 
     double result = totalDeltaSquared / (2 * (v.size () - distance));
 
-    return  (T)result;
+    return  static_cast<T> (result);
   }  /* CalcPQV */
-
-
 
 
 
   //  Quadrat-Valance Methods,  page 113
   template<typename T >
   T  CalcTTLQC (const vector<T>&  v,
-                kkint32           b
+                size_t            b
                )
   {
-    kkint32  i = 0;
-    kkint32  n = (kkint32)v.size ();
+    size_t   n = v.size ();
     
     double  squareSun = 0.0;
 
-    vector<T>  sumArray (v.size (), (T)0.0);
+    vector<T>  sumArray (v.size (), static_cast<T> (0.0));
     sumArray[0] = v[0];
-    for  (i = 1;  i < n;  i++)
+    for  (size_t i = 1;  i < n;  ++i)
       sumArray[i] = sumArray[i - 1] + v[i];
 
-    kkint32  end = n + 1 - (2 * b);
+    size_t  end = n + 1 - (2 * b);
 
-    for  (i = 0;  i < end;  i++)
+    for  (size_t i = 0;  i < end;  ++i)
     {
       T plusSide  = sumArray[i + b - 1];
       T minusSide = sumArray[i + b + b - 1] - sumArray[i + b - 1];
@@ -218,37 +208,33 @@ namespace  KKB
       squareSun += deltaSquared;
     }
 
-    double  divisor = 2.0 * (double)b * ((double)n + 1.0 - 2.0 * (double)b);
+    double  divisor = 2.0 * scDOUBLE (b) * (scDOUBLE (n) + 1.0 - 2.0 * scDOUBLE (b));
 
     double  result = squareSun / divisor;
 
-    return  (T)result;
+    return  static_cast<T> (result);
   }  /* CalcTTLQC */
-
-
-
 
 
 
   //  Quadrat-Valance Methods,  page 113
   template<typename T >
   T  Calc3TTLQC (const vector<T>&  v,
-                 kkint32           b
+                 size_t            b
                 )
   {
-    kkint32  i = 0;
-    kkint32  n = (kkint32)v.size ();
+    size_t  n = v.size ();
     
     double  squareSun = 0.0;
 
-    vector<T>  sumArray (v.size (), (T)0.0);
+    vector<T>  sumArray (v.size (), 0.0);
     sumArray[0] = v[0];
-    for  (i = 1;  i < n;  i++)
+    for  (size_t i = 1;  i < n;  i++)
       sumArray[i] = sumArray[i - 1] + v[i];
 
-    kkint32  end = n + 1 - (3 * b);
+    size_t  end = n + 1 - (3 * b);
 
-    for  (i = 0;  i < end;  i++)
+    for  (size_t i = 0;  i < end;  ++i)
     {
       T plusSide  = sumArray[i + b - 1];
       T minusSide = 2 * sumArray[i + b + b - 1];
@@ -259,11 +245,11 @@ namespace  KKB
       squareSun += deltaSquared;
     }
 
-    double  divisor = 8.0 * (double)b * ((double)n + 1.0 - 3.0 * (double)b);
+    double  divisor = 8.0 * scDOUBLE (b) * (scDOUBLE (n) + 1.0 - 3.0 * scDOUBLE (b));
 
     double  result = squareSun / divisor;
 
-    return  (T)result;
+    return  static_cast<T> (result);
   }  /* Calc3TTLQC */
 
 
@@ -271,8 +257,6 @@ namespace  KKB
   // As defined by Andrew Remsen
   // also look at http://www.pmel.noaa.gov/pubs/outstand/stab1646/statistics.shtml
   float   LLoydsIndexOfPatchiness (const KKB::VectorInt& bins);
-
-
 
 
 

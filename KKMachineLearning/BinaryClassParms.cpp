@@ -179,9 +179,9 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str)
 
 
 
-kkMemSize  BinaryClassParms::MemoryConsumedEstimated ()  const
+size_t  BinaryClassParms::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (*this)  + param.MemoryConsumedEstimated ();
+  size_t  memoryConsumedEstimated = sizeof (*this)  + param.MemoryConsumedEstimated ();
 
   if  (selectedFeatures)
     memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
@@ -227,9 +227,9 @@ BinaryClassParmsList::~BinaryClassParmsList ()
 
 
 
-kkMemSize  BinaryClassParmsList::MemoryConsumedEstimated ()  const
+size_t  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
+  size_t  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
   BinaryClassParmsList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
     memoryConsumedEstimated  += (*idx)->MemoryConsumedEstimated ();
@@ -256,7 +256,7 @@ float  BinaryClassParmsList::FeatureCountNet (FileDescConstPtr fileDesc)  const
     featureCountTotal += bcp->NumOfFeatures (fileDesc);
   }
 
-  return  (float)featureCountTotal / (float)size ();
+  return  scFLOAT (featureCountTotal() / scFLOAT (size ());
 }
 
 
@@ -323,7 +323,7 @@ void  BinaryClassParmsList::PushOnBack  (BinaryClassParmsPtr  binaryParms)
   if  (existingEntry)
   {
     // We have a duplicate entry
-    KKStr  errMsg (128);
+    KKStr  errMsg (128U);
     errMsg << "BinaryClassParmsList::PushOnBack   ***ERROR***  Duplicate Entry   " << binaryParms->Class1Name () << "\t" << binaryParms->Class2Name () << endl;
     cerr << errMsg << endl;
     throw  KKException (errMsg);
@@ -342,7 +342,7 @@ void  BinaryClassParmsList::PushOnFront (BinaryClassParmsPtr  binaryParms)
   if  (existingEntry)
   {
     // We have a duplicate entry
-    KKStr  errMsg (128);
+    KKStr  errMsg (128U);
     errMsg << "BinaryClassParmsList::PushOnFront   ***ERROR***  Duplicate Entry   " << binaryParms->Class1Name () << "\t" << binaryParms->Class2Name () << endl;
     cerr << errMsg << endl;
     throw  KKException (errMsg);

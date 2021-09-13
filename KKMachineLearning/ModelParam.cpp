@@ -82,9 +82,9 @@ ModelParam::~ModelParam  ()
 
 
 
-kkMemSize  ModelParam::MemoryConsumedEstimated ()  const
+size_t  ModelParam::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (ModelParam)
+  size_t  memoryConsumedEstimated = sizeof (ModelParam)
     +  fileName.MemoryConsumedEstimated ();
 
   if  (selectedFeatures)
@@ -332,7 +332,7 @@ void  ModelParam::ParseCmdLinePost (RunLog&  log)
 */
 KKStr   ModelParam::ToCmdLineStr () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   if  (selectedFeatures)
     cmdStr << "-SF " + selectedFeatures->ToCommaDelStr ();

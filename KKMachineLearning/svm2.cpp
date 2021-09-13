@@ -300,7 +300,7 @@ svm_parameter&  SVM289_MFS::svm_parameter::operator= (const svm_parameter& right
 
 KKStr   SVM289_MFS::svm_parameter::ToCmdLineStr ()  const
 {
-  KKStr cmdStr (200); // Initialized char* allocation to 200
+  KKStr cmdStr (200U); // Initialized char* allocation to 200
 
   cmdStr << "-CalcProb " << ((probability == 1) ? "Yes" : "No")  << "  "
          << "-c " << C              << "  "
@@ -399,7 +399,7 @@ void  SVM289_MFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
 
 KKStr   SVM289_MFS::svm_parameter::ToTabDelStr ()  const
 {
-  KKStr  result (256);
+  KKStr  result (256U);
 
   kkint32  x = 0;
 
@@ -4212,10 +4212,10 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
 }  /* CleanUpMemory */
 
 
-kkMemSize  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
+size_t  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
 {
   kkuint32   numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
-  kkMemSize  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
+  size_t  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
 
   if  (sv_coef)         memoryConsumedEstimated += sizeof (double)  * (nr_class - 1) * numSVs;    // sv_coef
   if  (rho)             memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;  // rho
@@ -4312,7 +4312,7 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
   {
     const  FeatureVector&  p = SV[i];
 
-    KKStr  svStr (512);
+    KKStr  svStr (512U);
     svStr << p.ExampleFileName () << "\t" << p.NumOfFeatures ();
     for  (kkuint32 j = 0;  j < nr_class - 1;  j++)
     {

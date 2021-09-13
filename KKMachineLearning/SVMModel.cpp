@@ -427,9 +427,9 @@ void  SVMModel::AllocateXSpaces ()
 
 
 
-kkMemSize  SVMModel::MemoryConsumedEstimated ()  const
+size_t SVMModel::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (SVMModel)
+  size_t  memoryConsumedEstimated = sizeof (SVMModel)
        + assignments.MemoryConsumedEstimated ()
        + sizeof (kkint32) * oneVsAllAssignment.size ()
        + sizeof (kkint32) * cardinality_table.size ()
@@ -2296,7 +2296,7 @@ void  SVMModel::WriteXML (const KKStr&  varName,
     for  (kkuint32 modelsIDX = 0;  modelsIDX < numOfModels;  ++modelsIDX)
     {
       BinaryClassParmsPtr  binClassParms = binaryParameters[modelsIDX];
-      KKStr  binaryClassNames (256);
+      KKStr  binaryClassNames (256U);
       binaryClassNames << modelsIDX << "\t" << binClassParms->Class1Name () << "\t"  << binClassParms->Class2Name ();
       binaryClassNames.WriteXML ("BinaryCombo", o);
       KKStr  binaryComboModelName = "BinaryComboModel_" + StrFormatInt (modelsIDX, "000");

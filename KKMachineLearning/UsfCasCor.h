@@ -288,7 +288,7 @@ namespace KKMLL
 
     ~UsfCasCor ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
 
     void  TrainNewClassifier (kkint32                 _in_limit,

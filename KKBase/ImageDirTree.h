@@ -40,7 +40,7 @@ namespace  KKB
 
 
     /** @brief returns the number of image files found the sub-directory tree. */
-    kkuint32  Size ()  {return  (kkuint32)entries.size ();}
+    kkuint32  Size ()  {return  scUINT32 (entries.size ());}
 
 
     /**

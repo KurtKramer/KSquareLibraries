@@ -454,7 +454,7 @@ namespace KKB
      *@returns A 2-dimensional matrix representing the Gaussian kernel.
      */
     static
-    MatrixDPtr    BuildGaussian2dKernel (float  sigma);  // Used by the Gaussian Smoothing algorithm.
+    MatrixDPtr    BuildGaussian2dKernel (double  sigma);  // Used by the Gaussian Smoothing algorithm.
 
 
     kkint32       CalcArea ();
@@ -1058,7 +1058,7 @@ namespace KKB
 
     RasterPtr     HistogramGrayscaleImage ()  const;
 
-    kkMemSize     MemoryConsumedEstimated ()  const;
+    size_t     MemoryConsumedEstimated ()  const;
 
     RasterPtr     Padded (kkint32 padding);  // Creates a Padded raster object.
 

@@ -133,13 +133,12 @@ void   ModelParamUsfCasCor::ParseCmdLinePost ()
 
 
 
-
 /**
  * @brief Convert all parameters to a command line string.
 */
 KKStr   ModelParamUsfCasCor::ToCmdLineStr () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   cmdStr << "-InLimit "  << in_limit  << "  "
          << "-OutLimit " << out_limit;

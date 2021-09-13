@@ -14,13 +14,13 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-WarningsLowered()
+WarningsLowered
 #if defined(FFTW_AVAILABLE)
 #  include  <fftw3.h>
 //#else
 //#  include  "kku_fftw.h"
 #endif
-WarningsRestored()
+WarningsRestored
 
 #include "kku_fftw.h"
 
@@ -214,7 +214,7 @@ void  ContourFollower::GetNextPixel (kkint32&  nextRow,
                        )
   {
     float  mag = 0.0f;
-    mag = (float)sqrt (dest[index][0] * dest[index][0] + dest[index][1] * dest[index][1]);
+    mag = static_cast<float> (sqrt (dest[index][0] * dest[index][0] + dest[index][1] * dest[index][1]));
     return  mag;
   }  /* CalcMagnitude */
 #else
@@ -609,8 +609,8 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
     #if  defined(FFTW_AVAILABLE)
       src[x][0] = src[x][0] - centerRow;
       src[x][1] = src[x][1] - centerCol;
-      totalRe+= (float)src[x][0];
-      totalIm+= (float)src[x][1];
+      totalRe+= static_cast<float> (src[x][0]);
+      totalIm+= static_cast<float> (src[x][1]);
     #else
       src[x].real (src[x].real () - centerRow);
       src[x].imag (src[x].imag () - centerCol);
@@ -652,7 +652,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
   for  (kkint32 x = 1; x < numOfBorderPixels;  ++x)
   {
     #if  defined(FFTW_AVAILABLE)
-      float mag = (float)sqrt (dest[x][0] * dest[x][0] + dest[x][1] * dest[x][1]);
+      float mag = static_cast<float> (sqrt (dest[x][0] * dest[x][0] + dest[x][1] * dest[x][1]));
     #else
       float mag = sqrt (dest[x].real () * dest[x].real () + dest[x].imag () * dest[x].imag ());
     #endif

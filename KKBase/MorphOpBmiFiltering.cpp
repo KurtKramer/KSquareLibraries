@@ -33,7 +33,7 @@ MorphOpBmiFiltering::~MorphOpBmiFiltering ()
 
 
 
-kkMemSize  MorphOpBmiFiltering::MemoryConsumedEstimated ()  const
+size_t  MorphOpBmiFiltering::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
@@ -74,7 +74,7 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
   erodedImage->CalcOrientationAndEigerRatio (eigenRatio,
                                              orientationAngle
                                             );
-  if  ((orientationAngle > TwoPie)  ||  (orientationAngle < -TwoPie))
+  if  ((orientationAngle > TwoPieF)  ||  (orientationAngle < -TwoPieF))
   {
     orientationAngle = 0.0;
     eigenRatio = 1.0;
@@ -100,19 +100,16 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
     boundingLength = brCol - tlCol + 1;
     boundingWidth  = brRow - tlRow + 1;
 
-    lengthVsWidth = (float)boundingWidth / (float)boundingLength;  // Prior 2 Format 18
+    lengthVsWidth = scFLOAT (boundingWidth) / scFLOAT (boundingLength);  // Prior 2 Format 18
     
     kkint32 firstQtr = tlCol +  (boundingLength / 4);
     kkint32 thirdQtr = tlCol + ((boundingLength * 3) / 4);
 
-    kkint32 row;
-    kkint32 col;
-    
     uchar** grey = rotatedImage->Green ();
 
-    for  (row = tlRow;  row <= brRow;  row++)
+    for  (kkint32 row = tlRow;  row <= brRow;  ++row)
     {
-      for (col = tlCol;  col <= firstQtr;  col++)
+      for (kkint32 col = tlCol;  col <= firstQtr;  ++col)
       {
         if  (grey[row][col] > 0)
         {
@@ -120,7 +117,7 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
         }
       }
 
-      for (col = thirdQtr;  col <= brCol;  col++)
+      for (kkint32 col = thirdQtr;  col <= brCol;  ++col)
       {
         if  (grey[row][col] > 0)
         {
@@ -130,12 +127,12 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
     }
 
     beltWidth = 0;
-    for (col = tlCol;  col <= brCol;  col++)
+    for (kkint32 col = tlCol;  col <= brCol;  ++col)
     {
       kkint32 rowFirst = -1;
       kkint32 rowLast  = 0;
 
-      for  (row = tlRow;  row <= brRow;  ++row)
+      for  (kkint32 row = tlRow;  row <= brRow;  ++row)
       {
         if  (grey[row][col] > 0)
         {
@@ -161,11 +158,11 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
     {
       if  (firstQtrWeight > forthQtrWeight)
       {
-        headTailRatio = (float)firstQtrWeight / (float)forthQtrWeight;
+        headTailRatio = scFLOAT (firstQtrWeight) / scFLOAT (forthQtrWeight);
       }
       else
       {
-        headTailRatio = (float)forthQtrWeight / (float)firstQtrWeight;
+        headTailRatio = scFLOAT (forthQtrWeight) / scFLOAT (firstQtrWeight);
       }
     }
   }
@@ -174,10 +171,10 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
   //float  r = sqrt (area / (float)PIE);
   //float  estVolume = (4.0f / 3.0f) * (float)PIE * r * r * r;
 
-  float  estVolume = (float)rotatedImage->CalcArea ();
-  float  boundingLengthSquare = (float)(boundingLength * boundingLength);
+  float  estVolume = scFLOAT (rotatedImage->CalcArea ());
+  float  boundingLengthSquare = scFLOAT (boundingLength * boundingLength);
   if  (boundingLengthSquare > 0.0f)
-    estimatedBmi = estVolume / (float)(boundingLength * boundingLength);
+    estimatedBmi = estVolume / scFLOAT (boundingLength * boundingLength);
   else
     estimatedBmi = 0.0f;
 
@@ -199,8 +196,8 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
   // 1) Remove Appendages.
   // 2) Perform Length vs Width
 
-  uchar  binarizeTHmin = (uchar)(srcRaster->BackgroundPixelTH () + 1);
-  uchar  binarizeTHmax = (uchar)125;
+  uchar  binarizeTHmin = scUCHAR (srcRaster->BackgroundPixelTH () + 1);
+  uchar  binarizeTHmax = scUCHAR (125);
 
   rotatedImage = ProcessBmi (binarizeTHmax);
   kkint32    rectangularAreaMax = boundingLength * boundingWidth;
@@ -220,7 +217,7 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
     }
   }
 
-  kkint32  rectangularAreaTH = (kkint32)(0.5f + (float)(rectangularAreaMax + rectangularAreaMin) * (1.0f / 2.0f));
+  kkint32  rectangularAreaTH = scINT32 (0.5f + scFLOAT (rectangularAreaMax + rectangularAreaMin) * (1.0f / 2.0f));
 
   uchar  binarizeTHminLast = binarizeTHmin;
   while  (binarizeTHmin < binarizeTHmax)
@@ -244,12 +241,8 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
     if  (rectangularAreaMin < rectangularAreaTH)
       break;
 
-    binarizeTHmin = (uchar)(binarizeTHmin + 5);
+    binarizeTHmin = scUCHAR (binarizeTHmin + 5);
   }
 
   return  rotatedImage;
 }  /* PerformOperation */
-
-
-
-

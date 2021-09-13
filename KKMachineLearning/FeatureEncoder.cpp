@@ -175,9 +175,9 @@ FeatureEncoder::~FeatureEncoder ()
 
 
 
-kkMemSize  FeatureEncoder::MemoryConsumedEstimated ()  const
+size_t  FeatureEncoder::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FeatureEncoder) 
+  size_t  memoryConsumedEstimated = sizeof (FeatureEncoder) 
     + selectedFeatures.MemoryConsumedEstimated ()
     + numOfFeatures * sizeof (kkint32);
 
@@ -215,7 +215,7 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     if  (y >= numEncodedFeatures)
     {
-      KKStr  errMsg (128);
+      KKStr  errMsg (128U);
       errMsg << "FeatureEncoder::CreateEncodedFileDesc  numEncodedFeatures [" << numEncodedFeatures << "]  exceeded.";
       cerr << endl
            << "FeatureEncoder::CreateEncodedFileDesc     *** ERROR ***"           << endl
@@ -305,7 +305,7 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescConstPtr  encodedFileD
 {
   if (numEncodedFeatures != (kkint32)encodedFileDesc->NumOfFields ())
   {
-    KKStr  errMsg(156);
+    KKStr  errMsg(156U);
     errMsg
       << "FeatureEncoder::EncodeAExample  numEncodedFeatures: " << numEncodedFeatures << " "
       << "not equal  encodedFileDesc->NumOfFields" << encodedFileDesc->NumOfFields ();
@@ -404,7 +404,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
 
     if  (y >= xSpaceNeededPerExample)
     {
-      KKStr  errMsg (128);
+      KKStr  errMsg (128U);
       errMsg << "FeatureEncoder::EncodeAExample  ***ERROR***   xSpaceNeededPerExample[" << xSpaceNeededPerExample << "].";
       cerr << endl
            << "FeatureEncoder::EncodeAExample     *** ERROR ***"  << endl

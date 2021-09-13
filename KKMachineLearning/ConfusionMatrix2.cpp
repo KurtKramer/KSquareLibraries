@@ -1142,7 +1142,7 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)  const
     << "  </thead>"                                                                              << endl
     << "  <tbody style=\"font-weight:normal; text-align:right; font-family:Courier\">" << endl;
 
-  KKStr  ln (1024);
+  KKStr  ln (1024U);
   KKStr  accStr;
 
   for  (kkuint32 classNum = 0;  classNum < classCount;  classNum++)
@@ -2249,7 +2249,7 @@ KKStr   ConfusionMatrix2::AccuracyStr ()
     if  (countsByKnownClass [x] == 0)
       accuracys[x] = 0;
     else
-      accuracys[x] = (100.0 * (double) predictedCountsCM [x] [x]) / ((double) (countsByKnownClass [x]));
+      accuracys[x] = (100.0 * scDOUBLE (predictedCountsCM [x] [x])) / (scDOUBLE (countsByKnownClass [x]));
   }
 
   KKStr  accuracyStr;
@@ -2304,7 +2304,7 @@ double  ConfusionMatrix2::Accuracy (MLClassPtr  mlClass)  const
 
   auto classIdx = classNum.value ();
 
-  float  accuracy = (float)(100.0 * (predictedCountsCM[classIdx] [classIdx])  /  (countsByKnownClass [classIdx]));
+  float  accuracy = scFLOAT (100.0 * (predictedCountsCM[classIdx] [classIdx])  /  (countsByKnownClass [classIdx]));
 
   return  accuracy;
 }  /* Accuracy */
@@ -2322,7 +2322,7 @@ VectorFloat ConfusionMatrix2::AccuracyByClass  ()  const
     }
     else
     {
-      float  classAccuracy = (float)(100.0f * (predictedCountsCM[classNum] [classNum])  / (countsByKnownClass [classNum]));
+      float  classAccuracy = scFLOAT (100.0f * (predictedCountsCM[classNum] [classNum])  / (countsByKnownClass [classNum]));
       accuracies.push_back (classAccuracy);
     }
   }
@@ -2341,12 +2341,12 @@ float  ConfusionMatrix2::AccuracyClassWeightedEqually ()  const
   {
     if  (countsByKnownClass [classNum] != 0)
     {
-      float  classAccuracy = (float)(100.0f * (predictedCountsCM[classNum] [classNum])  / (countsByKnownClass [classNum]));
+      float  classAccuracy = scFLOAT (100.0f * (predictedCountsCM[classNum] [classNum])  / (countsByKnownClass [classNum]));
       totalAccuracy += classAccuracy;
     }
   }
 
-  float  weightedAccuracy = (totalAccuracy / (float)classSize);
+  float  weightedAccuracy = (totalAccuracy / scFLOAT (classSize));
 
   return  weightedAccuracy;
 }  /* AccuracyClassWeightedEqually */
@@ -2509,7 +2509,7 @@ void ConfusionMatrix2::PrintConfusionMatrixHTML (const char *title,
   file  << "<br/>" << endl;
   file  << "<p><b>Accuracy for Non Noise</b> "
           << setprecision (5)
-          << (((double)totalNonNoiseRight / (double)totalNonNoise) * 100.0)
+          << ((scDOUBLE (totalNonNoiseRight) / scDOUBLE (totalNonNoise)) * 100.0)
           << "%</p>"
           << endl;
   file  << "<table cellpadding=\"2\" cellspacing=\"0\" border=\"2\">" << endl;
@@ -2661,7 +2661,7 @@ KKStr  ArrayToDelimitedDelimitedStr (const vector<T>&   v,
                                      char               delimiter
                                     )
 {
-  KKStr s ((kkint32)v.size () * 10);
+  KKStr s (v.size () * 10U);
 
   for  (kkuint32 x = 0;  x < v.size ();  ++x)
   {
@@ -2681,11 +2681,11 @@ void   DelimitedStrToArray (vector<kkint32>&  v,
 {
   v.clear ();
   VectorKKStr  fields = l.Split (delimiter);
-  kkuint32 lastField = (kkuint32)fields.size ();
+  kkuint32 lastField = scUINT32 (fields.size ());
   for  (kkuint32 idx = 0;  idx < lastField;  ++idx)
     v.push_back (fields[idx].ToInt32 ());
   while  (v.size () < minSize)
-    v.push_back ((kkint32)0);
+    v.push_back (0);
 }  /* DelimitedStrToArray */
 
 
@@ -2702,7 +2702,7 @@ void   DelimitedStrToArray (vector<double>&  v,
   for  (kkuint32 idx = 0;  idx < lastField;  idx++)
     v.push_back (fields[idx].ToDouble ());
   while  (v.size () < minSize)
-    v.push_back ((double)0);
+    v.push_back (0.0);
 }  /* DelimitedStrToArray */
 
 
@@ -2714,7 +2714,7 @@ void   DelimitedStrToArray (kkint32*      _array,
                            )
 {
   VectorKKStr  fields = _l.Split (_delimiter);
-  kkuint32  lastField = Min ((kkuint32)fields.size (), _count);
+  kkuint32  lastField = Min (scUINT32 (fields.size ()), _count);
   for  (kkuint32 idx = 0;  idx < lastField;  ++idx)
     _array[idx] = fields[idx].ToInt ();
 }  /* DelimitedStrToArray */
@@ -2728,7 +2728,7 @@ void   DelimitedStrToArray (double*        _array,
                            )
 {
   VectorKKStr  fields = _l.Split (_delimiter);
-  kkuint32  lastField = Min ((kkuint32)fields.size (), _count);
+  kkuint32  lastField = Min (scUINT32 (fields.size ()), _count);
   for  (kkuint32 idx = 0;  idx < lastField;  ++idx)
     _array[idx] = fields[idx].ToDouble ();
 }  /* DelimitedStrToArray */
@@ -2887,7 +2887,7 @@ void   ConfusionMatrix2::Read (istream&  f,
 
   char  buff[10240];
   buff[0] = 0;
-  KKStr l  (512);
+  KKStr l  (512U);
 
   classes.DeleteContents ();
 
@@ -3077,7 +3077,7 @@ ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix (RunLog
     meanCM->AddIn (*cm, log); 
   }
 
-  double  factor = 1.0 / (double)QueueSize ();
+  double  factor = 1.0 / scDOUBLE (QueueSize ());
 
   meanCM->FactorCounts (factor);
 

@@ -107,7 +107,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
                               kkint32      right
                              )
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt (right, "0");
   htmlReport.Append (s.Str ());
   return  htmlReport;
@@ -119,7 +119,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
                               kkuint32     right
                              )
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt (right, "0");
   htmlReport.Append (s.Str ());
   return  htmlReport;
@@ -131,7 +131,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
                               kkint64      right
                              )
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt64 (right, "0");
   htmlReport.Append (s.Str ());
   return  htmlReport;
@@ -143,7 +143,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
                               kkuint64     right
                              )
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt64 (right, "0");
   htmlReport.Append (s.Str ());
   return  htmlReport;
@@ -192,7 +192,6 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
 
 
 
-
 HTMLReport&  KKB::operator<< (HTMLReport&   htmlReport,
                               const KKStr&  right
                              )
@@ -200,7 +199,6 @@ HTMLReport&  KKB::operator<< (HTMLReport&   htmlReport,
   htmlReport.Append (right.Str ());
   return  htmlReport;
 }
-
 
 
 
@@ -224,7 +222,6 @@ HTMLReport&  KKB::operator<< (HTMLReport&      htmlReport,
   return  htmlReport;
 }
  
-
 
 
 HTMLReport& __cdecl KKB::operator<< (KKB::HTMLReport&   htmlReport,

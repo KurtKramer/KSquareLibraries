@@ -5,9 +5,9 @@
 #ifndef _CHART_
 #define _CHART_
 
-WarningsLowered()
+WarningsLowered
 #include <vector>
-WarningsRestored()
+WarningsRestored
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"

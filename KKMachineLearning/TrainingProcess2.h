@@ -215,7 +215,7 @@ namespace KKMLL
     virtual
     ~TrainingProcess2 ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
 
 
@@ -412,7 +412,7 @@ namespace KKMLL
     TrainingProcess2List (bool  _owner);
     virtual  ~TrainingProcess2List ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
   };
 

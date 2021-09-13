@@ -33,7 +33,7 @@
 
 //#define WIN32
 
-WarningsLowered ()
+WarningsLowered
 
 #if  defined(WIN32) || defined(WIN64)
 
@@ -53,10 +53,11 @@ WarningsLowered ()
 #include <type_traits>
 #include <vector>
 
-WarningsRestored ()
+WarningsRestored
 
 #define  PIE            3.1415926535897932384626433832795
 #define  TwoPie         6.28318530717959
+#define  TwoPieF        6.28318530717959f
 #define  TwoThirdsPie   2.09439510239319
 #define  OneHalfPie     1.57079632679490
 #define  OneThirdPie    1.04719755119660
@@ -67,19 +68,6 @@ WarningsRestored ()
 
 #undef min
 #undef max
-
-
-#define scFLOAT(X)  static_cast<float>(##X)
-#define scDOUBLE(X)  static_cast<double>(##X)
-
-#define scINT16(X)  static_cast<int16_t>(##X)
-#define scUINT16(X)  static_cast<uint16_t>(##X)
-
-#define scINT32(X)  static_cast<int32_t>(##X)
-#define scUINT32(X)  static_cast<uint32_t>(##X)
-
-#define scINT64(X)  static_cast<int64_t>(##X)
-#define scUINT64(X)  static_cast<uint64_t>(##X)
 
 /*----------------------------------------------------------------------------
   Definition of the namespace "KKB"  which stands for Kurt Kramer Base Library.
@@ -110,7 +98,7 @@ namespace KKB
     typedef  __int64           kkint64;
     typedef  unsigned __int64  kkuint64;
   #else
-  #if  defined(__GNUG__)
+  #if  defined(__linux__)
     typedef  __INT8_TYPE__     kkint8;
     typedef  __UINT8_TYPE__    kkuint8;
     typedef  __INT16_TYPE__    kkint16;  /**<@brief  16 bit signed integer. */
@@ -182,8 +170,6 @@ namespace KKB
 
   typedef  volatile const bool  VolConstBool;  /**< Commonly used for passing Cancel Flag in multi threaded environment.  */
 
-  typedef kkuint64  kkMemSize;
-
   typedef std::optional<kkuint16> OptionUInt16;
 
   typedef std::optional<kkint32>  OptionInt32;
@@ -191,6 +177,43 @@ namespace KKB
   typedef std::optional<kkuint32> OptionUInt32;
 
   typedef std::vector<OptionUInt32>  VectorOptionUInt32;
+
+
+template<typename T>  inline
+float  scFLOAT(T x)  {return static_cast<float> (x);}
+
+template<typename T>  inline
+double  scDOUBLE(T x)  {return static_cast<double> (x);}
+
+template<typename T>  inline
+char scCHAR(T x)   {return static_cast<char> (x);}
+
+template<typename T>  inline
+uchar scUCHAR(T x)   {return static_cast<uchar> (x);}
+
+template<typename T>  inline
+int8_t  scINT8(T x)  {return static_cast<int8_t> (x);}
+
+template<typename T>  inline
+uint8_t  scUINT8(T x)  {return static_cast<uint8_t> (x);}
+
+template<typename T>  inline
+int16_t  scINT16(T x)  {return static_cast<int16_t> (x);}
+
+template<typename T>  inline
+uint16_t  scUINT16(T x)  {return static_cast<uint16_t> (x);}
+
+template<typename T>  inline
+int32_t  scINT32(T x)  {return static_cast<int32_t> (x);}
+
+template<typename T>  inline
+uint32_t  scUINT32(T x)  {return static_cast<uint32_t> (x);}
+
+template<typename T>  inline
+int64_t  scINT64 (T x)  {return static_cast<int64_t> (x);}
+
+template<typename T>  inline
+uint64_t  scUINT64 (T x)  {return static_cast<uint64_t> (x);}
 
 
 
@@ -317,13 +340,17 @@ int32_t  toint32_t (T x)
 {
   if  constexpr (std::is_floating_point<T>::value)
   {
-    if  (x > static_cast<float>(std::numeric_limits<int32_t>::max()))
+    if  ((x < static_cast<T> (std::numeric_limits<int32_t>::min ()))  ||  (x > static_cast<T> (std::numeric_limits<int32_t>::max ())))
     {
+      std::stringstream errMsg;
+      errMsg << "toint32_t  ***ERROR***  x: " << x << " not in range of int32_t  min: " << std::numeric_limits<int32_t>::min () <<  "  max: " << std::numeric_limits<int32_t>::max () << '!';
+      std::cerr << '\n' << errMsg.str () << "\n\n";
+      throw std::range_error (errMsg.str ());
     }
   }
   else
   {
-    static_assert(std::is_integral<T>::value, "Integral required.");
+    static_assert (std::is_integral<T>::value, "Integral required.");
 
     if  constexpr (std::is_signed<T>::value)
     {

@@ -83,7 +83,6 @@ XmlTokenizer::XmlTokenizer (const KKStr&  _fileName,
 
 
 
-
 XmlTokenizer::~XmlTokenizer ()
 {
   if  (weOwnTokenBuffer)
@@ -92,7 +91,6 @@ XmlTokenizer::~XmlTokenizer ()
     in = NULL;
   }
 }
-
 
 
 
@@ -119,7 +117,6 @@ void  XmlTokenizer::Initialize ()
 
 
 
-
 char  XmlTokenizer::LookUpEntity (const KKStr&  entityName)  const
 {
   map<KKStr,char>::const_iterator  idx;
@@ -129,7 +126,6 @@ char  XmlTokenizer::LookUpEntity (const KKStr&  entityName)  const
   else
     return idx->second;
 }
-
 
 
 
@@ -202,7 +198,6 @@ void  XmlTokenizer::PushTokenOnFront (KKStrPtr  t)
 {
   tokenList.push_front (t);
 }
-
 
 
 
@@ -287,8 +282,6 @@ char  XmlTokenizer::GetNextChar ()
 
 
 
-
-
 void  XmlTokenizer::ReadInNextLogicalToken ()
 {
   KKStrPtr  t = GetNextTokenRaw ();
@@ -320,7 +313,6 @@ bool  XmlTokenizer::WhiteSpaceChar (char c)  const
 
 
 
-
 KKStrPtr  XmlTokenizer::GetNextTokenRaw ()
 {
   if  (atEndOfFile)
@@ -347,16 +339,14 @@ KKStrPtr  XmlTokenizer::GetNextTokenRaw ()
     nextRawToken = ProcessBodyToken ();
   }
 
-
   return  nextRawToken;
 }  /* GetNextTokenRaw */
 
 
 
-
 KKStrPtr  XmlTokenizer::ProcessTagToken ()
 {
-  KKStrPtr  token = new KKStr(100);
+  KKStrPtr  token = new KKStr (100u);
   token->Append (firstChar);
   GetNextChar ();
 
@@ -416,7 +406,6 @@ KKStrPtr  XmlTokenizer::ProcessTagToken ()
 
 
 
-
 /**
  *@brief  Processes a XML entity such as "&lt;";  when you encounter a ampersand (&) in the stream you 
  * call this method; it will scan until it reaches the matching semi colon(';') character. The word
@@ -425,7 +414,7 @@ KKStrPtr  XmlTokenizer::ProcessTagToken ()
  */
 void  XmlTokenizer::ProcessAmpersand ()
 {
-  KKStr  entityName  (10);
+  KKStr  entityName (10u);
   if  (in->EndOfFile ())
   {
     atEndOfFile = true;
@@ -457,10 +446,9 @@ void  XmlTokenizer::ProcessAmpersand ()
 
 
 
-
 KKStrPtr  XmlTokenizer::ProcessBodyToken ()
 {
-  KKStrPtr  token = new KKStr(512);
+  KKStrPtr  token = new KKStr(512u);
 
   while  ((!atEndOfFile)  &&  (firstChar != '<')  &&  (firstChar != '\n'))
   {
@@ -478,10 +466,6 @@ KKStrPtr  XmlTokenizer::ProcessBodyToken ()
   // At this point we are either at end-of-file, end-of-line,  or the next character is "<" start of a tag field.
   return  token;
 }  /* ProcessTagToken */
-
-
-
-
 
 
 

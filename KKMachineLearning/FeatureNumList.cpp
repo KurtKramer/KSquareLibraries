@@ -99,7 +99,7 @@ FeatureNumList::FeatureNumList (const BitString&  bitString):
   auto bitStringLen = bitString.BitLen ();
   if (bitStringLen > maxIntType)
   {
-    KKStr errMsg (256);
+    KKStr errMsg (256U);
     errMsg << "FeatureNumList (const BitString&  bitString)  bitString.BitLen()[" << bitStringLen << "] >  maxIntType[" << maxIntType << "].";
     cerr << errMsg << endl;
     throw KKException (errMsg);
@@ -139,9 +139,9 @@ FeatureNumList::~FeatureNumList ()
 
 
 
-kkMemSize  FeatureNumList::MemoryConsumedEstimated ()  const
+size_t  FeatureNumList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FeatureNumList);
+  size_t  memoryConsumedEstimated = sizeof (FeatureNumList);
   if  (featureNums)
     memoryConsumedEstimated += sizeof (IntType) * featureNumsAllocatedSize;
 
@@ -406,7 +406,7 @@ FeatureNumList::IntType  FeatureNumList::operator[] (kkint32  _idx)  const
 {
   if  (_idx >= numOfFeatures)
   {
-    KKStr  errMsg (100);
+    KKStr  errMsg (100U);
     errMsg << "FeatureNumList::operator[]  ***ERROR***   Invalid Index[" << _idx << "] requested.";
     cerr << endl << errMsg << endl << endl;
     throw  KKException (errMsg);
@@ -421,7 +421,7 @@ FeatureNumList::IntType  FeatureNumList::operator[] (kkint32  _idx)  const
 
 KKStr  FeatureNumList::ToString ()  const
 {
-  KKStr  featureNumStr (numOfFeatures * 6);
+  KKStr  featureNumStr (numOfFeatures * 6U);
   
   if  (numOfFeatures <= 0)
     return featureNumStr;

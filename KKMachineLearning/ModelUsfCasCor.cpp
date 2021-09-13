@@ -92,9 +92,9 @@ ModelUsfCasCor::~ModelUsfCasCor ()
 
 
 
-kkMemSize  ModelUsfCasCor::MemoryConsumedEstimated ()  const
+size_t  ModelUsfCasCor::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  size_t  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                        sizeof (usfCasCorClassifier);
 
   if  (usfCasCorClassifier)
@@ -488,7 +488,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
       }
       else
       {
-        KKStr  errMsg (128);
+        KKStr  errMsg (128U);
         errMsg << "ModelUsfCasCor::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
         log.Level (-1) << endl << errMsg << endl << endl;
         AddErrorMsg (errMsg, 0);
@@ -508,7 +508,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
 
     if  (Model::param == NULL)
     {
-      KKStr errMsg (128);
+      KKStr errMsg (128U);
       errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
       AddErrorMsg (errMsg, 0);
       log.Level (-1) << endl << errMsg << endl << endl;
@@ -516,7 +516,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
 
     else if  (typeid (*Model::param) != typeid(ModelParamUsfCasCor))
     {
-      KKStr errMsg (128);
+      KKStr errMsg (198U);
       errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
       AddErrorMsg (errMsg, 0);
       log.Level (-1) << endl << errMsg << endl << endl;

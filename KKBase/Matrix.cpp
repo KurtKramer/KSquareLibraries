@@ -36,7 +36,7 @@ void  KKB::MultiplyMatrix (const Matrix <float> & a,  const Matrix<float>& b,  M
 
   if (aNumCols != bNumRows)
   {
-    KKStr  msg (100);
+    KKStr  msg (160U);
     msg << "Matrix::operator*   **** ERROR ****,  Dimension Mismatch  Left[" << aNumRows << "," << aNumCols << "]  Right[" << bNumRows << "," << bNumCols << "].";
     std::cerr << std::endl << msg << std::endl << std::endl;
     throw  KKException (msg);
@@ -92,7 +92,7 @@ void  KKB::MultiplyMatrix (const Matrix <double> & a, const Matrix<double>& b, M
 
   if (aNumCols != bNumRows)
   {
-    KKStr  msg (100);
+    KKStr  msg (160U);
     msg << "Matrix::operator*   **** ERROR ****,  Dimension Mismatch  Left[" << aNumRows << "," << aNumCols << "]  Right[" << bNumRows << "," << bNumCols << "].";
     std::cerr << std::endl << msg << std::endl << std::endl;
     throw  KKException (msg);

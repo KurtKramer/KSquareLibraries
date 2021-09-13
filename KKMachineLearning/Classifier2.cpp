@@ -115,9 +115,9 @@ Classifier2::~Classifier2 ()
 }
 
 
-kkMemSize  Classifier2::MemoryConsumedEstimated ()  const
+size_t  Classifier2::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (*this);
+  size_t  memoryConsumedEstimated = sizeof (*this);
   if  (mlClasses)  memoryConsumedEstimated += mlClasses->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
@@ -475,7 +475,7 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
 {
   ClassProbListPtr  predictions = ProbabilitiesByClass (example);
 
-  kkuint32  numClasses = (kkuint32)classes.size ();
+  kkuint32  numClasses = scUINT32 (classes.size ());
   for  (kkuint32 x = 0;  x < numClasses;  ++x)
   {
     votes[x] = 0;
@@ -485,7 +485,7 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
     ClassProbConstPtr cp = predictions->LookUp (c);
     if  (cp)
     {
-      votes[x] = (kkint32)(0.5f + cp->votes);
+      votes[x] = scINT32 (0.5f + cp->votes);
       probabilities[x] = cp->probability;
     }
   }

@@ -457,9 +457,9 @@ void  UsfCasCor::CleanUpMemory ()
 
 
 
-kkMemSize  UsfCasCor::MemoryConsumedEstimated ()  const
+size_t  UsfCasCor::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (*this);
+  size_t  memoryConsumedEstimated = sizeof (*this);
 
   if  (feature_type)     memoryConsumedEstimated += Ninputs  * sizeof (int);
   if  (SumErrors)        memoryConsumedEstimated += Noutputs * sizeof (float);
@@ -2550,7 +2550,7 @@ void  UsfCasCor::OUT_PASS_OUTPUT ()
  */
 KKStr   UsfCasCor::PRINT_SUMMARY (int n)
 {
-  KKStr  result (20);
+  KKStr  result (40U);
   switch  (ErrorMeasure)
   {
   case BITS:

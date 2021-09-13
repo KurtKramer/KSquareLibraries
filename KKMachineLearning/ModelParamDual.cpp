@@ -226,7 +226,7 @@ void   ModelParamDual::ParseCmdLinePost (RunLog&   log)
 */
 KKStr   ModelParamDual::ToCmdLineStr () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
   cmdStr = ModelParam::ToCmdLineStr ();
 
   if  (!configFileName1.Empty ())

@@ -107,7 +107,7 @@ namespace KKMLL
                                       FeatureVectorPtr  src
                                      );
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     virtual
     void  ReadXML (XmlStream&      s,

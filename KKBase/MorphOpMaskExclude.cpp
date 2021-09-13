@@ -33,10 +33,10 @@ MorphOpMaskExclude::~MorphOpMaskExclude ()
 
 
 
-kkMemSize  MorphOpMaskExclude::MemoryConsumedEstimated ()
+size_t  MorphOpMaskExclude::MemoryConsumedEstimated ()  const
 {
-  kkint32  result = sizeof (*this);
-  return  result;
+  size_t  r = sizeof (*this);
+  return r;
 }
 
 
@@ -49,9 +49,9 @@ RasterPtr   MorphOpMaskExclude::PerformOperation (RasterConstPtr  _image)
 
   RasterPtr  maskImage = new Raster (*_image);
 
-  maskImage->Opening ((KKB::MaskTypes)mask);
+  maskImage->Opening (mask);
   //maskImage->ConnectedComponent();
-  maskImage->Dilation ((KKB::MaskTypes)mask);
+  maskImage->Dilation (mask);
 
   RasterPtr  result = new Raster (srcHeight, srcWidth, srcColor);
 

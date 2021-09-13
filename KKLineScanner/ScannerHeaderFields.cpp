@@ -51,11 +51,11 @@ ScannerHeaderFields::~ScannerHeaderFields ()
 
 
 
-kkMemSize  ScannerHeaderFields::MemoryConsumedEstimated () const
+size_t  ScannerHeaderFields::MemoryConsumedEstimated () const
 {
   goalie->StartBlock ();
 
-  kkMemSize  mem = sizeof (*this);
+  size_t  mem = sizeof (*this);
 
   if  (goalie)   mem += goalie->MemoryConsumedEstimated ();
   
@@ -131,11 +131,10 @@ void  ScannerHeaderFields::Add (const KKStr&  fieldName,
                                 double        fieldValue
                                )
 {
-  KKStr  fieldValueStr (20);
+  KKStr  fieldValueStr (20U);
   fieldValueStr << fieldValue;
   Add (fieldName, fieldValueStr);
 }
-
 
 
 
@@ -143,7 +142,7 @@ void  ScannerHeaderFields::Add (const KKStr&  fieldName,
                                 DateTime      fieldValue
                                )
 {
-  KKStr s (20);
+  KKStr s (20U);
   s << fieldValue;
   Add (fieldName, s);
 }

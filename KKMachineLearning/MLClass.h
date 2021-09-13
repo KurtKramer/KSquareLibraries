@@ -329,7 +329,7 @@ namespace KKMLL
                          bool&  _successfull
                         );
 
-    kkMemSize      MemoryConsumedEstimated () const;
+    size_t      MemoryConsumedEstimated () const;
       
     static
       MLClassListPtr  MergeClassList (const MLClassList&  list1,
@@ -453,7 +453,7 @@ namespace KKMLL
 
     virtual   ~MLClassIndexList ()  {}
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     virtual
       void  Clear ();
@@ -485,7 +485,7 @@ namespace KKMLL
     */
     MLClassPtr  GetMLClass (kkint32 classIndex);
 
-    MLClassPtr  GetMLClass (kkuint32 classIndex)  { return GetMLClass((kkint32)classIndex); }
+    MLClassPtr  GetMLClass (kkuint32 classIndex)  { return GetMLClass (scINT32 (classIndex)); }
     
     void  ParseClassIndexList (const KKStr&  s,
                                RunLog&       log

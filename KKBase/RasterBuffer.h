@@ -44,29 +44,29 @@ namespace KKB
      *            added (AddRaster).
      */
     RasterBuffer (const KKStr&  _name,
-                  kkint32       _maxNumOfBuffers
+                  size_t        _maxNumOfBuffers
                  );
 
     ~RasterBuffer ();
 
     /** @brief  Returns the number of 'Raster' instances that had to be deleted because the size of the queue had reached 'maxNumOfBuffers'. */
-    kkint32  RastersDropped          () const {return rastersDropped;}
+    size_t  RastersDropped          () const {return rastersDropped;}
 
-    kkint32  MaxNumOfBuffers         () const {return maxNumOfBuffers;}
+    size_t  MaxNumOfBuffers         () const {return maxNumOfBuffers;}
 
     /** @brief  The number of entries that are left in the buffer before 'maxNumOfBuffers' is reached. */
-    kkint32  NumAvailable            () const;
+    size_t  NumAvailable            () const;
 
-    kkint32  NumPopulated            () const;
+    size_t  NumPopulated            () const;
 
 
     /** @brief Returns an estimate of the amount of memory consumed in bytes.
      * @details  This will help managed objects keep track of how much memory they are using in the unmanaged world.
      */
-    kkMemSize  MemoryConsumedEstimated () const;
+    size_t  MemoryConsumedEstimated () const;
 
 
-    void  MaxNumOfBuffers (kkint32 _maxNumOfBuffers)  {maxNumOfBuffers = _maxNumOfBuffers;}
+    void  MaxNumOfBuffers (size_t _maxNumOfBuffers)  {maxNumOfBuffers = _maxNumOfBuffers;}
 
 
     /** @brief Adds 'raster' to the end of the queue giving the queue ownership of the instance.
@@ -94,10 +94,10 @@ namespace KKB
 
     std::queue<RasterPtr> buffer;
     GoalKeeperPtr         gateKeeper;
-    kkint32               maxNumOfBuffers;
-    kkMemSize             memoryConsumed;
+    size_t                maxNumOfBuffers;
+    size_t                memoryConsumed;
     KKStr                 name;             /**< Name of buffer. */
-    kkint32               rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */
+    size_t                rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */
   };  /* RasterBuffer */
 
 

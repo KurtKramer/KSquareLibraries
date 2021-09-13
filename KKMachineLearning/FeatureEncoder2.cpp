@@ -168,9 +168,9 @@ FeatureEncoder2::~FeatureEncoder2 ()
 }
 
 
-kkMemSize  FeatureEncoder2::MemoryConsumedEstimated ()  const
+size_t  FeatureEncoder2::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FeatureEncoder2)
+  size_t  memoryConsumedEstimated = sizeof (FeatureEncoder2)
           +  attributeVector.size ()   * sizeof (AttributeType)
           +  cardinalityVector.size () * sizeof (kkint32);
 

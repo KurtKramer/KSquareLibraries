@@ -961,7 +961,7 @@ void   KKJobManager::Run ()
       {
         // We will sleep for a bit until there are more jobs to run
         log.Level (10) << "KKJobManager::Run     No jobs avaialble to run; will sleep a bit." << endl;
-        osSleep ((float)(30 + rand () % 10)); 
+        osSleep (static_cast<float> (30 + rand () % 10)); 
       }
     }
 

@@ -57,9 +57,7 @@ namespace KKB
     virtual  ~Configuration ();
 
     virtual
-    void  Load (const KKB::KKStr&  _fileName,
-                RunLog&            _log
-               );
+    void  Load (const KKB::KKStr&  _fileName,  RunLog& _log);
 
 
     bool  FormatGood ()  const  {return  formatGood;}
@@ -79,7 +77,7 @@ namespace KKB
 
     void  LoadFile (RunLog& log);
 
-    virtual kkMemSize  MemoryConsumedEstimated ()  const;
+    virtual size_t  MemoryConsumedEstimated ()  const;
 
     kkuint32      NumOfSections ();
   

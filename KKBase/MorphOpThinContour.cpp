@@ -31,9 +31,9 @@ MorphOpThinContour::~MorphOpThinContour ()
 
 
 
-kkMemSize  MorphOpThinContour::MemoryConsumedEstimated ()
+size_t  MorphOpThinContour::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
+  size_t  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
   return  result;
 }
 

@@ -91,9 +91,9 @@ Attribute::~Attribute ()
 
 
 
-kkMemSize  Attribute::MemoryConsumedEstimated ()  const
+size_t  Attribute::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = static_cast<kkMemSize> (sizeof (Attribute))  +
+  size_t  memoryConsumedEstimated = static_cast<size_t> (sizeof (Attribute))  +
              name.MemoryConsumedEstimated ()               +
              nameUpper.MemoryConsumedEstimated ();
 
@@ -111,7 +111,7 @@ void  Attribute::ValidateNominalType (const KKStr&  funcName)  const
        (type != AttributeType::Symbolic)
       )
   {
-    KKStr  msg (80);
+    KKStr  msg (128U);
     msg <<  "Attribute::ValidateNominalType   Attribute[" << funcName << "] must be a Nominal or Symbolic Type to perform this operation.";
     cerr << std::endl << msg << std::endl << std::endl;
     throw  KKException (msg);
@@ -176,7 +176,7 @@ kkint32 Attribute::Cardinality ()  const
   if  ((type == AttributeType::Nominal)  ||  
        (type == AttributeType::Symbolic)
       )
-    return  (kkint32)nominalValuesUpper->size ();
+    return  scINT32 (nominalValuesUpper->size ());
   else
     return std::numeric_limits<kkint32>::max ();
 }  /* Cardinality */
@@ -336,14 +336,14 @@ AttributeList::~AttributeList ()
 
 
 
-kkMemSize  AttributeList::MemoryConsumedEstimated ()  const
+size_t  AttributeList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = static_cast<kkMemSize> (sizeof (AttributeList) + nameIndex.size ());
+  size_t  memoryConsumedEstimated = static_cast<size_t> (sizeof (AttributeList) + nameIndex.size ());
   
   {
     std::map<KKStr, AttributePtr>::const_iterator  idx;
     for  (idx = nameIndex.begin ();  idx != nameIndex.end ();  ++idx)
-      memoryConsumedEstimated += ((kkMemSize)sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
+      memoryConsumedEstimated += (sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
   }
 
   {
@@ -422,10 +422,10 @@ const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
       "Ordinal"
     };
 
-  if  ((type < (AttributeType)0)  ||  ((kkuint32)type >= AttributeTypeStrings.size ()))
+  if  (scUINT32 (type) >= AttributeTypeStrings.size ()))
     return  KKStr::EmptyStr ();
 
-  return AttributeTypeStrings[(int)type];
+  return AttributeTypeStrings[scUINT32 (type)];
 }  /* TypeStr */
 
 
@@ -557,7 +557,7 @@ AttributeTypeVector::AttributeTypeVector (kkuint32       initialSize,
 
 AttributeType  KKMLL::operator++(AttributeType  zed)
 {
-  return  (AttributeType)((int)zed + 1);
+  return  static_cast<AttributeType>(zed + 1) ;
 }  /* operator++ */
 
 
@@ -580,7 +580,7 @@ void  AttributeTypeVector::WriteXML (const KKStr&  varName,
 
   o << "CodedAttributeValues";
   for  (auto  idx: *this)
-    o << "\t" << (int)idx;
+    o << "\t" << scINT32 (idx);
   o << endl;
 
   XmlTag  tagEnd ("AttributeTypeVector", XmlTag::TagTypes::tagEnd);
@@ -623,14 +623,14 @@ void  AttributeTypeVector::ReadXML (XmlStream&      s,
       else if  (lineName.EqualIgnoreCase ("CodedAttributeValues"))
       {
         kkint32 x = p.GetNextTokenInt ();
-        if  ((x < 0)  ||  (x >= (kkint32)decodeTable.size ()))
+        if  ((x < 0)  ||  (x >= scINT32 (decodeTable.size ())))
         {
           log.Level (-1) << endl << "AttributeTypeVector::ReadXML   ***ERROR***    Invalid Code Value[" << x << "]" << endl  << endl;
           push_back (AttributeType::NULLAttribute);
         }
         else
         {
-          push_back ((AttributeType)x);
+          push_back (static_cast<AttributeType> (x));
         }
         
       }

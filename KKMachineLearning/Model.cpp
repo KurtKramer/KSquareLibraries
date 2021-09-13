@@ -210,9 +210,9 @@ Model::~Model ()
 }
 
 
-kkMemSize  Model::MemoryConsumedEstimated ()  const
+size_t  Model::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (Model) + rootFileName.MemoryConsumedEstimated ();
+  size_t  memoryConsumedEstimated = sizeof (Model) + rootFileName.MemoryConsumedEstimated ();
   if  (classes)              memoryConsumedEstimated += classes->MemoryConsumedEstimated ();
   if  (classesIndex)         memoryConsumedEstimated += classesIndex->MemoryConsumedEstimated ();
   if  (classProbs)           memoryConsumedEstimated += numOfClasses * sizeof (double);
@@ -877,7 +877,7 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
     {
       if  (ModelType ()  != Model::ModelTypeFromStr (e->ToKKStr ()))
       {
-        KKStr errMsg (128);
+        KKStr errMsg (198U);
         errMsg << "Model::ReadXMLModelToken   ***ERROR***   Wrong ModelType encountered;  Expected[" << ModelTypeStr () << "] "
                << "ModelType Specified[" << e->ToKKStr () << "].";
 
@@ -924,7 +924,7 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
       }
       else
       {
-        KKStr errMsg (128);
+        KKStr errMsg (128U);
         errMsg << "Model::ReadXMLModelToken   ***ERROR***   ModelParam variable 'param' not defined correctly.";
         log.Level (-1) << endl << errMsg << endl << endl;
         AddErrorMsg (errMsg, 0);

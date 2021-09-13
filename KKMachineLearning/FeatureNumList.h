@@ -154,7 +154,7 @@ namespace KKMLL
     
     bool  InList (IntType featureNum)  const;    /**< @brief returns true if '_featureNum' is one of the selected features. */
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
 
     /**

@@ -97,7 +97,7 @@ void  XmlStream::PopXmlElementLevel ()
 XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
 {
   XmlFactory*  result = NULL;
-  kkuint32  level = (kkuint32)factoryManagers.size ();
+  kkuint32  level = scUINT32 (factoryManagers.size ());
   while  ((level > 0)  &&  (result == NULL))
   {
     --level;
@@ -361,6 +361,17 @@ kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
 
 
 
+kkuint32  XmlAttributeList::AttributeValueUint32  (const KKStr&  name)   const
+{
+  KKStrConstPtr s = AttributeValueByName (name);
+  if  (!s)
+    return  0;
+  else
+    return s->ToUint32 ();
+}
+
+
+
 DateTime  XmlAttributeList::AttributeValueDateTime  (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
@@ -404,7 +415,7 @@ void  ReadWholeTag (istream&  i,
   tagStr = "";
   while  (!i.eof ())
   {
-    char nextCh = (char)(i.get ());
+    char nextCh = scCHAR (i.get ());
     if  (nextCh != 0)
       tagStr.Append (nextCh);
     if  (nextCh == '>')
@@ -502,7 +513,7 @@ XmlTag::XmlTag (istream&  i):
   if  (i.peek () == '<')
     i.get ();
 
-  KKStr tagStr (100);
+  KKStr tagStr (100U);
   ReadWholeTag (i, tagStr);
 
   if  (tagStr.FirstChar () == '/')
@@ -534,8 +545,8 @@ XmlTag::XmlTag (istream&  i):
   name.TrimRight ();
 
   name = tagStr.ExtractToken2 (" \n\r\t");
-  KKStr attributeName (20);
-  KKStr attributeValue (20);
+  KKStr attributeName (20U);
+  KKStr attributeValue (20U);
 
   while  (!tagStr.Empty ())
   {
@@ -664,10 +675,19 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 
 
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           kkuint64      attributeValue
+                         )
+{
+  attributes.AddAttribute (attributeName, StrFromUint64 (attributeValue));
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            double        attributeValue
                           )
 {
-  KKStr  s (20);
+  KKStr  s (20U);
   s << attributeValue;
   attributes.AddAttribute (attributeName, s);
 }
@@ -711,6 +731,13 @@ kkint32  XmlTag::AttributeValueInt32 (const KKStr& attributeName)  const
 
 
 
+kkuint32  XmlTag::AttributeValueUint32 (const KKStr& attributeName)  const
+{
+ return  this->attributes.AttributeValueUint32  (attributeName);
+}
+
+
+
 DateTime  XmlTag::AttributeValueDateTime (const KKStr&  attributeName)   const
 {
  return  this->attributes.AttributeValueDateTime  (attributeName);
@@ -727,7 +754,7 @@ const KKStr&  XmlTag::AttributeValueKKStr (const KKStr& attributeName)  const
 
 KKStr  XmlTag::ToString ()  const
 {
-  KKStr  s (name.Len () + (kkStrUint)attributes.size () * 30);
+  KKStr  s (name.Len () + scUINT32 (attributes.size () * 30U));
   s << "<";
   
   if  (tagType == TagTypes::tagEnd)
@@ -1002,7 +1029,7 @@ void   XmlFactoryManager::RegisterFactory  (XmlFactory*  factory)
   if  (existingFactory)
   {
     GlobalGoalKeeper::EndBlock ();
-    KKStr  errMsg (200);
+    KKStr  errMsg (200U);
     errMsg << "XmlFactoryManager::RegisterFactory  FactoryManager[" << name << "]  Factory[" << factory->ClassName () << "] already exists." ;
     cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
@@ -1187,7 +1214,7 @@ kkuint16 XmlElementDateTime::ToUint16 () const
     cerr << errMsg << endl;
     throw KKException (errMsg);
   }
-  return  (kkuint16)zed;
+  return  scUINT16 (zed);
 }
 
 
@@ -1202,7 +1229,7 @@ kkint32 XmlElementDateTime::ToInt32 () const
     cerr << errMsg << endl;
     throw KKException (errMsg);
   }
-  return  (kkuint16)zed;
+  return  scUINT16 (zed);
 }
 
 
@@ -1468,7 +1495,7 @@ void  XmlElementArrayFloat2DVarying::WriteXML
   XmlTag startTag ("ArrayFloat2DVarying", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
-  startTag.AddAtribute ("Height", (kkint32)height);
+  startTag.AddAtribute ("Height", scINT32 (height));
   startTag.WriteXML (o);
   o << endl;
 
@@ -1506,31 +1533,31 @@ XmlFactoryMacro(KKStrListIndexed)
 KKStr  TurnIntoKKStr (const void* value)
 {
   if (typeid(value) == typeid(KKStr*))
-    return *((KKStr*)value);
+    return *(static_cast<const KKStr*> (value));
 
   else if (typeid(value) == typeid(kkint64*))
-    return KKB::StrFromInt64 (*((kkint64*)value));
+    return KKB::StrFromInt64 (*(static_cast<const kkint64*> (value)));
 
   else if (typeid(value) == typeid(kkuint64*))
-    return KKB::StrFromUint64 (*((kkuint64*)value));
+    return KKB::StrFromUint64 (*(static_cast<const kkuint64*> (value)));
 
   else if (typeid(value) == typeid(kkint32*))
-    return KKB::StrFromInt32 (*((kkint32*)value));
+    return KKB::StrFromInt32 (*(static_cast<const kkint32*> (value)));
 
   else if (typeid(value) == typeid(kkuint32*))
-    return KKB::StrFromUint32 (*((kkuint32*)value));
+    return KKB::StrFromUint32 (*(static_cast<const kkuint32*> (value)));
 
   else if (typeid(value) == typeid(kkint16*))
-    return KKB::StrFromInt16 (*((kkint16*)value));
+    return KKB::StrFromInt16 (*(static_cast<const kkint16*> (value)));
 
   else if (typeid(value) == typeid(kkuint16*))
-    return KKB::StrFromUint16 (*((kkuint16*)value));
+    return KKB::StrFromUint16 (*(static_cast<const kkuint16*> (value)));
 
   else if (typeid(value) == typeid(double*))
-    return KKB::StrFromDouble (*((double*)value));
+    return KKB::StrFromDouble (*(static_cast<const double*> (value)));
 
   else if (typeid(value) == typeid(float*))
-    return KKB::StrFromFloat (*((float*)value));
+    return KKB::StrFromFloat (*(static_cast<const float*> (value)));
 
   else
     return "";
@@ -1549,18 +1576,18 @@ KKStr  TurnIntoKKStr (const void* value)
                                              RunLog&        log           \
                                             ):                            \
   XmlElement (tag, s, log),                                               \
-  value ((T)0)                                                            \
+  value (static_cast<T> (0))                                              \
 {                                                                         \
   KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");          \
   if  (valueStr)                                                          \
-    value = (T)(valueStr->ParseMethod ());                                \
+    value = static_cast<T> (valueStr->ParseMethod ());                    \
   XmlTokenPtr tok = s.GetNextToken (cancelFlag, log);                     \
   while  (tok != NULL)                                                    \
   {                                                                       \
     if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)           \
     {                                                                     \
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                \
-      value = (T)c->Content ()->ParseMethod ();                           \
+      value = static_cast<T> (c->Content ()->ParseMethod ());             \
     }                                                                     \
     delete  tok;                                                          \
     tok = s.GetNextToken (cancelFlag, log);                               \
@@ -1589,11 +1616,11 @@ void   XmlElement##TypeName::WriteXML (T              d,                  \
                                                                           \
 bool     XmlElement##TypeName::ToBool   () const {return value != 0;}     \
 KKStr    XmlElement##TypeName::ToKKStr  () const {return TurnIntoKKStr(&value);}   \
-double   XmlElement##TypeName::ToDouble () const {return (double)value;}   \
-float    XmlElement##TypeName::ToFloat  () const {return (float)value;}    \
-kkuint16 XmlElement##TypeName::ToUint16 () const {return (kkuint16)value;} \
-kkint32  XmlElement##TypeName::ToInt32  () const {return (kkint32)value;}  \
-kkint64  XmlElement##TypeName::ToInt64  () const {return (kkint64)value;}  \
+double   XmlElement##TypeName::ToDouble () const {return scDOUBLE (value);}   \
+float    XmlElement##TypeName::ToFloat  () const {return scFLOAT  (value);}    \
+kkuint16 XmlElement##TypeName::ToUint16 () const {return scUINT16 (value);} \
+kkint32  XmlElement##TypeName::ToInt32  () const {return scINT32  (value);}  \
+kkint64  XmlElement##TypeName::ToInt64  () const {return scINT64  (value);}  \
                                                                            \
 XmlFactoryMacro(TypeName)
 
@@ -1726,7 +1753,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,                \
   {                                                                            \
     value[rowCount] = new T[width];                                            \
     for (kkuint32 x = 0; x < width;  ++x)                                      \
-        value[rowCount][x] = (T)0;                                             \
+        value[rowCount][x] = static_cast<T> (0);                                             \
     ++rowCount;                                                                \
   }                                                                            \
 }                                                                              \
@@ -1762,8 +1789,8 @@ void  XmlElement##TypeName::WriteXML (kkuint32      height,                    \
   XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                     \
   if  (!varName.Empty ())                                                      \
     startTag.AddAtribute ("VarName", varName);                                 \
-  startTag.AddAtribute ("Height", (kkint32)height);                            \
-  startTag.AddAtribute ("Width",  (kkint32)width);                             \
+  startTag.AddAtribute ("Height", scINT32 (height));                            \
+  startTag.AddAtribute ("Width",  scINT32 (width));                             \
   startTag.WriteXML (o);                                                       \
                                                                                \
   for  (kkuint32 r = 0;  r < height;  ++r)                                     \
@@ -1807,7 +1834,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
       while  (p.MoreTokens ())                                             \
       {                                                                    \
         T  zed = p.ParserNextTokenMethod ("\t,");                          \
-        value->push_back ((T)zed);                                         \
+        value->push_back (static_cast<T> (zed));                                         \
       }                                                                    \
     }                                                                      \
     delete  tok;                                                           \

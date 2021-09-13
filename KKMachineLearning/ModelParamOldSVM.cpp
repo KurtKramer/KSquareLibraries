@@ -393,7 +393,7 @@ void  ModelParamOldSVM::ParseCmdLineParameter (const KKStr&  parameter,
 */
 KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   cmdStr << _param.ToCmdLineStr ();
 
@@ -402,18 +402,16 @@ KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 
 
 
-
 /**
  * @brief Convert all parameters to a command line string.
 */
 KKStr   ModelParamOldSVM::ToCmdLineStr () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   cmdStr = svmParameters->ToString ();
   return  cmdStr;
 }  /* ToString */
-
 
 
 

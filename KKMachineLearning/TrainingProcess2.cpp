@@ -449,9 +449,9 @@ TrainingProcess2::~TrainingProcess2 ()
 
 
 
-kkMemSize  TrainingProcess2::MemoryConsumedEstimated ()  const
+size_t  TrainingProcess2::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (TrainingProcess2)
+  size_t  memoryConsumedEstimated = sizeof (TrainingProcess2)
     +  configFileName.MemoryConsumedEstimated ()
     +  configFileNameSpecified.MemoryConsumedEstimated ()
     +  savedModelName.MemoryConsumedEstimated ();
@@ -1388,9 +1388,9 @@ TrainingProcess2List::~TrainingProcess2List ()
 
 
 
-kkMemSize TrainingProcess2List::MemoryConsumedEstimated ()  const
+size_t TrainingProcess2List::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = 0;
+  size_t  memoryConsumedEstimated = 0;
 
   TrainingProcess2List::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

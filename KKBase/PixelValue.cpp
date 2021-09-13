@@ -56,9 +56,9 @@ PixelValue&  PixelValue::operator=  (const PixelValue& right)
  */
 PixelValue  PixelValue::operator*  (double  fact)  const
 {
-  const uchar newR = static_cast<uchar>((double)r * fact + 0.5f);
-  const uchar newG = static_cast<uchar>((double)g * fact + 0.5f);
-  const uchar newB = static_cast<uchar>((double)b * fact + 0.5f);
+  const uchar newR = scUCHAR (scDOUBLE (r) * fact + 0.5);
+  const uchar newG = scUCHAR (scDOUBLE (g) * fact + 0.5);
+  const uchar newB = scUCHAR (scDOUBLE (b) * fact + 0.5);
   return  PixelValue (newR, newG, newB);
 }
 
@@ -83,21 +83,21 @@ void  PixelValue::ToHSI (float&  hue,
                          float&  intensity
                         )  const noexcept
 {
-  float  redF    = (float)r / 255.0f;
-  float  greenF  = (float)g / 255.0f;
-  float  blueF   = (float)b / 255.0f;
+  float  greenF  = scFLOAT (g) / 255.0f;
+  float  blueF   = scFLOAT (b) / 255.0f;
+  float  redF    = scFLOAT (r) / 255.0f;
 
   if (blueF <= greenF)
   {
     // compute hue with this formula
-    hue = static_cast<float> (acos ((0.5f * ((redF - greenF) + (redF - blueF))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF)))));
+    hue = static_cast<float> (acos ((0.5f * ((redF - greenF) + (redF - blueF))) / sqrtf ((pow ((redF - greenF), 2.0f) + (redF - blueF) * (greenF - blueF)))));
   }
 
   // Otherwise
   else
   {
     // compute hue with this formula
-    hue = static_cast<float> (2.0f * PIE - acos ((0.5f * ((redF - greenF) + (redF - blueF)))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF))));
+    hue = static_cast<float> (2.0f * scFLOAT (PIE) - acos ((0.5f * ((redF - greenF) + (redF - blueF)))) / sqrtf ((pow ((redF - greenF), 2.0f) + (redF - blueF) * (greenF - blueF))));
   }
 
   // compute saturation
@@ -215,8 +215,8 @@ PixelValue  PixelValue::FromHSI (float  hue,
 
 KKStr  PixelValue::ToStr ()  const
 {
-  KKStr  s = "(" + KKB::StrFormatInt ((kkint32)r, "ZZ0") + ","
-		         + KKB::StrFormatInt ((kkint32)g, "ZZ0") + ","
-		         + KKB::StrFormatInt ((kkint32)b, "ZZ0") + ")";
+  KKStr  s = "(" + KKB::StrFormatInt (scINT32 (r), "ZZ0") + ","
+    		         + KKB::StrFormatInt (scINT32 (g), "ZZ0") + ","
+	               + KKB::StrFormatInt (scINT32 (b), "ZZ0") + ")";
   return s;
 }

@@ -333,7 +333,7 @@ MLClass::MLClass (const KKStr&  _name):
 
 MLClass::MLClass (const MLClass&  mlClass)
 {
-  KKStr  errMsg (256);
+  KKStr  errMsg (256U);
   errMsg << endl
          << "MLClass::MLClass (const MLClass&  mlClass)       *** ERROR ***     classNane: " << mlClass.Name () << endl
          << "Should never ever call this method." << endl
@@ -601,7 +601,7 @@ MLClassList::~MLClassList ()
 
 
 
-kkMemSize  MLClassList::MemoryConsumedEstimated ()  const
+size_t  MLClassList::MemoryConsumedEstimated ()  const
 {
   return  sizeof (MLClassList) + sizeof (MLClassPtr) * size ();
 }
@@ -1518,7 +1518,7 @@ void  MLClassIndexList::Clear ()
 
 
 
-kkMemSize  MLClassIndexList::MemoryConsumedEstimated ()  const
+size_t  MLClassIndexList::MemoryConsumedEstimated ()  const
 {
   return sizeof (MLClassIndexList) + (shortIdx.size () * (sizeof (kkint16) + sizeof (MLClassPtr) + 10));  // added 10- bytes per entry for overhead.
 }
@@ -1595,7 +1595,7 @@ MLClassPtr  MLClassIndexList::GetMLClass (kkint32 classIndex)
 {
   if (classIndex > std::numeric_limits<kkuint16>::max ())
   {
-    KKStr errMsg (256);
+    KKStr errMsg (256U);
     errMsg << "MLClassIndexList::GetMLClass   classIndex[" << classIndex << "] exceeds max kjint16[" << int16_max << "] supported.";
     throw KKException (errMsg);
   }
@@ -1644,7 +1644,7 @@ void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
 
 KKStr  MLClassIndexList::ToCommaDelString ()  const
 {
-  KKStr  delStr (255);
+  KKStr  delStr (255U);
   for  (auto idx: shortIdx)
   {
     if  (!delStr.Empty ())

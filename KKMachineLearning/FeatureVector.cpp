@@ -77,9 +77,9 @@ FeatureVector::~FeatureVector ()
 
 
 
-kkMemSize  FeatureVector::MemoryConsumedEstimated ()  const
+size_t  FeatureVector::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FeatureVector)
+  size_t  memoryConsumedEstimated = sizeof (FeatureVector)
     +  exampleFileName.MemoryConsumedEstimated ();
 
   if  (featureData)
@@ -101,7 +101,7 @@ void  FeatureVector::ResetNumOfFeatures (kkuint32  newNumOfFeatures)
 {
   if  (newNumOfFeatures < 1)  
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "FeatureVector::ResetNumOfFeatures   ***ERROR***   NewNumOfFeatures[" << newNumOfFeatures << "] is invalid.";
     cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
@@ -351,9 +351,9 @@ FeatureVectorList::~FeatureVectorList ()
 
 
 
-kkMemSize  FeatureVectorList::MemoryConsumedEstimated ()  const
+size_t  FeatureVectorList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
+  size_t  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
   {
@@ -427,14 +427,14 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   {
     // This should never ever be able to happen,  but will check 
     // any way.  If missing something has gone very wrong.
-    KKStr  msg (200);
+    KKStr  msg (200U);
     msg << "FeatureVectorList::" << funcName << "      *** ERROR ***  'fileDesc == NULL'";
     throw KKException (msg);
   }
 
   if  ((fieldNum < 0)  ||  (fieldNum >= (kkint32)fileDesc->NumOfFields ()))
   {
-    KKStr  msg (200);
+    KKStr  msg (200U);
     msg << "FeatureVectorList::" << funcName << "    *** ERROR ***    FeatureNum[" << fieldNum << "] is out of range.";
     throw KKException (msg);
   }

@@ -417,7 +417,7 @@ kkint32  KKMLL::SvmPredictTwoClass (const svm_parameter&  param,
   int numClasses = submodel[0]->nr_class;
   if  (numClasses != 2)
   {
-    KKStr errMsg (255);
+    KKStr errMsg (255U);
     errMsg << "SvmPredictTwoClass    *** ERROR ***   Number of classes[" << numClasses << "] should equal two.";
     cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);

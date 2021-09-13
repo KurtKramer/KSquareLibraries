@@ -37,15 +37,15 @@ using  namespace  KKB;
 
 
 RasterBuffer::RasterBuffer (const KKStr&  _name,
-                            kkint32       _maxNumOfBuffers
+                            size_t        _maxNumOfBuffers
                            ):
   
-    buffer               (),
-    gateKeeper           (NULL),
-    maxNumOfBuffers      (_maxNumOfBuffers),
-    memoryConsumed       (0),
-    name                 (_name),
-    rastersDropped       (0)
+    buffer          (),
+    gateKeeper      (NULL),
+    maxNumOfBuffers (_maxNumOfBuffers),
+    memoryConsumed  (0),
+    name            (_name),
+    rastersDropped  (0)
 {
   GoalKeeper::Create ("RasterBuffer_" + name, gateKeeper);
   memoryConsumed = sizeof (RasterBuffer) + gateKeeper->MemoryConsumedEstimated ();
@@ -90,15 +90,15 @@ void  RasterBuffer::ThrowOutOldestOccupiedBuffer ()
 
 
 
-kkint32  RasterBuffer::NumAvailable () const 
+size_t  RasterBuffer::NumAvailable () const 
 {
-  return  maxNumOfBuffers - (kkint32)buffer.size ();
+  return  maxNumOfBuffers - buffer.size ();
 }
 
 
-kkint32  RasterBuffer::NumPopulated () const
+size_t  RasterBuffer::NumPopulated () const
 {
-  return  (kkint32)buffer.size ();
+  return  buffer.size ();
 }
 
 
@@ -114,7 +114,7 @@ void  RasterBuffer::AddRaster (RasterPtr  raster)
 
   gateKeeper->StartBlock ();
 
-  while  (buffer.size () >= (kkuint32)maxNumOfBuffers)
+  while  (buffer.size () >= maxNumOfBuffers)
     ThrowOutOldestOccupiedBuffer ();
 
   buffer.push (raster);
@@ -144,9 +144,9 @@ RasterPtr  RasterBuffer::GetNextRaster ()
 
 
 
-kkMemSize  RasterBuffer::MemoryConsumedEstimated () const
+size_t  RasterBuffer::MemoryConsumedEstimated () const
 {
-  kkMemSize  result = 0;
+  size_t result = 0;
   gateKeeper->StartBlock ();
   result = memoryConsumed;
   gateKeeper->EndBlock ();

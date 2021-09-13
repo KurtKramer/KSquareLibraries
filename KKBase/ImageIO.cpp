@@ -752,11 +752,11 @@ void  KKB::SaveImageInverted (Raster&       raster,
   {
     for  (c = 0;  c < invertedImage->Width ();  c++)
     {
-      g[r][c] = (uchar)(255 - g[r][c]);
+      g[r][c] = scUCHAR (255 - g[r][c]);
       if  (invertedImage->Color ())
       {
-        red [r][c] = (uchar)(255 - red [r][c]);
-        blue[r][c] = (uchar)(255 - blue[r][c]);
+        red [r][c] = scUCHAR (255 - red [r][c]);
+        blue[r][c] = scUCHAR (255 - blue[r][c]);
       }
     }
   }

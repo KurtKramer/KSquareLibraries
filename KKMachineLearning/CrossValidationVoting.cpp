@@ -31,7 +31,7 @@ using namespace  KKMLL;
 CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _configs,
                                               FeatureVectorListPtr           _examples,
                                               MLClassListPtr                 _mlClasses,
-                                              kkint32                        _numOfFolds,
+                                              kkuint32                       _numOfFolds,
                                               bool                           _featuresAreAlreadyNormalized,
                                               FileDescPtr                    _fileDesc
                                              ):
@@ -95,9 +95,7 @@ void  CrossValidationVoting::AllocateMemory ()
   foldAccuracies  = new float[numOfFolds];
   foldCounts      = new kkint32[numOfFolds];
 
-  kkint32  foldNum;
-
-  for  (foldNum = 0;  foldNum < numOfFolds;  foldNum++)
+  for  (kkuint32 foldNum = 0;  foldNum < numOfFolds;  foldNum++)
   {
     foldAccuracies [foldNum] = 0.0;
     foldCounts     [foldNum] = 0;
@@ -163,11 +161,9 @@ void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
   kkint32  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
   kkint32  firstInGroup     = 0;
 
-  kkint32  foldNum;
-
-  for  (foldNum = 0;  foldNum < numOfFolds;  foldNum++)
+  for  (kkuint32 foldNum = 0;  foldNum < numOfFolds;  foldNum++)
   {
-    kkint32  lastInGroup;
+    kkint32  lastInGroup = 0;
 
     // If We are doing the last Fold Make sure that we are including all the examples 
     // that have not been tested.
@@ -323,7 +319,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
       auto predictedIdx = predictedNum.value ();
       voteTable[predictedIdx]++;
 
-      if  (probTable[predictedIdx] == 0.0f)
+      if  (probTable[predictedIdx] == 0.0)
         probTable[predictedIdx] = probability;
       else
         probTable[predictedIdx] *= probability;
@@ -383,14 +379,14 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
     confusionMatrix->Increment (knownClass, 
                                 predictedClass, 
-                                (kkint32)(*imageIDX)->OrigSize (), 
+                                scINT32 ((*imageIDX)->OrigSize ()), 
                                 probability,
                                 log
                                );
 
     cmByNumOfConflicts[numOfWinners]->Increment (knownClass, 
                                                  predictedClass, 
-                                                 (kkint32)(*imageIDX)->OrigSize (), 
+                                                 scINT32 ((*imageIDX)->OrigSize ()), 
                                                  probability,
                                                  log
                                                 );
@@ -425,7 +421,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   float  foldAccuracy = 0.0;
 
   if  (foldCount > 0)
-    foldAccuracy = 100.0f * (float)foldCorrect / (float)foldCount;
+    foldAccuracy = 100.0f * scFLOAT (foldCorrect) / scFLOAT (foldCount);
 
   foldAccuracies [foldNum] = foldAccuracy;
   foldCounts     [foldNum] = foldCount;
@@ -445,7 +441,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 float  CrossValidationVoting::Accuracy ()
 {
   if  (confusionMatrix)
-    return  (float)confusionMatrix->Accuracy ();
+    return  scFLOAT (confusionMatrix->Accuracy ());
   else
     return 0.0;
 }  /* Accuracy */
@@ -454,9 +450,9 @@ float  CrossValidationVoting::Accuracy ()
 
 KKStr  CrossValidationVoting::FoldAccuracysToStr ()  const
 {
-  KKStr  foldAccuracyStr (9 * numOfFolds);  // Pre Reserving enough space for all Accuracies.
+  KKStr  foldAccuracyStr (12 * numOfFolds);  // Pre Reserving enough space for all Accuracies.
 
-  for  (kkint32 foldNum = 0;  foldNum < numOfFolds;  foldNum++)
+  for  (kkuint32 foldNum = 0;  foldNum < numOfFolds;  foldNum++)
   {
     if  (foldNum > 0)
       foldAccuracyStr << "\t";
@@ -468,29 +464,27 @@ KKStr  CrossValidationVoting::FoldAccuracysToStr ()  const
 
 
 
-float  CrossValidationVoting::FoldAccuracy (kkint32 foldNum)  const
+float  CrossValidationVoting::FoldAccuracy (kkuint32 foldNum)  const
 {
   if  (!foldAccuracies)
     return 0.0f;
 
-  if  ((foldNum < 0)  ||  (foldNum >= numOfFolds))
+  if  (foldNum >= numOfFolds)
     return 0.0f;
 
   return  foldAccuracies[foldNum];
-}  /* FoldAccuracy */
+}  /* FoldAccuracy */ 
 
 
 
 KKStr  CrossValidationVoting::FoldStr ()  const
 {
-  if  ((numOfFolds <= 0)  ||  (!foldAccuracies))
+  if  ((numOfFolds < 1)  ||  (!foldAccuracies))
     return  "";
 
-  kkint32  x;
+  KKStr  result (numOfFolds * 12 + 10U);
 
-  KKStr  result (numOfFolds + 10);
-
-  for  (x = 0;  x < numOfFolds;  x++)
+  for  (kkuint32 x = 0;  x < numOfFolds;  x++)
   {
     if  (x > 0)
       result << ",";

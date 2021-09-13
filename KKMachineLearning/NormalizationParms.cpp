@@ -126,9 +126,9 @@ NormalizationParms::~NormalizationParms ()
 
 
 
-kkMemSize  NormalizationParms::MemoryConsumedEstimated ()  const
+size_t  NormalizationParms::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (NormalizationParms)
+  size_t  memoryConsumedEstimated = sizeof (NormalizationParms)
     + attriuteTypes.size () * sizeof (AttributeType)
     + fileName.MemoryConsumedEstimated ()
     + numOfFeatures * (sizeof (bool) + sizeof (double) + sizeof (double));  //  mean + sigma

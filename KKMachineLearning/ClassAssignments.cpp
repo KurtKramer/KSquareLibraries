@@ -39,9 +39,9 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes):
 
 
 
-kkMemSize  ClassAssignments::MemoryConsumedEstimated ()  const
+size_t  ClassAssignments::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (ClassAssignments) 
+  size_t  memoryConsumedEstimated = sizeof (ClassAssignments) 
     +  (classLookUp.size () * (sizeof (MLClassPtr) + sizeof (kkint32)));
   return  memoryConsumedEstimated;
 }
@@ -131,7 +131,7 @@ VectorInt32  ClassAssignments::GetUniqueListOfAssignments ()  const
 
 MLClassPtr  ClassAssignments::GetMLClassByIndex (kkint32 idx)
 {
-  if  ((idx < 0)  ||  (idx >= (kkint32)size ()))
+  if  ((idx < 0)  ||  (idx >= scINT32 (size ())))
   {
     cerr << endl
          << endl
@@ -181,7 +181,7 @@ void  ClassAssignments::Save (const KKStr&  fileName,
 
 KKStr  ClassAssignments::ToString ()  const
 {
-  KKStr  result ((kkint32)(size () * 20));
+  KKStr  result (size () * 20U);
 
   result << kkint32 (size ());
 

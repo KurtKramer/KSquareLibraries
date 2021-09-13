@@ -54,8 +54,8 @@ Point::Point  (kkint32  _row,
 Point::Point  (float  _row,
                float  _col
               ):
-   row ((kkint32)(_row + 0.5)),
-   col ((kkint32)(_col + 0.5))
+   row (scINT32 (_row + 0.5f)),
+   col (scINT32 (_col + 0.5f))
 {}
 
 
@@ -166,8 +166,8 @@ Point  PointList::CalculateCenterPoint ()
     totalCol += p->Col ();
   }
 
-  kkint32 centerRow = (kkint32)((double)totalRow / (double)size () + 0.5);
-  kkint32 centerCol = (kkint32)((double)totalCol / (double)size () + 0.5);
+  kkint32 centerCol = scINT32 (scDOUBLE (totalCol) / scDOUBLE (size ()) + 0.5);
+  kkint32 centerRow = scINT32 (scDOUBLE (totalRow) / scDOUBLE (size ()) + 0.5);
   return  Point (centerRow, centerCol);
 }
 
@@ -214,8 +214,8 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
     {
       // Not Bracketed.
       endPairChar = 0;
-      kkint16  row = (kkint16)s.ExtractTokenInt (",\t\n\t");
-      kkint16  col = (kkint16)s.ExtractTokenInt (",\t\n\t");
+      kkint16  row = scINT16 (s.ExtractTokenInt (",\t\n\t"));
+      kkint16  col = scINT16 (s.ExtractTokenInt (",\t\n\t"));
       result->PushOnBack (new Point (row, col));
     }
 
@@ -234,8 +234,8 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
         s = "";
       }
 
-      kkint16  row = (kkint16)pairStr.ExtractTokenInt (",");
-      kkint16  col = (kkint16)pairStr.ExtractTokenInt (",");
+      kkint16  row = scINT16 (pairStr.ExtractTokenInt (","));
+      kkint16  col = scINT16 (pairStr.ExtractTokenInt (","));
       result->PushOnBack (new Point (row, col));
       nextCh = s.FirstChar ();
       if  ((nextCh == ',')  ||  (nextCh == '\n')  ||  (nextCh == '\r')  || (nextCh == '\t'))
@@ -267,8 +267,8 @@ float  PointList::ComputeSegmentLens (float  heightFactor,
   {
     PointPtr  nextPoint = *idx;  ++idx;
 
-    float  deltaHeight = (float)(nextPoint->Row () - lastPoint->Row ()) * heightFactor;
-    float  deltaWidth  = (float)(nextPoint->Col () - lastPoint->Col ()) * widthFactor;
+    float  deltaHeight = scFLOAT (nextPoint->Row () - lastPoint->Row ()) * heightFactor;
+    float  deltaWidth  = scFLOAT (nextPoint->Col () - lastPoint->Col ()) * widthFactor;
 
     float  segmentLen = sqrt (deltaHeight * deltaHeight + deltaWidth * deltaWidth);
 

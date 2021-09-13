@@ -98,7 +98,7 @@ namespace KKMLL
 
     KKStr     Class1Name ()  const;
     KKStr     Class2Name ()  const;
-    kkMemSize MemoryConsumedEstimated ()  const;
+    size_t    MemoryConsumedEstimated ()  const;
     KKStr     ToTabDelString ()  const;
 
 
@@ -163,7 +163,7 @@ namespace KKMLL
 
     BinaryClassParmsList*  DuplicateListAndContents ()  const;
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     virtual
     void  PushOnBack  (BinaryClassParmsPtr  binaryParms);

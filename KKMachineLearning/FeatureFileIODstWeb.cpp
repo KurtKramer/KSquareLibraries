@@ -107,7 +107,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       << "    _estSize : " << _estSize << endl
       << endl;
 
-  KKStr  line (1024);
+  KKStr  line (1024U);
   bool   eof = false;
   KKStr  classNameAttribute;
   _estSize = -1;

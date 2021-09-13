@@ -304,7 +304,7 @@ svm_parameter&  SVM289_BFS::svm_parameter::operator= (const svm_parameter& right
 
 KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
 {
-  KKStr cmdStr (200); // Initialized char* allocation to 200
+  KKStr cmdStr (256U); // Initialized char* allocation to 200
 
   cmdStr << "-CalcProb " << ((probability == 1) ? "Yes" : "No")  << "  "
          << "-c " << C              << "  "
@@ -403,7 +403,7 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
 
 KKStr  SVM289_BFS::svm_parameter::ToTabDelStr ()  const
 {
-  KKStr  result (256);
+  KKStr  result (256U);
 
   kkint32  x = 0;
 

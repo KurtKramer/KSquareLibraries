@@ -114,7 +114,7 @@ namespace KKB
     float*      buckets;
     float*      bucketTotals;
 
-    kkint32*      equalizedMapTable;
+    kkint32*    equalizedMapTable;
 
     float       minValue;
 

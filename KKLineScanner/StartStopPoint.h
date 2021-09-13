@@ -50,7 +50,7 @@ namespace  KKLSC
 
     ~StartStopPoint ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
   
     // Access Methods
     kkint32           ScanLineNum  () const  {return  scanLineNum;}
@@ -84,7 +84,7 @@ namespace  KKLSC
     StartStopPointList ();
     ~StartStopPointList ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     StartStopPointPtr  AddEntry (kkint32                        _scanLineNum,
                                  StartStopPoint::StartStopType  _type

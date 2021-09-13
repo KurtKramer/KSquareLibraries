@@ -303,7 +303,7 @@ void  ClassificationBiasMatrix::TestPaperResults (ostream&   sw)
 void  ClassificationBiasMatrix::ReadXML (istream&  sr)
 {
   char  buff[10240];
-  KKStr l (512);
+  KKStr l (512U);
 
   if  (sr.eof ())
     return;

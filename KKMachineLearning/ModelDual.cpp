@@ -121,9 +121,9 @@ ModelDual::~ModelDual ()
 
 
 
-kkMemSize ModelDual::MemoryConsumedEstimated ()  const
+size_t ModelDual::MemoryConsumedEstimated ()  const
 {
-  kkMemSize memoryConsumedEstimated = Model::MemoryConsumedEstimated ();
+  size_t memoryConsumedEstimated = Model::MemoryConsumedEstimated ();
   if  (trainer1)    memoryConsumedEstimated += trainer1->MemoryConsumedEstimated ();
   if  (trainer2)    memoryConsumedEstimated += trainer2->MemoryConsumedEstimated ();
   if  (classifier1) memoryConsumedEstimated += classifier1->MemoryConsumedEstimated ();
@@ -354,8 +354,8 @@ MLClassPtr  ModelDual::ReconcilePredictions (MLClassPtr  pred1,
   // We need to find the common part of the predictions.
   KKStr  name1 = pred1->Name ();
   KKStr  name2 = pred2->Name ();
-  kkint32 maxLen = Min (name1.Len (), name2.Len ());
-  KKStr  commonPart (maxLen + 1);
+  kkuint32 maxLen = Min (name1.Len (), name2.Len ());
+  KKStr  commonPart (maxLen + 1U);
 
   while  ((!name1.Empty ())  &&  (!name2.Empty ()))
   {
@@ -392,7 +392,7 @@ void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
                                         MLClassPtr        predClass,
                                         FeatureVectorPtr  encodedExample,
                                         double&           predClassProb,
-                                        kkint32&            predClassVotes
+                                        kkint32&          predClassVotes
                                        )
 {
   const KKStr&  predClassName = predClass->Name ();
@@ -948,7 +948,7 @@ void  ModelDual::ReadXML (XmlStream&      s,
     }
     if  (!tokenFound)
     {
-      KKStr  errMsg (128);
+      KKStr  errMsg (128U);
       errMsg << "ModelDual::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
       log.Level (-1) << endl << errMsg << endl << endl;
       AddErrorMsg (errMsg, 0);
@@ -994,7 +994,7 @@ void  ModelDual::ReadXML (XmlStream&      s,
 
   if  (Model::param == NULL)
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
@@ -1002,7 +1002,7 @@ void  ModelDual::ReadXML (XmlStream&      s,
 
   else if  (typeid (*Model::param) != typeid(ModelParamDual))
   {
-    KKStr errMsg (128);
+    KKStr errMsg (198U);
     errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;

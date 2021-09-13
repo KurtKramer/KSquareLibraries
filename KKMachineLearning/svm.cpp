@@ -67,11 +67,11 @@ SvmModel233::~SvmModel233 ()
 
 
 
-kkMemSize  SvmModel233::MemoryConsumedEstimated ()  const
+size_t  SvmModel233::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (SvmModel233)
+  size_t  memoryConsumedEstimated = sizeof (SvmModel233)
     +  param.MemoryConsumedEstimated ()
-    +  (kkMemSize)exampleNames.size () * 40;
+    +  (size_t)exampleNames.size () * 40;
 
   if  (SV)             memoryConsumedEstimated  += sizeof (svm_node*) * l;
   if  (sv_coef)        memoryConsumedEstimated  += (nr_class - 1) * sizeof (double*) + l * (nr_class - 1) * sizeof (double);
@@ -878,9 +878,9 @@ svm_parameter&  svm_parameter::operator= (const svm_parameter&  right)
 
 
 
-kkMemSize svm_parameter::MemoryConsumedEstimated ()  const
+size_t svm_parameter::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (svm_parameter);
+  size_t  memoryConsumedEstimated = sizeof (svm_parameter);
   if  (weight)
     memoryConsumedEstimated += ((sizeof (double) + sizeof(kkint32)) * nr_weight);
 
@@ -1062,7 +1062,7 @@ svm_parameter::svm_parameter (KKStr&  _paramStr):
 
 KKStr  svm_parameter::ToCmdLineStr ()  const
 {
-  KKStr cmdStr (200); // Initialized char* allocation to 200
+  KKStr cmdStr (300U); // Initialized char* allocation to 200
 
   cmdStr << "-a " << numSVM         << "  "
          //<< "-b " << sample         << "  "  
@@ -1095,7 +1095,7 @@ KKStr  svm_parameter::ToCmdLineStr ()  const
 
 KKStr  svm_parameter::ToTabDelStr  ()  const
 {
-  KKStr  result (300);
+  KKStr  result (300U);
 
   result << "svm_type"    << "\t"  << svm_type       << "\t"
          << "kernel_type" << "\t"  << kernel_type    << "\t"
@@ -3102,16 +3102,17 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
     if  (fabs (alpha[i]) > 0)
     {
       ++nSV;
-      if (prob->y[i] > 0)
+      //if (prob->y[i] > 0)
       {
         if (fabs (alpha[i]) >= prob->W[i])
           ++nBSV;
       }
-      else
-      {
-        if (fabs(alpha[i]) >= prob->W[i])
-          ++nBSV;
-      }
+
+      //else  What is the point in the lse branch?  
+      //{
+      //  if (fabs (alpha[i]) >= prob->W[i])
+      //    ++nBSV;
+      //}
     }
   }
 
@@ -3796,7 +3797,7 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
   bool  validFormat = true;
 
   {
-    KKStr  line (1024);  // Preallocating to at least 1024 characters.
+    KKStr  line (1024U);  // Preallocating to at least 1024 characters.
 
     // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
     // an invalid Training Model.

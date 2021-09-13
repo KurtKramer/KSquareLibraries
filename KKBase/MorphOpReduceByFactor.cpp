@@ -34,9 +34,9 @@ MorphOpReduceByFactor::~MorphOpReduceByFactor ()
 
 
 
-kkMemSize  MorphOpReduceByFactor::MemoryConsumedEstimated ()
+size_t  MorphOpReduceByFactor::MemoryConsumedEstimated () const
 {
-  kkMemSize  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
+  size_t  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
   return  result;
 }
 
@@ -52,8 +52,8 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   else if (factor > 1.0f)
     factor = 1.0f;
 
-  kkint32  newHeight = (kkint32)((float)(srcRaster->Height ()) * factor + 0.5f);
-  kkint32  newWidth  = (kkint32)((float)(srcRaster->Width ())  * factor + 0.5f);
+  kkint32  newHeight = scINT32 (scFLOAT (srcRaster->Height ()) * factor + 0.5f);
+  kkint32  newWidth  = scINT32 (scFLOAT (srcRaster->Width  ()) * factor + 0.5f);
   if (newHeight < 2)
     newHeight = 2;
 
@@ -65,7 +65,7 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   float*  accumulatorAreaGreen = new float[newTotal];
   float*  accumulatorAreaRed = NULL;
   float*  accumulatorAreaBlue = NULL;
-  if (srcColor)
+  if  (srcColor)
   {
     accumulatorAreaRed  = new float[newTotal];
     accumulatorAreaBlue = new float[newTotal];
@@ -82,7 +82,7 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   float** accumulatorGreen = new float*[newHeight];
   float** accumulatorBlue = NULL;
 
-  if (srcColor)
+  if  (srcColor)
   {
     accumulatorRed  = new float*[newHeight];
     accumulatorBlue = new float*[newHeight];
@@ -93,26 +93,26 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   float*  rowFactor = new float[srcRaster->Height () + 1];
   float*  colFactor = new float[srcRaster->Width  () + 1];
 
-  for (kkint32 r = 0; r < srcRaster->Height (); ++r)
-    rowFactor[r] = (float)r * factor;
-  rowFactor[srcRaster->Height ()] = (float)newHeight;
+  for  (kkint32 r = 0;  r < srcRaster->Height ();  ++r)
+    rowFactor[r] = scFLOAT (r) * factor;
+  rowFactor[srcRaster->Height ()] = scFLOAT (newHeight);
 
-  for (kkint32 c = 0; c < srcRaster->Width (); ++c)
-    colFactor[c] = (float)c * factor;
-  colFactor[srcRaster->Width ()] = (float)newWidth;
+  for  (kkint32 c = 0;  c < srcRaster->Width ();  ++c)
+    colFactor[c] = scFLOAT (c) * factor;
+  colFactor[srcRaster->Width ()] = scFLOAT (newWidth);
 
   float*  arPtr = accumulatorAreaRed;
   float*  agPtr = accumulatorAreaGreen;
   float*  abPtr = accumulatorAreaBlue;
   float*  daPtr = divisorArea;
-  for (kkint32 newR = 0; newR < newHeight; ++newR)
+  for  (kkint32 newR = 0;  newR < newHeight; ++newR)
   {
     accumulatorGreen[newR] = agPtr;
     divisor[newR] = daPtr;
     agPtr += newWidth;
     daPtr += newWidth;
 
-    if (srcRaster->Color ())
+    if  (srcRaster->Color ())
     {
       accumulatorRed [newR] = arPtr;
       accumulatorBlue[newR] = abPtr;
@@ -123,13 +123,13 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
 
   uchar  rValue = 0, gValue = 0, bValue = 0;
 
-  for (kkint32 r = 0; r < srcHeight; ++r)
+  for  (kkint32 r = 0;  r < srcHeight;  ++r)
   {
-    kkint32  thisRow = (kkint32)rowFactor[r];
+    kkint32  thisRow = scINT32 (rowFactor[r]);
     if (thisRow >= newHeight)
       thisRow = newHeight - 1;
 
-    kkint32  nextRow = (kkint32)rowFactor[r + 1];
+    kkint32  nextRow = scINT32 (rowFactor[r + 1]);
     if (nextRow >= newHeight)
       nextRow = newHeight - 1;
 
@@ -138,11 +138,11 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
 
     if (nextRow > thisRow)
     {
-      amtThisRow = (float)nextRow - rowFactor[r];
+      amtThisRow = scFLOAT (nextRow) - rowFactor[r];
       amtNextRow = 1.0f - amtThisRow;
     }
 
-    for (kkint32 c = 0; c < srcWidth; c++)
+    for  (kkint32 c = 0;  c < srcWidth;  ++c)
     {
       gValue = srcGreen[r][c];
       if (srcRaster->Color ())
@@ -151,11 +151,11 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
         bValue = srcBlue[r][c];
       }
 
-      kkint32  thisCol = (kkint32)colFactor[c];
+      kkint32  thisCol = scINT32 (colFactor[c]);
       if (thisCol >= newWidth)
         thisCol = newWidth - 1;
 
-      kkint32  nextCol = (kkint32)colFactor[c + 1];
+      kkint32  nextCol = scINT32 (colFactor[c + 1]);
       if (nextCol >= newWidth)
         nextCol = newWidth - 1;
 
@@ -164,7 +164,7 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
 
       if (nextCol > thisCol)
       {
-        amtThisCol = (float)nextCol - colFactor[c];
+        amtThisCol = scFLOAT (nextCol) - colFactor[c];
         amtNextCol = 1.0f - amtThisCol;
       }
 
@@ -232,11 +232,11 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
     }
     else
     {
-      newGreenArea[x] = (uchar)(accumulatorAreaGreen[x] / divisorArea[x] + 0.5f);
+      newGreenArea[x] = scUCHAR (accumulatorAreaGreen[x] / divisorArea[x] + 0.5f);
       if (srcColor)
       {
-        newRedArea [x] = (uchar)(accumulatorAreaRed[x]  / divisorArea[x] + 0.5f);
-        newBlueArea[x] = (uchar)(accumulatorAreaBlue[x] / divisorArea[x] + 0.5f);
+        newRedArea [x] = scUCHAR (accumulatorAreaRed[x]  / divisorArea[x] + 0.5f);
+        newBlueArea[x] = scUCHAR (accumulatorAreaBlue[x] / divisorArea[x] + 0.5f);
       }
     }
   }

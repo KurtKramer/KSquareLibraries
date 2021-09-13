@@ -95,7 +95,7 @@ namespace KKMLL
     float  TotalOfFeatureData ()  const;
 
     virtual
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     /**  
      * @brief  Assign a specific example a higher weight for training purposes.
@@ -445,7 +445,7 @@ namespace KKMLL
     FeatureVectorListPtr      ManufactureEmptyList (bool _owner)  const;
 
     virtual
-    kkMemSize                 MemoryConsumedEstimated ()  const;
+    size_t                 MemoryConsumedEstimated ()  const;
 
     bool                      MissingData () const;  /**< Returns true if 1 or more entries have missing data. */
 

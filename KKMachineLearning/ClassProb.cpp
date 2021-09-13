@@ -68,9 +68,9 @@ ClassProbList::ClassProbList (const ClassProbList&  pairList):
  
 
 
-kkMemSize  ClassProbList::MemoryConsumedEstimated ()  const
+size_t  ClassProbList::MemoryConsumedEstimated ()  const
 {
-  return  ((kkMemSize)size ())  *  sizeof(ClassProb);
+  return  ((size_t)size ())  *  sizeof(ClassProb);
 }  /* MemoryConsumedEstimated */
 
 

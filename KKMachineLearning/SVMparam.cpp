@@ -115,9 +115,9 @@ FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescConstPtr  fileDesc) 
 
 
 
-kkMemSize  SVMparam::MemoryConsumedEstimated () const
+size_t  SVMparam::MemoryConsumedEstimated () const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (SVMparam) + fileName.MemoryConsumedEstimated ();
+  size_t  memoryConsumedEstimated = sizeof (SVMparam) + fileName.MemoryConsumedEstimated ();
   if  (selectedFeatures)
     memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
 
@@ -336,7 +336,7 @@ void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
 */
 KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   cmdStr << _param.ToCmdLineStr ();
 
@@ -350,7 +350,7 @@ KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 */
 KKStr   SVMparam::ToString () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
 
   cmdStr = SvmParamToString (param);
 

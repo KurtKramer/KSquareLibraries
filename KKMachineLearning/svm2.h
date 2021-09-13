@@ -178,7 +178,7 @@ namespace  SVM289_MFS
     double*  ProbEstimates ();
     double** PairwiseProb  ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     void  NormalizeProbability ();
 

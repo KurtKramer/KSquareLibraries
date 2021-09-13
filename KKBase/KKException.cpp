@@ -6,7 +6,7 @@
 
 #include "FirstIncludes.h"
 
-WarningsLowered()
+WarningsLowered
 
 #include <ctype.h>
 #include <limits.h>
@@ -19,7 +19,7 @@ WarningsLowered()
 #include <vector>
 #include "MemoryDebug.h"
 
-WarningsRestored()
+WarningsRestored
 
 using namespace std;
 

@@ -117,7 +117,7 @@ namespace  SVM233
     double  Gamma      ()  const {return  gamma;}
     kkint32 KernalType ()  const {return  kernel_type;}
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     void  ProcessSvmParameter (KKStr   cmd,
                                KKStr   value,
@@ -176,13 +176,13 @@ struct SvmModel233
 
   SvmModel233 (const SvmModel233& _model)
   {
-    KKStr errMsg (256);
+    KKStr errMsg (256U);
     errMsg << "SvmModel233::SvmModel233 (const   SvmModel233& _model)  ***ERROR***  Not Supported;  examples: " << _model.l;
     throw KKException (errMsg);
   }
 
 
-  kkMemSize  MemoryConsumedEstimated ()  const;
+  size_t  MemoryConsumedEstimated ()  const;
   
 
   KKStr  SupportVectorName (kkint32 svIDX);
