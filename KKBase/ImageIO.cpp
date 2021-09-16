@@ -589,7 +589,7 @@ void  KKB::SaveImagePGM (const Raster&  image,
   FILE* o = osFOPEN (imageFileName.Str (), "wb");
 
   {
-    KKStr  headerStr (15);
+    KKStr  headerStr (15U);
     headerStr << "P5"            << endl
               << image.Width ()  << endl
               << image.Height () << endl
@@ -627,7 +627,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
   KKCheck (o, "SaveImagePNG   Error opening File: " << imageFileName)
  
   {
-    KKStr  headerStr (15);
+    KKStr  headerStr (15U);
     headerStr << "P6"            << endl
               << image.Width ()  << endl
               << image.Height () << endl
@@ -684,7 +684,7 @@ void  KKB::SaveImagePPM (const Raster&  image,
   KKCheck (o, "SaveImagePPM   Error opening File: " << imageFileName)
  
   {
-    KKStr  headerStr (15);
+    KKStr  headerStr (15U);
     headerStr << "P6"            << endl
               << image.Width ()  << endl
               << image.Height () << endl

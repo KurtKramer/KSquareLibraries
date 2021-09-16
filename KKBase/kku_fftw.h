@@ -657,7 +657,7 @@ namespace  KKB
                                   int             sign,
                                   int             flag
                                  );
-WarningsRestored
+
   fftwf_plan  fftwCreateOneDPlan (kkint32         len,
                                   fftwf_complex*  src,
                                   fftwf_complex*  dest,

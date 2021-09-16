@@ -422,7 +422,7 @@ const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
       "Ordinal"
     };
 
-  if  (scUINT32 (type) >= AttributeTypeStrings.size ()))
+  if  (scUINT32 (type) >= AttributeTypeStrings.size ())
     return  KKStr::EmptyStr ();
 
   return AttributeTypeStrings[scUINT32 (type)];
@@ -557,7 +557,7 @@ AttributeTypeVector::AttributeTypeVector (kkuint32       initialSize,
 
 AttributeType  KKMLL::operator++(AttributeType  zed)
 {
-  return  static_cast<AttributeType>(zed + 1) ;
+  return  static_cast<AttributeType> (scINT32 (zed) + 1);
 }  /* operator++ */
 
 

@@ -124,6 +124,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>set cmd="git describe --long  --dirty "
+FOR /F "tokens=*" %%i IN (' %cmd% ') DO SET X=%%i
+echo #define VERSION ^"%X%^" &gt; $(SolutionDir)GitVersionNum.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

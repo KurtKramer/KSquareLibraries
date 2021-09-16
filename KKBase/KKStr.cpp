@@ -1047,7 +1047,7 @@ KKStr  KKStr::Concat (const VectorKKStr&  values)
  */
 KKStr  KKStr::Concat (const std::vector<std::string>&  values)
 {
-  size_t len  = accumulate (values.begin (), values.end (), 0, [](size_t a, const std::string& b) {return a + b.size ();});
+  size_t len  = accumulate (values.begin (), values.end (), static_cast<size_t> (0), [](size_t a, const std::string& b) -> size_t {return a + b.size ();});
 
   KKStr  result (len);
   for  (auto s: values)

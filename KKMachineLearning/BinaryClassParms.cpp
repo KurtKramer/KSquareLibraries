@@ -256,7 +256,7 @@ float  BinaryClassParmsList::FeatureCountNet (FileDescConstPtr fileDesc)  const
     featureCountTotal += bcp->NumOfFeatures (fileDesc);
   }
 
-  return  scFLOAT (featureCountTotal() / scFLOAT (size ());
+  return  scFLOAT (featureCountTotal / scFLOAT (size ()));
 }
 
 
