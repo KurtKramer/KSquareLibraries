@@ -116,9 +116,9 @@ KKThread::~KKThread ()
 
 
 
-kkMemSize  KKThread::MemoryConsumedEstimated () const
+size_t  KKThread::MemoryConsumedEstimated () const
 {
-  kkMemSize  estMem = sizeof (crashed)                +
+  size_t  estMem = sizeof (crashed)                +
                      sizeof (msgQueue)               + 
                      sizeof (shutdownFlag)           +
                      sizeof (startPrerequisites)     +
@@ -148,7 +148,7 @@ const KKStr&  KKThread::ThreadStatusToStr (ThreadStatus ts)
   if  ((ts < ThreadStatus::Null)  ||  (ts > ThreadStatus::Stopped))
     return KKStr::EmptyStr ();
   else
-    return  threadStatusDescs[(int)ts];
+    return  threadStatusDescs[static_cast<uint32_t> (ts)];
 }
 
 
@@ -256,7 +256,7 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
     if  (maxTimeToWait > 0)
     {
       kkuint64 now = osGetLocalDateTime ().Seconds ();
-      timeWaitedSoFar = (kkuint32)(now - startTime);
+      timeWaitedSoFar = scUINT32 (now - startTime);
       if  (timeWaitedSoFar > maxTimeToWait)
         break;
     }
@@ -310,7 +310,7 @@ extern "C"
 
 void*  ThreadStartCallBack (void* param)
 {
-  KKThreadPtr  tp = (KKThreadPtr)param;
+  KKThreadPtr  tp = static_cast<KKThreadPtr> (param);
   tp->Status (KKThread::ThreadStatus::Starting);
     try  
     {
@@ -392,7 +392,7 @@ void  KKThread::Start (ThreadPriority  _priority,
   int returnCd = pthread_create (&linuxThreadId,
                                  NULL,                  // const pthread_attr_t * attr,
                                  ThreadStartCallBack,   // void * (*start_routine)(void *),
-                                 (void*)this
+                                 static_cast<void*> (this)
                                 );
   if  (returnCd != 0)
   {
@@ -401,7 +401,7 @@ void  KKThread::Start (ThreadPriority  _priority,
   }
   else 
   {
-    threadId = (kkint64)linuxThreadId;
+    threadId = scINT64 (linuxThreadId);
     SetThreadName ();
     successful = true;
   }
@@ -564,9 +564,9 @@ KKThreadList::~KKThreadList ()
 
 
 
-kkMemSize  KKThreadList::MemoryConsumedEstimated ()  const
+size_t  KKThreadList::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memEst = sizeof (KKThreadList);
+  size_t  memEst = sizeof (KKThreadList);
 
   KKThreadList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

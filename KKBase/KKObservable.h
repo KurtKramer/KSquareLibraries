@@ -5,9 +5,9 @@
 #if  !defined(_KKOBSERVABLE_)
 #define  _KKOBSERVABLE_
 
-WarningsLowered()
+WarningsLowered
 #include <map>
-WarningsRestored()
+WarningsRestored
 
 #include "MsgQueue.h"
 
@@ -33,7 +33,7 @@ namespace KKB
 
     virtual ~KKObservable ();
 
-    kkMemSize  MemoryConsumedEstimated ();
+    virtual size_t  MemoryConsumedEstimated () const;
 
     virtual  void  RegisterObserver (KKObserverPtr observer);
     

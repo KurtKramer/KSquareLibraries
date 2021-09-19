@@ -5,11 +5,11 @@
 #ifndef  _KKEXCEPTION_
 #define  _KKEXCEPTION_
 
-WarningsLowered()
+WarningsLowered
 #include <ostream>
 #include <string>
 #include <sstream>
-WarningsRestored()
+WarningsRestored
 
 #ifdef  WIN32
 #else

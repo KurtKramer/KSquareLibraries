@@ -145,22 +145,22 @@ RasterPtr  MorphOpSobel::BuildMagnitudeImage () const
 
   float  adjMag = 0.0f;
 
-  float  maxMagnitudeFloat = sqrt ((float)maxMagnitude);
+  float  maxMagnitudeFloat = sqrt (scFLOAT (maxMagnitude));
 
   for  (r = 1;  r < (srcHeight - 1);  ++r)
   {
     for  (c = 1;  c < (srcWidth - 1);  ++c)
     {
-       if  (maxMagnitude > 0.0f)
-         adjMag = 255.0f * sqrt ((float)magnitudeSqrTable[r][c]) / maxMagnitudeFloat;
+       if  (maxMagnitude > 0)
+         adjMag = 255.0f * sqrt (scFLOAT (magnitudeSqrTable[r][c]) / scFLOAT (maxMagnitudeFloat));
        else
          adjMag = 0.0f;
         
-       float  pixelWorkVal = adjMag + (float)0.5;
+       float  pixelWorkVal = adjMag + 0.5f;
        if  (pixelWorkVal > 255.0f)
          pixelWorkVal = 255.0f;
 
-       uchar  pixelVal = (uchar)pixelWorkVal;
+       uchar  pixelVal = scUCHAR (pixelWorkVal);
        magImage->SetPixelValue (r, c, pixelVal);
     }
   }

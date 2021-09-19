@@ -5,9 +5,9 @@
 #if  !defined(_KKU_MSGQUEUE_)
 #define  _KKU_MSGQUEUE_
 
-WarningsLowered()
+WarningsLowered
 #include <queue>
-WarningsRestored()
+WarningsRestored
 
 #include "GoalKeeperSimple.h"
 
@@ -34,7 +34,7 @@ namespace KKB
      *@details This will help managed objects keep track of how much memory they are using in the 
      * unmanaged world.
      */
-    kkMemSize  MemoryConsumedEstimated () const;
+    size_t  MemoryConsumedEstimated () const;
 
     /**
      *@brief  Take ownership of 'msg' and add to end of the queue.
@@ -82,7 +82,7 @@ namespace KKB
 
   private:
     GoalKeeperSimplePtr    gateKeeper;       /**< Used to manage synchronization amongst different threads to this queue. */
-    kkMemSize              memoryConsumed;
+    size_t              memoryConsumed;
     KKStr                  name;             /**< Name of msgQueue. */
     std::queue<KKStrPtr>   queue;
   };  /* MsgQueue */

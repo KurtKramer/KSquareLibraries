@@ -202,8 +202,8 @@ DateType::DateType (KKStr  s):
   if  ((m > 0)  && (m < 13))
   {
     // The first field is a month, assume  mmm/dd/yyyy
-    d = (uchar)atoi (field2.Str ());
-    y = (kkint16)atoi (field3.Str ());
+    d = scUCHAR (atoi (field2.Str ()));
+    y = scINT16 (atoi (field3.Str ()));
 
     if  ((d < 1)  ||  (d > DaysInTheMonth (y, m)))
       d = 1;
@@ -224,13 +224,13 @@ DateType::DateType (KKStr  s):
     
     if  (f3 > 1900)
     {
-      y = (kkint16)f3;
-      d = (uchar)f1;
+      y = scINT16 (f3);
+      d = scUCHAR (f1);
     }
     else
     {
-      y = (kkint16)f1;
-      d = (uchar)f3;
+      y = scINT16 (f1);
+      d = scUCHAR (f3);
     }
 
     if  (d < 1)
@@ -329,7 +329,7 @@ void  DateType::SetFromNumOfDaysInTime (kkint32  days)
   if  (days < 0)
     days--;
 
-  year = (kkint16)(numOf4Years * 4);
+  year = scINT16 (numOf4Years * 4);
   days = days % 1461;
 
   while  (days < 0)
@@ -340,14 +340,14 @@ void  DateType::SetFromNumOfDaysInTime (kkint32  days)
 
   if  (days == 0)
   {
-    year--;
+    --year;
     days = DaysInYear (year);
   }
 
   kkint32  daysInYear = DaysInYear (year);
   while  (days > daysInYear)
   {
-    year++;
+    ++year;
     days = days - daysInYear;
     daysInYear = DaysInYear (year);
   }
@@ -356,12 +356,12 @@ void  DateType::SetFromNumOfDaysInTime (kkint32  days)
   kkint32  daysInMonth = DaysInTheMonth (year, month);
   while  (days > daysInMonth)
   {
-    month++;
+    ++month;
     days = days - daysInMonth;
     daysInMonth = DaysInTheMonth (year, month);
   }
 
-  day = (uchar)days;
+  day = scUCHAR (days);
 }  /* SetFromNumOfDaysInTime */
 
 
@@ -371,9 +371,9 @@ void  DateType::AdjustYear ()
   if  (year < 100)
   {
     if (year > 50)
-      year = (kkint16)(year + 1900);
+      year = scINT16 (year + 1900);
     else
-      year = (kkint16)(year +  2000);
+      year = scINT16 (year +  2000);
   }
 }  /* AdjustYear */
 
@@ -406,7 +406,7 @@ void   DateType::AddDays (kkint32  _days)
     }
   }
 
-  day = (uchar)newDay;
+  day = scUCHAR (newDay);
 }  /* AddDays */
 
 
@@ -432,13 +432,13 @@ void   DateType::SubtractDays (kkint32  _days)
     month--;
     while  (month < 1)
     {
-      month = (kkuint8)(month + 12);
+      month = scUINT8 (month + 12);
       year--;
     }
     newDay = newDay + DaysThisMonth ();
   }
 
-  day = (uchar)newDay;
+  day = scUCHAR (newDay);
 } /* SubtractDays */
 
 
@@ -446,7 +446,7 @@ void   DateType::SubtractDays (kkint32  _days)
 void  DateType::AddMonths (kkint32 _months)
 {
   kkint32  newMonth = month + _months;
-  year = (kkint16)(year + (newMonth / 12));
+  year = scINT16 (year + (newMonth / 12));
   newMonth = newMonth % 12;
   if  (newMonth == 0)
   {
@@ -496,8 +496,8 @@ kkint32  DateType::Days ()  const
 
 kkuint64   DateType::Seconds ()  const
 {
-  kkuint64  numDays = (kkuint64)Days ();
-  kkuint64  numSecs = numDays * (kkuint64)86400;
+  kkuint64  numDays = scUINT64 (Days ());
+  kkuint64  numSecs = numDays * scUINT64 (86400);
   return  numSecs;
 }
 
@@ -505,7 +505,7 @@ kkuint64   DateType::Seconds ()  const
 
 kkuint32  DateType::ToDays    ()  const  {return  Days ();}
 kkuint32  DateType::ToHours   ()  const  {return  Days () * 24;}
-kkuint64  DateType::ToSeconds ()  const  {return  (kkuint64)(Days ()) * (kkuint64)86400;}
+kkuint64  DateType::ToSeconds ()  const  {return  scUINT64 (Days ()) * scUINT64 (86400);}
 
 
 
@@ -555,7 +555,7 @@ void  DateType::AdjustDateFields (kkint32&  years,
   years  += (months / 12);
   months =  (months % 12);
 
-  kkint32  daysInTheMonth = DaysInTheMonth (years, (uchar)months);
+  kkint32  daysInTheMonth = DaysInTheMonth (years, scUCHAR (months));
 
   while  ((days < 1)  &&  (days > daysInTheMonth))
   {
@@ -566,7 +566,7 @@ void  DateType::AdjustDateFields (kkint32&  years,
       else
         months--;
     
-      daysInTheMonth = DaysInTheMonth (years, (uchar)months);
+      daysInTheMonth = DaysInTheMonth (years, scUCHAR (months));
       days = days + daysInTheMonth;
     }
     else
@@ -577,7 +577,7 @@ void  DateType::AdjustDateFields (kkint32&  years,
         months++;
       days = days - daysInTheMonth;
 
-      daysInTheMonth = DaysInTheMonth (years, (uchar)months);
+      daysInTheMonth = DaysInTheMonth (years, scUCHAR (months));
     }
   }
 }  /* AdjustDateFields */
@@ -652,7 +652,7 @@ DateType DateType::operator-- (int)
 
 KKStr   DateType::MM_DD_YY ()  const
 {
-  KKStr  s (9);
+  KKStr  s (9U);
   s << StrFormatInt (Month (),       "00")  << "/"
     << StrFormatInt (Day   (),       "00")  << "/"
     << StrFormatInt (Year  () % 100, "00");
@@ -663,7 +663,7 @@ KKStr   DateType::MM_DD_YY ()  const
 
 KKStr   DateType::MMM_DD_YYYY ()  const
 {
-  KKStr  s (12);
+  KKStr  s (12U);
 
   if  ((month < 1)  ||  (month > 12))
     s << "***";
@@ -679,7 +679,7 @@ KKStr   DateType::MMM_DD_YYYY ()  const
 
 KKStr   DateType::YY_MM_DD ()  const
 {
-  KKStr  s (9);
+  KKStr  s (9U);
   s << StrFormatInt (year % 100, "00")  << "/"
     << StrFormatInt (month,      "00")  << "/"
     << StrFormatInt (day,        "00");
@@ -690,7 +690,7 @@ KKStr   DateType::YY_MM_DD ()  const
 
 KKStr   DateType::YYYY_MM_DD ()  const
 {
-  KKStr  s (11);
+  KKStr  s (11U);
   s << StrFormatInt (year,   "0000")  << "/"
     << StrFormatInt (month,  "00")    << "/"
     << StrFormatInt (day,    "00");
@@ -705,7 +705,7 @@ KKStr   DateType::YYYY_MMM_DD ()  const
   if  ((month >= 1)  &&  (month <= 12))
     monthStr = monthlyShortNames[month];
 
-  KKStr  s (12);
+  KKStr  s (12U);
   s << StrFormatInt (year,   "0000")  << "/"
     << monthStr                       << "/"
     << StrFormatInt (day,    "00");
@@ -716,7 +716,7 @@ KKStr   DateType::YYYY_MMM_DD ()  const
 
 KKStr   DateType::YYYYMMDD () const
 {
-  KKStr  s (8);
+  KKStr  s (8U);
   s << StrFormatInt (year,   "0000")
     << StrFormatInt (month,  "00")
     << StrFormatInt (day,    "00");
@@ -780,9 +780,9 @@ TimeType::TimeType (kkint32  seconds)
   kkint32 minutes = seconds / 60;
       seconds = seconds % 60;
 
-  hour   = (uchar)hours;
-  minute = (uchar)minutes;
-  second = (uchar)seconds;
+  hour   = scUCHAR (hours);
+  minute = scUCHAR (minutes);
+  second = scUCHAR (seconds);
 }
 
 
@@ -818,9 +818,9 @@ TimeType::TimeType (KKStr  s):
        ((f3 >= 0)  &&  (f3 <= 59))
       )
   {
-    hour    = (uchar)f1;
-    minute  = (uchar)f2;
-    second  = (uchar)f3;
+    hour    = scUCHAR (f1);
+    minute  = scUCHAR (f2);
+    second  = scUCHAR (f3);
   }
 }
 
@@ -920,14 +920,14 @@ kkuint32  TimeType::Seconds ()  const
 
 double  TimeType::ToHours ()  const
 {
-  return  (double)hour +  (double)(minute * 60 + second) / 3600.0;
+  return  scDOUBLE (hour) +  scDOUBLE (minute * 60 + second) / 3600.0;
 }
 
 
 
 double  TimeType::ToMinutes ()  const
 {
-  return  (double)hour +  (double)(minute * 60 + second) / 60.0;
+  return  scDOUBLE (hour) +  scDOUBLE (minute * 60 + second) / 60.0;
 }
 
 
@@ -1065,8 +1065,8 @@ kkint32 DateTime::Compare (const DateTime&  right)  const
 
 kkuint64  DateTime::Seconds () const
 {
-  kkuint64  secsInDate = (kkuint64)date.Seconds ();
-  kkuint64  secsInTime = (kkuint64)time.Seconds ();
+  kkuint64  secsInDate = scUINT64 (date.Seconds ());
+  kkuint64  secsInTime = scUINT64 (time.Seconds ());
   return  secsInDate + secsInTime;
 }
 
@@ -1076,7 +1076,7 @@ double    KKB::DateTime::ToHours   ()  const  {return  date.Days () * 24 + time.
 
 
 ///<summary>Number seconds since "0000/01/01 00:00:00"</summary>
-kkuint64  KKB::DateTime::ToSeconds ()  const{return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();}
+kkuint64  KKB::DateTime::ToSeconds ()  const{return  scUINT64 (date.Days ()) * scUINT64 (86400) + time.Seconds ();}
 
 
 void  KKB::DateTime::AddDays (kkint32  _days)
@@ -1096,7 +1096,7 @@ void  DateTime::AddHours (kkint32  _hours)
       date = date - 1;
       newHour += 24;
     }
-    time.Hour ((uchar)newHour);
+    time.Hour (scUCHAR (newHour));
   }
   else
   {
@@ -1106,7 +1106,7 @@ void  DateTime::AddHours (kkint32  _hours)
       date = date + 1;
       newHour -= 24;
     }
-    time.Hour ((uchar)newHour);
+    time.Hour (scUCHAR (newHour));
   }
 }  /* AddHours */
 
@@ -1128,7 +1128,7 @@ void  DateTime::AddMinutes  (kkint32  _mins)
     newMins -= 60;
   }
 
-  time.Minute ((uchar)newMins);
+  time.Minute (scUCHAR (newMins));
 }  /* AddMinutes */
 
 
@@ -1140,7 +1140,7 @@ void  DateTime::AddSeconds  (kkint64 _secs)
   kkint64  minsToAdd = newSecs / 60;
   newSecs = newSecs - (minsToAdd * 60);
   if  (minsToAdd != 0)
-    MinutesAdd ((kkint32)minsToAdd);
+    MinutesAdd (scINT32 (minsToAdd));
 
   while  (newSecs < 0)
   {
@@ -1154,7 +1154,7 @@ void  DateTime::AddSeconds  (kkint64 _secs)
     newSecs -= 60;
   }
 
-  time.Second ((uchar)newSecs);
+  time.Second (scUCHAR (newSecs));
 }  /* AddSeconds */
 
 

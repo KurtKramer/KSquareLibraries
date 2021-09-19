@@ -104,7 +104,7 @@ BitString::BitString (kkuint32   _bitLen,
   {
     if  (bitNums[x] >= bitLen)
     {
-      KKStr  msg (128);
+      KKStr  msg (128U);
       msg << "BitString   Constructing from list of numbers:  bitNums[" << x << "] = [" << bitNums[x] << "] which is >= bitLen[" << bitLen << "].";
       cerr << std::endl << std::endl << "BitString   ***ERROR***  " << msg << std::endl << std::endl;
       throw KKException (msg);

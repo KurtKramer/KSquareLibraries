@@ -159,7 +159,7 @@ void  GoalKeeper::ReportBlockedStats ()
 
 
 
-kkMemSize  GoalKeeper::MemoryConsumedEstimated ()  const
+size_t  GoalKeeper::MemoryConsumedEstimated ()  const
 {
   return  (sizeof (GoalKeeper) + name.MemoryConsumedEstimated ());
 }

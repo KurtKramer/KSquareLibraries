@@ -227,13 +227,13 @@ namespace  KKB
 
   template<typename DftType>
   KK_DFT1D<DftType>::KK_DFT1D (kkint32 _size,
-                               bool  _forwardTransform
+                               bool    _forwardTransform
                               ):
-      MinusOne         ((DftType)-1.0,          (DftType)0.0),
-      One              ((DftType)1.0,           (DftType)0.0),
-      Pi               ((DftType)3.14159265359, (DftType)0.0),
-      Two              ((DftType)2.0,           (DftType)0.0),
-      Zero             ((DftType)0.0,           (DftType)0.0),
+      MinusOne         (static_cast<DftType> (-1.0),          static_cast<DftType> (0.0)),
+      One              (static_cast<DftType> (1.0),           static_cast<DftType> (0.0)),
+      Pi               (static_cast<DftType> (3.14159265359), static_cast<DftType> (0.0)),
+      Two              (static_cast<DftType> (2.0),           static_cast<DftType> (0.0)),
+      Zero             (static_cast<DftType> (0.0),           static_cast<DftType> (0.0)),
       forwardTransform (_forwardTransform),
       fourierMask      (NULL),
       fourierMaskArea  (NULL),
@@ -254,16 +254,16 @@ namespace  KKB
   template<typename DftType>
   void  KK_DFT1D<DftType>::BuildMask ()
   {
-    DftComplexType  N((DftType)size, 0);
-    DftComplexType  M((DftType)size, 0);
+    DftComplexType  N(static_cast<DftType> (size), 0);
+    DftComplexType  M(static_cast<DftType> (size), 0);
 
     kkint32  x;
 
     DftComplexType direction;
     if  (forwardTransform)
-      direction = DftComplexType ((DftType)-1.0, (DftType)0.0);
+      direction = DftComplexType (static_cast<DftType> (-1.0), static_cast<DftType> (0.0));
     else
-      direction = DftComplexType ((DftType)1.0, (DftType)0.0);
+      direction = DftComplexType (static_cast<DftType> (1.0), static_cast<DftType> (0.0));
 
     fourierMaskArea = new DftComplexType [size * size];
     DftComplexType* fourierMaskAreaPtr = fourierMaskArea;
@@ -279,11 +279,11 @@ namespace  KKB
 
     for  (kkint32 m = 0;  m < size;  m++)
     {
-      DftComplexType  mc ((DftType)m, (DftType)0);
+      DftComplexType  mc (static_cast<DftType> (m), static_cast<DftType> (0));
 
       for  (kkint32 k = 0; k < size; k++)
       {
-        DftComplexType  kc ((DftType)k, (DftType)0);
+        DftComplexType  kc (static_cast<DftType> (k), static_cast<DftType> (0));
         fourierMask[m][k] = exp (direction * j * Two * Pi * kc * mc / M);
       }
     }
@@ -298,13 +298,13 @@ namespace  KKB
                                       DftComplexType*  dest
                                      )
   {
-    DftComplexType  M((DftType)size, 0);
+    DftComplexType  M(static_cast<DftType> (size), 0);
 
     DftComplexType direction;
     if  (forwardTransform)
-      direction = DftComplexType ((DftType)-1.0, (DftType)0.0);
+      direction = DftComplexType (static_cast<DftType> (-1.0), static_cast<DftType> (0.0));
     else
-      direction = DftComplexType ((DftType)1.0, (DftType)0.0);
+      direction = DftComplexType (static_cast<DftType> (1.0), static_cast<DftType> (0.0));
  
     DftComplexType  j;
     j = sqrt (MinusOne);
@@ -314,14 +314,14 @@ namespace  KKB
     {
       dest[l] = Zero;
 
-      DftComplexType  lc ((DftType)l, (DftType)0);
+      DftComplexType  lc (static_cast<DftType> (l), static_cast<DftType> (0));
       for  (kkint32 k = 0;  k < size;  k++)
       {
-        //DftType  exponetPart = (DftType)2.0 * (DftType)3.14159265359 * (DftType)k * (DftType)l / (DftType)size;
+        //DftType  exponetPart = static_cast<DftType> (2.0 * static_cast<DftType> (3.14159265359 * static_cast<DftType> (k * static_cast<DftType> (l / static_cast<DftType> (size;
         //DftType  realPart = cos (exponetPart);
         //DftType  imgPart  = -sin (exponetPart);
 
-        DftComplexType  kc ((DftType)k, (DftType)0);
+        DftComplexType  kc (static_cast<DftType> (k), static_cast<DftType> (0));
         DftComplexType  fm = exp (direction * j * Two * Pi * kc * lc / M);
 
         //dest[l] = dest[l] + src[k] * fourierMask[l][k];
@@ -434,14 +434,14 @@ namespace  KKB
     kkint32  i = 0;
     kkint32  isign = (forwardTransform ? 1 : -1);
 
-    DftType  wtemp = (DftType)0.0;
-    DftType  wr    = (DftType)0.0;
-    DftType  wpr   = (DftType)0.0;
-    DftType  wpi   = (DftType)0.0;
-    DftType  wi    = (DftType)0.0;
-    DftType  theta = (DftType)0.0;
-    DftType  tempr = (DftType)0.0;
-    DftType  tempi = (DftType)0.0;
+    DftType  wtemp = static_cast<DftType> (0.0);
+    DftType  wr    = static_cast<DftType> (0.0);
+    DftType  wpr   = static_cast<DftType> (0.0);
+    DftType  wpi   = static_cast<DftType> (0.0);
+    DftType  wi    = static_cast<DftType> (0.0);
+    DftType  theta = static_cast<DftType> (0.0);
+    DftType  tempr = static_cast<DftType> (0.0);
+    DftType  tempi = static_cast<DftType> (0.0);
 
     kkint32  nn = this->size;
     n = nn << 1;
@@ -491,7 +491,7 @@ namespace  KKB
     height           (_height),
     width            (_width),
     forwardTransform (_forwardTransform),
-    Zero             ((DftType)0.0, (DftType)0.0),
+    Zero             (static_cast<DftType> (0.0), static_cast<DftType> (0.0)),
     workArray        (NULL),
     workArrayArea    (NULL),
     workCol          (NULL),
@@ -601,8 +601,6 @@ namespace  KKB
 
 
 
-
-
   template<typename DftType>
   void  KK_DFT2D<DftType>::AllocateArray (DftComplexType*   &arrayArea,
                                           DftComplexType**  &array
@@ -625,14 +623,12 @@ namespace  KKB
 
     for  (kkint32  x = 0;  x < total;  ++x)
     {
-      arrayArea[x].real ((DftType)0.0);
-      arrayArea[x].imag ((DftType)0.0);
+      arrayArea[x].real (static_cast<DftType> (0.0));
+      arrayArea[x].imag (static_cast<DftType> (0.0));
     }
 
     return;
   }  /* AllocateArray */
-
-
 
 
 
@@ -645,8 +641,6 @@ namespace  KKB
     delete  array;      array     = NULL;
     return;
   }  /* DestroyArray */
-
-
 
 
 
@@ -676,10 +670,4 @@ namespace  KKB
 
 }  /* KKB */
 
-
-
-
-
-
 #endif			/* _KKU_FFTW_ */
-

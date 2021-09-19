@@ -114,7 +114,7 @@ RunLog::~RunLog ()
 
 
 
-kkMemSize  RunLog::MemoryConsumedEstimated ()  const
+size_t  RunLog::MemoryConsumedEstimated ()  const
 {
   return  sizeof (RunLog) + 
           curLine.MemoryConsumedEstimated   () +
@@ -328,7 +328,7 @@ RunLog&  RunLog::operator<< (bool  right)
 
 RunLog&  RunLog::operator<< (kkint16  right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt (right, "0");
   Append (s.Str ());
   return  *this;
@@ -338,7 +338,7 @@ RunLog&  RunLog::operator<< (kkint16  right)
 
 RunLog&  RunLog::operator<< (kkuint16 right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt (right, "0");
   Append (s.Str ());
   return  *this;
@@ -348,7 +348,7 @@ RunLog&  RunLog::operator<< (kkuint16 right)
 
 RunLog&  RunLog::operator<< (kkint32  right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s.AppendInt32 (right);
   Append (s.Str ());
   return  *this;
@@ -358,7 +358,7 @@ RunLog&  RunLog::operator<< (kkint32  right)
 
 RunLog&  RunLog::operator<< (kkuint32  right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s.AppendUInt32 (right);
   Append (s.Str ());
   return  *this;
@@ -368,7 +368,7 @@ RunLog&  RunLog::operator<< (kkuint32  right)
 
 RunLog&  RunLog::operator<< (kkint64  right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt64 (right, "0");
   Append (s.Str ());
   return  *this;
@@ -378,7 +378,7 @@ RunLog&  RunLog::operator<< (kkint64  right)
 
 RunLog&  RunLog::operator<< (kkuint64  right)
 {
-  KKStr  s (30);
+  KKStr  s (30U);
   s = StrFormatInt64 (right, "0");
   Append (s.Str ());
   return  *this;

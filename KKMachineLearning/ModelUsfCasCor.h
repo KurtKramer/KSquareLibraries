@@ -43,7 +43,7 @@ namespace  KKMLL
     ~ModelUsfCasCor ();
 
     virtual
-    kkMemSize               MemoryConsumedEstimated ()  const;
+    size_t               MemoryConsumedEstimated ()  const;
 
     virtual ModelTypes      ModelType () const  {return ModelTypes::UsfCasCor;}
 

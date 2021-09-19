@@ -73,7 +73,7 @@ namespace  KKLSC
 
     virtual  ~ScannerFile ();
 
-    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
+    virtual  size_t  MemoryConsumedEstimated ()  const;
 
     virtual  Format  FileFormat ()  const  {return Format::sfUnKnown;}
 

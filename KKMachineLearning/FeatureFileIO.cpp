@@ -215,7 +215,7 @@ KKStr  FeatureFileIO::FileFormatsReadOptionsStr ()
 {
   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
 
-  KKStr  driversThatCanRead (128);
+  KKStr  driversThatCanRead (128U);
 
   vector<FeatureFileIOPtr>::const_iterator  idx;
   for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
@@ -237,7 +237,7 @@ KKStr  FeatureFileIO::FileFormatsWrittenOptionsStr ()
 {
   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
 
-  KKStr  driversThatCanWrite (128);
+  KKStr  driversThatCanWrite (128U);
 
   vector<FeatureFileIOPtr>::const_iterator  idx;
   for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
@@ -257,7 +257,7 @@ KKStr  FeatureFileIO::FileFormatsWrittenOptionsStr ()
 
 KKStr  FeatureFileIO::FileFormatsReadAndWriteOptionsStr ()
 {
-  KKStr  driversThatCanReadAndWrite (128);
+  KKStr  driversThatCanReadAndWrite (128U);
 
   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
 

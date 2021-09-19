@@ -79,17 +79,17 @@ StartStopPoint::~StartStopPoint ()
 }
 
 
-kkMemSize  StartStopPoint::MemoryConsumedEstimated ()  const
+
+size_t  StartStopPoint::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
 
 
 
-
 KKStr  StartStopPoint::ToTabDelStr ()  const
 {
-  KKStr s (48);
+  KKStr s (48U);
   s << scanLineNum << "\t" << TypeStr ();
   return  s;
 }
@@ -131,11 +131,11 @@ void  StartStopPointList::Clear ()
 
 
 
-kkMemSize  StartStopPointList::MemoryConsumedEstimated ()  const
+size_t StartStopPointList::MemoryConsumedEstimated ()  const
 {
   const_iterator  idx2;
 
-  kkMemSize mem = sizeof (*this);
+  size_t mem = sizeof (*this);
 
   for  (idx2 = begin ();  idx2 != end ();  ++idx2)
   {

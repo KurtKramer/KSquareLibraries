@@ -53,7 +53,7 @@ namespace KKMLL
     ClassProbList (bool _owner);
     ClassProbList (const ClassProbList&  pairList);
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     void  SortByClassName ();
     void  SortByProbability (bool highToLow = true);

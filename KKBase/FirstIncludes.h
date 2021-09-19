@@ -8,7 +8,7 @@
 
 #if  defined(_WIN32)
 
-#define  WarningsLowered()  \
+#define  WarningsLowered  \
 __pragma(warning( push )) \
 __pragma(warning( disable : 4267)) \
 __pragma(warning( disable : 4458)) \
@@ -26,20 +26,20 @@ __pragma(warning( disable : 5026)) \
 __pragma(warning( disable : 5027)) \
 __pragma(warning( disable : 5039))
 
-#define  WarningsRestored()   \
+#define  WarningsRestored   \
 __pragma(warning( pop )) 
 #else
 
-#define  WarningsLowered        \
-_Pragma( GCC diagnostic push)             \
-_Pragma( GCC diagnostic ignored "-Wall"()
+#define  WarningsLowered       \
+_Pragma(" GCC diagnostic push")             \
+_Pragma(" GCC diagnostic ignored \"-Wall\"")
 
 #define  WarningsRestored  \
-_Pragma(GCC diagnostic pop)
+_Pragma("GCC diagnostic pop")
 #endif
 
 
-WarningsLowered()
+WarningsLowered
 
 
 #if  defined(WIN32)
@@ -96,7 +96,7 @@ WarningsLowered()
 #define  STDLIB_INCLUDED
 #endif
 
-WarningsRestored()
+WarningsRestored
 
 #if  defined(_WIN32)
 
@@ -114,5 +114,11 @@ WarningsRestored()
 
 #define  RestoreConversionWarning (alpha)  \
 #pragma GCC diagnostic pop 
+
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wuseless-cast"
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+
+_Pragma(" GCC diagnostic push")       
 
 #endif

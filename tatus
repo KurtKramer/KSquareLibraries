@@ -1190,7 +1190,7 @@
  [m
    #define int16_max    (kkint16)32767[m
 [31m-  #define int16_min    (kkint16)-32,768[m
-[32m+[m[32m  #define int16_min    (kkint16)–32,768[m
+[32m+[m[32m  #define int16_min    (kkint16)ï¿½32,768[m
    #define uint16_max   (kkuint16)65535[m
    #define int32_max    (kkint32)2147483647[m
    #define int32_min    (kkint32)-214748367[m
@@ -1531,7 +1531,7 @@
 [31m-      // Calculate the distance from the threshold initial point to the current pixelColor using[m
 [32m+[m[32m      // Calculate the distance from the threshold initial point to the current pixel color using[m[41m [m
        // the euclidean distance[m
-       r = (float)(sqrt (pow (xOriginalPoint - x, 2) + pow (yOriginalPoint - y, 2) + pow (thresholdI - tempI, 2)));[m
+       r = static_cast<float> (sqrt (pow (xOriginalPoint - x, 2) + pow (yOriginalPoint - y, 2) + pow (thresholdI - tempI, 2)));[m
  [m
        if  (r <= distance)[m
 [31m-         resultingImage->SetPixelValue (m, n, pixelColor);[m

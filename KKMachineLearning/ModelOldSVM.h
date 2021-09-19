@@ -74,7 +74,7 @@ namespace KKMLL
                                             );
 
     virtual
-    kkMemSize                MemoryConsumedEstimated ()  const;
+    size_t                MemoryConsumedEstimated ()  const;
 
     virtual
     bool                     NormalizeNominalAttributes ()  const;

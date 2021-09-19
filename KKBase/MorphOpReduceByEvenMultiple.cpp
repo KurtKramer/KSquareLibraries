@@ -32,9 +32,9 @@ MorphOpReduceByEvenMultiple::~MorphOpReduceByEvenMultiple ()
 
 
 
-kkMemSize  MorphOpReduceByEvenMultiple::MemoryConsumedEstimated ()
+size_t  MorphOpReduceByEvenMultiple::MemoryConsumedEstimated () const
 {
-  kkMemSize  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
+  size_t  result = MorphOp::MemoryConsumedEstimated () + sizeof (*this);
   return  result;
 }
 
@@ -47,8 +47,8 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
   // We will pad one extra pixel top, bot, left, and right.
   // This is necessary because some feature calculations assume that there edge rows are empty.
 
-  kkint32  nHeight = kkint32 (srcHeight / multiple) + 2;
-  kkint32  nWidth = kkint32  (srcWidth  / multiple) + 2;
+  kkint32  nHeight = scINT32 (srcHeight / multiple) + 2;
+  kkint32  nWidth  = scINT32 (srcWidth  / multiple) + 2;
 
   kkuint32**  workRaster  = new kkuint32*[nHeight];
   uchar**     workDivisor = new uchar*[nHeight];
@@ -56,7 +56,7 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
 
   uchar*  workDivisorRow = NULL;
 
-  for (kkint32 nRow = 0; nRow < nHeight; ++nRow)
+  for  (kkint32 nRow = 0;  nRow < nHeight;  ++nRow)
   {
     workRow = new kkuint32[nWidth];
     workRaster[nRow] = workRow;
@@ -64,7 +64,7 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
     workDivisorRow = new uchar[nWidth];
     workDivisor[nRow] = workDivisorRow;
 
-    for (kkint32 nCol = 0; nCol < nWidth; ++nCol)
+    for  (kkint32 nCol = 0;  nCol < nWidth;  ++nCol)
     {
       workRow[nCol] = 0;
       workDivisorRow[nCol] = 0;
@@ -77,7 +77,7 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
 
   {
     kkint32 nRow = 1;
-    for (kkint32 row = 0; row < srcHeight; ++row)
+    for  (kkint32 row = 0;  row < srcHeight;  ++row)
     {
       srcRow = srcGreen[row];
       intermediateCol = 0;
@@ -85,13 +85,13 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
       workRow = workRaster[nRow];
       workDivisorRow = workDivisor[nRow];
 
-      for (kkint32 col = 0; col < srcWidth; ++col)
+      for  (kkint32 col = 0;  col < srcWidth;  ++col)
       {
         workRow[nCol] += srcRow[col];
         workDivisorRow[nCol]++;
 
         intermediateCol++;
-        if (intermediateCol >= multiple)
+        if  (intermediateCol >= multiple)
         {
           intermediateCol = 0;
           nCol++;
@@ -99,7 +99,7 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
       }
 
       intermediateRow++;
-      if (intermediateRow >= multiple)
+      if  (intermediateRow >= multiple)
       {
         intermediateRow = 0;
         nRow++;
@@ -115,21 +115,21 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
   kkint32  nMaxPixVal = 0;
   kkint32  nForegroundPixelCount = 0;
 
-  for (kkint32 nRow = 0; nRow < nHeight; ++nRow)
+  for  (kkint32 nRow = 0;  nRow < nHeight;  ++nRow)
   {
     destRow = (reducedRaster->Green ())[nRow];
     workRow = workRaster[nRow];
     workDivisorRow = workDivisor[nRow];
 
-    for (kkint32 nCol = 0; nCol < nWidth; ++nCol)
+    for  (kkint32 nCol = 0;  nCol < nWidth;  ++nCol)
     {
       newPixelVal = workRow[nCol];
-      if (newPixelVal > 0)
+      if  (newPixelVal > 0)
       {
         nForegroundPixelCount++;
-        newPixelVal = (kkint32)(0.5f + (float)(newPixelVal) / (float)(workDivisorRow[nCol]));
-        destRow[nCol] = (uchar)(newPixelVal);
-        if (newPixelVal > nMaxPixVal)
+        newPixelVal = scINT32 (0.5f + scFLOAT (newPixelVal) / scFLOAT (workDivisorRow[nCol]));
+        destRow[nCol] = scUCHAR (newPixelVal);
+        if  (newPixelVal > nMaxPixVal)
           nMaxPixVal = newPixelVal;
       }
     }
@@ -143,7 +143,7 @@ RasterPtr   MorphOpReduceByEvenMultiple::PerformOperation (RasterConstPtr  _imag
   delete[]  workDivisor;  workDivisor = NULL;
 
   reducedRaster->ForegroundPixelCount (nForegroundPixelCount);
-  reducedRaster->MaxPixVal ((uchar)nMaxPixVal);
+  reducedRaster->MaxPixVal (scUCHAR (nMaxPixVal));
 
   return  reducedRaster;
 }  /* PerformOperation */

@@ -150,7 +150,7 @@ void  CrossValidationMxN::RunValidations (RunLog&  log)
     cv->RunCrossValidation (log);
 
     accuracies.push_back    (cv->Accuracy       ());
-    supportPoints.push_back ((float)cv->NumOfSupportVectors ());
+    supportPoints.push_back (scFLOAT (cv->NumOfSupportVectors ()));
     trainingTimes.push_back (cv->TrainTimeTotal ());
     testTimes.push_back     (cv->TestTimeTotal  ());
 
@@ -164,7 +164,7 @@ void  CrossValidationMxN::RunValidations (RunLog&  log)
   CalcMeanAndStdDev (trainingTimes,   trainingTimeMean,   trainingTimeStdDev);
   CalcMeanAndStdDev (testTimes,       testTimeMean,       testTimeStdDev);
 
-  double  factor = 1.0 / (double)numOfOrderings;
+  double  factor = 1.0 / scDOUBLE (numOfOrderings);
 
   meanConfusionMatrix->FactorCounts (factor);
 }  /* RunValidations */
@@ -226,7 +226,7 @@ void  CrossValidationMxN::RunTrainAndTest (kkuint32  numExamplsToUseForTraining,
                           );
 
     accuracies.push_back    (cv->Accuracy       ());
-    supportPoints.push_back ((float)cv->NumOfSupportVectors ());
+    supportPoints.push_back (scFLOAT (cv->NumOfSupportVectors ()));
     trainingTimes.push_back (cv->TrainTimeTotal ());
     testTimes.push_back     (cv->TestTimeTotal  ());
 
@@ -240,7 +240,7 @@ void  CrossValidationMxN::RunTrainAndTest (kkuint32  numExamplsToUseForTraining,
   CalcMeanAndStdDev (trainingTimes,   trainingTimeMean,   trainingTimeStdDev);
   CalcMeanAndStdDev (testTimes,       testTimeMean,       testTimeStdDev);
 
-  double  factor = 1.0 / (double)numOfOrderings;
+  double  factor = 1.0 / scDOUBLE (numOfOrderings);
 
   meanConfusionMatrix->FactorCounts (factor);
 }  /* RunTrainAndTest */

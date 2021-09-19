@@ -53,7 +53,7 @@ namespace KKB
 
     virtual ~KKThread ();
 
-    kkMemSize  MemoryConsumedEstimated () const;
+    size_t  MemoryConsumedEstimated () const;
 
     static  const KKStr&     ThreadStatusToStr (ThreadStatus);
 
@@ -215,7 +215,7 @@ namespace KKB
     KKThreadList (const KKThreadList&  list);
     ~KKThreadList ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
   };
 
   typedef  KKThreadList*    KKThreadListPtr;

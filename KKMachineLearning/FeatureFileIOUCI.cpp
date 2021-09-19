@@ -122,7 +122,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
   kkint32  numOfFeatures = _fileDesc->NumOfFields ();
   kkint32  lineCount = 0;
 
-  KKStr  ln (256);
+  KKStr  ln (256U);
   bool  eof;
 
   if  (!_maxCount)

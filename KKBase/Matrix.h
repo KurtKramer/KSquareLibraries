@@ -149,6 +149,10 @@ namespace  KKB
                             kkuint32 _numOfCols
                            );
 
+    void            ReSize (size_t _numOfRows,
+                            size_t _numOfCols
+                           );
+
     bool            Symmetric ()  const;  /**< Returns true is the matrix is Symmetric */
 
     Matrix<T>       Transpose ();
@@ -283,7 +287,7 @@ namespace  KKB
   {
     if (idx >= numOfCols)
     {
-      KKStr errMsg(80);
+      KKStr errMsg(120U);
       errMsg << "Row::operator[]  **** ERROR ****,  Index["
         << idx << "]  out of range of [0-" << numOfCols << "]."
         << std::endl;
@@ -407,14 +411,14 @@ namespace  KKB
 
     Matrix<T>*  m = new Matrix<T> (numOfRows, numOfCols);
 
-    for (kkuint32 row = 0; row < numOfRows; ++row)
+    for (kkuint32 row = 0;  row < numOfRows;  ++row)
     {
       U*  srcRow = data[row];
       T*  destRow = m->data[row];
       if (srcRow)
       {
-        for (kkuint32 col = 0; col < numOfCols; ++col)
-          destRow[col] = (T)(srcRow[col]);
+        for (kkuint32 col = 0;  col < numOfCols;  ++col)
+          destRow[col] = static_cast<T> (srcRow[col]);
       }
     }
     return  m;
@@ -430,6 +434,19 @@ namespace  KKB
     Destroy ();
     numOfRows = _numOfRows;
     numOfCols = _numOfCols;
+    AllocateStorage ();
+  }
+
+
+
+  template<typename T>
+  void   Matrix<T>::ReSize (size_t _numOfRows,
+                            size_t _numOfCols
+                           )
+  {
+    Destroy ();
+    numOfRows = scUINT32 (_numOfRows);
+    numOfCols = scUINT32 (_numOfCols);
     AllocateStorage ();
   }  /* ReSize */
 
@@ -472,7 +489,7 @@ namespace  KKB
   {
     if (rowIDX >= numOfRows)
     {
-      KKStr  msg (80);
+      KKStr  msg (120U);
       msg << "Matrix::operator[]   **** ERROR ****,  Row Index[" << rowIDX << "]  Invalid.";
       std::cerr << std::endl << msg << std::endl << std::endl;
       throw  KKException (msg);
@@ -529,7 +546,7 @@ namespace  KKB
   template<typename U>
   Matrix<T>&  Matrix<T>::operator=  (const std::vector<U>&  right)
   {
-    ReSize ((kkuint32)right.size (), 1);
+    ReSize (scUINT32 (right.size ()), 1);
     for (kkuint32 row = 0; row < numOfRows; row++)
       dataArea[row] = static_cast<T>(right[row]);
 
@@ -566,7 +583,7 @@ namespace  KKB
     if ((numOfRows != right.numOfRows) ||
       (numOfCols != right.numOfCols))
     {
-      KKStr  msg (100);
+      KKStr  msg (256U);
       msg << "Matrix::operator+   **** ERROR ****,  Dimensions Don't Match [" << numOfRows << "," << numOfCols << "] + [" << right.numOfRows << "," << right.numOfCols << "].";
       cerr << std::endl << msg << std::endl << std::endl;
       throw  KKException (msg);
@@ -613,7 +630,7 @@ namespace  KKB
     if ((numOfRows != right.numOfRows) ||
       (numOfCols != right.numOfCols))
     {
-      KKStr  msg (100);
+      KKStr  msg (256U);
       msg << "Matrix::operator-   **** ERROR ****,  Dimensions Don't Match [" << numOfRows << "," << numOfCols << "] + [" << right.numOfRows << "," << right.numOfCols << "].";
       cerr << std::endl << msg << std::endl << std::endl;
       throw  KKException (msg);
@@ -671,7 +688,7 @@ namespace  KKB
   {
     if (numOfCols != right.numOfRows)
     {
-      KKStr  msg (100);
+      KKStr  msg (192U);
       msg << "Matrix::operator*   **** ERROR ****,  Dimension Mismatch  Left[" << numOfRows << "," << numOfCols << "]  Right[" << right.numOfRows << "," << right.numOfCols << "].";
       std::cerr << std::endl << msg << std::endl << std::endl;
       throw  KKException (msg);
@@ -726,26 +743,26 @@ namespace  KKB
     }
 
     if (size == 1)
-      return (T)0.0;
+      return static_cast<T> (0.0);
 
     T* coFactors = data[rowMap[0]];
-    T  det = (T)0.0;
+    T  det = static_cast<T> (0.0);
     kkuint32 newSize = size - 1;
     kkint32 sign = 1;
 
     kkuint32*  newRowMap = new kkuint32[newSize];
 
-    for (kkuint32 row = 1; row < size; row++)
+    for (kkuint32 row = 1;  row < size;  ++row)
     {
       newRowMap[row - 1] = rowMap[row];
     }
 
-    for (kkuint32 cfCol = 0; cfCol < size; ++cfCol)
+    for (kkuint32 cfCol = 0;  cfCol < size;  ++cfCol)
     {
       kkuint32*  newColMap = new kkuint32[newSize];
 
       kkuint32  newCol = 0;
-      for (kkuint32 oldCol = 0; oldCol < size; ++oldCol)
+      for (kkuint32 oldCol = 0;  oldCol < size;  ++oldCol)
       {
         if (oldCol != cfCol)
         {
@@ -777,7 +794,7 @@ namespace  KKB
   {
     if (numOfCols != numOfRows)
     {
-      KKStr errMsg (128);
+      KKStr errMsg (128U);
       errMsg << "Matrix::CalcCoFactors   **** ERROR ****,  Matrix not a Square["
         << numOfRows << "," << numOfCols << "].";
 
@@ -885,7 +902,7 @@ namespace  KKB
   {
     if (numOfCols != numOfRows)
     {
-      KKStr  msg (80);
+      KKStr  msg (128U);
       msg << "Matrix::Inverse   *** ERROR ***   Dimensions are not Square[" << numOfRows << "," << numOfCols << "]  Invalid.";
       std::cerr << std::endl << msg << std::endl << std::endl;
       throw  KKException (msg);
@@ -1086,14 +1103,13 @@ namespace  KKB
   template<typename T>
   T  Matrix<T>::Determinant ()  const
   {
-    if (numOfCols != numOfRows)
-      return (T)-999999.99;
+    KKCheck (numOfCols == numOfRows, "Matrix<T>::Determinant   numOfCols: " << numOfCols << " must equal numOfRows: " << numOfRows << "!")
 
     T** mat = new T*[numOfRows];
-    for (kkuint32 r = 0; r < numOfRows; ++r)
+    for  (kkuint32 r = 0;  r < numOfRows;  ++r)
     {
       mat[r] = new T[numOfCols];
-      for (kkuint32 c = 0; c < numOfCols; ++c)
+      for  (kkuint32 c = 0;  c < numOfCols;  ++c)
       {
         mat[r][c] = data[r][c];
       }
@@ -1101,7 +1117,7 @@ namespace  KKB
 
     T det = static_cast<T>(1.0);
 
-    for (kkuint32 i = 0; i < numOfRows; ++i)
+    for  (kkuint32 i = 0;  i < numOfRows;  ++i)
     {
       const T  Aii = DeterminantSwap (mat, i);
 
@@ -1114,15 +1130,15 @@ namespace  KKB
       det *= Aii;
 
       //Do elimination
-      for (kkuint32 j = i + 1; j < numOfRows; j++)
+      for  (kkuint32 j = i + 1;  j < numOfRows;  ++j)
       {
         const T pivot = mat[j][i] / Aii;
-        for (kkuint32 k = i; k < numOfRows; k++)
+        for  (kkuint32 k = i;  k < numOfRows;  ++k)
           mat[j][k] -= pivot * mat[i][k];
       }
     }
 
-    for (kkuint32 r = 0; r < numOfRows; r++)
+    for  (kkuint32 r = 0;  r < numOfRows;  ++r)
     {
       delete  mat[r];
       mat[r] = NULL;
@@ -1240,7 +1256,7 @@ namespace  KKB
         for (k = 0; k < l + 1; k++)
           scale += fabs (a[i][k]);
 
-        if (scale == (T)0.0)
+        if  (scale == static_cast<T> (0.0))
         {
           e[i] = a[i][l];
         }
@@ -1296,8 +1312,8 @@ namespace  KKB
 
     // We can now calculate Eigen Vectors
 
-    d[0] = (T)0.0;
-    e[0] = (T)0.0;
+    d[0] = static_cast<T> (0.0);
+    e[0] = static_cast<T> (0.0);
 
     for (i = 0; i < n; i++)
     {
@@ -1319,7 +1335,7 @@ namespace  KKB
       d[i] = a[i][i];
 
       // Reset row and column of 'a' to identity matrix;
-      a[i][i] = (T)1.0;
+      a[i][i] = static_cast<T> (1.0);
       for (j = 0; j < l; j++)
         a[j][i] = a[i][j] = 0.0;
     }  /* for (i) */
@@ -1363,7 +1379,7 @@ namespace  KKB
 
     if (absa > absb)
     {
-      return  absa * sqrt ((T)1.0 + SQR (absb / absa));
+      return  absa * sqrt (static_cast<T> (1.0) + SQR (absb / absa));
     }
     else
     {

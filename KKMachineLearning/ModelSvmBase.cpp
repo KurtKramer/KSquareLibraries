@@ -92,9 +92,9 @@ ModelSvmBase::~ModelSvmBase ()
 
 
 
-kkMemSize  ModelSvmBase::MemoryConsumedEstimated ()  const
+size_t  ModelSvmBase::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  size_t  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                        sizeof (SVM289_MFS::Svm_Model*)   + 
                                        sizeof (ModelParamSvmBasePtr);
 
@@ -639,7 +639,7 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
       }
       else
       {
-        KKStr errMsg (128);
+        KKStr errMsg (198U);
         errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Unexpected Token;  Section:"
                << "  tag: " << tag->Name()
                << "  Section: " << t->SectionName () << "  VarName: " << t->VarName ();
@@ -661,7 +661,7 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
 
     if  (Model::param == NULL)
     {
-      KKStr errMsg (128);
+      KKStr errMsg (128U);
       errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
       AddErrorMsg (errMsg, 0);
       log.Level (-1) << endl << errMsg << endl << endl;
@@ -669,7 +669,7 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
 
     else if  (typeid (*Model::param) != typeid(ModelParamSvmBase))
     { 
-      KKStr errMsg (128);
+      KKStr errMsg (198U);
       errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
       AddErrorMsg (errMsg, 0);
       log.Level (-1) << endl << errMsg << endl << endl;

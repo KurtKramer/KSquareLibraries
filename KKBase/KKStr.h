@@ -14,7 +14,7 @@
 //*  KKStr class and string manipulation routines.
 //************************************************************************************
 
-WarningsLowered()
+WarningsLowered
 #include <istream>
 #include <map>
 #include <ostream>
@@ -27,7 +27,7 @@ WarningsLowered()
 #define  __cdecl
 #endif
 #endif
-WarningsRestored()
+WarningsRestored
 
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
@@ -109,6 +109,8 @@ namespace  KKB
 
     explicit KKStr (kkStrUint  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
+    explicit KKStr (size_t  size);
+
     ///<summary> Initializes the string with a displayable version of <paramref name='d'/> with <paramref name='precision'/> decimal points. </summary>
     KKStr (double  d,  kkint32 precision);
 
@@ -178,7 +180,7 @@ namespace  KKB
 
     void     AppendUInt32 (kkuint32  i);
 
-    bool     CharInStr (char  ch);  /**<  Determines if 'ch' occurs anywhere in the string. */
+    bool     IsCharInStr (char  ch) const;  /**<  Determines if 'ch' occurs anywhere in the string. */
 
     void     ChopFirstChar ();      /**<  Removes the first character from the string. */
 
@@ -383,7 +385,7 @@ namespace  KKB
     static
     kkStrUint  MaxLenSupported ();                                /**< Returns the maximum String Length that this string can support. */
 
-    kkMemSize  MemoryConsumedEstimated () const;
+    size_t  MemoryConsumedEstimated () const;
 
     /** @brief  Will break up the contents of the string into tokens where one of the characters in 'delStr' separates each token. */
     VectorKKStr  Parse (const char* delStr = "\n\r\t, ")  const;
@@ -474,7 +476,7 @@ namespace  KKB
     static
       bool  StrEqualNoCaseN (const char* s1,
                              const char* s2,
-                             kkuint32    len
+                             size_t      len
                             );
 
 
@@ -802,7 +804,7 @@ namespace  KKB
 
     KKStrListPtr  DuplicateListAndContents ()  const;
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     void   Sort (bool  _reversedOrder);
 
@@ -873,7 +875,7 @@ namespace  KKB
 
     KKStrConstPtr  LookUp (kkuint32 x)  const;
 
-    kkMemSize MemoryConsumedEstimated ()  const;
+    size_t MemoryConsumedEstimated ()  const;
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
@@ -913,7 +915,7 @@ namespace  KKB
     bool          caseSensative;
     KKStrPtrComp  comparator;
     IndexIndex    indexIndex;
-    kkMemSize     memoryConsumedEstimated;
+    size_t     memoryConsumedEstimated;
     kkint32       nextIndex;
     bool          owner;
     StrIndex*     strIndex;

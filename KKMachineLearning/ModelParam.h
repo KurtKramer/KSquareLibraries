@@ -78,7 +78,7 @@ namespace KKMLL
 
 
     virtual
-      kkMemSize  MemoryConsumedEstimated ()  const;
+      size_t  MemoryConsumedEstimated ()  const;
 
 
     virtual
@@ -112,7 +112,7 @@ namespace KKMLL
     virtual float                    AvgMumOfFeatures () const;
     virtual EncodingMethodType       EncodingMethod () const { return encodingMethod; }
     virtual KKStr                    EncodingMethodStr () const { return EncodingMethodToStr (encodingMethod); }
-    virtual kkint32                  ExamplesPerClass () const { return examplesPerClass; }
+    virtual kkint32                  ExamplesPerClass  () const { return examplesPerClass; }
     virtual const KKStr&             FileName () const { return fileName; }
     virtual bool                     NormalizeNominalFeatures () const { return normalizeNominalFeatures; }
     virtual FeatureNumListConstPtr   SelectedFeatures () const { return selectedFeatures; }

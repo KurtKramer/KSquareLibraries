@@ -416,7 +416,7 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
 
       else if  (strchr (invalidChars, c) != NULL)
       {
-        KKStr invalidStr (2);
+        KKStr invalidStr (2U);
         invalidStr.Append (c);
         errors->PushOnBack (new KKStr ("Invalid character: " + invalidStr + "  at position: " + StrFormatInt (x, "##0")));
       }
@@ -1096,9 +1096,9 @@ KKStr  KKB::osGetUserName ()
 
 
 
-kkint32  KKB::osGetNumberOfProcessors ()
+kkuint32  KKB::osGetNumberOfProcessors ()
 {
-  return (kkint32)std::thread::hardware_concurrency ();
+  return std::thread::hardware_concurrency ();
 }  /* osGetNumberOfProcessors */
 
 
@@ -1244,7 +1244,7 @@ void  KKB::osGetListOfFilesInDirectoryTree (const KKStr&  rootDir,
     KKStr fileName = de.path ().filename ().string (); // filename () does not include directopry path.
     if (!fs::is_directory (de.status ()) && osFileNameMatchesSearchFields (fileName, fileSpecParts))
     {
-      fileNames.push_back(de.path ().string ());
+      fileNames.push_back (de.path ().string ());
     }
   }
   delete fileSpecParts;
@@ -1299,13 +1299,13 @@ double  KKB::osGetSystemTimeUsed ()
 
   SYSTEMTIME  st;
 
-  FileTimeToSystemTime(&kernelTime, &st);
+  FileTimeToSystemTime (&kernelTime, &st);
   double  kt =  st.wHour * 3600 + st.wMinute * 60 + st.wSecond;
-  kt += ((double)st.wMilliseconds / 1000.0);
+  kt += (scDOUBLE (st.wMilliseconds) / 1000.0);
 
-  FileTimeToSystemTime(&userTime, &st);
+  FileTimeToSystemTime (&userTime, &st);
   double  ut =  st.wHour * 3600 + st.wMinute * 60 + st.wSecond;
-  ut += ((double)st.wMilliseconds / 1000.0);
+  ut += (scDOUBLE (st.wMilliseconds) / 1000.0);
 
   double  numOfSecs = kt + ut;
   
@@ -1320,8 +1320,8 @@ double  KKB::osGetSystemTimeUsed ()
 {
   struct  tms  buff;
   times (&buff);
-  double  totalTime = (double)(buff.tms_utime + buff.tms_stime);
-  return  (totalTime / (double)(sysconf (_SC_CLK_TCK)));
+  double  totalTime = scDOUBLE (buff.tms_utime + buff.tms_stime);
+  return  (totalTime / scDOUBLE (sysconf (_SC_CLK_TCK)));
 }
 #endif
 
@@ -1354,12 +1354,12 @@ double  KKB::osGetUserTimeUsed () noexcept
 
 
 
-double  KKB::osGetUserTimeUsed ()
+double  KKB::osGetUserTimeUsed () noexcept
 {
   struct  tms  buff;
   times (&buff);
-  double  totalTime = (double)(buff.tms_utime);
-  return  (totalTime / (double)(sysconf (_SC_CLK_TCK)));
+  double  totalTime = scDOUBLE (buff.tms_utime);
+  return  (totalTime / scDOUBLE (sysconf (_SC_CLK_TCK)));
 }
 #endif
 
@@ -1379,7 +1379,7 @@ double  KKB::osGetKernalTimeUsed () noexcept
 
   SYSTEMTIME  st;
 
-  FileTimeToSystemTime(&kernelTime, &st);
+  FileTimeToSystemTime (&kernelTime, &st);
   double  kt =  st.wHour * 3600 + 
                 st.wMinute * 60 + 
                 st.wSecond      +
@@ -1388,12 +1388,12 @@ double  KKB::osGetKernalTimeUsed () noexcept
 }  /* osGetSystemTimeUsed */
 
 #else
-double  KKB::osGetKernalTimeUsed ()
+double  KKB::osGetKernalTimeUsed () noexcept
 {
   struct  tms  buff;
   times (&buff);
-  double  totalTime = (double)(buff.tms_stime);
-  return  (totalTime / (double)(sysconf (_SC_CLK_TCK)));
+  double  totalTime = scDOUBLE (buff.tms_stime);
+  return  (totalTime / scDOUBLE (sysconf (_SC_CLK_TCK)));
 }  /* osGetSystemTimeUsed */
 #endif
 
@@ -1424,7 +1424,7 @@ kkuint64  KKB::osGetSystemTimeInMiliSecs () noexcept
 } 
 
 #else
-kkuint64  KKB::osGetSystemTimeInMiliSecs ()
+kkuint64  KKB::osGetSystemTimeInMiliSecs () noexcept
 {
   struct timeval now;
   gettimeofday (&now, NULL);
@@ -1441,12 +1441,12 @@ DateTime  KKB::osGetLocalDateTime ()
 
   GetLocalTime(&sysTime);
 
-  const DateTime  dateTime ((short)sysTime.wYear,
-                            (uchar)sysTime.wMonth,
-                            (uchar)sysTime.wDay,
-                            (uchar)sysTime.wHour,
-                            (uchar)sysTime.wMinute,
-                            (uchar)sysTime.wSecond
+  const DateTime  dateTime (scINT16 (sysTime.wYear),
+                            scUCHAR (sysTime.wMonth),
+                            scUCHAR (sysTime.wDay),
+                            scUCHAR (sysTime.wHour),
+                            scUCHAR (sysTime.wMinute),
+                            scUCHAR (sysTime.wSecond)
                            );
 
   return  dateTime;
@@ -1463,12 +1463,12 @@ DateTime  KKB::osGetLocalDateTime ()
   time (&long_time);                /* Get time as long integer. */
   curTime = localtime (&long_time); /* Convert to local time. */
 
-  DateTime  dateTime ((kkint16)(curTime->tm_year + 1900),
-                      (uchar)(curTime->tm_mon + 1),
-                      (uchar)curTime->tm_mday,
-                      (uchar)curTime->tm_hour,
-                      (uchar)curTime->tm_min,
-                      (uchar)curTime->tm_sec
+  DateTime  dateTime (scINT16 (curTime->tm_year + 1900),
+                      scUCHAR (curTime->tm_mon + 1),
+                      scUCHAR (curTime->tm_mday),
+                      scUCHAR (curTime->tm_hour),
+                      scUCHAR (curTime->tm_min),
+                      scUCHAR (curTime->tm_sec)
                      );
 
   return  dateTime;
@@ -1494,17 +1494,16 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
   FileTimeToSystemTime (&(wfd.ftLastWriteTime), &fileTime);
   SystemTimeToTzSpecificLocalTime(NULL, &fileTime, &stLocal);
 
-  return  DateTime ((kkint16)stLocal.wYear,
-                    (uchar)stLocal.wMonth, 
-                    (uchar)stLocal.wDay,
-                    (uchar)stLocal.wHour,
-                    (uchar)stLocal.wMinute,
-                    (uchar)stLocal.wSecond
+  return  DateTime (scINT16 (stLocal.wYear),
+                    scUCHAR (stLocal.wMonth), 
+                    scUCHAR (stLocal.wDay),
+                    scUCHAR (stLocal.wHour),
+                    scUCHAR (stLocal.wMinute),
+                    scUCHAR (stLocal.wSecond)
                    );
 
 }  /* osGetFileDateTime */
 #else
-
 
 
 DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
@@ -1518,16 +1517,15 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
     return  DateTime (0, 0, 0, 0, 0, 0);
   }
 
-
   struct tm* dt =  localtime (&(buf.st_mtime));
 
-  return  DateTime ((kkuint16)(1900 + dt->tm_year), 
-                    (uchar)(dt->tm_mon + 1),
-                    (uchar)dt->tm_mday,
-                    (uchar)dt->tm_hour,
-                    (uchar)dt->tm_min,
-                    (uchar)dt->tm_sec
-	           );
+  return  DateTime (scINT16 (1900 + dt->tm_year), 
+                    scUCHAR (dt->tm_mon + 1),
+                    scUCHAR (dt->tm_mday),
+                    scUCHAR (dt->tm_hour),
+                    scUCHAR (dt->tm_min),
+                    scUCHAR (dt->tm_sec)
+	                 );
 }
 #endif
 
@@ -1538,9 +1536,9 @@ kkint64  KKB::osGetFileSize (const KKStr&  fileName)
   try
   {
     fs::path p = fs::path (fileName.Str ());
-    auto stats = fs::status(p);
-    auto fileSize = fs::file_size(p);
-    return (kkint64)fileSize;
+    auto stats = fs::status (p);
+    auto fileSize = fs::file_size (p);
+    return scINT64 (fileSize);
   }
   catch (const std::exception& e)
   {
@@ -1650,7 +1648,7 @@ KKStr   KKB::osLookForFile (const KKStr&  fileName,
 
 
 
-KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
+KKStr  KKB::osCreateUniqueFileName (KKStr fileName)
 {
   if  (fileName.Empty ())
     fileName = "Temp.txt";
@@ -1688,7 +1686,7 @@ KKStrPtr  KKB::osReadNextLine (FILE*  in)
   if  (feof (in))
     return NULL;
 
-  KKStrPtr  buff = new KKStr (100);
+  KKStrPtr  buff = new KKStr (100U);
   while  (true)
   {
     if  (feof (in))
@@ -1710,7 +1708,7 @@ KKStrPtr  KKB::osReadNextLine (FILE*  in)
       break;
     }
 
-    buff->Append ((char)ch);
+    buff->Append (scCHAR (ch));
     if  (buff->Len () >= KKStr::MaxStrLen)
       break;
   }
@@ -1730,10 +1728,10 @@ KKStr  KKB::osReadNextToken (std::istream&  in,
   eol = false;
 
   char  token[1024];
-  kkint32  maxTokenLen = (kkint32)sizeof (token) - 1;
+  size_t  maxTokenLen = sizeof (token) - 1;
 
   //kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
-  kkint32  ch = in.get ();  
+  kkint32  ch = in.get ();
   eof = in.eof ();
   if  (eof)
   {
@@ -1754,20 +1752,20 @@ KKStr  KKB::osReadNextToken (std::istream&  in,
     return "";
   }
 
-  kkint32 tokenLen = 0;
+  size_t  tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
   {
     if  (ch == '\n')
     {
-      in.putback ((char)ch);
+      in.putback (scCHAR (ch));
       break;
     }
     else
     {
-      token[tokenLen] = (char)ch;
-      tokenLen++;
+      token[tokenLen] = scCHAR (ch);
+      ++tokenLen;
       
       if  (tokenLen >= maxTokenLen)
         break;
@@ -1784,7 +1782,7 @@ KKStr  KKB::osReadNextToken (std::istream&  in,
   {
     if  (strchr (" \r", token[tokenLen - 1]) == 0)
       break;
-    tokenLen--;
+    --tokenLen;
     token[tokenLen] = 0;
   }
 
@@ -1803,7 +1801,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
   eol = false;
 
   char  token[1024];
-  kkint32  maxTokenLen = (kkint32)sizeof (token) - 1;
+  size_t  maxTokenLen = sizeof (token) - 1;
 
   kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
 
@@ -1823,7 +1821,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
     return "";
   }
 
-  kkint32 tokenLen = 0;
+  size_t tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
@@ -1835,8 +1833,8 @@ KKStr  KKB::osReadNextToken (FILE*       in,
     }
     else
     {
-      token[tokenLen] = (char)ch;
-      tokenLen++;
+      token[tokenLen] = scCHAR (ch);
+      ++tokenLen;
       
       if  (tokenLen >= maxTokenLen)
         break;
@@ -1853,7 +1851,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
   {
     if  (strchr (" \r", token[tokenLen - 1]) == 0)
       break;
-    tokenLen--;
+    --tokenLen;
     token[tokenLen] = 0;
   }
 
@@ -1869,24 +1867,24 @@ KKStr  KKB::osReadNextToken (FILE*       in,
 {
   eof = false;
   char  token[1024];
-  kkint32  maxTokenLen = (kkint32)sizeof (token) - 1;
+  size_t  maxTokenLen = sizeof (token) - 1;
 
   kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
 
   if  (eof)
-    return "";
+    return KKStr::EmptyStr ();
 
   // lets skip leading white space
   while  ((!eof)  &&  ((ch == ' ') || (ch == '\r'))  &&  (ch != '\n'))
     {ch = fgetc (in); eof = (feof (in)!= 0);}
 
-  kkint32 tokenLen = 0;
+  size_t tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
   {
-    token[tokenLen] = (char)ch;
-    tokenLen++;
+    token[tokenLen] = scCHAR (ch);
+    ++tokenLen;
       
     if  (tokenLen >= maxTokenLen)
       break;
@@ -1902,7 +1900,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
   {
     if  (strchr (" \n\r", token[tokenLen - 1]) == 0)
       break;
-    tokenLen--;
+    --tokenLen;
     token[tokenLen] = 0;
   }
 
@@ -1941,7 +1939,7 @@ KKStrPtr   KKB::osReadRestOfLine (std::istream&  in,
   if  (eof)
     return NULL;
 
-  KKStrPtr  result = new KKStr (1024);
+  KKStrPtr  result = new KKStr (1024U);
 
   // Read till first delimiter or eof
   while  (!eof)
@@ -1952,7 +1950,7 @@ KKStrPtr   KKB::osReadRestOfLine (std::istream&  in,
     }
     else
     {
-      result->Append ((char)ch);
+      result->Append (scCHAR (ch));
       if  (result->Len () >= (result->MaxLenSupported ()))
         break;
       ch = in.get ();  eof = in.eof ();
@@ -1977,7 +1975,7 @@ KKStrPtr  KKB::osReadRestOfLine (FILE*  in,
   if  (eof)  
     return NULL;
 
-  KKStrPtr  result = new KKStr(1024);
+  KKStrPtr  result = new KKStr(1024U);
   // Read till first delimiter or eof
   while  (!eof)
   {
@@ -1987,7 +1985,7 @@ KKStrPtr  KKB::osReadRestOfLine (FILE*  in,
     }
     else
     {
-      result->Append ((char)ch);
+      result->Append (scCHAR (ch));
       if  (result->Len () >= result->MaxLenSupported ())
         break;
       ch = fgetc (in);  eof = (feof (in) != 0);
@@ -2040,7 +2038,7 @@ KKStr  KKB::osReadNextQuotedStr (FILE*        in,
   }
 
 
-  KKStr  result (10);
+  KKStr  result (10U);
 
   bool  lookForTerminatingQuote = false;
 
@@ -2080,20 +2078,20 @@ KKStr  KKB::osReadNextQuotedStr (FILE*        in,
         ch = fgetc (in);
         switch  (ch)
         {
-         case  '"': result.Append ('"');      break;
-         case  't': result.Append ('\t');     break;
-         case  'n': result.Append ('\n');     break;
-         case  'r': result.Append ('\r');     break;
-         case '\\': result.Append ('\\');     break;
-         case  '0': result.Append (char (0)); break;
-         case    0:                           break;
-         default:   result.Append ((char)ch); break;
+         case  '"': result.Append ('"');         break;
+         case  't': result.Append ('\t');        break;
+         case  'n': result.Append ('\n');        break;
+         case  'r': result.Append ('\r');        break;
+         case '\\': result.Append ('\\');        break;
+         case  '0': result.Append (scCHAR (0));  break;
+         case    0:                              break;
+         default:   result.Append (scCHAR (ch)); break;
         }
       }
     }
     else
     {
-      result.Append ((char)ch);
+      result.Append (scCHAR (ch));
     }
 
     ch = fgetc (in);
@@ -2186,7 +2184,7 @@ void  KKB::osSleep (float secsToSleep)
   kkint32  miliSecsToSleep = (kkint32)(1000.0f * secsToSleep + 0.5f);
   Sleep (miliSecsToSleep);
 #else
-  kkint32  secsToSleepInt = (kkint32)(0.5f + secsToSleep);
+  kkint32  secsToSleepInt = scINT32 (0.5f + secsToSleep);
 
   if  (secsToSleepInt < 1)
     secsToSleepInt = 1;

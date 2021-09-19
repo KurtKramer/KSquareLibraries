@@ -58,7 +58,7 @@ namespace  KKMLL
     CrossValidationVoting (TrainingConfiguration2ListPtr  _configs,
                            FeatureVectorListPtr           _examples,
                            MLClassListPtr                 _mlClasses,
-                           kkint32                        _numOfFolds,
+                           kkuint32                       _numOfFolds,
                            bool                           _featuresAreAlreadyNormalized,
                            FileDescPtr                    _fileDesc
                           );
@@ -77,7 +77,7 @@ namespace  KKMLL
 
     float   Accuracy                  ();
     double  ClassificationTime        ()  const {return  classificationTime;}
-    float   FoldAccuracy (kkint32 foldNum)  const;
+    float   FoldAccuracy (kkuint32 foldNum)  const;
     KKStr   FoldAccuracysToStr        ()  const;
     KKStr   FoldStr                   ()  const;
     kkint32 NumOfSupportVectors       ()  const {return  numOfSupportVectors;}
@@ -107,7 +107,7 @@ namespace  KKMLL
     MLClassListPtr                mlClasses;
     kkint32                       examplesPerClass;
     kkint32                       maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
-    kkint32                       numOfFolds;
+    kkuint32                      numOfFolds;
     kkint32                       numOfSupportVectors;
     kkint32*                      numOfWinnersCounts;
     kkint32*                      numOfWinnersCorrects;

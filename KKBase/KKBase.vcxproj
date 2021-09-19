@@ -124,6 +124,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>cmd /c BuildGetGitVersion.cmd
+</Command>
+      <Message>Update Git Version Number</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -168,10 +173,16 @@
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
+    <PreBuildEvent>
+      <Command>cmd /c BuildGetGitVersion.cmd
+</Command>
+      <Message>Update Git Version Number</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Atom.cpp" />
+    <ClCompile Include="KKBGitVersionNum.cpp" />
     <ClCompile Include="KKHeap.cpp" />
     <ClCompile Include="RNBase64.cpp" />
     <ClCompile Include="BitString.cpp" />
@@ -235,6 +246,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Atom.h" />
+    <ClInclude Include="KKBGitVersionNum.h" />
     <ClInclude Include="KKHeap.h" />
     <ClInclude Include="RNBase64.h" />
     <ClInclude Include="BitString.h" />
@@ -315,6 +327,9 @@
     <ProjectReference Include="..\..\OutsidePackages\zlib-1.2.11\zlib-1.2.11.vcxproj">
       <Project>{5b5ec7ae-bb81-4032-b510-3693221bc716}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuildGetGitVersion.cmd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

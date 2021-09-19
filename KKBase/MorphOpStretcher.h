@@ -39,7 +39,7 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
-    kkMemSize  MemoryConsumedEstimated ();
+    size_t  MemoryConsumedEstimated () const;
 
   private:
     float  rowFactor;

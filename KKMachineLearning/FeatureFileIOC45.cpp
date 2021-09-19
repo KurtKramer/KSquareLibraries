@@ -390,7 +390,7 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
    
   bool  classLineRead = false;
 
-  KKStr  ln (1024);
+  KKStr  ln (1024U);
   bool  eof = false;
   kkint32  lineNum = 0;
   GetLine (_in, ln, eof);  lineNum++;

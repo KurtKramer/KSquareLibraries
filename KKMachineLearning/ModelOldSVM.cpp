@@ -90,9 +90,9 @@ ModelOldSVM::~ModelOldSVM ()
 
 
 
-kkMemSize  ModelOldSVM::MemoryConsumedEstimated ()  const
+size_t  ModelOldSVM::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  size_t  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                  sizeof (ClassAssignmentsPtr) + 
                                  sizeof (SVMModelPtr);
 
@@ -557,7 +557,7 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
 
       else
       {
-        KKStr errMsg (128);
+        KKStr errMsg (128U);
         errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
         AddErrorMsg (errMsg, 0);
         log.Level (-1) << endl << errMsg << endl << endl;
@@ -578,7 +578,7 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
 
   if  (Model::param == NULL)
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
@@ -586,7 +586,7 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
 
   else if  (typeid (*Model::param) != typeid(ModelParamOldSVM))
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
@@ -594,7 +594,7 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
 
   if  ((!svmModel)  ||  (!svmModel->ValidModel ()))
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "ModelOldSVM::ReadXML  ***ERROR***  'SvmModel' was not defined or is not valid.";
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;

@@ -189,6 +189,9 @@
     <ClCompile Include="GrayScaleImagesFVProducer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KKMLLGitVersionNum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attribute.h">
@@ -365,9 +368,15 @@
     <ClInclude Include="GrayScaleImagesFVProducer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="KKMLLGitVersionNum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuildGetGitVersion.cmd" />
   </ItemGroup>
 </Project>

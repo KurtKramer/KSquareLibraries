@@ -73,9 +73,9 @@ FileDesc::~FileDesc ()
 
 
 
-kkMemSize  FileDesc::MemoryConsumedEstimated ()  const
+size_t  FileDesc::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  memoryConsumedEstimated = sizeof (FileDesc)         +
+  size_t  memoryConsumedEstimated = sizeof (FileDesc)         +
              attributes.MemoryConsumedEstimated ()               +
              sizeof (AttributeType) * attributeVector.size ()    +
              sizeof (kkint32)       * cardinalityVector.size ()  +
@@ -233,7 +233,7 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
   auto existingAttribute = attributes.LookUpByName (attributeName);
   if  (!existingAttribute)
   {
-    KKStr  errMsg (128);
+    KKStr  errMsg (128U);
     errMsg << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "].";
     log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);

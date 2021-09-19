@@ -235,7 +235,7 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
         if  (deletedDictionaryIdx != deletedDictionary.end ())
         {
           // AHA We are getting ready to delete an entry we have already deleted ????
-          KKStr  errMsg (1024);
+          KKStr  errMsg (1024U);
           errMsg << "Example: " << deletedDictionaryIdx->second << "  Already Been Deleted.";
           log.Level (-1) << endl << "DuplicateImages::PurgeDuplicates   ***ERROR***  " << errMsg << endl <<endl;
           alreadyDeleted = true;

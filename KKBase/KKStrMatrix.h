@@ -5,10 +5,10 @@
 #ifndef  _KKSTRMATRIX_
 #define  _KKSTRMATRIX_
 
-WarningsLowered()
+WarningsLowered
 #include <ostream>
 #include <string>
-WarningsRestored()
+WarningsRestored
 
 //#ifdef  WIN32
 //#else
@@ -60,7 +60,7 @@ namespace KKB
                 ):  
         numCols (_numCols) 
     {
-      while  ((kkuint32)data.QueueSize () < _numRows)
+      while  (data.QueueSize () < _numRows)
         AddRow ();
     }
 

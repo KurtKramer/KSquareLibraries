@@ -32,6 +32,7 @@ RandomNumGenerator::RandomNumGenerator ()
 }
 
 
+
 RandomNumGenerator::RandomNumGenerator (long  _seed): RandomNumGenerator()
 {
   kkint64 seedMask = 65535;
@@ -42,9 +43,11 @@ RandomNumGenerator::RandomNumGenerator (long  _seed): RandomNumGenerator()
 }
 
 
+
 RandomNumGenerator::~RandomNumGenerator ()
 {
 }
+
 
 
 const  kkint64 RandomNumGenerator::c     = 0xB; 
@@ -63,6 +66,5 @@ const  kkint64 RandomNumGenerator::mask  = 281474976710655LLU;
 long  RandomNumGenerator::Next ()
 {
   _lrand48_sequence = ( ((a * _lrand48_sequence) & mask) + c ) % m;
-  return (long)(_lrand48_sequence >> 17);
+  return static_cast<long> (_lrand48_sequence >> 17);
 }
-

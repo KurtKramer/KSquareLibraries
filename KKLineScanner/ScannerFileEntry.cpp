@@ -49,16 +49,15 @@ ScannerFileEntry::ScannerFileEntry (const ScannerFileEntry&  entry):
 
 
 
-
 ScannerFileEntry::~ScannerFileEntry ()
 {
 }
 
 
 
-kkMemSize  ScannerFileEntry::MemoryConsumedEstimated () const
+size_t  ScannerFileEntry::MemoryConsumedEstimated () const
 {
-  kkMemSize  mem = sizeof (*this) +
+  size_t mem = sizeof (*this) +
                description.MemoryConsumedEstimated () +
                fullName.MemoryConsumedEstimated ()    +
                rootName.MemoryConsumedEstimated ();
@@ -79,7 +78,7 @@ void  ScannerFileEntry::CleanUp ()
 
 KKStr  ScannerFileEntry::ToTabDelStr ()  const
 {
-  KKStr  r (256);
+  KKStr  r (256U);
   r << "Description"       << "\t" << description        << "\t"
     << "FullName"          << "\t" << fullName           << "\t"
     << "PixelsPerScanLine" << "\t" << pixelsPerScanLine  << "\t"
@@ -183,13 +182,11 @@ ScannerFileEntryPtr  ScannerFileEntry::GetOrCreateScannerFileEntry (KKLSC::Scann
 
 
 
-
-
-
 ScannerFileEntryList::ScannerFileEntryList ():
     map<KKStr, ScannerFileEntryPtr> ()
 {
 }
+
 
 
 ScannerFileEntryList::~ScannerFileEntryList ()
@@ -202,9 +199,10 @@ ScannerFileEntryList::~ScannerFileEntryList ()
 }
 
 
-kkMemSize  ScannerFileEntryList::MemoryConsumedEstimated () const
+
+size_t  ScannerFileEntryList::MemoryConsumedEstimated () const
 {
-  kkMemSize mem = sizeof (*this);
+  size_t mem = sizeof (*this);
 
   for (auto idx: *this)
   {
@@ -214,7 +212,6 @@ kkMemSize  ScannerFileEntryList::MemoryConsumedEstimated () const
 
   return  mem;
 }
-
 
 
 

@@ -2,7 +2,7 @@
 
 #if !defined(_WINDOWS)
 
-WarningsLowered()
+WarningsLowered
 #if  defined(WIN32)  &&  defined(_DEBUG)
 // We need to make sure that these items are included before we override the new operator.
 #include <algorithm>
@@ -22,7 +22,7 @@ WarningsLowered()
 #include <string>
 #include <vector>
 #include <windows.h>
-WarningsRestored()
+WarningsRestored
 
 #define new MYDEBUG_NEW
 #endif

@@ -14,7 +14,7 @@ namespace  KKB
     typedef  const std::function<bool(const T& left, const T& right)> CompFunc;
 
 
-    KKHeap(CompFunc  compFunc): compFunc(compFunc)
+    KKHeap(CompFunc _compFunc): compFunc (_compFunc)
     {
     }
     

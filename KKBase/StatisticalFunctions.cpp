@@ -30,7 +30,7 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
 
   KKCheck (set1.size () == set2.size (), "PairedTTest  two sets not the same length;  set1.size: " + StrFromUint64 (set1.size ()) + " set2.size: " << StrFromUint64 (set2.size ()))
 
-  double  numOfPairs = (double)set1.size ();
+  double  numOfPairs = scDOUBLE (set1.size ());
   double xTotal = 0.0f;
   double yTotal = 0.0f;
 
@@ -38,8 +38,8 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
 
   for  (foldNum = 0;  foldNum < numOfPairs;  foldNum++)
   {
-    xTotal += set1[foldNum];
-    yTotal += set2[foldNum];
+    xTotal += scDOUBLE (set1[foldNum]);
+    yTotal += scDOUBLE (set2[foldNum]);
   }
 
   double  xMean = xTotal / numOfPairs;
@@ -49,8 +49,8 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
 
   for  (foldNum = 0;  foldNum < numOfPairs;  foldNum++)
   {
-    double  xDelta = set1[foldNum] - xMean;
-    double  yDelta = set2[foldNum] - yMean;
+    double  xDelta = scDOUBLE (set1[foldNum]) - xMean;
+    double  yDelta = scDOUBLE (set2[foldNum]) - yMean;
 
     double  deltaDelta = xDelta - yDelta;
     totalDeltaSquared += (deltaDelta * deltaDelta);
@@ -95,10 +95,10 @@ float  KKB::McNemarsTest (kkint32      size,
       n11++;   // true pos
   }
 
-  float y = (float)fabs ((float)(n01 - n10)) - 1.0f;    // (false pos - false neg) - 1.0;
+  float y = scFLOAT (fabs (scFLOAT (n01 - n10)) - 1.0f);    // (false pos - false neg) - 1.0;
 
   float  mcNemars = 0.0;
-  float  divisor = (float)n01 + (float)n10;
+  float  divisor = scFLOAT (n01) + scFLOAT (n10);
 
   if  (divisor != 0.0f)
     mcNemars =  y * y / divisor;
@@ -147,7 +147,7 @@ float   KKB::LLoydsIndexOfPatchiness (const VectorInt& bins)
     totalDeltaSquared += delta * delta;
   }
 
-  double  var = totalDeltaSquared / (double)bins.size ();
+  double  var = totalDeltaSquared / scDOUBLE (bins.size ());
 
   double  varDivMean = var / mean;
   double  oneDivMean = 1.0 / mean;

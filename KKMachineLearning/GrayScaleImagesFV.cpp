@@ -437,7 +437,7 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
     FeatureVectorPtr featureVector = fvProducer->ComputeFeatureVectorFromImage (fullFileName, _mlClass, NULL, _log);
     if  (!featureVector)
     {
-      KKStr  msg (100);
+      KKStr  msg (100U);
       msg << "GrayScaleImagesFVList::FeatureExtraction   ***ERROR***   Could not Allocate GrayScaleImagesFV object" << endl
           << "for FileName[" << fullFileName << "].";
       _log.Level (-1) << endl << msg << endl << endl;

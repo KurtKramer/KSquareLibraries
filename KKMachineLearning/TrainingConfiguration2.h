@@ -92,10 +92,10 @@ namespace KKMLL
      *@param[in] _parameterStr Sting with Machine Learning Parameters.
      *@param[in] _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (MLClassListPtr    _mlClasses,
-                            FileDescConstPtr  _fileDesc,
-                            const KKStr&      _parameterStr,
-                            RunLog&           _log
+    TrainingConfiguration2 (MLClassListPtr   _mlClasses,
+                            FileDescConstPtr _fileDesc,
+                            const KKStr&     _parameterStr,
+                            RunLog&          _log
                            );
 
 
@@ -116,12 +116,8 @@ namespace KKMLL
                            );
 
 
-
     virtual
-    void  Load (const KKStr&  _configFileName, 
-                bool          _validateDirectories,
-                RunLog&       log
-               );
+    void  Load (const KKStr& _configFileName,  bool _validateDirectories,  RunLog& log);
 
 
      virtual    

@@ -37,12 +37,10 @@ MorphOpStruct::~MorphOpStruct ()
 
 
 
-kkMemSize  MorphOpStruct::MemoryConsumedEstimated ()
+size_t  MorphOpStruct::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
-
-
 
 
 
@@ -206,7 +204,7 @@ uchar  MorphOpStruct::HitForegroundCount (kkint32  row,
   }
 
   if  (neighborCount < foregroundCountTH)
-    return (uchar)0;
+    return scCHAR (0);
   else
-    return (uchar)(0.5f + (float)pixelValueTotal / (float)neighborCount);
+    return scCHAR (0.5f + scFLOAT (pixelValueTotal) / scFLOAT (neighborCount));
 }  /* HitForegroundCount */

@@ -90,7 +90,7 @@ void  KKStrMatrix::AddRow (KKStrListPtr newRowData)
 void  KKStrMatrix::AddRow ()  // Will add one row of empty Strings
 {
   KKStrListPtr  newRowData = new KKStrList (true);
-  while  ((kkuint32)newRowData->QueueSize () < numCols)
+  while  (newRowData->QueueSize () < numCols)
     newRowData->PushOnBack (new KKStr ());
   data.PushOnBack (newRowData);
 }

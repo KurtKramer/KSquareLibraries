@@ -5,7 +5,7 @@
 
    Version: 1.01.00
 
-   Copyright (C) 2004-2017 René Nyffenegger
+   Copyright (C) 2004-2017 Renï¿½ Nyffenegger
 
    This source code is provided 'as-is', without any express or implied
    warranty. In no event will the author be held liable for any damages
@@ -25,7 +25,7 @@
 
    3. This notice may not be removed or altered from any source distribution.
 
-   René Nyffenegger rene.nyffenegger@adp-gmbh.ch
+   Renï¿½ Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
 */
 
@@ -38,6 +38,13 @@ using namespace std;
 #include "KKStr.h"
 #include "RNBase64.h"
 using namespace KKB;
+
+WarningsLowered
+
+#if defined(__linux__)
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#endif
 
 
 static const std::string base64_chars =
@@ -140,3 +147,5 @@ KKStr KKB::Nyffenegger::base64_decode (KKStr const& encoded_string)
   
   return ret;
 }
+
+WarningsRestored

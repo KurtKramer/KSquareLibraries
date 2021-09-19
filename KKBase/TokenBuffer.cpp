@@ -157,7 +157,7 @@ char  TokenBufferStream::GetNextChar ()
   if  (endOfFile)
     return 0;
 
-  char c = (char)(in->get ());
+  char c = scCHAR (in->get ());
   if  (in->eof())
   {
     endOfFile = true;
@@ -172,7 +172,7 @@ char  TokenBufferStream::PeekNextChar ()
 {
   if  (in->eof ())
     return 0;
-  return  (char)(in->peek ());
+  return  scCHAR (in->peek ());
 }
 
 

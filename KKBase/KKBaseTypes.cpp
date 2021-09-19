@@ -7,6 +7,7 @@
 #include "FirstIncludes.h"
 #include <ctype.h>
 #include <cmath>
+#include <iostream>
 #include <math.h>
 #include <stdio.h>
 using namespace  std;
@@ -24,7 +25,7 @@ double  KKB::DoubleMin = DBL_MIN;
 
 float  KKB::FloatAbs (float f)
 {
-  return (float)abs (f);
+  return static_cast<float> (abs (f));
 }
 
 
@@ -41,7 +42,7 @@ kkint32  KKB::LRand48 ()
   kkint64 mask = 281474976710655LL;
 
   _lrand48_sequence = ( ((a * _lrand48_sequence) & mask) + c ) % m;
-  return (kkint32)(_lrand48_sequence >> 17);
+  return scINT32 (_lrand48_sequence >> 17);
 }
 
 

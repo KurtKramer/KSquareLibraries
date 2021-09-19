@@ -4,6 +4,7 @@ Debug
 Release
 CMakeFiles
 CMakeCache.txt
+GitVersionNum.h
 *.libs
 *.a
 *.al
@@ -80,3 +81,7 @@ KSquareLibraries - Shortcut.lnk
 .vs/KSquareLibraries/v15/Server/sqlite3/storage.ide
 *.db-shm
 .vs/KSquareLibraries/v15/Solution.VC.db-wal
+/KKBase/KKBGitVersionNum.cpp
+/KKBase/KKBGitVersionNum.h
+/KKMachineLearning/KKMLLGitVersionNum.h
+/KKMachineLearning/KKMLLGitVersionNum.cpp

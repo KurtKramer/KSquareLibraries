@@ -7,14 +7,14 @@
 
 #define  GOALKEEPER_DEBUG
 
-WarningsLowered()
+WarningsLowered
 #if  defined(WIN32)
 #include  <windows.h>
 #else
 #include  <fcntl.h>
 #include  <semaphore.h>
 #endif
-WarningsRestored()
+WarningsRestored
 
 #include "DateTime.h"
 #include "KKStr.h"
@@ -118,7 +118,7 @@ namespace  KKB
      */
     void   EndBlock ();
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     const  KKStr&  Name ()  const  {return  name;}
 

@@ -87,7 +87,7 @@ namespace  KKB
 
     virtual  ~MorphOp ();
 
-    virtual  kkMemSize  MemoryConsumedEstimated ();
+    virtual  size_t  MemoryConsumedEstimated ()  const;
 
     virtual  OperationType   Operation ()  const  = 0;
 

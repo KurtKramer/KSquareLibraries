@@ -129,7 +129,7 @@ void   ModelParamSvmBase::ParseCmdLinePost ()
 */
 KKStr   ModelParamSvmBase::ToCmdLineStr () const
 {
-  KKStr  cmdStr (300);
+  KKStr  cmdStr (300U);
   cmdStr = ModelParam::ToCmdLineStr () + " " + svmParam.ToCmdLineStr ();
   return  cmdStr;
 }  /* ToCmdLineStr */

@@ -40,11 +40,11 @@ public:
                                 float   factor
                                )
   {
-    float  cellStart = (float)cellIdx * factor;
-    float  cellEnd   = (float)(cellIdx + 1) * factor;
+    float  cellStart = scFLOAT (cellIdx) * factor;
+    float  cellEnd   = scFLOAT (cellIdx + 1) * factor;
 
-    kkuint32 cellStartIdx = (kkuint32)floor (cellStart);
-    kkuint32 cellEndIdx   = (kkuint32)floor (cellEnd);
+    kkuint32 cellStartIdx = scUINT32 (floor (cellStart));
+    kkuint32 cellEndIdx   = scUINT32 (floor (cellEnd));
     destCellCount = cellEndIdx - cellStartIdx;
     if  (cellEnd > floor(cellEnd))
       ++destCellCount;
@@ -101,9 +101,9 @@ MorphOpStretcher::~MorphOpStretcher ()
 
 
 
-kkMemSize  MorphOpStretcher::MemoryConsumedEstimated ()
+size_t  MorphOpStretcher::MemoryConsumedEstimated () const
 {
-  kkMemSize  result = sizeof (*this) + (kkMemSize)(rowFactorsCount * sizeof (CellFactor) + colFactorsCount * sizeof (CellFactor));
+  size_t  result = sizeof (*this) + scUINT64 (rowFactorsCount) * sizeof (CellFactor) + scUINT64 (colFactorsCount) * sizeof (CellFactor);
   return  result;
 }
 
@@ -113,14 +113,14 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 {
   this->SetSrcRaster (_image);
 
-  kkuint32  destHeight = (kkuint32)ceil (0.5f + (float)srcHeight * rowFactor);
-  kkuint32  destWidth  = (kkuint32)ceil (0.5f + (float)srcWidth  * colFactor);
-
+  kkuint32  destHeight = scUINT32 (ceil (0.5f + scFLOAT (srcHeight) * rowFactor));
+  kkuint32  destWidth  = scUINT32 (ceil (0.5f + scFLOAT (srcWidth)  * colFactor));
+ 
   bool  color = _image->Color ();
 
   UpdateFactors (srcHeight, srcWidth);
 
-  RasterPtr  result = _image->AllocateARasterInstance(destHeight, destWidth, color);
+  RasterPtr  result = _image->AllocateARasterInstance (scINT32 (destHeight), scINT32 (destWidth), color);
 
   result->BackgroundPixelTH    (_image->BackgroundPixelTH    ());
   result->BackgroundPixelValue (_image->BackgroundPixelValue ());
@@ -166,12 +166,12 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
           kkuint32  destCol      = srcColFactor.destCellIdxs  [colFactorIdx];
           float     destColFract = srcColFactor.destCellFracts[colFactorIdx];
 
-          uchar newDestG = (uchar)(destGreen[destRow][destCol] + (uchar)Min (255.0f, (float)srcPixelGreen * destRowFract * destColFract));
+          uchar newDestG = scUCHAR (destGreen[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelGreen) * destRowFract * destColFract)));
           destGreen[destRow][destCol] = newDestG;
           if  (color)
           {
-            destRed [destRow][destCol] = (uchar)(destRed[destRow][destCol]  + (uchar)Min (255.0f, (float)srcPixelRed  * destRowFract * destColFract));
-            destBlue[destRow][destCol] = (uchar)(destBlue[destRow][destCol] + (uchar)Min (255.0f, (float)srcPixelBlue * destRowFract * destColFract));
+            destRed [destRow][destCol] = scUCHAR (destRed [destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelRed)  * destRowFract * destColFract)));
+            destBlue[destRow][destCol] = scUCHAR (destBlue[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelBlue) * destRowFract * destColFract)));
           }
         }
       }

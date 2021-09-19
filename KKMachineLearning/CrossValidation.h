@@ -84,7 +84,7 @@ namespace  KKMLL
     CrossValidation (TrainingConfiguration2Ptr _config,
                      FeatureVectorListPtr      _examples,
                      MLClassListPtr            _mlClasses,
-                     kkint32                   _numOfFolds,
+                     kkuint32                 _numOfFolds,
                      bool                      _featuresAreAlreadyNormalized,
                      FileDescConstPtr          _fileDesc,
                      RunLog&                   _log,
@@ -105,9 +105,9 @@ namespace  KKMLL
     float         Accuracy     ();
     float         AccuracyNorm ();
     kkint32       DuplicateTrainDataCount () const {return  duplicateTrainDataCount;}
-    float         FoldAccuracy (kkint32 foldNum) const;
+    float         FoldAccuracy (kkuint32 foldNum) const;
 
-    void          NumOfFolds (kkint32 _numOfFolds)  {numOfFolds = _numOfFolds;}
+    void          NumOfFolds (kkuint32 _numOfFolds)  {numOfFolds = _numOfFolds;}
 
     const
     VectorFloat&  FoldAccuracies          () const {return  foldAccuracies;}
@@ -170,7 +170,7 @@ namespace  KKMLL
     MLClassListPtr            mlClasses;
     kkint32                   imagesPerClass;
     kkint32                   maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
-    kkint32                   numOfFolds;
+    kkuint32                  numOfFolds;
 
     kkint32                   numSVs;             /**< Total Support Vectors Detected. */
 

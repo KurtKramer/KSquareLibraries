@@ -26,7 +26,7 @@ using namespace KKB;
 
 
 KKStrParser::KKStrParser (const KKStrParser&  _strParser):
-    len            ((kkuint32)strlen (_strParser.str)),
+    len            (scUINT32 (strlen (_strParser.str))),
     nextPos        (_strParser.nextPos),
     str            (_strParser.str),
     trimWhiteSpace (_strParser.trimWhiteSpace),
@@ -52,7 +52,7 @@ KKStrParser::KKStrParser (const KKStr&  _str):
 
 
 KKStrParser::KKStrParser (const char*  _str):
-    len            ((kkuint16)strlen (_str)),
+    len            (scUINT32 (strlen (_str))),
     nextPos        (0),
     str            (_str),
     trimWhiteSpace (false),
@@ -147,7 +147,7 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
   char ch = str[endPos];
   if  ((ch == '\'')  ||  (ch == '"'))
   {
-    KKStr  token (30);
+    KKStr  token (30U);
     // Token is a string
     char  quoteChar = ch;
 
@@ -274,7 +274,7 @@ KKStr  KKStrParser::PeekNextToken (const char* delStr)  const
   char ch = str[endPos];
   if  ((ch == '\'')  ||  (ch == '"'))
   {
-    KKStr  token (30);
+    KKStr  token (30U);
     // Token is a string
     char  quoteChar = ch;
     // We have a quoted String need to skip to end of quote.
@@ -421,7 +421,7 @@ kkint16  KKStrParser::GetNextTokenInt16 (const char* delStr)
     throw KKException (errMsg);
   }
 
-  return  (kkint16)zed;
+  return  scINT16 (zed);
 }
 
 

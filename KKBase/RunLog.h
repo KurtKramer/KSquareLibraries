@@ -161,7 +161,7 @@ namespace KKB
 
     void    SetLevel (kkint32 _level)  {loggingLevel = _level;}
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
     void  Info (std::function< KKStr() > lambda);
   

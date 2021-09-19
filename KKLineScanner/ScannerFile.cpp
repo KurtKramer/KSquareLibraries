@@ -170,9 +170,9 @@ ScannerFile::~ScannerFile ()
 
 
 
-kkMemSize  ScannerFile::MemoryConsumedEstimated ()  const
+size_t  ScannerFile::MemoryConsumedEstimated ()  const
 {
-  kkMemSize  mem = sizeof (*this) +
+  size_t mem = sizeof (*this) +
                fileName.MemoryConsumedEstimated ()       +
                frameOffsets.size () * sizeof(kkint64)    +
                indexFileName.MemoryConsumedEstimated ()  +
@@ -713,12 +713,10 @@ void   ScannerFile::WriteInstrumentDataWord (uchar             idNum,
                                              WordFormat32Bits  dataWord
                                             )
 {
-  KKStr  s (100);
+  KKStr  s (100U);
   s << "InstrumentDataWord" << "\t" << (int)idNum << "\t" << scanLineNum << "\t" << dataWord.unsigned32BitInt;
   WriteTextBlock ((const uchar*)s.Str (), s.Len ());
 }  /* WriteInstrumentDataWord */
-
-
 
 
 
@@ -735,7 +733,7 @@ ScannerFile::Format  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
     return Format::sfUnKnown;
 
   bool  endOfText = false;
-  KKStr ln (100);
+  KKStr ln (100U);
   ReadHeaderOneLine (f, endOfText, ln);
   fclose (f);
 
@@ -996,7 +994,7 @@ void  ScannerFile::InitiateWritting ()
 
 void  ScannerFile::WriteHeader ()
 {
-  KKStr  ln (100);
+  KKStr  ln (100U);
   ln << "ScannerFile" << "\t" << FileFormatStr () << "\n";
   fwrite (ln.Str (), 1, ln.Len (), file);
   
@@ -1043,7 +1041,7 @@ void  ScannerFile::ReadHeader ()
   delete  headerFields;
   headerFields = new ScannerHeaderFields ();
   bool  endOfText = false;
-  KKStr  ln (100);
+  KKStr  ln (100U);
 
   ReadHeaderOneLine (file, endOfText, ln);
   while  (!endOfText)

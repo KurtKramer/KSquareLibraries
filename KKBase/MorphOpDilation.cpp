@@ -34,7 +34,7 @@ MorphOpDilation::~MorphOpDilation ()
 
 
 
-kkMemSize  MorphOpDilation::MemoryConsumedEstimated ()
+size_t  MorphOpDilation::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

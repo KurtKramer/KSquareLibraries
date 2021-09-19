@@ -34,12 +34,10 @@ MorphOpErosion::~MorphOpErosion ()
 
 
 
-kkMemSize  MorphOpErosion::MemoryConsumedEstimated ()
+size_t  MorphOpErosion::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
-
-
 
 
 

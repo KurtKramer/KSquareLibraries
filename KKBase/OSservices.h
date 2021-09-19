@@ -222,7 +222,7 @@ namespace KKB
   kkint32        osGetProcessId ();
 
   /** @brief returns the number of CPU's or number of simultaneous threads that you can have. */
-  kkint32        osGetNumberOfProcessors ();
+  kkuint32       osGetNumberOfProcessors ();
 
   KKStr          osGetProgName ();
 

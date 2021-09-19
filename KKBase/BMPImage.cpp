@@ -1447,7 +1447,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
     size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);
     if  (buffRead < bmpRowWidthInBytes)
     {
-      KKStr errMsg (128);
+      KKStr errMsg (198U);
       errMsg << "BmpImage::Load8BitColor   ***ERROR***   Bytes read: " << buffRead << " less than expected: " << bmpRowWidthInBytes;
       cerr << endl << errMsg << endl << endl;  
       successfull = false;
@@ -1489,7 +1489,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
 
   if  (buffRead < imageBuffSize)
   {
-    KKStr errMsg (128);
+    KKStr errMsg (198U);
     errMsg << "BmpImage::Load8BitColor   ***ERROR***   Bytes read: " << buffRead << " less than expected: " << imageBuffSize;
     cerr << endl << errMsg << endl << endl;  
     successfull = false;

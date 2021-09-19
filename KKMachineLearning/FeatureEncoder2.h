@@ -64,7 +64,7 @@ namespace KKMLL
 
     FeatureVectorPtr  EncodeAExample (FeatureVectorPtr  src)  const;
 
-    kkMemSize         MemoryConsumedEstimated ()  const;
+    size_t         MemoryConsumedEstimated ()  const;
 
     kkint32           NumEncodedFeatures ()  const;
 

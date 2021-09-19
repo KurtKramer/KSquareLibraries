@@ -120,7 +120,7 @@ void  Histogram::Increment (float  val)
 {
   KKCheck ((val >= minValue), "Histogram::Increment,  val: " << val << " out of range.")
 
-  kkint32 bucket  = (kkint32) ((val - minValue) / bucketSize);
+  kkint32 bucket  = scINT32 ((val - minValue) / bucketSize);
   if  (bucket >= numOfBuckets)
     bucket = numOfBuckets - 1;
   else if  (bucket < 0)
@@ -175,7 +175,7 @@ RasterPtr  Histogram::CreateGraph ()  const
   kkint32  middleIdx = 0;
   if  (minValue < 0)
   {
-    kkint32  numOfBucketsToZero = (kkint32)(0.5 + fabs (minValue) / bucketSize);
+    kkint32  numOfBucketsToZero = scINT32 (0.5f + fabs (minValue) / bucketSize);
 
     if  (numOfBucketsToZero < numOfBuckets)
       middleIdx = numOfBucketsToZero;
@@ -347,7 +347,7 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
   kkint32  middleIdx = 0;
   if  (minValue < 0)
   {
-    kkint32  numOfBucketsToZero = (kkint32)(0.5 + fabs (minValue) / bucketSize);
+    kkint32  numOfBucketsToZero = scINT32 (0.5f + fabs (minValue) / bucketSize);
 
     if  (numOfBucketsToZero < numOfBuckets)
       middleIdx = numOfBucketsToZero;
@@ -437,7 +437,7 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
       graph->DrawLine (graphHeight - 10, col + 1, 10, col + 1, gridColor);
     }
 
-    colHeight = scINT32 (ceil ((((float)maxColHeight * buckets[bucket]) / maxCount)));
+    colHeight = scINT32 (ceil (((scFLOAT (maxColHeight) * buckets[bucket]) / maxCount)));
 
     if  ((colHeight < 1)  &&  (buckets[bucket] > 0.0f))
     {
@@ -531,7 +531,7 @@ void  Histogram::Save (KKStr  fileName)  const
     o << "\t" << avg;
 
 
-    percentage = (float)100.0 * buckets[bucketIDX] / totalCount;
+    percentage = scFLOAT (100.0) * buckets[bucketIDX] / totalCount;
     o << "\t" << percentage << "%";
 
     bucketVal += bucketSize;
@@ -586,8 +586,8 @@ HistogramPtr  Histogram::Smooth (kkint32 smoothWidth)
 
     for  (bucket = 0;  bucket < numOfBuckets;  bucket++)
     {
-      hist->buckets      [bucket] = sumOfbuckets      / (float)smoothWidth;
-      hist->bucketTotals [bucket] = sumOfBucketTotals / (float)smoothWidth;
+      hist->buckets      [bucket] = sumOfbuckets      / scFLOAT (smoothWidth);
+      hist->bucketTotals [bucket] = sumOfBucketTotals / scFLOAT (smoothWidth);
 
       sumOfbuckets      -= buckets      [startBuckOffset];
       sumOfBucketTotals -= bucketTotals [startBuckOffset];
@@ -746,7 +746,7 @@ kkint32  Histogram::GetPeakByHighestOrder (kkint32 peakNum)
   if  (peaks.empty ())
     CalculatePeaks (2);
 
-  if  (peakNum > (kkint32)peaks.size ())
+  if  (peakNum > scINT32 (peaks.size ()))
     return -1;
 
   VectorInt32 sortedPeaks (peaks);
@@ -938,7 +938,7 @@ kkint32  Histogram::AreaInRange (kkint32  minBucket,
     area += buckets[b];
   }
 
-  return  static_cast<kkint32> (area + (float)0.5);
+  return  static_cast<kkint32> (area + scFLOAT (0.5));
 }   /* AreaInRange */
 
 

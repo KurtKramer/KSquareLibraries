@@ -157,6 +157,7 @@ namespace  KKB
 
     const KKStr&   AttributeValueKKStr    (const KKStr&  name)   const;
     kkint32        AttributeValueInt32    (const KKStr&  name)   const;
+    kkuint32       AttributeValueUint32   (const KKStr&  name)   const;
     DateTime       AttributeValueDateTime (const KKStr&  name)   const;
 
   private:
@@ -205,6 +206,7 @@ namespace  KKB
 
     const KKStr&   AttributeValueKKStr    (const KKStr&  name)   const;
     kkint32        AttributeValueInt32    (const KKStr&  attributeName)  const;
+    kkuint32       AttributeValueUint32   (const KKStr&  attributeName)  const;
     DateTime       AttributeValueDateTime (const KKStr&  attributeName)  const;
 
 
@@ -230,6 +232,10 @@ namespace  KKB
 
     void  AddAtribute (const KKStr&  attributeName,
                        kkint64       attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       kkuint64      attributeValue
                       );
 
     void  AddAtribute (const KKStr&  attributeName,

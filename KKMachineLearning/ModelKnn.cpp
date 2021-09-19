@@ -256,7 +256,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
       }
       else
       {
-        KKStr  errMsg (256);
+        KKStr  errMsg (256U);
         errMsg << "Invalid XmlElement Encountered:  Section: " << t->SectionName () << "  VarName: " << varName;
         log.Level (-1) << endl << errMsg << endl << endl;
         AddErrorMsg (errMsg, 0);
@@ -274,7 +274,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
 
   if  (Model::param == NULL)
   {
-    KKStr errMsg (128);
+    KKStr errMsg (128U);
     errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
@@ -282,7 +282,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
 
   else if  (typeid (*Model::param) != typeid(ModelParamKnn))
   {
-    KKStr errMsg (128);
+    KKStr errMsg (198U);
     errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;

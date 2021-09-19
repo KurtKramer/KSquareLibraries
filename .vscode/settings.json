@@ -1,1 +1,10 @@
-{}
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "*.rs": "rust",
+        "limits": "cpp",
+        "algorithm": "cpp",
+        "cmath": "cpp",
+        "ostream": "cpp"
+    }
+}

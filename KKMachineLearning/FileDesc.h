@@ -105,7 +105,7 @@ namespace KKMLL
   public:
     friend class KKQueue<FileDesc>;
 
-    kkMemSize  MemoryConsumedEstimated ()  const;
+    size_t  MemoryConsumedEstimated ()  const;
 
 
   public:
@@ -192,7 +192,7 @@ namespace KKMLL
 
     MLClassPtr                  LookUpUnKnownMLClass ()  const;
     
-    kkuint32                    NumOfFields () const  {return (kkuint32)attributes.size ();}
+    kkuint32                    NumOfFields () const  {return scUINT32 (attributes.size ());}
 
     void                        ReadXML (XmlStream&      s,
                                          XmlTagConstPtr  tag,

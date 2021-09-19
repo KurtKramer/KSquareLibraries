@@ -173,7 +173,7 @@ KKStrConstPtr  Tokenizer::Peek (kkuint32 idx)
   if  (idx >= tokenList.size ())
     return NULL;
 
-  return  tokenList.IdxToPtr ((kkint32)idx);
+  return  tokenList.IdxToPtr (idx);
 }  /* Peek */
 
 
@@ -316,7 +316,7 @@ KKStrPtr  Tokenizer::ProcessStringToken (char strDelChar)
   if  (firstChar  == strDelChar)
     GetNextChar ();
 
-  KKStr  str (20);
+  KKStr  str (20U);
 
   // Scan until we hit another '"' character,  or end of KKStr.
   while  (!atEndOfFile)
@@ -358,7 +358,7 @@ KKStrPtr  Tokenizer::ProcessStringToken (char strDelChar)
 
 KKStrPtr  Tokenizer::ProcessOperatorToken ()
 {
-  KKStrPtr  field = new KKStr (3);
+  KKStrPtr  field = new KKStr (4U);
   field->Append (firstChar);
 
   if  ((firstChar == '+')  &&  (secondChar == '+'))
@@ -401,7 +401,7 @@ KKStrPtr  Tokenizer::ProcessFieldToken ()
   // We have a token that we don't recognize.  We will create a token 
   // of type tokNULL and place all characters up till the next whitespace 
   // or delimiter character.
-  KKStrPtr  field = new KKStr (10);
+  KKStrPtr  field = new KKStr (10U);
   while  ((!WhiteSpaceChar (firstChar)) &&  
           (!DelimiterChar (firstChar))  &&  
           (!atEndOfFile)
