@@ -123,6 +123,12 @@
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
+    <PreBuildEvent>
+      <Command>cmd /c BuildGetGitVersion.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generate Git  KKMLLGitVersionNum</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -165,6 +171,12 @@
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
+    <PreBuildEvent>
+      <Command>cmd /c BuildGetGitVersion.cmd</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generate Git  KKMLLGitVersionNum</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Attribute.cpp" />
@@ -198,6 +210,7 @@
     <ClCompile Include="GrayScaleImagesFVProducer.cpp" />
     <ClCompile Include="ImageFeaturesDataIndexed.cpp" />
     <ClCompile Include="ImageFeaturesNameIndexed.cpp" />
+    <ClCompile Include="KKMLLGitVersionNum.cpp" />
     <ClCompile Include="KKMLVariables.cpp" />
     <ClCompile Include="MLClass.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -258,6 +271,7 @@
     <ClInclude Include="GrayScaleImagesFVProducer.h" />
     <ClInclude Include="ImageFeaturesDataIndexed.h" />
     <ClInclude Include="ImageFeaturesNameIndexed.h" />
+    <ClInclude Include="KKMLLGitVersionNum.h" />
     <ClInclude Include="KKMLVariables.h" />
     <ClInclude Include="MLClass.h" />
     <ClInclude Include="Model.h" />
@@ -289,6 +303,9 @@
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuildGetGitVersion.cmd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

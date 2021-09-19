@@ -313,10 +313,10 @@ unsigned char  touchar_t (T x)
 {
   if (std::is_signed<T>::value)
   {
-    if (x < 0)
+    if  (x < 0)
     {
       std::stringstream errMsg;
-      errMsg << "touchar_t  ***ERROR***  x: " << x << " is negative number!";
+      errMsg << "touchar_t  ***ERROR***  x: " << x << " can not be nagative!";
       std::cerr << '\n' << errMsg.str () << "\n\n";
       throw std::range_error (errMsg.str ());
     }

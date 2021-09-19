@@ -198,6 +198,9 @@
     <ClCompile Include="KKHeap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KKBGitVersionNum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -419,9 +422,15 @@
     <ClInclude Include="KKHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="KKBGitVersionNum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BuildGetGitVersion.cmd" />
   </ItemGroup>
 </Project>
