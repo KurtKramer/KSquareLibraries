@@ -159,7 +159,7 @@ FlowMeterTracker::Entry::Entry ():
 
 
 
-float  FlowMeterTracker::FlowRateInstantaneous ()
+float  FlowMeterTracker::FlowRateInstantaneous ()  noexcept
 {
   if  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))
     return flowRateDefault;
@@ -171,11 +171,16 @@ float  FlowMeterTracker::FlowRateInstantaneous ()
   EntryPtr  lastPtr = history + historyLastIdxAdded;
   EntryPtr  prevPtr = history + prevIdx;
  
-  kkint32 tics      = lastPtr->counterValue - prevPtr->counterValue;
-  kkint32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+  kkint64 tics      = lastPtr->counterValue - prevPtr->counterValue;
+  kkint64 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
 
-  float meters = (float)tics / ticsPerMeter;
-  float secs   = (float)scanLines / scanRate;
+  if  ((tics <= 0)  ||  (tics > 100))
+  {
+    return flowRateDefault;
+  }
+
+  const float meters = (float)tics / ticsPerMeter;
+  const float secs   = (float)scanLines / scanRate;
 
   return  meters / secs;
 }  /* FlowRateInstantaneous */
@@ -190,11 +195,11 @@ float  FlowMeterTracker::FlowRateTrend ()
   EntryPtr  lastPtr = history + historyLastIdxAdded;
   EntryPtr  prevPtr = history + historyOldestIdx;
  
-  kkint32 tics      = lastPtr->counterValue - prevPtr->counterValue;
-  kkint32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+  kkint64 tics      = lastPtr->counterValue - prevPtr->counterValue;
+  kkint64 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
 
-  if  ((tics == 0)  ||  (scanLines == 0))
-    return 0.0f;
+  if  ((tics <= 0)  ||  (tics > 100)  ||  (scanLines == 0))
+    return flowRateDefault;
 
   float meters = (float)tics / ticsPerMeter;
   float secs   = (float)scanLines / scanRate;
@@ -204,8 +209,8 @@ float  FlowMeterTracker::FlowRateTrend ()
 
 
 
-void  FlowMeterTracker::GetFlowRateInstantaneous (float&   flowRate,
-                                                  float&   flowRateRatio
+void  FlowMeterTracker::GetFlowRateInstantaneous (float&  flowRate,
+                                                  float&  flowRateRatio
                                                  )                                                 
 {
   if  (!flowMeterPresent)

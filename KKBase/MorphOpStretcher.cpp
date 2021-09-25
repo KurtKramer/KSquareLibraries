@@ -111,71 +111,83 @@ size_t  MorphOpStretcher::MemoryConsumedEstimated () const
 
 RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 {
-  this->SetSrcRaster (_image);
+  RasterPtr  result = nullptr;
 
-  kkuint32  destHeight = scUINT32 (ceil (0.5f + scFLOAT (srcHeight) * rowFactor));
-  kkuint32  destWidth  = scUINT32 (ceil (0.5f + scFLOAT (srcWidth)  * colFactor));
- 
-  bool  color = _image->Color ();
-
-  UpdateFactors (srcHeight, srcWidth);
-
-  RasterPtr  result = _image->AllocateARasterInstance (scINT32 (destHeight), scINT32 (destWidth), color);
-
-  result->BackgroundPixelTH    (_image->BackgroundPixelTH    ());
-  result->BackgroundPixelValue (_image->BackgroundPixelValue ());
-  result->ForegroundPixelValue (_image->ForegroundPixelValue ());
-
-  uchar**  destRed   = result->Red   ();
-  uchar**  destGreen = result->Green ();
-  uchar**  destBlue  = result->Blue  ();
-
-  for  (kkint32  srcRow = 0;  srcRow < srcHeight;  ++srcRow)
+  try
   {
-    uchar*  srcRedRow   = NULL;
-    uchar*  srcGreenRow = srcGreen[srcRow];
-    uchar*  srcBlueRow  = NULL;
-    if  (color)
+    this->SetSrcRaster (_image);
+  
+    kkuint32  destHeight = scUINT32 (ceil (0.5f + scFLOAT (srcHeight) * rowFactor));
+    kkuint32  destWidth  = scUINT32 (ceil (0.5f + scFLOAT (srcWidth)  * colFactor));
+   
+    bool  color = _image->Color ();
+  
+    UpdateFactors (srcHeight, srcWidth);
+  
+    result = _image->AllocateARasterInstance (scINT32 (destHeight), scINT32 (destWidth), color);
+  
+    result->BackgroundPixelTH    (_image->BackgroundPixelTH    ());
+    result->BackgroundPixelValue (_image->BackgroundPixelValue ());
+    result->ForegroundPixelValue (_image->ForegroundPixelValue ());
+  
+    uchar**  destRed   = result->Red   ();
+    uchar**  destGreen = result->Green ();
+    uchar**  destBlue  = result->Blue  ();
+  
+    for  (kkint32  srcRow = 0;  srcRow < srcHeight;  ++srcRow)
     {
-      srcRedRow  = srcRed [srcRow];
-      srcBlueRow = srcBlue[srcRow];
-    }
-
-    CellFactor&  srcRowFactor = rowFactors[srcRow];
-
-    for  (kkuint32  rowFactorIdx = 0;  rowFactorIdx < srcRowFactor.destCellCount;  ++rowFactorIdx)
-    {
-      kkuint32  destRow      = srcRowFactor.destCellIdxs  [rowFactorIdx];
-      float     destRowFract = srcRowFactor.destCellFracts[rowFactorIdx];
-
-      for  (kkint32 srcCol = 0;  srcCol < srcWidth;  ++srcCol)
+      uchar*  srcRedRow   = NULL;
+      uchar*  srcGreenRow = srcGreen[srcRow];
+      uchar*  srcBlueRow  = NULL;
+      if  (color)
       {
-        uchar  srcPixelRed   = 0;
-        uchar  srcPixelGreen = srcGreenRow[srcCol];
-        uchar  srcPixelBlue  = 0;
-        if  (color)
+        srcRedRow  = srcRed [srcRow];
+        srcBlueRow = srcBlue[srcRow];
+      }
+  
+      CellFactor&  srcRowFactor = rowFactors[srcRow];
+  
+      for  (kkuint32  rowFactorIdx = 0;  rowFactorIdx < srcRowFactor.destCellCount;  ++rowFactorIdx)
+      {
+        kkuint32  destRow      = srcRowFactor.destCellIdxs  [rowFactorIdx];
+        float     destRowFract = srcRowFactor.destCellFracts[rowFactorIdx];
+  
+        for  (kkint32 srcCol = 0;  srcCol < srcWidth;  ++srcCol)
         {
-          srcPixelRed   = srcRedRow [srcCol];
-          srcPixelBlue  = srcBlueRow[srcCol];
-        }
-
-        CellFactor&  srcColFactor = colFactors[srcCol];
-
-        for  (kkuint32  colFactorIdx = 0;  colFactorIdx < srcColFactor.destCellCount;  ++colFactorIdx)
-        {
-          kkuint32  destCol      = srcColFactor.destCellIdxs  [colFactorIdx];
-          float     destColFract = srcColFactor.destCellFracts[colFactorIdx];
-
-          uchar newDestG = scUCHAR (destGreen[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelGreen) * destRowFract * destColFract)));
-          destGreen[destRow][destCol] = newDestG;
+          uchar  srcPixelRed   = 0;
+          uchar  srcPixelGreen = srcGreenRow[srcCol];
+          uchar  srcPixelBlue  = 0;
           if  (color)
           {
-            destRed [destRow][destCol] = scUCHAR (destRed [destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelRed)  * destRowFract * destColFract)));
-            destBlue[destRow][destCol] = scUCHAR (destBlue[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelBlue) * destRowFract * destColFract)));
+            srcPixelRed   = srcRedRow [srcCol];
+            srcPixelBlue  = srcBlueRow[srcCol];
+          }
+  
+          CellFactor&  srcColFactor = colFactors[srcCol];
+  
+          for  (kkuint32  colFactorIdx = 0;  colFactorIdx < srcColFactor.destCellCount;  ++colFactorIdx)
+          {
+            kkuint32  destCol      = srcColFactor.destCellIdxs  [colFactorIdx];
+            float     destColFract = srcColFactor.destCellFracts[colFactorIdx];
+  
+            uchar newDestG = scUCHAR (destGreen[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelGreen) * destRowFract * destColFract)));
+            destGreen[destRow][destCol] = newDestG;
+            if  (color)
+            {
+              destRed [destRow][destCol] = scUCHAR (destRed [destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelRed)  * destRowFract * destColFract)));
+              destBlue[destRow][destCol] = scUCHAR (destBlue[destRow][destCol] + scUCHAR (Min (255.0f, scFLOAT (srcPixelBlue) * destRowFract * destColFract)));
+            }
           }
         }
       }
     }
+  }
+  catch (const std::exception& e)
+  {
+    KKStr msg(128U);
+    msg << "MorphOpStretcher::PerformOperation   ***EXCEPTION***   " << e.what();
+    std::cerr << msg << '\n' << std::endl;
+    throw KKB::KKException (msg);
   }
 
   return  result;

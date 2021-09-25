@@ -91,7 +91,7 @@ namespace  KKLSC
 
 
     /**  Computes flow rate using the two most current count entries. */
-    float  FlowRateInstantaneous ();
+    float  FlowRateInstantaneous () noexcept;
 
 
     /**  Computes flow rate using full range of history table. */

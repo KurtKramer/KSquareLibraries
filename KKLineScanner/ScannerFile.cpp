@@ -649,7 +649,6 @@ void  ScannerFile::SkipNextLine ()
 
 
 
-
 void   ScannerFile::WriteScanLine (const uchar*  buffer,
                                    kkuint32      bufferLen
                                   )
@@ -671,7 +670,6 @@ void   ScannerFile::WriteScanLine (const uchar*  buffer,
   ++nextScanLine;
   ++frameBufferNextLine;
 }  /* WriteScanLine */
-
 
 
 
@@ -785,7 +783,6 @@ void   ScannerFile::GetScannerFileParameters (const KKStr&             _scannerF
                                      
 
 
-
 ScannerFilePtr  ScannerFile::CreateScannerFile (KKStr    _fileName,
                                                 RunLog&  _log
                                                )
@@ -811,7 +808,6 @@ ScannerFilePtr  ScannerFile::CreateScannerFile (KKStr    _fileName,
 
   return NULL;
 }  /* CreateScanLineFile */
-
 
 
 
@@ -903,7 +899,6 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&  _fileName
 }  /* CreateScannerFileForOutput */
 
 
-
   
 ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileName,
                                                          const KKStr&   _formatStr,
@@ -927,8 +922,6 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileNam
 
   return  scannerFile;
 }  /* CreateScannerFileForOutput */
-
-
 
 
 
@@ -956,7 +949,6 @@ KKStr  ScannerFile::FileFormatStr ()  const
 {
   return ScannerFile::ScannerFileFormatToStr (FileFormat ());
 }
-
 
 
 
@@ -1056,7 +1048,6 @@ void  ScannerFile::ReadHeader ()
 
 
 
-
 void  ScannerFile::ExtractHeaderField (const KKStr&  fieldName,
                                        const KKStr&  fieldValue
                                       )
@@ -1115,6 +1106,7 @@ const KKStr&  ScannerFile::GetValue (const KKStr&  fieldName)
 }
 
 
+
 float  ScannerFile::GetValueFloat (const KKStr&  fieldName)
 {
   if  (!headerFields)
@@ -1149,8 +1141,6 @@ void  ScannerFile::ReportTextMsg (const char*  textBuff,
 
 
 
-
-
 void  ScannerFile::ReportInstrumentDataWord (uchar             idNum,
                                              kkuint32          scanLineNum,
                                              WordFormat32Bits  dataWord
@@ -1167,7 +1157,6 @@ void  ScannerFile::ReportInstrumentDataWord (uchar             idNum,
     flowMeterCounterScanLine = scanLineNum;
   }
 }  /* ReportInstrumentDataWord */
-
 
 
 
@@ -1321,7 +1310,6 @@ void  ScannerFile::SaveIndexFile ()
 
 
 
-
 void  ScannerFile::LoadIndexFile (bool&  successful)
 {
   if  (indexFile)
@@ -1395,7 +1383,6 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
 
 
-
 void  ScannerFile::SkipBytesForward (kkuint32  numBytes)
 {
   kkint32  returnCd = osFSEEK (file, numBytes, SEEK_CUR);
@@ -1404,8 +1391,6 @@ void  ScannerFile::SkipBytesForward (kkuint32  numBytes)
 	log.Level (-1) << "ScannerFile::SkipBytesForward   ReturnCd = " << returnCd << endl;
   }
 }  /* SkipBytesForward */
-
-
 
 
 
