@@ -1,4 +1,5 @@
 #include "FirstIncludes.h"
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -268,8 +269,7 @@ void  ScannerFile::Open (const KKStr&  _fileName)
   {
     file = osFOPEN (fileName.Str (), "rb");
     if  (file)
-      fileSizeInBytes = osGetFileSize (fileName);
-  }
+      fileSizeInBytes = osGetFileSize (fileName);  }
   else
   {
     file = osFOPEN (fileName.Str (), "wb");
