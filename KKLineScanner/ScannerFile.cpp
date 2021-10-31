@@ -94,9 +94,8 @@ ScannerFile::ScannerFile (const KKStr&  _fileName,
   }
 }
 
- 
-  
-  
+
+
 /**  Constructor for opening file for Writing */
 ScannerFile::ScannerFile (const KKStr&  _fileName,
                           kkuint32      _pixelsPerScanLine,
@@ -231,12 +230,10 @@ void  ScannerFile::Flush ()
 
 
 
-
 void  ScannerFile::ScanRate (float  _scanRate)
 {
   scanRate = _scanRate;
 }
-
 
 
 
@@ -258,7 +255,6 @@ void  ScannerFile::Reset ()
 
 
 
-
 void  ScannerFile::Open (const KKStr&  _fileName)
 {
   eof = false;
@@ -269,7 +265,8 @@ void  ScannerFile::Open (const KKStr&  _fileName)
   {
     file = osFOPEN (fileName.Str (), "rb");
     if  (file)
-      fileSizeInBytes = osGetFileSize (fileName);  }
+      fileSizeInBytes = osGetFileSize (fileName);
+  }
   else
   {
     file = osFOPEN (fileName.Str (), "wb");
@@ -295,6 +292,7 @@ void  ScannerFile::Open (const KKStr&  _fileName)
     log.Level (-1) << endl << endl << "ScannerFile::Open     ***ERROR***   Opening File[" << fileName << "]" << endl << endl;
   }
 }  /* Open */
+
 
 
 void  ScannerFile::CreateGoalie ()
@@ -347,7 +345,6 @@ void  ScannerFile::AddStartStopEntryToIndexFile (kkint32                        
 
 
 
-
 void  ScannerFile::AddStartPoint (kkint32  _scanLineNum)
 {
   startStopPoints.AddEntry (_scanLineNum, StartStopPoint::StartStopType::StartPoint);
@@ -372,7 +369,6 @@ void  ScannerFile::StartStopPointDelete (kkint32 _scanLineNum)
 
 
 
-
 StartStopPointPtr  ScannerFile::StartStopPointNearestEntry (kkint32 _scanLineNum)
 {
   return  startStopPoints.NearestEntry (_scanLineNum);
@@ -391,7 +387,6 @@ StartStopPointPtr  ScannerFile::StartStopPointSuccEntry (kkint32 _scanLineNum)
 {
   return  startStopPoints.SuccEntry (_scanLineNum);
 }
-
 
 
 
@@ -445,10 +440,6 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
 
 
 
-
-
-
-
 void  ScannerFile::UpdateFrameOffset (kkuint32 frameNum,
                                       kkuint32 scanLineNum,
                                       kkint64  byteOffset
@@ -492,7 +483,6 @@ kkint64  ScannerFile::GetFrameOffset (kkuint32  frameNum)
 
 
 
-
 void  ScannerFile::FrameRead (kkuint32  frameNum,
                               bool&   found
                              )
@@ -530,8 +520,6 @@ void  ScannerFile::FrameRead (kkuint32  frameNum,
   }
   goalie->EndBlock ();
 }  /* FrameRead */
-
-
 
 
 
@@ -603,8 +591,6 @@ void  ScannerFile::GetNextLine (uchar*     lineBuff,
   ++frameBufferNextLine;
   ++nextScanLine;
 }  /* GetNextLine */
-
-
 
 
 
