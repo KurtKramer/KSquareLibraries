@@ -71,7 +71,7 @@ kkuint32  ScannerFileSimple::ReadBufferFrame ()
   }
 
   frameBufferFileOffsetLast = osFTELL (file);
-  frameBufferLen = (kkint32)fread (frameBuffer, 1, frameBufferSize, file);
+  frameBufferLen = scINT32 (fread (frameBuffer, 1, frameBufferSize, file));
   frameBufferFileOffsetNext = osFTELL (file);
   frameBufferNextLine = 0;
   return  (frameBufferLen / pixelsPerScanLine);
