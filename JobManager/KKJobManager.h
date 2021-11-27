@@ -42,7 +42,7 @@ namespace  KKJobManagment
                   RunLog&       _log
                  );
 
-    ~KKJobManager ();
+    virtual ~KKJobManager ();
 
 
     /**
@@ -223,7 +223,7 @@ namespace  KKJobManagment
   {
   public:
     JobManagerList (const KKStr& _rootDir);
-    ~JobManagerList ();
+    virtual ~JobManagerList ();
 
   private:
   };

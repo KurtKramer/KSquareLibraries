@@ -443,7 +443,7 @@ void  KKJobManager::StatusFileRefresh ()
   }
 
   char  buff[20480];
-  KKStr  statusStr (512);
+  KKStr  statusStr (scUINT64 (512));
 
   if  (statusFileNextByte >= 0)
     statusFile->seekg (statusFileNextByte);
@@ -694,7 +694,7 @@ void   KKJobManager::Update (JobManagerPtr  p)
 
 KKStr  KKJobManager::ToStatusStr ()
 {
-  KKStr  statusStr (200);  // PreAllocate 200 bytes
+  KKStr  statusStr (scUINT64 (200));  // PreAllocate 200 bytes
 
   statusStr << KKJob::ToStatusStr ()                                            << "\t"
             << "Status"               << "\t" << KKJob::JobStatusToStr (status) << "\t"

@@ -239,7 +239,7 @@ void  KKJob::PrerequisitesFromStr (const KKStr&  s)
 
 KKStr  KKJob::ToStatusStr ()
 {
-  KKStr  statusStr (200);  // Preallocating 200 bytes.
+  KKStr  statusStr (scUINT64 (200));  // Preallocating 200 bytes.
 
   statusStr << "JobId"                << "\t" << jobId                << "\t"
             << "ParentId"             << "\t" << parentId             << "\t"
