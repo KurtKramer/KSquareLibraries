@@ -2231,13 +2231,21 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (TrainingClassCons
  *  }
  *@endcode
  */
-KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (const  KKStr&  configFileName)
+KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (KKStr  configFileName)
 {
   if  (osFileExists (configFileName))
     return  configFileName;
 
-  KKStr  rootNameEithExtension = osGetRootNameWithExtension (configFileName);
   KKStr  extension = osGetFileExtension (configFileName);
+  if  (extension.Empty())
+  {
+    extension = "cfg";
+    configFileName += ".cfg";
+    if  (osFileExists (configFileName))
+      return  configFileName;
+  }
+
+  KKStr  rootNameEithExtension = osGetRootNameWithExtension (configFileName);
   KKStr  path = osGetPathPartOfFile (configFileName);
 
   KKStr  configFileNameWithExtension = configFileName;

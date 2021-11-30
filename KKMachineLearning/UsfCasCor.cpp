@@ -935,15 +935,15 @@ void UsfCasCor::train_network (VolConstBool&  cancelFlag,
   log.Level (10) << "Victories: " << vics << ", Defeats: " << defs << endl;
 
   log.Level (10) << "Training Epochs - "
-                 << "Min: " << min_epochs << "  "
-                 << "Avg: " << (total_epochs / total_trials) << " "
-                 << "Max: " << max_epochs
+                 << "Min: " << scINT64 (min_epochs) << "  "
+                 << "Avg: " << scINT64 (total_epochs / total_trials) << " "
+                 << "Max: " << scINT64 (max_epochs)
                  << endl;
 
   log.Level (10) << "Hidden Units -    "
-                 << "Min: " << min_units << " "
-                 << "Avg: " << ((float)total_units /total_trials) << " "
-                 << "Max: " << max_units
+                 << "Min: " << scINT64 (min_units) << " "
+                 << "Avg: " << (scFLOAT (total_units) /total_trials) << " "
+                 << "Max: " << scINT64 (max_units)
                  << endl;
 
   return;
@@ -968,7 +968,6 @@ void  UsfCasCor::allocate_network (RunLog&  log)
   FirstCase = 0;
   Nunits    = 1 + Ninputs;
 
-
   /* setup for ErrorIndex */
   NtrainingOutputValues = Noutputs * NTrainingPatterns; 
   NtestOutputValues = Noutputs * NTestPatterns;
@@ -982,7 +981,6 @@ void  UsfCasCor::allocate_network (RunLog&  log)
 
     MaxUnits = Nunits + 1;
   }
-
 
   /* allocate memory for outer arrays */
   ExtraValues = new float[MaxUnits];

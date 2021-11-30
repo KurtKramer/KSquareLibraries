@@ -341,7 +341,7 @@ namespace KKMLL
 
     static  bool           ConfigFileExists (const KKStr& _configFileName);
 
-    static  KKStr          GetEffectiveConfigFileName (const  KKStr&  configFileName);
+    static  KKStr          GetEffectiveConfigFileName (KKStr  configFileName);
 
     void                   WriteXML (const KKStr&   varName,
                                      std::ostream&  o
