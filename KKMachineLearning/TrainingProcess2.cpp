@@ -985,7 +985,7 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
   }
 
   //trainingExamples->Owner (false);
-  buildDateTime = osGetLocalDateTime ();
+  buildDateTime = osGetDateTimeLocal ();
   log.Level (20) << "TrainingProcess2::CreateModelsFromTrainingData    Ending" << endl;
 } /* CreateModelsFromTrainingData */
 

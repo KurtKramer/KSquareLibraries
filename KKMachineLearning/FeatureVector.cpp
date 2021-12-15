@@ -950,7 +950,7 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
     return;
   }
 
-  o << "// " << "Time Written  [" << osGetLocalDateTime () << "]" << endl;
+  o << "// " << "Time Written  [" << osGetDateTimeLocal () << "]" << endl;
   o << "// " << "File Name     [" << _fileName             << "]" << endl;
   o << "// " << "Size          [" << QueueSize ()          << "]" << endl;
   o << "//"                                                       << endl;

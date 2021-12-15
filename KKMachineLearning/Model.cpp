@@ -835,7 +835,7 @@ void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
 void  Model::WriteModelXMLFields (ostream&  o)  const
 {
-  //timeSaved = osGetLocalDateTime ();
+  //timeSaved = osGetDateTimeLocal ();
   ModelTypeStr ().WriteXML ("ModelType", o);
   Name ().WriteXML ("Name", o);
   rootFileName.WriteXML ("RootFileName", o);

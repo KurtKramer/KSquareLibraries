@@ -63,7 +63,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     _out << "% ARFF Format Definition: http://www.cs.waikato.ac.nz/~ml/weka/arff.html"  << endl
          << "%"                                                             << endl
          << "% FileName         [" << _fileName                      << "]" << endl
-         << "% DateWritten      [" << osGetLocalDateTime ()          << "]" << endl
+         << "% DateWritten      [" << osGetDateTimeLocal ()          << "]" << endl
          << "% SelectedFeatures [" << _selFeatures.ToString ()       << "]" << endl
          << "% TotalRecords     [" << _data.QueueSize ()             << "]" << endl
          << "% NumAttributes    [" << _selFeatures.NumOfFeatures ()  << "]" << endl

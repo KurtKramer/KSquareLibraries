@@ -177,7 +177,7 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSi
   {
     ofstream  f ("c:\\Temp\\SimpleCompressor.txt", ios_base::app);
     f << std::endl
-      << osGetLocalDateTime () << "\t"
+      << osGetDateTimeLocal () << "\t"
       << "SimpleCompressor::CreateCompressedBuffer     ***ERROR***     compressedBytesNeeded[" << compressedBytesNeeded << "] to large." << std::endl
       << std::endl;
     f.flush ();
@@ -233,7 +233,7 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSi
     // This is not a good thing; something has damaged the compressed string.
     ofstream  f ("c:\\Temp\\SimpleCompressor.txt", ios_base::app);
     f << std::endl
-      << osGetLocalDateTime () << "\t" << "SimpleCompressor::CreateCompressedBuffer    ***ERROR***"
+      << osGetDateTimeLocal () << "\t" << "SimpleCompressor::CreateCompressedBuffer    ***ERROR***"
       << std::endl
       << "               "     << "\t" << "Something has gone terribly wrong with the simpleCompression algorithm." << std::endl
       << std::endl;
@@ -266,7 +266,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
   {
     ofstream  f ("c:\\Temp\\SimpleCompressor.txt", ios_base::app);
     f << std::endl
-      << osGetLocalDateTime ()  << "\t"
+      << osGetDateTimeLocal ()  << "\t"
       << "compressedBuffSize[" << compressedBuffSize << "] > compressedBuffLen[" << compressedBuffLen << "]" << "\t" 
       << std::endl;
     f.flush ();
@@ -303,7 +303,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
     // This is not a good thing; something has damaged the compressed string.
     ofstream  f ("c:\\Temp\\SimpleCompressor.txt", ios_base::app);
     f << std::endl
-      << osGetLocalDateTime ()  << "\t"
+      << osGetDateTimeLocal ()  << "\t"
       << "nextByte[" <<  nextByte << "] > compressedBuffSize[" << compressedBuffSize << "]"
       << std::endl;
     f.flush ();

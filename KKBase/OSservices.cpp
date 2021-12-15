@@ -908,7 +908,7 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
   if (path.LastChar () == '/' || path.LastChar () == '\\')
     path.ChopLastChar ();
 
-  auto  x1 = path.LocateLastOccurrence (DSchar);
+  auto  x1 = osLocateLastSlashChar (path);
   auto  x2 = path.LocateLastOccurrence (':');
   auto  x = Max (x1, x2);
   if  (!x)
@@ -1435,7 +1435,7 @@ kkuint64  KKB::osGetSystemTimeInMiliSecs () noexcept
 
 
 #ifdef  WIN32
-DateTime  KKB::osGetLocalDateTime ()
+DateTime  KKB::osGetDateTimeLocal ()
 {
   SYSTEMTIME  sysTime;
 
@@ -1455,7 +1455,7 @@ DateTime  KKB::osGetLocalDateTime ()
 
 
 
-DateTime  KKB::osGetLocalDateTime ()
+DateTime  KKB::osGetDateTimeLocal ()
 {
   struct tm  *curTime;
   time_t     long_time;

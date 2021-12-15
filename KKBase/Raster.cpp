@@ -7383,7 +7383,7 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
     ofstream f ("c:\\Temp\\Raster_FromSimpleCompression.txt", ios_base::app);
 
     f << std::endl
-      << "DateTime"                 << "\t"  <<  osGetLocalDateTime () << "\t"
+      << "DateTime"                 << "\t"  <<  osGetDateTimeLocal () << "\t"
       << "(compressedBuff==NULL)"
       << std::endl;
 
@@ -7398,7 +7398,7 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
     ofstream f ("c:\\Temp\\Raster_FromSimpleCompression.txt", ios_base::app);
 
     f << std::endl
-      << "DateTime"                 << "\t"  <<  osGetLocalDateTime () << "\t"
+      << "DateTime"                 << "\t"  <<  osGetDateTimeLocal () << "\t"
       << "(uncompressedBuff==NULL)" << "\t" 
       << "unCompressedSize"         << "\t" << unCompressedSize
       << std::endl;
@@ -7417,7 +7417,7 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
     ofstream f ("c:\\Temp\\Raster_FromSimpleCompression.txt", ios_base::app);
 
     f << std::endl
-      << "DateTime"         << "\t"  << osGetLocalDateTime () << "\t"
+      << "DateTime"         << "\t"  << osGetDateTimeLocal () << "\t"
       << "unCompressedSize" << "\t"  << unCompressedSize      << "\t"
       << "Height"           << "\t"  << height                << "\t" 
       << "Width"            << "\t"  << width
@@ -7447,7 +7447,7 @@ RasterPtr  Raster::FromSimpleCompression (const kkuint8*  compressedBuff,
     ofstream f ("c:\\Temp\\Raster_FromSimpleCompression.txt", ios_base::app);
 
     f << std::endl
-      << "DateTime"         << "\t"  << osGetLocalDateTime () << "\t"
+      << "DateTime"         << "\t"  << osGetDateTimeLocal () << "\t"
       << "unCompressedSize" << "\t"  << unCompressedSize      << "\t"
       << "totalPixels"      << "\t"  << totalPixels           << "\t"
       << "Height"           << "\t"  << height                << "\t" 

@@ -43,7 +43,7 @@ public:
     blockerThreadId   (_blockerThreadId),
     milliSecsBlocked  (_milliSecsBlocked),
     numBlockedThreads (_numBlockedThreads),
-    dateTimeBlocked   (osGetLocalDateTime ())
+    dateTimeBlocked   (osGetDateTimeLocal ())
   {
   }
 

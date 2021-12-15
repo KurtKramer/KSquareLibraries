@@ -185,7 +185,7 @@ void  KKThread::AddMsg (const KKStr&  msg)
   else
   {
     KKStr msgTemp (msg.Len () + 20);
-    msgTemp << osGetThreadId () << " - " << osGetLocalDateTime ().Time () << "->" << msg;
+    msgTemp << osGetThreadId () << " - " << osGetDateTimeLocal ().Time () << "->" << msg;
     msgQueue->AddMsg (msgTemp);
   }
 }  /* AddMsg */
@@ -248,14 +248,14 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
     return;
   }
 
-  kkuint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
+  kkuint64  startTime = KKB::osGetDateTimeLocal ().Seconds ();
   kkuint32  timeWaitedSoFar = 0;
   while  ((status == ThreadStatus::Running)  ||  (status == ThreadStatus::Stopping))
   {
 	  osSleepMiliSecs (50);
     if  (maxTimeToWait > 0)
     {
-      kkuint64 now = osGetLocalDateTime ().Seconds ();
+      kkuint64 now = osGetDateTimeLocal ().Seconds ();
       timeWaitedSoFar = scUINT32 (now - startTime);
       if  (timeWaitedSoFar > maxTimeToWait)
         break;

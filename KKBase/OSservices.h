@@ -199,7 +199,7 @@ namespace KKB
   /**
    *@brief Returned the current local date and time.
    */
-  KKB::DateTime  osGetLocalDateTime ();
+  KKB::DateTime  osGetDateTimeLocal ();
 
   KKStr          osGetParentDirectoryOfDirPath (KKStr  path);
 

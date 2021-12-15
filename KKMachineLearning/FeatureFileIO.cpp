@@ -978,7 +978,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
                      _log
                     );
 
-    _timeStamp = osGetLocalDateTime ();
+    _timeStamp = osGetDateTimeLocal ();
   }
 
   delete fvProducer;       fvProducer      = NULL;

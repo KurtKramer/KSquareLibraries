@@ -1068,7 +1068,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
     ClassStatisticList::iterator  idx;
 
     _out << "|  FileName         [" << _fileName                     << "]" << endl;
-    _out << "|  DateWritten      [" << osGetLocalDateTime ()         << "]" << endl;
+    _out << "|  DateWritten      [" << osGetDateTimeLocal ()         << "]" << endl;
     _out << "|  SelectedFeatures [" << _selFeatures.ToString ()      << "]" << endl;
     _out << "|  TotalRecords     [" << _data.QueueSize ()            << "]" << endl;
     _out << "|  NumAttributes    [" << _selFeatures.NumOfFeatures () << "]" << endl;

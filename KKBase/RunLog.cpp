@@ -252,7 +252,7 @@ void  RunLog::DisplayTimeStamp ()
   if  (curLevel > loggingLevel)
     return;
 
-  DateTime curTime = osGetLocalDateTime ();
+  DateTime curTime = osGetDateTimeLocal ();
   if  (procId > 0)
     (*logFile) << procId << " - " ;
   (*logFile) << curTime.Time () << "->";
@@ -283,7 +283,7 @@ void  RunLog::Append (const char*  str)
     if  (msgQueue)
     {
       KKStrPtr  msgStr = new KKStr (curLine.Len () + 10);
-      *msgStr << procId << " - " << osGetLocalDateTime ().Time () << "->" << curLine;
+      *msgStr << procId << " - " << osGetDateTimeLocal ().Time () << "->" << curLine;
       msgQueue->AddMsg (msgStr);
     }
     lastLine = curLine;

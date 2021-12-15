@@ -559,7 +559,7 @@ void  Orderings::Save ()
   o << "//FeatureFileName" << "\t" << tempName              << endl;
   o << "//NumOfOrderings"  << "\t" << numOfOrderings        << endl;
   o << "//NumOfFolds"      << "\t" << numOfFolds            << endl;
-  o << "//DateCreated"     << "\t" << osGetLocalDateTime () << endl;
+  o << "//DateCreated"     << "\t" << osGetDateTimeLocal () << endl;
   o << "//EndOfHeader"                                      << endl;
 
   for  (kkuint32 orderingIDX = 0;  orderingIDX < orderings.size ();  orderingIDX++)

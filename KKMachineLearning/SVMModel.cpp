@@ -2265,7 +2265,7 @@ void  SVMModel::WriteXML (const KKStr&  varName,
     XmlElementKeyValuePairs*   headerFields = new XmlElementKeyValuePairs ();
 
     headerFields->Add ("RootFileName",      rootFileName);
-    headerFields->Add ("Time",              osGetLocalDateTime ());
+    headerFields->Add ("Time",              osGetDateTimeLocal ());
     headerFields->Add ("NumOfModels",       numOfModels);
     if  (selectedFeatures)
       headerFields->Add ("SelectedFeatures", selectedFeatures->ToString ());

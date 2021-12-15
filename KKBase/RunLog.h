@@ -135,7 +135,6 @@ namespace KKB
     */
     void    WriteLine (const char* s);
 
-
     RunLog&  operator<< (bool           right);
     RunLog&  operator<< (kkint16        right);
     RunLog&  operator<< (kkuint16       right);
@@ -157,7 +156,7 @@ namespace KKB
 
     //friend  RunLog& endl (RunLog& _outs);
 
-    void    Flush ();
+    void  Flush ();
 
     void    SetLevel (kkint32 _level)  {loggingLevel = _level;}
 

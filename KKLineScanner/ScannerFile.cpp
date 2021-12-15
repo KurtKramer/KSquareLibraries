@@ -274,7 +274,7 @@ void  ScannerFile::Open (const KKStr&  _fileName)
     indexFile = new ofstream (indexFileName.Str ());
     *indexFile << "IndexFile"                                      << endl
                << "ScannerFile" << "\t" << _fileName               << endl
-               << "DateTime"    << "\t" << osGetLocalDateTime ()   << endl;
+               << "DateTime"    << "\t" << osGetDateTimeLocal ()   << endl;
 
     *indexFile << "IndexEntryFields" << "\t" << "FrameNum"
                                      << "\t" << "ScanLineNum"
@@ -1272,7 +1272,7 @@ void  ScannerFile::SaveIndexFile ()
   ofstream f (indexFileName.Str ());
   f << "IndexFile"                                     << endl
     << "ScannerFile" << "\t" << fileName               << endl
-    << "DateTime"    << "\t" << osGetLocalDateTime ()  << endl;
+    << "DateTime"    << "\t" << osGetDateTimeLocal ()  << endl;
 
   f << "IndexEntryFields" << "\t" << "FrameNum"
                           << "\t" << "ScanLineNum"
