@@ -272,7 +272,7 @@ void  ScannerFile::Open (const KKStr&  _fileName)
     file = osFOPEN (fileName.Str (), "wb");
     indexFileName = osRemoveExtension (_fileName) + ".idx";
     indexFile = new ofstream (indexFileName.Str ());
-    *indexFile << "IndexFile"                                      << endl
+    *indexFile << "IndexFile"                                     << endl
                << "ScannerFile" << "\t" << _fileName               << endl
                << "DateTime"    << "\t" << osGetDateTimeLocal ()   << endl;
 
