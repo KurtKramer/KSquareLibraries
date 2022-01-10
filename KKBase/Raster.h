@@ -1058,7 +1058,8 @@ namespace KKB
 
     RasterPtr     HistogramGrayscaleImage ()  const;
 
-    size_t     MemoryConsumedEstimated ()  const;
+    virtual 
+    size_t        MemoryConsumedEstimated ()  const;
 
     RasterPtr     Padded (kkint32 padding);  // Creates a Padded raster object.
 

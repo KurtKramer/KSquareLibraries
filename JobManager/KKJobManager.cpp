@@ -587,13 +587,13 @@ void  KKJobManager::StatusFileWrite ()
 
   ofstream*  statusFile = StatusFileOpen (ios::out);
 
-  *statusFile << "// Date/Time [" << osGetLocalDateTime () << "]." << endl
+  *statusFile << "// Date/Time [" << osGetDateTimeLocal () << "]." << endl
               << "//" << endl
               << endl;
 
   *statusFile << "Status"              << "\t" << KKJob::JobStatusToStr (status)  << endl
               << "NextJobId"           << "\t" << nextJobId                     << endl
-              << "CurrentDateTime"     << "\t" << osGetLocalDateTime ()         << endl
+              << "CurrentDateTime"     << "\t" << osGetDateTimeLocal ()         << endl
               << "ExpansionCount"      << "\t" << expansionCount                << endl
               << "ExpansionFirstJobId" << "\t" << expansionFirstJobId           << endl
               << endl;
@@ -622,7 +622,7 @@ void  KKJobManager::ReportCpuTimeUsed (ofstream* statusFile)
   *statusFile << "CpuTimeUsed"     << "\t" << cpuTimeUsed   << "\t"
               << "ProcId"          << "\t" << procId        << "\t"
               << endl
-              << "CurrentDateTime" << "\t" << osGetLocalDateTime () << endl;
+              << "CurrentDateTime" << "\t" << osGetDateTimeLocal () << endl;
 }  /* ReportCpuTimeUsed */
 
 
@@ -636,14 +636,14 @@ void  KKJobManager::StatusFileInitialize ()
 
   ofstream*  statusFile = StatusFileOpen (ios::out);
 
-  *statusFile << "// Date/Time [" << osGetLocalDateTime () << "]." << endl
+  *statusFile << "// Date/Time [" << osGetDateTimeLocal () << "]." << endl
               << "//" << endl
               << "//" << endl;
 
 
   *statusFile << "Status"              << "\t" << KKJob::JobStatusToStr (status)  << endl
               << "NextJobId"           << "\t" << nextJobId                     << endl
-              << "CurrentDateTime"     << "\t" << osGetLocalDateTime ()         << endl
+              << "CurrentDateTime"     << "\t" << osGetDateTimeLocal ()         << endl
               << "ExpansionCount"      << "\t" << expansionCount                << endl
               << "ExpansionFirstJobId" << "\t" << expansionFirstJobId           << endl;
 

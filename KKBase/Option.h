@@ -73,8 +73,8 @@ namespace KKB
   template<typename T>
   OptionUInt32  operator+ (const OptionUInt32& lhs, T rhs)
   {
-    KKCheck(lhs, "OptionUInt32::operator+  Can not add to NONE!")
-    kkint64 newValue = static_cast<kkint64> (lhs.value()) + static_cast<kkint64> (rhs);
+    KKCheck (lhs, "OptionUInt32::operator+  Can not add to NONE!")
+    const kkint64 newValue = static_cast<kkint64> (lhs.value()) + static_cast<kkint64> (rhs);
     ValidateValidUint32 (newValue);
     return OptionUInt32(static_cast<kkuint32> (newValue));
   }
