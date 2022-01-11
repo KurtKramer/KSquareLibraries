@@ -24,9 +24,10 @@ using  namespace  KKLSC;
 
 
 
-FlatFieldCorrection::FlatFieldCorrection (kkint32       _numSampleLines,
-                                          kkint32       _lineWidth,
-                                          const uchar*  _compensationTable
+FlatFieldCorrection::FlatFieldCorrection (kkuint32      _numSampleLines,
+                                          kkuint32      _lineWidth,
+                                          const uchar*  _compensationTable,
+                                          kkuint32      _startCol
                                          ):
     compensationTable    (_compensationTable),
     enabled              (true),
@@ -37,37 +38,37 @@ FlatFieldCorrection::FlatFieldCorrection (kkint32       _numSampleLines,
     lineWidth            (_lineWidth),
     numSampleLines       (_numSampleLines),
     numSampleLinesAdded  (0),
+    startCol             (_startCol),
     totalLine            (NULL)
 {
-  kkint32 x, y;
-
+  KKCheck (_numSampleLines > 0,  "_numSampleLines: " + StrFromUint32 (_numSampleLines) + " > 0")
   highPoint         = new uchar[lineWidth];
-  highPointLastSeen = new kkint32[lineWidth];
-  for  (x = 0; x < lineWidth;  x++)
+  highPointLastSeen = new kkuint32[lineWidth];
+  for  (kkuint32 x = 0; x < lineWidth;  ++x)
   {
-    highPoint        [x] = 255;
+    highPoint        [x] = 255u;
     highPointLastSeen[x] = 0;
   }
 
   history = new uchar*[numSampleLines];
-  for  (x = 0;  x < numSampleLines;  x++)
+  for  (kkuint32 x = 0;  x < numSampleLines;  ++x)
   {
     history[x] = new uchar[lineWidth];
-    for  (y = 0;  y < lineWidth;  y++)
+    for  (kkuint32 y = 0;  y < lineWidth;  ++y)
       history[x][y] = (uchar)255;
   }
 
   totalLine = new kkint32[lineWidth];
 
   lookUpTable = new uchar*[lineWidth];
-  for  (x = 0;  x < lineWidth;  x++)
+  for  (kkuint32 x = 0;  x < lineWidth;  ++x)
   {
-    lookUpTable[x] = new uchar[256];
-    for  (y = 0;  y < 256;  y++)
+    lookUpTable[x] = new uchar[256u];
+    for  (kkuint32 y = 0;  y < 256u;  ++y)
       lookUpTable[x][y] = (uchar)y;
   }
 
-  for  (kkint32 col = 0;  col < lineWidth;  col++)
+  for  (kkuint32 col = 0;  col < lineWidth;  ++col)
     ReComputeLookUpForColumn (col);
 }
 
@@ -75,12 +76,10 @@ FlatFieldCorrection::FlatFieldCorrection (kkint32       _numSampleLines,
 
 FlatFieldCorrection::~FlatFieldCorrection ()
 {
-  kkint32 x;
-
   delete  highPoint;          highPoint         = NULL;
   delete  highPointLastSeen;  highPointLastSeen = NULL;
 
-  for (x = 0;  x < numSampleLines;  x++)
+  for (kkuint32  x = 0;  x < numSampleLines;  ++x)
   {
     delete  history[x];
     history[x] = NULL;
@@ -88,7 +87,7 @@ FlatFieldCorrection::~FlatFieldCorrection ()
   delete  history;
   history = NULL;
 
-  for (x = 0;  x < lineWidth;  x++)
+  for (kkuint32 x = 0;  x < lineWidth;  ++x)
   {
     delete  lookUpTable[x];
     lookUpTable[x] = NULL;
@@ -103,7 +102,7 @@ FlatFieldCorrection::~FlatFieldCorrection ()
 void  FlatFieldCorrection::CompensationTable (const uchar*  _compensationTable)
 {
   compensationTable = _compensationTable;
-  for  (kkint32  x = 0;  x < lineWidth;  ++x)
+  for  (kkuint32  x = 0;  x < lineWidth;  ++x)
     ReComputeLookUpForColumn (x);
 }
 
@@ -111,12 +110,12 @@ void  FlatFieldCorrection::CompensationTable (const uchar*  _compensationTable)
 
 void  FlatFieldCorrection::AddSampleLine (const uchar*  sampleLine)
 {
-  lastHistoryIdxAdded++;
+  ++lastHistoryIdxAdded;
   if  (lastHistoryIdxAdded >= numSampleLines)
     lastHistoryIdxAdded = 0;
 
   uchar*  historyLine = history[lastHistoryIdxAdded];
-  for  (kkint32 x = 0;  x < lineWidth;  ++x)
+  for  (kkuint32 x = 0;  x < lineWidth;  ++x)
   {
     historyLine[x] = sampleLine[x];
     if  (sampleLine[x] < highPoint[x])
@@ -128,33 +127,33 @@ void  FlatFieldCorrection::AddSampleLine (const uchar*  sampleLine)
     else if  ((sampleLine[x] - 5) > highPoint[x])
     {
       ReComputeLookUpForColumn (x);
-      highPointLastSeen[x] = 0;
+      highPointLastSeen[x] = 0u;
     }
     else
     {
-      highPointLastSeen[x] = 0;
+      highPointLastSeen[x] = 0u;
     }
   }
 
-  numSampleLinesAdded++;
+  ++numSampleLinesAdded;
 }  /* AddSampleLine */
 
 
 
-void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
+void  FlatFieldCorrection::ReComputeLookUpForColumn (kkuint32 col)
 {
   if  (enabled)
   {
-    highPointLastSeen[col] = 1;
+    highPointLastSeen[col] = 1u;
 
-    kkint32 historyIdx = lastHistoryIdxAdded;
+    kkuint32 historyIdx = lastHistoryIdxAdded;
 
     kkint32 age = 1;
     highPoint[col] = 0;
 
-    kkint32 hp0 = 0, hp0Age =0;
-    kkint32 hp1 = 0, hp1Age =0;
-    kkint32 hp2 = 0, hp2Age =0;
+    kkint32 hp0 = 0, hp0Age = 0;
+    kkint32 hp1 = 0, hp1Age = 0;
+    kkint32 hp2 = 0, hp2Age = 0;
 
     while  (true)
     {
@@ -175,14 +174,10 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
         hp2 = hv;   hp2Age = age;
       }
 
-      //if  (hv > highPoint[col])
-      //{
-      //  highPoint[col]         = history[historyIdx][col];
-      // highPointLastSeen[col] = age;
-      //}
-      historyIdx--;
-      if  (historyIdx < 0)
+      if  (historyIdx < 1)
         historyIdx = numSampleLines - 1;
+      else
+        --historyIdx;
 
       if  (historyIdx == lastHistoryIdxAdded)
         break;
@@ -200,24 +195,23 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
 
 
     // We now know the high point value;  lets scale the look-up-table for this column now.
-    kkint32 row = 0;
-    kkint32 hp = highPoint[col];
+    kkuint32 hp = highPoint[col];
 
-    if  (hp < 28)
+    if  (hp < 28u)
     {
       hp = 0;
       kkint32  newPixelValue = 255;
       if  (compensationTable)
         newPixelValue = compensationTable[newPixelValue];
       newPixelValue = 255 - newPixelValue;
-      for  (row = 0;  row < 256;  ++row)
+      for  (kkuint32 row = 0;  row < 256u;  ++row)
         lookUpTable[col][row] = (uchar)newPixelValue;
     }
     else
     {
       kkint32 newPixelValue = 0;
 
-      for  (row = 0;  row < 256;  ++row)
+      for  (kkuint32 row = 0;  row < 256u;  ++row)
       {
         if  (row  <  hp)
           newPixelValue = (kkint32)(0.5f + (255.0f * (float)row) / (float)hp);
@@ -227,6 +221,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
         if  ((newPixelValue < 0)  ||  (newPixelValue > 255))
         {
           cout << "Woaaaaa!!!!! it went beyond 255  or less that 0  ["  << newPixelValue << "]." << endl;
+          newPixelValue = Max (0, Min (newPixelValue, 255));
         }
 
         //lookUpTable[col][row] = (uchar)(255 - newPixelValue);
@@ -241,7 +236,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
   }
   else
   {
-    for  (kkint32  row = 0;  row < 256;  ++row)
+    for  (kkuint32  row = 0;  row < 256u;  ++row)
     {
       kkint32  newPixelValue = row;
       if  (compensationTable)
@@ -258,7 +253,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
 
 void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  scanLine)
 {
-  for  (kkint32 col = 0;  col < lineWidth;  col++)
+  for  (kkuint32 col = startCol;  col < lineWidth;  ++col)
     scanLine[col] = lookUpTable[col][scanLine[col]];
 }  /* ApplyFlatFieldCorrection */
 
@@ -270,12 +265,12 @@ void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  srcScanLine,
 {
   if  (enabled)
   {
-    for  (kkint32 col = 0;  col < lineWidth;  col++)
+    for  (kkuint32 col = 0;  col < lineWidth;  col++)
       destScanLine[col] = lookUpTable[col][srcScanLine[col]];
   }
   else
   {
-    for  (kkint32 col = 0;  col < lineWidth;  col++)
+    for  (kkuint32 col = 0;  col < lineWidth;  col++)
       destScanLine[col] = srcScanLine[col];
   }
 }  /* ApplyFlatFieldCorrection */
@@ -285,27 +280,27 @@ void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  srcScanLine,
 VectorUcharPtr  FlatFieldCorrection::CameraHighPoints ()  const
 {
   vector<uchar>*  results = new vector<uchar> ();
-  for  (kkint32 x = 0;  x < lineWidth;  x++)
+  for  (kkuint32 x = 0;  x < lineWidth;  x++)
     results->push_back (highPoint[x]);
   return  results;
 }  /* CameraHighPoints */
 
 
 
-VectorUcharPtr  FlatFieldCorrection::CameraHighPointsFromLastNSampleLines (kkint32 n)  const
+VectorUcharPtr  FlatFieldCorrection::CameraHighPointsFromLastNSampleLines (kkuint32 n)  const
 {
   n = Min (n, numSampleLines);
 
   vector<uchar>*  highPoints = new vector<uchar>(lineWidth, 0);
 
   kkint32  row = lastHistoryIdxAdded;
-  for  (kkint32  x = 0;  x < n;  ++x)
+  for  (kkuint32  x = 0;  x < n;  ++x)
   {
     if  (row < 0)
       row = numSampleLines - 1;
     uchar*  sampleRow = history[row];
 
-    for  (kkint32 col = 0;  col < lineWidth;  ++col)
+    for  (kkuint32 col = 0;  col < lineWidth;  ++col)
     {
       if  (sampleRow[col] > (*highPoints)[col])
         (*highPoints)[col] = sampleRow[col];
