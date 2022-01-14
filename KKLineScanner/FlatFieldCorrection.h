@@ -22,17 +22,18 @@ namespace  KKLSC
   class  FlatFieldCorrection
   {
   public:
-    FlatFieldCorrection (kkint32       _numSampleLines,
-                         kkint32       _lineWidth,
-                         const uchar*  _compensationTable
+    FlatFieldCorrection (kkuint32      _numSampleLines,
+                         kkuint32      _lineWidth,
+                         const uchar*  _compensationTable,
+                         kkuint32      _startCol
                         );
 
     ~FlatFieldCorrection ();
 
-    bool    Enabled             () const {return enabled;}
-    kkint32 LineWidth           () const {return lineWidth;}
-    kkint32 NumSampleLines      () const {return numSampleLines;}
-    kkint32 NumSampleLinesAdded () const {return numSampleLinesAdded;}
+    bool     Enabled             () const {return enabled;}
+    kkuint32 LineWidth           () const {return lineWidth;}
+    kkuint32 NumSampleLines      () const {return numSampleLines;}
+    kkuint32 NumSampleLinesAdded () const {return numSampleLinesAdded;}
 
     void  CompensationTable (const uchar*  _compensationTable);
 
@@ -56,27 +57,28 @@ namespace  KKLSC
      *@brief Will return the high point for each pixel from the last 'n' sample lines taken. 
      *@param[in] n The number of Sample lines to locate high point; ex: n = 2 means check the last two sample lines.
      */
-    VectorUcharPtr  CameraHighPointsFromLastNSampleLines (kkint32 n)  const;
+    VectorUcharPtr  CameraHighPointsFromLastNSampleLines (kkuint32 n)  const;
 
   private:
-    void  ReComputeLookUpForColumn (kkint32 col);
+    void  ReComputeLookUpForColumn (kkuint32 col);
 
     const uchar*  compensationTable;  /**< From ScannerFile::ConpensationTable(); used to compensate for the effects of ScannerFile compression. */
 
-    bool      enabled;                /**< When set to 'true'  will apply flat field correction otherwise ignore.     */
-    uchar*    highPoint;              /**< Highest pixel value in history for the respective column.                  */
-    kkint32*  highPointLastSeen;      /**< The number of Samplings since high point was last seen.                    */
-    uchar**   history;                /**< 2D array (_numSampleLines x _lineWidth); each row represents a scan-line.  */
-    kkint32   lastHistoryIdxAdded;    /**< Index of last history line to be added by 'AddSampleLine'                  */
-    kkint32   lineWidth;
-    uchar**   lookUpTable;            /**< 2D array (lineWidth x 256) lookup table for each scan-line pixel location.
-                                      * Each column will be the look uptable for the respective scan line pixel.
-                                      * Every time a new high point s seen for a pixel location that column will
-                                      * get recomputed.
-                                      */
-    kkint32   numSampleLines;         /* Number of history scan lines that are to be kept.                            */
-    kkint32   numSampleLinesAdded;    /* Total number of sample lines kept.                                           */
-    kkint32*  totalLine;
+    bool       enabled;                /**< When set to 'true'  will apply flat field correction otherwise ignore.     */
+    uchar*     highPoint;              /**< Highest pixel value in history for the respective column.                  */
+    kkuint32*  highPointLastSeen;      /**< The number of Samplings since high point was last seen.                    */
+    uchar**    history;                /**< 2D array (_numSampleLines x _lineWidth); each row represents a scan-line.  */
+    kkuint32   lastHistoryIdxAdded;    /**< Index of last history line to be added by 'AddSampleLine'                  */
+    kkuint32   lineWidth;
+    uchar**    lookUpTable;            /**< 2D array (lineWidth x 256) lookup table for each scan-line pixel location.
+                                       * Each column will be the look uptable for the respective scan line pixel.
+                                       * Every time a new high point s seen for a pixel location that column will
+                                       * get recomputed.
+                                       */
+    kkuint32   numSampleLines;         /* Number of history scan lines that are to be kept.                            */
+    kkint32    numSampleLinesAdded;    /* Total number of sample lines kept.                                           */
+    kkuint32   startCol;               /* First column to process in a scan line; implemented to support counter dat in starting coulmns such as flow rate counter. */
+    kkint32*   totalLine;
   };
 
   typedef  FlatFieldCorrection*  FlatFieldCorrectionPtr;

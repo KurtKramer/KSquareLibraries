@@ -159,6 +159,26 @@ FlowMeterTracker::Entry::Entry ():
 
 
 
+FlowMeterTracker::FlowCounterResult  FlowMeterTracker::FlowCounter ()  const noexcept
+{
+  if  (!history  ||  (historyLastIdxAdded < 0))
+    return FlowCounterResult (0, 0);
+
+  auto curEntry  = history + historyLastIdxAdded;
+  auto prevEntry = (historyLastIdxAdded < 1) ? (history + historyTableSize - 1) : curEntry - 1;
+
+  kkuint32 count =  history[historyLastIdxAdded].counterValue;
+
+  kkuint32 curScanLine = curEntry->scanLineNum;
+  kkuint32 prevScanLine = prevEntry->scanLineNum;
+
+  kkuint32 numScanLines = (curScanLine >= prevScanLine) ? (curScanLine - prevScanLine) : 0;
+
+  return FlowCounterResult (count, numScanLines);
+}
+
+
+
 float  FlowMeterTracker::FlowRateInstantaneous ()  noexcept
 {
   if  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))

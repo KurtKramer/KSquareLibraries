@@ -90,6 +90,11 @@ namespace  KKLSC
                    );
 
 
+    struct FlowCounterResult {kkuint32 count, scanLines;};
+
+    FlowCounterResult  FlowCounter ()  const noexcept;
+
+
     /**  Computes flow rate using the two most current count entries. */
     float  FlowRateInstantaneous () noexcept;
 
