@@ -38,6 +38,7 @@ ScannerFile::ScannerFile (const KKStr&  _fileName,
                           RunLog&       _log
                           ):
   byteOffsetScanLineZero    (0),
+  channelCount              (0),
   eof                       (false),
   file                      (NULL),
   fileName                  (_fileName),
@@ -98,12 +99,14 @@ ScannerFile::ScannerFile (const KKStr&  _fileName,
 
 /**  Constructor for opening file for Writing */
 ScannerFile::ScannerFile (const KKStr&  _fileName,
+                          kkuint32      _channelCount,
                           kkuint32      _pixelsPerScanLine,
                           kkuint32      _frameHeight,
                           RunLog&       _log
-                          ):
+                         ):
 
   byteOffsetScanLineZero    (0),
+  channelCount              (_channelCount),
   eof                       (false),
   file                      (NULL),
   fileName                  (_fileName),
@@ -740,6 +743,7 @@ ScannerFile::Format  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
 void   ScannerFile::GetScannerFileParameters (const KKStr&             _scannerFileName,
                                               ScannerHeaderFieldsPtr&  _headerFields,
                                               Format&                  _scannerFileFormat,
+                                              uint32_t                 _channelCount,
                                               kkint32&                 _frameHeight,
                                               kkint32&                 _frameWidth,
                                               float&                   _scanRate,
@@ -761,6 +765,7 @@ void   ScannerFile::GetScannerFileParameters (const KKStr&             _scannerF
   _frameHeight       = sf->FrameHeight       ();
   _frameWidth        = sf->PixelsPerScanLine ();
   _scanRate          = sf->ScanRate          ();
+  _channelCount      = sf->ChannelCount      ();
 
   _successful = true;
   delete  sf;
@@ -831,6 +836,7 @@ const uchar*  ScannerFile::ConpensationTable (Format  format)
 
 ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&  _fileName,
                                                          Format        _format,
+                                                         kkuint32      _channelCount,
                                                          kkuint32      _pixelsPerScanLine,
                                                          kkuint32      _frameHeight,
                                                          RunLog&       _log
@@ -848,23 +854,23 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&  _fileName
     switch  (_format)
     {
     case  Format::sfSimple:      
-      scannerFile = new ScannerFileSimple (_fileName, _pixelsPerScanLine, _frameHeight, _log);
+      scannerFile = new ScannerFileSimple (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
     case  Format::sf2BitEncoded:
-      scannerFile = new ScannerFile2BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
+      scannerFile = new ScannerFile2BitEncoded (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
     case  Format::sf3BitEncoded:
-      scannerFile = new ScannerFile3BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
+      scannerFile = new ScannerFile3BitEncoded (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
     case  Format::sf4BitEncoded:
-      scannerFile = new ScannerFile4BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
+      scannerFile = new ScannerFile4BitEncoded (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
     case  Format::sfZlib3BitEncoded:
-      scannerFile = new ScannerFileZLib3BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
+      scannerFile = new ScannerFileZLib3BitEncoded (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
     case  Format::sfUnKnown:
@@ -888,6 +894,7 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&  _fileName
   
 ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileName,
                                                          const KKStr&   _formatStr,
+                                                         kkuint32       _channelCount,
                                                          kkuint32       _pixelsPerScanLine,
                                                          kkuint32       _frameHeight,
                                                          RunLog&        _log
@@ -903,7 +910,7 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileNam
   else
   {
     scannerFile = ScannerFile::CreateScannerFileForOutput
-    		(_fileName, (Format)format, _pixelsPerScanLine, _frameHeight, _log);
+    		(_fileName, (Format)format, _channelCount, _pixelsPerScanLine, _frameHeight, _log);
   }
 
   return  scannerFile;

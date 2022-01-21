@@ -66,6 +66,7 @@ namespace  KKLSC
 
     /**  Constructor for opening file for Writing */
     ScannerFile (const KKStr&  _fileName,
+                 uint32_t      _channelCount,
                  kkuint32      _pixelsPerScanLine,
                  kkuint32      _frameHeight,
                  RunLog&       _log
@@ -88,6 +89,7 @@ namespace  KKLSC
   
     bool                    BuildFrameOffsetsRunning  ()  const {return  frameOffsetsBuildRunning;}
     kkint64                 ByteOffsetScanLineZero    ()  const {return  byteOffsetScanLineZero;}  /**< Byte offset of 1st scan line after header field.                */
+    uint32_t                ChannelCount              ()  const {return  channelCount; }
     bool                    Eof                       ()  const {return  eof;}
     const KKStr&            FileName                  ()  const {return  fileName;}
     kkint64                 FileSizeInBytes           ()  const {return  fileSizeInBytes;}         /**<  When opening a existing file represents size of file in Bytes. */
@@ -249,6 +251,7 @@ namespace  KKLSC
     static  
     ScannerFilePtr  CreateScannerFileForOutput (const KKStr&  _fileName,
                                                 Format        _format,
+                                                kkuint32      _channelCount,
                                                 kkuint32      _pixelsPerScanLine,
                                                 kkuint32      _frameHeight,
                                                 RunLog&       _log
@@ -257,6 +260,7 @@ namespace  KKLSC
     static  
     ScannerFilePtr  CreateScannerFileForOutput (const KKStr&   _fileName,
                                                 const KKStr&   _formatStr,
+                                                kkuint32       _channelCount,
                                                 kkuint32       _pixelsPerScanLine,
                                                 kkuint32       _frameHeight,
                                                 RunLog&        _log
@@ -279,6 +283,7 @@ namespace  KKLSC
      *                                 be responsible for deleting them;  if != NULL upon call previous 
      *                                 instance will be deleted.
      *@param[out]  _scannerFileFormat  Format of scanner file;  ex: sf3BitEncoded.
+     *@param[out]  _ChannelCount
      *@param[out]  _frameHeight        Frame height of source camera.
      *@param[out]  _frameWidth         Width in pixels of scanner file.
      *@param[out]  _scanRate           Scan lines/sec that imagery was acquired at.
@@ -289,13 +294,13 @@ namespace  KKLSC
     void   GetScannerFileParameters (const KKStr&             _scannerFileName,
                                      ScannerHeaderFieldsPtr&  _headerFields,
                                      Format&                  _scannerFileFormat,
+                                     uint32_t                 _channelCount,
                                      kkint32&                 _frameHeight,
                                      kkint32&                 _frameWidth,
                                      float&                   _scanRate,
                                      bool&                    _successful,
                                      RunLog&                  _log
-                                    );
-                                     
+                                    );                                     
 
 
   protected:
@@ -390,6 +395,7 @@ namespace  KKLSC
 
     
     kkint64                 byteOffsetScanLineZero;  /**< Byte offset of 1st scan line after the header fields. */
+    uint32_t                channelCount;            /**< RGB would be 3,  while mono = 1*/
     bool                    eof;
     FILE*                   file;
     KKStr                   fileName;

@@ -113,11 +113,12 @@ ScannerFile3BitEncoded::ScannerFile3BitEncoded (const KKStr&  _fileName,
 
 
 ScannerFile3BitEncoded::ScannerFile3BitEncoded (const KKStr&  _fileName,
+                                                kkuint32      _channelCount,
                                                 kkuint32      _pixelsPerScanLine,
                                                 kkuint32      _frameHeight,
                                                 RunLog&       _log
                                                ):
-  ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log),
+  ScannerFile (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log),
   outputBuff    (NULL),
   outputBuffLen (0),
   workLine      (NULL),

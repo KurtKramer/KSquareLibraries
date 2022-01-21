@@ -77,6 +77,7 @@ namespace  KKLSC
                            );
 
     ScannerFile3BitEncoded (const KKStr&  _fileName,
+                            kkuint32      _channelCount,
                             kkuint32      _pixelsPerScanLine,
                             kkuint32      _frameHeight,
                             RunLog&       _log

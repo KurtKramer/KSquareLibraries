@@ -186,11 +186,12 @@ ScannerFile2BitEncoded::ScannerFile2BitEncoded (const KKStr&  _fileName,
 
 
 ScannerFile2BitEncoded::ScannerFile2BitEncoded (const KKStr&  _fileName,
+                                                kkuint32      _channelCount,
                                                 kkuint32      _pixelsPerScanLine,
                                                 kkuint32      _frameHeight,
                                                 RunLog&       _log
                                                ):
-  ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log),
+  ScannerFile (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log),
   rawPixelRecBuffer     (NULL),
   rawPixelRecBufferLen  (0),
   rawPixelRecBufferSize (0),

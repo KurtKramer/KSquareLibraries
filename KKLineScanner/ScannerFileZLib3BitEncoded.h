@@ -47,6 +47,7 @@ namespace  KKLSC
 
     /**  Constructor for opening file for Writing */
     ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
+                                kkuint32      _channelCount,
                                 kkuint32      _pixelsPerScanLine,
                                 kkuint32      _frameHeight,
                                 RunLog&       _log

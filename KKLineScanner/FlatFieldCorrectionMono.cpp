@@ -1,4 +1,4 @@
-/* FlatFieldCorrection.cpp --
+/* FlatFieldCorrectionMono.cpp --
  * Copyright (C) 2011-2013  Kurt Kramer
  * For conditions of distribution and use, see copyright notice in CounterUnManaged.txt
  */
@@ -18,27 +18,21 @@ using namespace std;
 #include  "OSservices.h"
 using namespace KKB;
 
-
 #include "FlatFieldCorrection.h"
+#include "FlatFieldCorrectionMono.h"
 using  namespace  KKLSC;
 
 
 
-FlatFieldCorrection::FlatFieldCorrection (kkuint32      _numSampleLines,
-                                          kkuint32      _lineWidth,
-                                          const uchar*  _compensationTable,
-                                          kkuint32      _startCol
-                                         ):
-    compensationTable    (_compensationTable),
-    enabled              (true),
+FlatFieldCorrectionMono::FlatFieldCorrectionMono (kkuint32      _numSampleLines,
+                                                  kkuint32      _lineWidth,
+                                                  const uchar*  _compensationTable,
+                                                  kkuint32      _startCol
+                                                 ):
+    FlatFieldCorrection (_numSampleLines, _lineWidth, _compensationTable, _startCol, false),
     highPoint            (NULL),
     highPointLastSeen    (NULL),
     history              (NULL),
-    lastHistoryIdxAdded  (_numSampleLines - 1),
-    lineWidth            (_lineWidth),
-    numSampleLines       (_numSampleLines),
-    numSampleLinesAdded  (0),
-    startCol             (_startCol),
     totalLine            (NULL)
 {
   KKCheck (_numSampleLines > 0,  "_numSampleLines: " + StrFromUint32 (_numSampleLines) + " > 0")
@@ -74,7 +68,7 @@ FlatFieldCorrection::FlatFieldCorrection (kkuint32      _numSampleLines,
 
 
 
-FlatFieldCorrection::~FlatFieldCorrection ()
+FlatFieldCorrectionMono::~FlatFieldCorrectionMono ()
 {
   delete  highPoint;          highPoint         = NULL;
   delete  highPointLastSeen;  highPointLastSeen = NULL;
@@ -99,7 +93,7 @@ FlatFieldCorrection::~FlatFieldCorrection ()
 
 
 
-void  FlatFieldCorrection::CompensationTable (const uchar*  _compensationTable)
+void  FlatFieldCorrectionMono::CompensationTable (const uchar*  _compensationTable)
 {
   compensationTable = _compensationTable;
   for  (kkuint32  x = 0;  x < lineWidth;  ++x)
@@ -108,7 +102,7 @@ void  FlatFieldCorrection::CompensationTable (const uchar*  _compensationTable)
 
 
 
-void  FlatFieldCorrection::AddSampleLine (const uchar*  sampleLine)
+void  FlatFieldCorrectionMono::AddSampleLine (const uchar*  sampleLine)
 {
   ++lastHistoryIdxAdded;
   if  (lastHistoryIdxAdded >= numSampleLines)
@@ -140,7 +134,7 @@ void  FlatFieldCorrection::AddSampleLine (const uchar*  sampleLine)
 
 
 
-void  FlatFieldCorrection::ReComputeLookUpForColumn (kkuint32 col)
+void  FlatFieldCorrectionMono::ReComputeLookUpForColumn (kkuint32 col)
 {
   if  (enabled)
   {
@@ -251,7 +245,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkuint32 col)
 
 
 
-void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  scanLine)
+void  FlatFieldCorrectionMono::ApplyFlatFieldCorrection (uchar*  scanLine)
 {
   for  (kkuint32 col = startCol;  col < lineWidth;  ++col)
     scanLine[col] = lookUpTable[col][scanLine[col]];
@@ -259,9 +253,7 @@ void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  scanLine)
 
 
 
-void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  srcScanLine,
-                                                     uchar*  destScanLine
-                                                    )
+void  FlatFieldCorrectionMono::ApplyFlatFieldCorrection (uchar*  srcScanLine,  uchar*  destScanLine)
 {
   if  (enabled)
   {
@@ -277,7 +269,7 @@ void  FlatFieldCorrection::ApplyFlatFieldCorrection (uchar*  srcScanLine,
 
 
 
-VectorUcharPtr  FlatFieldCorrection::CameraHighPoints ()  const
+VectorUcharPtr  FlatFieldCorrectionMono::CameraHighPoints ()  const
 {
   vector<uchar>*  results = new vector<uchar> ();
   for  (kkuint32 x = 0;  x < lineWidth;  x++)
@@ -287,7 +279,7 @@ VectorUcharPtr  FlatFieldCorrection::CameraHighPoints ()  const
 
 
 
-VectorUcharPtr  FlatFieldCorrection::CameraHighPointsFromLastNSampleLines (kkuint32 n)  const
+VectorUcharPtr  FlatFieldCorrectionMono::CameraHighPointsFromLastNSampleLines (kkuint32 n)  const
 {
   n = Min (n, numSampleLines);
 

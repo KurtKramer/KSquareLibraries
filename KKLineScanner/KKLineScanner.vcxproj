@@ -157,6 +157,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FlatFieldCorrection.cpp" />
+    <ClCompile Include="FlatFieldCorrectionColor.cpp" />
+    <ClCompile Include="FlatFieldCorrectionMono.cpp" />
     <ClCompile Include="FlowMeterTracker.cpp" />
     <ClCompile Include="ScannerClock.cpp" />
     <ClCompile Include="ScannerFile.cpp" />
@@ -174,6 +176,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FlatFieldCorrection.h" />
+    <ClInclude Include="FlatFieldCorrectionColor.h" />
+    <ClInclude Include="FlatFieldCorrectionMono.h" />
     <ClInclude Include="FlowMeterTracker.h" />
     <ClInclude Include="KKLineScanner.h" />
     <ClInclude Include="ScannerClock.h" />

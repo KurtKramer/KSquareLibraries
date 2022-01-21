@@ -118,18 +118,18 @@ ScannerFileZLib3BitEncoded::ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
 
 
 ScannerFileZLib3BitEncoded::ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
+                                                        kkuint32      _channelCount,
                                                         kkuint32      _pixelsPerScanLine,
                                                         kkuint32      _frameHeight,
                                                         RunLog&       _log
                                                        ):
-  ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log),
+  ScannerFile (_fileName, _channelCount, _pixelsPerScanLine, _frameHeight, _log),
   compBuffer      (NULL),
   compBufferLen   (0),
   compBufferSize  (0)
 {
   AllocateBuffers ();
 }
-
 
 
 
