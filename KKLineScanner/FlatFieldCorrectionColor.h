@@ -60,8 +60,6 @@ namespace  KKLSC
   private:
     void  ReComputeLookUpForColumn (kkuint32 byteCol)  override;  /**< Processes single channel for a single pixel, if byteCol = 7  then it is for channel 1 of pixel 2, RGBRGBRGB    */
 
-    const uchar*  compensationTable;  /**< From ScannerFile::ConpensationTable(); used to compensate for the effects of ScannerFile compression. */
-
     uint32_t   lineWidthBytes;         /**< Number bytes esch scsan line cinsumes */
 
     uchar*     highPoint;              /**< Highest pixel value in history for the respective column.                  */

@@ -19,7 +19,7 @@ namespace  KKLSC
    * such that 255 is background and 0 is foreground.  The data that will result from 'ApplyFlatFieldCorrection'
    * will have 0 as foreground and 255 as background.  
    */
-  class  FlatFieldCorrectionMono: protected  FlatFieldCorrection
+  class  FlatFieldCorrectionMono: public  FlatFieldCorrection
   {
   public:
     FlatFieldCorrectionMono (kkuint32      _numSampleLines,
